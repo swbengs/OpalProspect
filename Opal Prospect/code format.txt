@@ -1,0 +1,9 @@
+Convetions:
+
+C code should have .h and .c file extensions
+C++ code should use .hpp and .cpp file extensions
+
+Coordinate handedness:
+All code is to be written as left handed. All matrix assume this is the case. Old style OpenGL switched to right hand for the perspective
+matrix, but I want to stay consistent the entire way.
+Therefore, once again everything is written for left hand. +X is right, +Y is up, +Z is heading out from the camera.

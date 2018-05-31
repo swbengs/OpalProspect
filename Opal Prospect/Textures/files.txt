@@ -1,0 +1,35 @@
+Texture files
+gem.png -> Gem(all precious materials that are not smelted)
+ore.png -> Ore(all smeltable materials)
+liquid.png -> Liquids(lava, water, and other misc liquids)
+soil.png -> Soil(all dirt and sand, and clay. These leave no boulders)
+stone.png -> Stone(all stone but not ore and gems/minerals and ice)
+
+All block types below
+AIR
+SOIL
+STONE
+FEATURE
+LAVA_STONE
+MINERAL
+FROZEN_LIQUID
+CONSTRUCTION
+GRASS_LIGHT
+GRASS_DARK
+GRASS_DRY
+GRASS_DEAD
+PLANT
+HFS
+CAMPFIRE
+FIRE
+ASHES
+MAGMA
+DRIFTWOOD
+POOL
+BROOK
+ROOT
+TREE
+MUSHROOM
+UNDERWORLD_GATE
+
+ores.txt and so on list the default game's materials that are there for reference

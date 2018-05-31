@@ -1,0 +1,23 @@
+2x2
+1x1 textures
+4 texture total
+
+2x4
+2x2 
+2 texture total
+
+4x2
+2x2
+2 texture total
+
+4x4
+2x2
+4 texture total
+
+6x15
+3x5
+6 texture total
+
+15x5
+3x5
+5 texture total
