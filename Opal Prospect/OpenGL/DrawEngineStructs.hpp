@@ -10,7 +10,7 @@ struct opengl_state
     unsigned int program_id; //bound program id
 };
 
-//struct to draw a model
+//struct to draw a model. This should be the only information the engine needs to draw a model
 struct model_pod
 {
     //vao ref, index byte offset, texture ref needed to draw 

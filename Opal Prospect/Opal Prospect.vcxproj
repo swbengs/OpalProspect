@@ -89,13 +89,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Programming\Projects\Opal Prospect\Opal Prospect;C:\Programming\Libraries\libs\zlib\include;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\\libs\glfw\include;C:\Programming\Libraries\libs\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Libraries\libs\glew\include;C:\Programming\Libraries\libs\glfw\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\zlib\include;C:\Programming\Projects\OpalProspect\Opal Prospect;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glew32.lib;opengl32.lib;glfw3dll.lib;zlib.lib;libpng16.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Programming\Libraries\libs\zlib\lib;C:\Programming\Libraries\libs\libpng\lib;C:\Programming\Libraries\libs\glfw\lib;C:\Programming\Libraries\libs\glew\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Programming\Libraries\libs\zlib\lib;C:\Programming\Libraries\libs\libpng\lib;C:\Programming\Libraries\libs\glfw\lib;C:\Programming\Libraries\libs\glew\lib;%(AdditionalLibraryDirectories)C:\Programming\Libraries\libs\zlib\lib;C:\Programming\Libraries\libs\libpng\lib;C:\Programming\Libraries\libs\glfw\lib;C:\Programming\Libraries\libs\glew\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -106,10 +106,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Programming\Libraries\libs\glew\include;C:\Programming\Libraries\libs\glfw\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\zlib\include;C:\Programming\Projects\OpalProspect\Opal Prospect;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Programming\Libraries\libs\zlib\lib;C:\Programming\Libraries\libs\libpng\lib;C:\Programming\Libraries\libs\glfw\lib;C:\Programming\Libraries\libs\glew\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,14 +124,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Programming\Projects\Opal Prospect\Opal Prospect;C:\Programming\Libraries\libs\zlib\include;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\\libs\glfw\include;C:\Programming\Libraries\libs\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Libraries\libs\zlib\include;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\\libs\glfw\include;C:\Programming\Libraries\libs\glew\include;C:\Programming\Projects\OpalProspect\Opal Prospect;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Programming\Libraries\libs\zlib\lib;C:\Programming\Libraries\libs\libpng\lib;C:\Programming\Libraries\libs\glfw\lib;C:\Programming\Libraries\libs\glew\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Programming\Libraries\libs\zlib\lib;C:\Programming\Libraries\libs\libpng\lib;C:\Programming\Libraries\libs\glfw\lib;C:\Programming\Libraries\libs\glew\lib;%(AdditionalLibraryDirectories)C:\Programming\Libraries\libs\zlib\lib;C:\Programming\Libraries\libs\libpng\lib;C:\Programming\Libraries\libs\glfw\lib;C:\Programming\Libraries\libs\glew\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;opengl32.lib;glfw3dll.lib;zlib.lib;libpng16.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

@@ -19,7 +19,7 @@ void DrawEngine::bufferControlTest()
 {
     OGLHelpers::getOpenGLError("pre array texture creation", true);
 
-    test_texture.setFilename("soils.png");
+    test_texture.setFilename("Textures\\soils.png");
     test_texture.setTextureWidth(16);
     test_texture.setTextureHeight(16);
     test_texture.createTexture();
@@ -29,12 +29,12 @@ void DrawEngine::bufferControlTest()
     ShapeToModel convert;
     NormalBox box;
 
-    box.setFrontTextureNumber(248);
-    box.setBackTextureNumber(241);
-    box.setLeftTextureNumber(242);
-    box.setRightTextureNumber(243);
-    box.setTopTextureNumber(244);
-    box.setBottomTextureNumber(245);
+    box.setFrontTextureNumber(0);
+    box.setBackTextureNumber(1);
+    box.setLeftTextureNumber(2);
+    box.setRightTextureNumber(3);
+    box.setTopTextureNumber(4);
+    box.setBottomTextureNumber(5);
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     convert.convertToModelIndex(box, model);
     model.setModelName("test.obj");
@@ -44,17 +44,17 @@ void DrawEngine::bufferControlTest()
     OGLHelpers::getOpenGLError("post model add", true);
 
     ModelIndex mod2, mod3, mod4;
-    box.setTextureNumber(243);
+    box.setTextureNumber(10);
     convert.convertToModelIndex(box, mod2);
     mod2.setModelName("test_two");
     buffers.addModel(mod2);
 
-    box.setTextureNumber(241);
+    box.setTextureNumber(11);
     convert.convertToModelIndex(box, mod3);
     mod3.setModelName("test_three");
     buffers.addModel(mod3);
 
-    box.setTextureNumber(242);
+    box.setTextureNumber(12);
     convert.convertToModelIndex(box, mod4);
     mod4.setModelName("test_four");
     buffers.addModel(mod4);
@@ -381,14 +381,14 @@ void DrawEngine::setupOpenGLObjects()
     //text.generateAtlas();
 
     //atlas.addAtlas(text);
-
+    /*
     int uv_total_size = 0;
 
     for (unsigned int n = 0; n < atlas.getSize(); n++)
     {
         uv_total_size += atlas.getAtlas(n).getAtlasSize();
     }
-
+    */
     //setup VAO, VBO
     /*
     uvVAO.setObjectCount(uv_total_size);
