@@ -1,5 +1,15 @@
 #include "NormalBox.hpp"
 
+NormalBox::NormalBox()
+{
+    front_normal.setXYZ(0.0f, 0.0f, 0.0f);
+    back_normal.setXYZ(0.0f, 0.0f, 0.0f);
+    left_normal.setXYZ(0.0f, 0.0f, 0.0f);
+    right_normal.setXYZ(0.0f, 0.0f, 0.0f);
+    top_normal.setXYZ(0.0f, 0.0f, 0.0f);
+    bottom_normal.setXYZ(0.0f, 0.0f, 0.0f);
+}
+
 void NormalBox::fillNormalFace(NormalFace& front_face, NormalFace& back_face, NormalFace& left_face, NormalFace& right_face, NormalFace& top_face, NormalFace& bottom_face) const
 {
     //front back left right top bottom

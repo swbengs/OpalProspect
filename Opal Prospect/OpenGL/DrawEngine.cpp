@@ -36,6 +36,10 @@ void DrawEngine::bufferControlTest()
     box.setTopTextureNumber(4);
     box.setBottomTextureNumber(5);
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    //Point3D front, back, left, right, top, bottom;
+    //front.setXYZ(0, 0, 0);
+    //box.setNormal(front, back, left, right, top, bottom);
+    
     convert.convertToModelIndex(box, model);
     model.setModelName("test.obj");
 

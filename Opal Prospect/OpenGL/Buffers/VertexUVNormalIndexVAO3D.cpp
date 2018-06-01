@@ -55,7 +55,7 @@ void VertexUVNormalIndexVAO3D::bufferNormal(const std::vector<float> &vector)
 
 void VertexUVNormalIndexVAO3D::bufferIndex(const std::vector<unsigned int> &vector)
 {
-    index.addData(vector.size() * sizeof(int), vector.data());
+    index.addData(vector.size() * sizeof(unsigned int), vector.data());
 }
 
 void VertexUVNormalIndexVAO3D::create()
@@ -108,13 +108,13 @@ void VertexUVNormalIndexVAO3D::create()
     uv.enableVertexIndex();
     uv.vertexPointer();
 
-    //normal.generateVBOID();
-    //normal.bindVBO();
+    normal.generateVBOID();
+    normal.bindVBO();
     normal.setMaximumSize(normal_size);
     normal.setDimensions(normal_dimensions);
     normal.setBindIndex(2);
 
-    //normal.createVBO();
+    normal.createVBO();
     //normal.enableVertexIndex();
     //normal.vertexPointer();
 

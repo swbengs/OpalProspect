@@ -8,6 +8,8 @@
 class NormalBox : public TextureBox
 {
 public:
+    NormalBox();
+
     void fillNormalFace(NormalFace& front_face, NormalFace& back_face, NormalFace& left_face, NormalFace& right_face, NormalFace& top_face, NormalFace& bottom_face) const;
 
     //gets
