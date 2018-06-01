@@ -89,7 +89,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Programming\Libraries\libs\glew\include;C:\Programming\Libraries\libs\glfw\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\zlib\include;C:\Programming\Projects\OpalProspect\Opal Prospect;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Projects\Opal Prospect\Opal Prospect;C:\Programming\Libraries\libs\glew\include;C:\Programming\Libraries\libs\glfw\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,7 +124,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Programming\Libraries\libs\zlib\include;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\\libs\glfw\include;C:\Programming\Libraries\libs\glew\include;C:\Programming\Projects\OpalProspect\Opal Prospect;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Projects\Opal Prospect\Opal Prospect;C:\Programming\Libraries\libs\zlib\include;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\\libs\glfw\include;C:\Programming\Libraries\libs\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
