@@ -5,6 +5,7 @@ Updated: 6/2/2018
 
 -==Critical issues(try and do this first)==-
 1: Code cleanup and license adding. Much of the code is fairly old and should be updated to include the license and the some basic description of what it does.
+All headers should have license info now. Need to check that they all have a description about what they do.
 
 -=Draw engine specifics=-
 1: OpenGL 3.3 is the version I am building for. Allows more modern shader programming without requiring too new of a card. 4.5 support may be added at a later date when more important features are done.
