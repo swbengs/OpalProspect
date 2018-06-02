@@ -3,6 +3,9 @@ This is to help give an idea what needs to be done and what is currently being w
 
 Updated: 6/2/2018
 
+-==Critical issues(try and do this first)==-
+1: Code cleanup and license adding. Much of the code is fairly old and should be updated to include the license and the some basic description of what it does.
+
 -=Draw engine specifics=-
 1: OpenGL 3.3 is the version I am building for. Allows more modern shader programming without requiring too new of a card. 4.5 support may be added at a later date when more important features are done.
 2: Array Textures(Finished) 16x16 pixel textures currently. Anyone is free to add their own higher quality textures.
@@ -42,3 +45,7 @@ An example is a box. It's a 3D rectangle which may be a cube. It has 6 faces mad
 Thus you can store each face as 4 unique verticies and use 6 indicies per face to describe them. Thus 36 indicies and 24 verticies.
 If you had multiple boxes in a VAO(yes it's actually stored in a VBO but we can bind just the VAO to use them) 
 you can just do 36 * wanted_box as offset and 36 for the count. However, we can store any model in a VAO
+
+-=Dwarf Fortress textures=-
+My current system is to copy the actual texture from DF. This is an 8x12 image. Then I draw by hand a similar one in 16x16 and color it the same.
+Once we have all of the different types we just need the color info. Writing a system to do this automatically will take too long so I do it by hand.
