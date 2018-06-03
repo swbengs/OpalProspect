@@ -1,4 +1,4 @@
-# OpalProspectPrivate
+# OpalProspect
 Public repository for Opal Prospect, a 3D viewer for Dwarf Fortress.
 
 This project is to allow you to save fortress info from a LUA script, and then keep that forever. It will allow you to save it at 
