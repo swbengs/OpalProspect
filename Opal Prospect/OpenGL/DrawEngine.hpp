@@ -84,6 +84,7 @@ private:
     const static float Z_FAR;
     BufferController buffers;
     opengl_state state;
+    
 
     TextureAtlasController atlas;
     VertexFragmentProgram texture_program;
@@ -123,6 +124,4 @@ private:
     //tests
     void arrayTextureTest();
     void bufferControlTest();
-
-    
 };

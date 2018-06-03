@@ -168,6 +168,7 @@
     <ClCompile Include="OpenGL\Buffers\VertexUVIndexVAO.cpp" />
     <ClCompile Include="OpenGL\Buffers\VertexUVNormalIndexVAO3D.cpp" />
     <ClCompile Include="OpenGL\DrawEngine.cpp" />
+    <ClCompile Include="OpenGL\ModelController.cpp" />
     <ClCompile Include="OpenGL\OGLHelpers.cpp" />
     <ClCompile Include="OpenGL\Programs\FragmentShader.cpp" />
     <ClCompile Include="OpenGL\Programs\GeometryShader.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="OpenGL\Buffers\VertexUVNormalIndexVAO3D.hpp" />
     <ClInclude Include="OpenGL\DrawEngine.hpp" />
     <ClInclude Include="OpenGL\DrawEngineStructs.hpp" />
+    <ClInclude Include="OpenGL\ModelController.hpp" />
     <ClInclude Include="OpenGL\OGLHelpers.hpp" />
     <ClInclude Include="OpenGL\Programs\FragmentShader.hpp" />
     <ClInclude Include="OpenGL\Programs\GeometryShader.hpp" />
