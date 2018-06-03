@@ -51,7 +51,7 @@ public:
     //sets
 
 private:
-    const static size_t MAXIMUM_BUFFER_SIZE = 4096; //size of an individual buffer in bytes. specification reccomends data size in the MB range
+    const static size_t MAXIMUM_BUFFER_SIZE = 4096; //size of an individual buffer in bytes. specification reccomends data size in the MB range. Lower numbers are being used right now for testing this class
     std::vector<VertexUVNormalIndexVAO3D> vaos;
     std::unordered_map<std::string, unsigned int> references;
 

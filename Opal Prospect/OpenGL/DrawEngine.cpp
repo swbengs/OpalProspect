@@ -36,8 +36,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-const float Z_NEAR = 0.1f;
-const float Z_FAR = 50.0f;
+const float DrawEngine::Z_NEAR = 0.1f;
+const float DrawEngine::Z_FAR = 50.0f;
 
 void DrawEngine::bufferControlTest()
 {

@@ -80,6 +80,8 @@ public:
     void setScreenWidthHeight(int width, int height);
 
 private:
+    const static float Z_NEAR;
+    const static float Z_FAR;
     BufferController buffers;
     opengl_state state;
 
