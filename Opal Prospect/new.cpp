@@ -1,4 +1,4 @@
-//class parent
+//class header
 
 //std lib includes
 
@@ -26,10 +26,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
-
-/*
-Description: This structure is still not fully decided on. Give a basic description of what this class does at a minimum. More detail is always welcome.
 */
 
 //class code
