@@ -192,6 +192,9 @@
     <ClCompile Include="OpenGL\ModelController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OpenGL\ArrayTextureController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\ArrayTexture.hpp">
@@ -358,6 +361,9 @@
     </ClInclude>
     <ClInclude Include="OpenGL\ModelController.hpp">
       <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\ArrayTextureController.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

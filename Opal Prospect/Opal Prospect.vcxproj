@@ -159,6 +159,7 @@
     <ClCompile Include="MainLoop.cpp" />
     <ClCompile Include="Opal Prospect.cpp" />
     <ClCompile Include="OpenGL\ArrayTexture.cpp" />
+    <ClCompile Include="OpenGL\ArrayTextureController.cpp" />
     <ClCompile Include="OpenGL\Buffers\BufferController.cpp" />
     <ClCompile Include="OpenGL\Buffers\FloatVBO.cpp" />
     <ClCompile Include="OpenGL\Buffers\IntVBO.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="Containers\SortedObjectPool.hpp" />
     <ClInclude Include="MainLoop.hpp" />
     <ClInclude Include="OpenGL\ArrayTexture.hpp" />
+    <ClInclude Include="OpenGL\ArrayTextureController.hpp" />
     <ClInclude Include="OpenGL\Buffers\BufferController.hpp" />
     <ClInclude Include="OpenGL\Buffers\FloatVBO.hpp" />
     <ClInclude Include="OpenGL\Buffers\IntVBO.hpp" />
