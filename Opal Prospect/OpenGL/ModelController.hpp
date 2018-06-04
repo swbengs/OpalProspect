@@ -2,6 +2,8 @@
 
 //std lib includes
 #include <vector>
+#include <unordered_map>
+#include <string>
 
 //other includes
 #include "DrawEngineStructs.hpp"
@@ -38,15 +40,17 @@ Description: This class is used to store all models and how they are accessed. A
 class ModelController
 {
 public:
-    bool addModel(ModelIndex &model);
+    void addModel(const ModelIndex &model);
 
-    const ModelIndex& getModel(std::string model_name); //for reading only
-    const model_pod& getModelPOD(std::string model_name);
+    const ModelIndex& getModel(unsigned int reference) const; //for reading only
+    model_pod getModelPOD(unsigned int reference) const;
+    unsigned int getModelReference(std::string model_name) const;
 
-    ModelIndex& modifyModel(std::string model_name); //for writing and reading
-    ModelIndex& modifyModelPOD(std::string model_name);
+    ModelIndex& modifyModel(unsigned int reference); //for writing and reading
+    model_pod& modifyModelPOD(unsigned int reference);
 private:
     std::vector<ModelIndex> models;
     std::vector<model_pod> pods;
+    std::unordered_map<std::string, unsigned int> references;
 };
 

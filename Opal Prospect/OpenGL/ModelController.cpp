@@ -1,5 +1,7 @@
 #include "ModelController.hpp"
+
 //std lib includes
+#include <iostream>
 
 //other includes
 
@@ -27,29 +29,49 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-//class code
-
-bool ModelController::addModel(ModelIndex & model)
+void ModelController::addModel(const ModelIndex &model)
 {
-    return false;
+    //fill in what we can get right now
+    model_pod pod;
+    pod.model_name = model.getModelName();
+    pod.texture_name = model.getTextureName();
+    pod.index_count = model.getActualPointCount();
+    models.push_back(model);
+    pods.push_back(pod);
+    references[model.getModelName()] = static_cast<unsigned int>(pods.size()); //cast just in case it's on a 64 bit system
 }
 
-const ModelIndex & ModelController::getModel(std::string model_name)
+const ModelIndex& ModelController::getModel(unsigned int reference) const
 {
-    
+    return models[reference - 1];
 }
 
-const model_pod & ModelController::getModelPOD(std::string model_name)
+model_pod ModelController::getModelPOD(unsigned int reference) const
 {
-    
+    return pods[reference - 1];
 }
 
-ModelIndex & ModelController::modifyModel(std::string model_name)
+unsigned int ModelController::getModelReference(std::string model_name) const
 {
-    
+    auto search = references.find(model_name);
+    if (search != references.end()) //found
+    {
+        return search->second;
+    }
+    else
+    {
+        //std::cout << "model " << model_name << " does not exist from ModelController\n";
+        return 0;
+    }
 }
 
-ModelIndex & ModelController::modifyModelPOD(std::string model_name)
+ModelIndex& ModelController::modifyModel(unsigned int reference)
 {
-    
+    return models[reference - 1];
 }
+
+model_pod& ModelController::modifyModelPOD(unsigned int reference)
+{
+    return pods[reference - 1];
+}
+
