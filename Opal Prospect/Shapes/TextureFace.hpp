@@ -2,7 +2,7 @@
 
 #include "VertexFace.hpp"
 
-#include "Shapes\Point3D.hpp"
+#include "Point3D.hpp"
 
 /*
 MIT License

@@ -89,7 +89,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Programming\Projects\Opal Prospect\Opal Prospect;C:\Programming\Libraries\libs\glew\include;C:\Programming\Libraries\libs\glfw\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Libraries\libs\glew\include;C:\Programming\Libraries\libs\glfw\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,7 +124,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Programming\Projects\Opal Prospect\Opal Prospect;C:\Programming\Libraries\libs\zlib\include;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\\libs\glfw\include;C:\Programming\Libraries\libs\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Libraries\libs\zlib\include;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\\libs\glfw\include;C:\Programming\Libraries\libs\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,7 +160,7 @@
     <ClCompile Include="Opal Prospect.cpp" />
     <ClCompile Include="OpenGL\ArrayTexture.cpp" />
     <ClCompile Include="OpenGL\ArrayTextureController.cpp" />
-    <ClCompile Include="OpenGL\Buffers\BufferController.cpp" />
+    <ClCompile Include="OpenGL\BufferController.cpp" />
     <ClCompile Include="OpenGL\Buffers\FloatVBO.cpp" />
     <ClCompile Include="OpenGL\Buffers\IntVBO.cpp" />
     <ClCompile Include="OpenGL\Buffers\VAO.cpp" />
@@ -217,7 +217,7 @@
     <ClInclude Include="MainLoop.hpp" />
     <ClInclude Include="OpenGL\ArrayTexture.hpp" />
     <ClInclude Include="OpenGL\ArrayTextureController.hpp" />
-    <ClInclude Include="OpenGL\Buffers\BufferController.hpp" />
+    <ClInclude Include="OpenGL\BufferController.hpp" />
     <ClInclude Include="OpenGL\Buffers\FloatVBO.hpp" />
     <ClInclude Include="OpenGL\Buffers\IntVBO.hpp" />
     <ClInclude Include="OpenGL\Buffers\VAO.hpp" />

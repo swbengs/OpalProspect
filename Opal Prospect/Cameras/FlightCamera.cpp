@@ -1,7 +1,7 @@
 #include "FlightCamera.hpp"
 
 #include "gtc\matrix_transform.hpp"
-#include "Constants\axis.hpp"
+#include "..\Constants\axis.hpp"
 
 #include "gtx\io.hpp"
 #include <iostream>

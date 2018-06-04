@@ -1,4 +1,4 @@
-#include "OpenGL\TextureAtlasController.hpp"
+#include "TextureAtlasController.hpp"
 
 /*
 MIT License

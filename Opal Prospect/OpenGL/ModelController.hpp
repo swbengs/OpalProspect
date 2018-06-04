@@ -7,7 +7,7 @@
 
 //other includes
 #include "DrawEngineStructs.hpp"
-#include "Shapes\ModelIndex.hpp"
+#include "..\Shapes\ModelIndex.hpp"
 
 /*
 MIT License

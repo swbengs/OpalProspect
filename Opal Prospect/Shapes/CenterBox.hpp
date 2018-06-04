@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shapes\Box.hpp"
+#include "Box.hpp"
 
 /*
 MIT License

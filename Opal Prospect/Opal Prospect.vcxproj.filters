@@ -183,9 +183,6 @@
     <ClCompile Include="OpenGL\OGLHelpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL\Buffers\BufferController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="OpenGL\Buffers\VertexUVNormalIndexVAO3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -193,6 +190,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OpenGL\ArrayTextureController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\BufferController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -353,17 +353,17 @@
     <ClInclude Include="OpenGL\OGLHelpers.hpp">
       <Filter>OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="OpenGL\Buffers\BufferController.hpp">
-      <Filter>OpenGL\Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="OpenGL\Buffers\VertexUVNormalIndexVAO3D.hpp">
       <Filter>OpenGL\Buffers</Filter>
     </ClInclude>
     <ClInclude Include="OpenGL\ModelController.hpp">
       <Filter>OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="OpenGL\BufferController.hpp">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="OpenGL\ArrayTextureController.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

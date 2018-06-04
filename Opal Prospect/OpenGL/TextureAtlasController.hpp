@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "OpenGL\TextureAtlas.hpp"
+#include "TextureAtlas.hpp"
 
 /*
 MIT License

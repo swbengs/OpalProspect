@@ -5,7 +5,7 @@
 
 #include "GL\glew.h"
 #include "OGLHelpers.hpp"
-#include "Constants\axis.hpp"
+#include "..\Constants\axis.hpp"
 
 //glm includes
 #include "gtc\matrix_transform.hpp" //ortho, rotate, scale, translate

@@ -8,29 +8,29 @@
 #include "ArrayTexture.hpp"
 #include "TextureAtlas.hpp"
 #include "TextureAtlasController.hpp"
-#include "Shapes\ColorRectangle.hpp"
-#include "Containers\SortedObjectPool.hpp"
+#include "..\Shapes\ColorRectangle.hpp"
+#include "..\Containers\SortedObjectPool.hpp"
 
 //buffers
-#include "OpenGL\Buffers\VertexColorIndexVAO.hpp"
-#include "OpenGL\Buffers\VertexUVIndexVAO.hpp"
-#include "OpenGL\Buffers\VertexUVNormalIndexVAO3D.hpp"
+#include "Buffers\VertexColorIndexVAO.hpp"
+#include "Buffers\VertexUVIndexVAO.hpp"
+#include "Buffers\VertexUVNormalIndexVAO3D.hpp"
 
 //programs
-#include "OpenGL\Programs\VertexFragmentProgram.hpp"
+#include "Programs\VertexFragmentProgram.hpp"
 
 //glm types
 #include "mat4x4.hpp"
 #include "vec3.hpp"
 
-#include "Cameras\Camera.hpp"
-#include "Shapes\Grid3D.hpp"
-#include "Shapes\ShapeToModel.hpp"
-#include "Shapes\ModelIndex.hpp"
+#include "..\Cameras\Camera.hpp"
+#include "..\Shapes\Grid3D.hpp"
+#include "..\Shapes\ShapeToModel.hpp"
+#include "..\Shapes\ModelIndex.hpp"
 
 #include "DrawEngineStructs.hpp"
 #include "ArrayTextureController.hpp"
-#include "OpenGL\Buffers\BufferController.hpp"
+#include "BufferController.hpp"
 #include "ModelController.hpp"
 
 /*

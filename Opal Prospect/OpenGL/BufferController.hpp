@@ -3,8 +3,8 @@
 #include <vector>
 #include <unordered_map>
 
-#include "Shapes\ModelIndex.hpp"
-#include "OpenGL\Buffers\VertexUVNormalIndexVAO3D.hpp"
+#include "..\Shapes\ModelIndex.hpp"
+#include "Buffers\VertexUVNormalIndexVAO3D.hpp"
 
 /*
 MIT License
