@@ -41,6 +41,11 @@ void ModelController::addModel(const ModelIndex &model)
     references[model.getModelName()] = static_cast<unsigned int>(pods.size()); //cast just in case it's on a 64 bit system
 }
 
+size_t ModelController::getCount()
+{
+    return models.size();
+}
+
 const ModelIndex& ModelController::getModel(unsigned int reference) const
 {
     return models[reference - 1];

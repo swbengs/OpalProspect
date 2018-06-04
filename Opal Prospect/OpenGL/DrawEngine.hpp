@@ -5,6 +5,7 @@
 #include <string>
 
 //shapes and textures
+#include "ArrayTexture.hpp"
 #include "TextureAtlas.hpp"
 #include "TextureAtlasController.hpp"
 #include "Shapes\ColorRectangle.hpp"
@@ -13,7 +14,6 @@
 //buffers
 #include "OpenGL\Buffers\VertexColorIndexVAO.hpp"
 #include "OpenGL\Buffers\VertexUVIndexVAO.hpp"
-#include "OpenGL\Buffers\BufferController.hpp"
 #include "OpenGL\Buffers\VertexUVNormalIndexVAO3D.hpp"
 
 //programs
@@ -23,14 +23,15 @@
 #include "mat4x4.hpp"
 #include "vec3.hpp"
 
-#include "DrawEngineStructs.hpp"
 #include "Cameras\Camera.hpp"
 #include "Shapes\Grid3D.hpp"
-
-//tests
 #include "Shapes\ShapeToModel.hpp"
 #include "Shapes\ModelIndex.hpp"
-#include "ArrayTexture.hpp"
+
+#include "DrawEngineStructs.hpp"
+#include "ArrayTextureController.hpp"
+#include "OpenGL\Buffers\BufferController.hpp"
+#include "ModelController.hpp"
 
 /*
 MIT License
@@ -65,6 +66,8 @@ class DrawEngine
 public:
     DrawEngine();
 
+    void addModel(ModelIndex& model);
+    void addTexture(const ArrayTexture& texture);
     void draw(const Camera &camera);
 
     void setup();
@@ -83,6 +86,8 @@ private:
     const static float Z_NEAR;
     const static float Z_FAR;
     BufferController buffers;
+    ArrayTextureController textures;
+    ModelController models;
     opengl_state state;
     
 

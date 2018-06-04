@@ -90,6 +90,11 @@ void BufferController::destroyBuffers()
     }
 }
 
+size_t BufferController::getCount()
+{
+    return vaos.size();
+}
+
 //gets
 unsigned int BufferController::getVAOID(unsigned int reference) const
 {

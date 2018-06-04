@@ -44,6 +44,7 @@ public:
     void destroyBuffers();
 
     //gets
+    size_t getCount();
     unsigned int getVAOID(unsigned int reference) const;
     unsigned int getModelVAOReference(std::string model_name) const;
     unsigned int getModelIndexOffset(std::string model_name) const;

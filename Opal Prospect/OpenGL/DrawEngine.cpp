@@ -1,13 +1,13 @@
+#include "DrawEngine.hpp"
+
 #include <iostream>
 #include <array>
 
-#include "DrawEngine.hpp"
 #include "GL\glew.h"
 #include "OGLHelpers.hpp"
 #include "Constants\axis.hpp"
 
 //glm includes
-#include "vec3.hpp"
 #include "gtc\matrix_transform.hpp" //ortho, rotate, scale, translate
 #include "gtx\io.hpp" //output matrix and vectors to std::cout
 #include "gtc\type_ptr.hpp" //get pointer for any vec or mat to upload to OpenGL
@@ -43,10 +43,12 @@ void DrawEngine::bufferControlTest()
 {
     OGLHelpers::getOpenGLError("pre array texture creation", true);
 
-    test_texture.setFilename("Textures\\soils.png");
+    std::string texture_name = "Textures\\soils.png";
+    test_texture.setFilename(texture_name);
     test_texture.setTextureWidth(16);
     test_texture.setTextureHeight(16);
     test_texture.createTexture();
+    addTexture(test_texture);
 
     OGLHelpers::getOpenGLError("post array texture creation", true);
 
@@ -66,26 +68,30 @@ void DrawEngine::bufferControlTest()
     
     convert.convertToModelIndex(box, model);
     model.setModelName("test.obj");
+    model.setTextureName(texture_name);
 
     OGLHelpers::getOpenGLError("pre model add", true);
-    buffers.addModel(model);
+    addModel(model);
     OGLHelpers::getOpenGLError("post model add", true);
 
     ModelIndex mod2, mod3, mod4;
     box.setTextureNumber(10);
     convert.convertToModelIndex(box, mod2);
     mod2.setModelName("test_two");
-    buffers.addModel(mod2);
+    mod2.setTextureName(texture_name);
+    addModel(mod2);
 
     box.setTextureNumber(11);
     convert.convertToModelIndex(box, mod3);
     mod3.setModelName("test_three");
-    buffers.addModel(mod3);
+    mod3.setTextureName(texture_name);
+    addModel(mod3);
 
     box.setTextureNumber(12);
     convert.convertToModelIndex(box, mod4);
     mod4.setModelName("test_four");
-    buffers.addModel(mod4);
+    mod4.setTextureName(texture_name);
+    addModel(mod4);
 
     std::cout << "\n";
 }
@@ -185,6 +191,17 @@ DrawEngine::DrawEngine()
     screen_width = 1;
     screen_height = 1;
     resize();
+}
+
+void DrawEngine::addModel(ModelIndex& model)
+{
+    models.addModel(model);
+    buffers.addModel(model);
+}
+
+void DrawEngine::addTexture(const ArrayTexture& texture)
+{
+    textures.addTexture(texture);
 }
 
 void DrawEngine::draw(const Camera &camera)
