@@ -193,10 +193,20 @@ DrawEngine::DrawEngine()
     resize();
 }
 
+/*
+Method to properly add a model and update all important references it needs to be drawn. This means the texture it wants must already have been added prior to adding said model.
+*/
 void DrawEngine::addModel(ModelIndex& model)
 {
+    size_t current;
     models.addModel(model);
-    buffers.addModel(model);
+    current = models.getCount();
+    buffers.addModel(models.modifyModel(current));
+    //texture name, model name, and index count are already entered
+    model_pod& pod = models.modifyModelPOD(current);
+    pod.texture_reference = textures.getTextureReference(pod.texture_name);
+    pod.index_offset_bytes = models.getModel(current).getIndexOffset(); //needs to be count of indicies which the buffer should handle
+    pod.vao_reference = buffers.getModelVAOReference(pod.model_name);
 }
 
 void DrawEngine::addTexture(const ArrayTexture& texture)
