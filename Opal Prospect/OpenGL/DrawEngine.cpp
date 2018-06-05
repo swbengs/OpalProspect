@@ -66,12 +66,12 @@ void DrawEngine::bufferControlTest()
     //front.setXYZ(0, 0, 0);
     //box.setNormal(front, back, left, right, top, bottom);
     
-    convert.convertToModelIndex(box, model);
-    model.setModelName("test.obj");
-    model.setTextureName(texture_name);
+    convert.convertToModelIndex(box, test_model);
+    test_model.setModelName("test.obj");
+    test_model.setTextureName(texture_name);
 
     OGLHelpers::getOpenGLError("pre model add", true);
-    addModel(model);
+    addModel(test_model);
     OGLHelpers::getOpenGLError("post model add", true);
 
     ModelIndex mod2, mod3, mod4;
@@ -147,8 +147,8 @@ void DrawEngine::arrayTextureTest()
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     box.setNormal(front, back, left, right, top, bottom);
 
-    model.setIndexOffset(0);
-    convert.convertToModelIndex(box, model);
+    test_model.setIndexOffset(0);
+    convert.convertToModelIndex(box, test_model);
 
     OGLHelpers::getOpenGLError("pre vao creation");
 
@@ -166,9 +166,9 @@ void DrawEngine::arrayTextureTest()
     std::vector<float> uv;
     std::vector<unsigned int> index;
 
-    model.fillVertex(vertex);
-    model.fillUV(uv);
-    model.fillIndex(index);
+    test_model.fillVertex(vertex);
+    test_model.fillUV(uv);
+    test_model.fillIndex(index);
 
     OGLHelpers::getOpenGLError("pre buffering");
 
@@ -205,7 +205,7 @@ void DrawEngine::addModel(ModelIndex& model)
     //texture name, model name, and index count are already entered
     model_pod& pod = models.modifyModelPOD(current);
     pod.texture_reference = textures.getTextureReference(pod.texture_name);
-    pod.index_offset_bytes = models.getModel(current).getIndexOffset(); //needs to be count of indicies which the buffer should handle
+    pod.index_offset_bytes = buffers.getIndexByteOffset(pod.model_name);
     pod.vao_reference = buffers.getModelVAOReference(pod.model_name);
 }
 
@@ -223,6 +223,12 @@ void DrawEngine::draw(const Camera &camera)
     glm::vec3 third = glm::vec3(0.0f, 3.0f, 0.0f);
     glm::vec3 fourth = glm::vec3(3.0f, 3.0f, 0.0f);
 
+    draw(models.getModelPOD(1), camera, &first, nullptr, nullptr);
+    draw(models.getModelPOD(2), camera, &second, nullptr, nullptr);
+    draw(models.getModelPOD(3), camera, &third, nullptr, nullptr);
+    draw(models.getModelPOD(4), camera, &fourth, nullptr, nullptr);
+
+    /*
     draw("test.obj", camera, &first, nullptr, nullptr);
 
     model_pod junk;
@@ -251,6 +257,7 @@ void DrawEngine::draw(const Camera &camera)
     junk4.texture_name = "soils.png";
     junk4.model_name = "test_four";
     draw(junk4, camera, &fourth, nullptr, nullptr);
+    */
 }
 
 void DrawEngine::setup()

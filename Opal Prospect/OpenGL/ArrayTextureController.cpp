@@ -35,7 +35,7 @@ void ArrayTextureController::addTexture(const ArrayTexture &texture)
     references[texture.getFilename()] = textures.size();
 }
 
-size_t ArrayTextureController::getCount()
+size_t ArrayTextureController::getCount() const
 {
     return textures.size();
 }

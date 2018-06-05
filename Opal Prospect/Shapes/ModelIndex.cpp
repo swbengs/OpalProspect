@@ -71,16 +71,16 @@ void ModelIndex::fillFaceVertex(size_t index, std::vector<float>& vector) const
     Point4D point;
     float extra = 1.0f; //vertex need w to be 1.0 to be properly placed
 
-    point.setXYZW(faces[index].getBottomLeftVertex(), 1.0f);
+    point.setXYZW(faces[index].getBottomLeftVertex(), extra);
     point.fillArray4D(vector);
 
-    point.setXYZW(faces[index].getBottomRightVertex(), 1.0f);
+    point.setXYZW(faces[index].getBottomRightVertex(), extra);
     point.fillArray4D(vector);
 
-    point.setXYZW(faces[index].getTopLeftVertex(), 1.0f);
+    point.setXYZW(faces[index].getTopLeftVertex(), extra);
     point.fillArray4D(vector);
 
-    point.setXYZW(faces[index].getTopRightVertex(), 1.0f);
+    point.setXYZW(faces[index].getTopRightVertex(), extra);
     point.fillArray4D(vector);
 }
 

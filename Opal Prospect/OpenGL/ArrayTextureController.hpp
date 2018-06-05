@@ -42,7 +42,7 @@ class ArrayTextureController
 public:
     void addTexture(const ArrayTexture &texture);
 
-    size_t getCount();
+    size_t getCount() const;
     const ArrayTexture& getTexture(unsigned int reference) const; //for reading only
     unsigned int getTextureReference(std::string texture_name) const;
 

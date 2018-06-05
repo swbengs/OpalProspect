@@ -96,7 +96,7 @@ private:
     VertexUVIndexVAO uvVAO;
     VertexUVIndexVAO uvVAO3D;
     Grid3D grid;
-    ModelIndex model;
+    ModelIndex test_model;
     ArrayTexture test_texture;
     
 

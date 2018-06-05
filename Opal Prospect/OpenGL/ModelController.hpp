@@ -42,7 +42,7 @@ class ModelController
 public:
     void addModel(const ModelIndex &model);
 
-    size_t getCount();
+    size_t getCount() const;
     const ModelIndex& getModel(unsigned int reference) const; //for reading only
     model_pod getModelPOD(unsigned int reference) const;
     unsigned int getModelReference(std::string model_name) const;

@@ -33,6 +33,12 @@ void ModelController::addModel(const ModelIndex &model)
 {
     //fill in what we can get right now
     model_pod pod;
+    //set defaults for the parts we can't fill in
+    pod.index_offset_bytes = 0;
+    pod.texture_reference = 0;
+    pod.vao_reference = 0;
+
+    //fill in what we can
     pod.model_name = model.getModelName();
     pod.texture_name = model.getTextureName();
     pod.index_count = model.getActualPointCount();
@@ -41,7 +47,7 @@ void ModelController::addModel(const ModelIndex &model)
     references[model.getModelName()] = static_cast<unsigned int>(pods.size()); //cast just in case it's on a 64 bit system
 }
 
-size_t ModelController::getCount()
+size_t ModelController::getCount() const
 {
     return models.size();
 }

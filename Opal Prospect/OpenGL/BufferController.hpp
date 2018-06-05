@@ -44,17 +44,26 @@ public:
     void destroyBuffers();
 
     //gets
-    size_t getCount();
+    size_t getCount() const;
     unsigned int getVAOID(unsigned int reference) const;
     unsigned int getModelVAOReference(std::string model_name) const;
-    unsigned int getModelIndexOffset(std::string model_name) const;
+    unsigned int getIndexByteOffset(std::string model_name) const;
+    unsigned int getIndexCount(std::string model_name) const;
 
     //sets
 
 private:
+    struct model_info_pod
+    {
+        unsigned int vao_reference; //reference to what vao this model is in
+        unsigned int index_byte_offset; //index_count * sizeof(unsigned int). used in draw call to know how many bytes of offset for index buffer
+        unsigned int index_count; //how many indicies this model has(actual not unique)
+    };
+
     const static size_t MAXIMUM_BUFFER_SIZE = 4096; //size of an individual buffer in bytes. specification reccomends data size in the MB range. Lower numbers are being used right now for testing this class
     std::vector<VertexUVNormalIndexVAO3D> vaos;
-    std::unordered_map<std::string, unsigned int> references;
+    std::vector<unsigned int> index_byte_offset_totals; //one per vao
+    std::unordered_map<std::string, model_info_pod> model_infos;
 
     int findSuitableBuffer(size_t total_size, size_t index_size) const; //used to find a buffer with enough room for our model
     void bufferModel(int index, ModelIndex &model);

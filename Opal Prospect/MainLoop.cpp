@@ -79,6 +79,8 @@ void MainLoop::startLoop()
     int major = glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR);
     int minor = glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR);
 
+    std::cout << "version major: " << major << " minor: " << minor << "\n";
+
     //start glew after window creation
     GLenum err = glewInit();
     if (GLEW_OK != err)

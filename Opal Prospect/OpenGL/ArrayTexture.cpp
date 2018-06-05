@@ -99,8 +99,8 @@ void ArrayTexture::createTexture()
 
         int pixel_size = sizeof(unsigned char) * color_components;
 
-        std::vector<unsigned char> data;
-        data.resize(pixel_size * getWidth() * getHeight()); //we need actual elements to be there
+        std::vector<unsigned char> pixel_data;
+        pixel_data.resize(pixel_size * getWidth() * getHeight()); //we need actual elements to be there
 
         //load each atlas part seperately
         int start = 0;
@@ -111,8 +111,8 @@ void ArrayTexture::createTexture()
             int atlas_y = n / getAtlasWidth();
             int atlas_x = n - getAtlasWidth() * atlas_y;
 
-            extractTexture(data, start, atlas_x, atlas_y, pixel_size);
-            uploadTexture(n, data.data());
+            extractTexture(pixel_data, start, atlas_x, atlas_y, pixel_size);
+            uploadTexture(n, pixel_data.data());
             OGLHelpers::getOpenGLError("loop array texture uploads", true);
         }
 
@@ -187,16 +187,16 @@ void ArrayTexture::testLoading(std::vector<unsigned char>& store_data)
     int color_components = 4;
 
     //values to fill in so it's more easily readable
-    int level = 0; //not using mipmaps so it's always 0
-    int border = 0; //no border being used so set to 0
-    void* data = NULL; //will upload data later so leave it NULL
+    //int level = 0; //not using mipmaps so it's always 0
+    //int border = 0; //no border being used so set to 0
+    //void* data = NULL; //will upload data later so leave it NULL
 
     if (name.compare("") != 0) //make sure it contains something
     {
         //both in pixels
-        int image_width = 0;
-        int image_height = 0;
-        int id_count = 1; //how many ids do you want
+        int image_width;
+        int image_height;
+        //int id_count = 1; //how many ids do you want
 
         //glGenTextures(id_count, &id); //create an id and bind it
         //bind();
@@ -223,8 +223,8 @@ void ArrayTexture::testLoading(std::vector<unsigned char>& store_data)
 
         int pixel = sizeof(unsigned char) * color_components;
 
-        std::vector<unsigned char> data;
-        data.resize(pixel * getWidth() * getHeight()); //we need actual elements to be there
+        std::vector<unsigned char> pixel_data;
+        pixel_data.resize(pixel * getWidth() * getHeight()); //we need actual elements to be there
 
                                                        //load each atlas part seperately
         int start = 0;
@@ -235,11 +235,11 @@ void ArrayTexture::testLoading(std::vector<unsigned char>& store_data)
             int atlas_y = n / getAtlasWidth();
             int atlas_x = n - getAtlasWidth() * atlas_y;
 
-            extractTexture(data, start, atlas_x, atlas_y, pixel);
+            extractTexture(pixel_data, start, atlas_x, atlas_y, pixel);
             //uploadTexture(n, data.data());
-            for (unsigned int a = 0; a < data.size(); a++)
+            for (unsigned int a = 0; a < pixel_data.size(); a++)
             {
-                store_data.push_back(data[a]);
+                store_data.push_back(pixel_data[a]);
             }
             
         }
