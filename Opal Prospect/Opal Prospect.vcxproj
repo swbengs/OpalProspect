@@ -191,6 +191,10 @@
     <ClCompile Include="Shapes\NormalTriangle.cpp" />
     <ClCompile Include="Shapes\Point1D.cpp" />
     <ClCompile Include="Shapes\Point4D.cpp" />
+    <ClCompile Include="Shapes\RightRectanglePyramid.cpp" />
+    <ClCompile Include="Shapes\RightRectanglePyramidNormal.cpp" />
+    <ClCompile Include="Shapes\RightRectanglePyramidTexture.cpp" />
+    <ClCompile Include="Shapes\RightRectanglePyramidVertex.cpp" />
     <ClCompile Include="Shapes\ShapeToModel.cpp" />
     <ClCompile Include="Shapes\TextureFace.cpp" />
     <ClCompile Include="Shapes\TextureTriangle.cpp" />
@@ -249,6 +253,10 @@
     <ClInclude Include="Shapes\NormalTriangle.hpp" />
     <ClInclude Include="Shapes\Point1D.hpp" />
     <ClInclude Include="Shapes\Point4D.hpp" />
+    <ClInclude Include="Shapes\RightRectanglePyramid.hpp" />
+    <ClInclude Include="Shapes\RightRectanglePyramidNormal.hpp" />
+    <ClInclude Include="Shapes\RightRectanglePyramidTexture.hpp" />
+    <ClInclude Include="Shapes\RightRectanglePyramidVertex.hpp" />
     <ClInclude Include="Shapes\ShapeToModel.hpp" />
     <ClInclude Include="Shapes\TextureFace.hpp" />
     <ClInclude Include="Shapes\TextureTriangle.hpp" />

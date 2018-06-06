@@ -198,6 +198,18 @@
     <ClCompile Include="OpenGL\BufferController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shapes\RightRectanglePyramidNormal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes\RightRectanglePyramidTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes\RightRectanglePyramidVertex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes\RightRectanglePyramid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\ArrayTexture.hpp">
@@ -367,6 +379,18 @@
     </ClInclude>
     <ClInclude Include="OpenGL\ArrayTextureController.hpp">
       <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\RightRectanglePyramidNormal.hpp">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\RightRectanglePyramidTexture.hpp">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\RightRectanglePyramidVertex.hpp">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\RightRectanglePyramid.hpp">
+      <Filter>Shapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
