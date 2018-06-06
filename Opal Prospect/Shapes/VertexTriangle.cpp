@@ -31,6 +31,11 @@ VertexTriangle::VertexTriangle()
     setABC(junk, junk, junk);
 }
 
+VertexTriangle::VertexTriangle(Point3D a, Point3D b, Point3D c)
+{
+    setABC(a, b, c);
+}
+
 Point3D VertexTriangle::getA() const
 {
     return point_a;

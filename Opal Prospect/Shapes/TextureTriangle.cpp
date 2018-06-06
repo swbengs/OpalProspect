@@ -31,6 +31,11 @@ TextureTriangle::TextureTriangle()
     setABCUV(junk, junk, junk);
 }
 
+TextureTriangle::TextureTriangle(Point3D a, Point3D b, Point3D c)
+{
+    setABCUV(a, b, c);
+}
+
 Point3D TextureTriangle::getAUV() const
 {
     return a_uv;

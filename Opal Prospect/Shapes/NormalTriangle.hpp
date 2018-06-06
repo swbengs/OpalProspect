@@ -31,6 +31,7 @@ class NormalTriangle : public TextureTriangle
 public:
 
     NormalTriangle();
+    NormalTriangle(Point3D a, Point3D b, Point3D c);
 
     //gets
     Point3D getANormal() const;

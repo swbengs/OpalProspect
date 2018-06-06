@@ -1,5 +1,6 @@
 #pragma once
-
+//parent
+#include "RightRectanglePyramidTexture.hpp"
 //std lib includes
 
 //other includes
@@ -31,4 +32,10 @@ SOFTWARE.
 /*
 Description: This structure is still not fully decided on. Give a basic description of what this class does at a minimum. More detail is always welcome.
 */
+
+class RightRectanglePyramidNormal : public RightRectanglePyramidTexture
+{
+public:
+private:
+};
 

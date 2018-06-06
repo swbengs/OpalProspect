@@ -1,9 +1,9 @@
 #pragma once
-
-//std lib includes
-
+//parent
+#include "RightRectanglePyramid.hpp"
 //other includes
-#include "Point3D.hpp"
+#include "VertexTriangle.hpp"
+#include "VertexFace.hpp"
 
 /*
 MIT License
@@ -33,7 +33,7 @@ SOFTWARE.
 Description: This is a right regular rectangle pyramid. Apex is at the top and in the middle of the rectangle.
 */
 
-class RightRectanglePyramidVertex
+class RightRectanglePyramidVertex : public RightRectanglePyramid
 {
 public:
     

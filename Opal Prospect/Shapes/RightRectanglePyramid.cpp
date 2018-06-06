@@ -35,6 +35,11 @@ RightRectanglePyramid::RightRectanglePyramid()
     whl.setXYZ(0.0f, 0.0f, 0.0f);
 }
 
+RightRectanglePyramid::RightRectanglePyramid(float width, float height, float length)
+{
+    setWidthHeightLength(width, height, length);
+}
+
 float RightRectanglePyramid::getWidth() const
 {
     return whl.x;
@@ -57,27 +62,27 @@ Point3D RightRectanglePyramid::getWidthHeightLength() const
 
 Point3D RightRectanglePyramid::getApex() const
 {
-    return Point3D();
+    return Point3D(0.0f, getHeight() * 0.5f, 0.0f);
 }
 
 Point3D RightRectanglePyramid::getFrontLeft() const
 {
-    return Point3D();
+    return Point3D(getWidth() * -0.5f, getHeight() * -0.5f, getLength() * -0.5f);
 }
 
 Point3D RightRectanglePyramid::getFrontRight() const
 {
-    return Point3D();
+    return Point3D(getWidth() * 0.5f, getHeight() * -0.5f, getLength() * -0.5f);
 }
 
 Point3D RightRectanglePyramid::getBackLeft() const
 {
-    return Point3D();
+    return Point3D(getWidth() * -0.5f, getHeight() * -0.5f, getLength() * 0.5f);
 }
 
 Point3D RightRectanglePyramid::getBackRight() const
 {
-    return Point3D();
+    return Point3D(getWidth() * 0.5f, getHeight() * -0.5f, getLength() * 0.5f);
 }
 
 void RightRectanglePyramid::setWidth(float width)

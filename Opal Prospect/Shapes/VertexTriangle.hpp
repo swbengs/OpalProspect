@@ -31,6 +31,7 @@ class VertexTriangle : public Triangle3D
 public:
 
     VertexTriangle();
+    VertexTriangle(Point3D a, Point3D b, Point3D c);
 
     //gets
     Point3D getA() const;

@@ -37,6 +37,7 @@ class RightRectanglePyramid
 {
 public:
     RightRectanglePyramid();
+    RightRectanglePyramid(float width, float height, float length);
 
     float getWidth() const;
     float getHeight() const;

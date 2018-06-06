@@ -31,6 +31,11 @@ NormalTriangle::NormalTriangle()
     setABCNormal(junk, junk, junk);
 }
 
+NormalTriangle::NormalTriangle(Point3D a, Point3D b, Point3D c)
+{
+    setABCNormal(a, b, c);
+}
+
 Point3D NormalTriangle::getANormal() const
 {
     return normal_a;
@@ -46,19 +51,19 @@ Point3D NormalTriangle::getCNormal() const
     return normal_c;
 }
 
-void NormalTriangle::setANormal(Point3D point)
+void NormalTriangle::setANormal(Point3D a)
 {
-    normal_a = point;
+    normal_a = a;
 }
 
-void NormalTriangle::setBNormal(Point3D point)
+void NormalTriangle::setBNormal(Point3D b)
 {
-    normal_b = point;
+    normal_b = b;
 }
 
-void NormalTriangle::setCNormal(Point3D point)
+void NormalTriangle::setCNormal(Point3D c)
 {
-    normal_c = point;
+    normal_c = c;
 }
 
 void NormalTriangle::setABCNormal(Point3D a, Point3D b, Point3D c)
