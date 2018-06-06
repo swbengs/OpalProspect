@@ -1,10 +1,13 @@
 #pragma once
 
+//std lib includes
 #include <vector>
 #include <unordered_map>
+#include <string>
 
-#include "Shapes\ModelIndex.hpp"
-#include "OpenGL\Buffers\VertexUVNormalIndexVAO3D.hpp"
+//other includes
+#include "DrawEngineStructs.hpp"
+#include "ArrayTexture.hpp"
 
 /*
 MIT License
@@ -31,34 +34,21 @@ SOFTWARE.
 */
 
 /*
-   Class that stores all VAO, VBO, and so on. Will create them as needed or remove them. Adds incoming models into the proper buffer that has enough room.
+Description: This class stores and maintains all the textures. References start at 1 and count up. Reference of 0 is similar to null, since it does not exist
 */
 
-class BufferController
+class ArrayTextureController
 {
 public:
-    BufferController();
+    void addTexture(const ArrayTexture &texture);
 
-    unsigned int addModel(ModelIndex &model);
-    void bindVAO(unsigned int reference) const;
-    void destroyBuffers();
+    size_t getCount() const;
+    const ArrayTexture& getTexture(unsigned int reference) const; //for reading only
+    unsigned int getTextureReference(std::string texture_name) const;
 
-    //gets
-    unsigned int getVAOID(unsigned int reference) const;
-    unsigned int getModelVAOReference(std::string model_name) const;
-    unsigned int getModelIndexOffset(std::string model_name) const;
-
-    //sets
-
+    ArrayTexture& modifyTexture(unsigned int reference); //for writing and reading
 private:
-    const static size_t MAXIMUM_BUFFER_SIZE = 4096; //size of an individual buffer in bytes. specification reccomends data size in the MB range. Lower numbers are being used right now for testing this class
-    std::vector<VertexUVNormalIndexVAO3D> vaos;
+    std::vector<ArrayTexture> textures;
     std::unordered_map<std::string, unsigned int> references;
-
-    int findSuitableBuffer(size_t total_size, size_t index_size) const; //used to find a buffer with enough room for our model
-    void bufferModel(int index, ModelIndex &model);
-    void makeBuffer(); //used when all the current buffers are full or the new model won't fit in them
-
-    bool inBounds(unsigned int reference) const;
 };
 

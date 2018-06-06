@@ -24,3 +24,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+VertexTriangle::VertexTriangle()
+{
+
+}
+
+Point3D VertexTriangle::getA() const
+{
+    return Point3D();
+}
+
+Point3D VertexTriangle::getB() const
+{
+    return Point3D();
+}
+
+Point3D VertexTriangle::getC() const
+{
+    return Point3D();
+}
+
+void VertexTriangle::setA(Point3D point)
+{
+}
+
+void VertexTriangle::setB(Point3D point)
+{
+}
+
+void VertexTriangle::setC(Point3D point)
+{
+}
+
+void VertexTriangle::setABC(Point3D a, Point3D b, Point3D c)
+{
+}

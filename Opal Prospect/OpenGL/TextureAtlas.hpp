@@ -2,8 +2,8 @@
 
 #include "Texture.hpp"
 
-#include "Shapes\Grid2D.hpp"
-#include "Shapes\VertexRectangle.hpp"
+#include "..\Shapes\Grid2D.hpp"
+#include "..\Shapes\VertexRectangle.hpp"
 
 /*
 MIT License

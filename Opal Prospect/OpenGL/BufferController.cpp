@@ -58,7 +58,7 @@ unsigned int BufferController::addModel(ModelIndex &model)
         OGLHelpers::getOpenGLError("post buffering", true);
 
         unsigned int reference = static_cast<unsigned int>(buffer + 1);
-        references[model.getModelName()] = reference; //insert into hashmap
+        model_infos[model.getModelName()].vao_reference = reference; //insert into hashmap
         //std::cout << model.getModelName();
 
         return reference;
@@ -90,7 +90,7 @@ void BufferController::destroyBuffers()
     }
 }
 
-size_t BufferController::getCount()
+size_t BufferController::getCount() const
 {
     return vaos.size();
 }
@@ -111,10 +111,10 @@ unsigned int BufferController::getVAOID(unsigned int reference) const
 
 unsigned int BufferController::getModelVAOReference(std::string model_name) const
 {
-    auto search = references.find(model_name);
-    if (search != references.end()) //found
+    auto search = model_infos.find(model_name);
+    if (search != model_infos.end()) //found
     {
-        return search->second;
+        return search->second.vao_reference;
     }
     else
     {
@@ -123,9 +123,32 @@ unsigned int BufferController::getModelVAOReference(std::string model_name) cons
     }
 }
 
-unsigned int BufferController::getModelIndexOffset(std::string model_name) const
+unsigned int BufferController::getIndexByteOffset(std::string model_name) const
 {
-    return 0;
+    auto search = model_infos.find(model_name);
+    if (search != model_infos.end()) //found
+    {
+        return search->second.index_byte_offset;
+    }
+    else
+    {
+        //std::cout << "model " << model_name << " does not exist\n";
+        return 0;
+    }
+}
+
+unsigned int BufferController::getIndexCount(std::string model_name) const
+{
+    auto search = model_infos.find(model_name);
+    if (search != model_infos.end()) //found
+    {
+        return search->second.index_count;
+    }
+    else
+    {
+        //std::cout << "model " << model_name << " does not exist\n";
+        return 0;
+    }
 }
 
 //private
@@ -179,6 +202,12 @@ void BufferController::bufferModel(int index, ModelIndex &model)
     OGLHelpers::getOpenGLError("post index", true);
 
     vao.unBind();
+
+    //grab pod and fill it in
+    model_info_pod& pod = model_infos[model.getModelName()];
+    pod.index_byte_offset = index_byte_offset_totals[index];
+    pod.index_count = model.getActualPointCount();
+    index_byte_offset_totals[index] += pod.index_count * sizeof(unsigned int);
 }
 
 void BufferController::makeBuffer()
@@ -187,6 +216,7 @@ void BufferController::makeBuffer()
     temp.setMaximumSize(MAXIMUM_BUFFER_SIZE);
     temp.create();
     vaos.push_back(temp);
+    index_byte_offset_totals.push_back(0);
 }
 
 bool BufferController::inBounds(unsigned int reference) const

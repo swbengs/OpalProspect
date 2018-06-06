@@ -26,6 +26,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+//file contains structures used by the draw engine and all it's helper classes.
+
 //keep track of state to reduce pipeline requests. only add the parts we're interested in
 struct opengl_state
 {

@@ -34,6 +34,9 @@
     <Filter Include="Cameras">
       <UniqueIdentifier>{a877f1a8-7f8a-4d8c-bb4d-5cf55351a2ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Text Files">
+      <UniqueIdentifier>{68e5d287-241d-4f41-b747-1de9a8cdad37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Opal Prospect.cpp">
@@ -183,10 +186,16 @@
     <ClCompile Include="OpenGL\OGLHelpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL\Buffers\BufferController.cpp">
+    <ClCompile Include="OpenGL\Buffers\VertexUVNormalIndexVAO3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL\Buffers\VertexUVNormalIndexVAO3D.cpp">
+    <ClCompile Include="OpenGL\ModelController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\ArrayTextureController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\BufferController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -347,11 +356,30 @@
     <ClInclude Include="OpenGL\OGLHelpers.hpp">
       <Filter>OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="OpenGL\Buffers\BufferController.hpp">
-      <Filter>OpenGL\Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="OpenGL\Buffers\VertexUVNormalIndexVAO3D.hpp">
       <Filter>OpenGL\Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="OpenGL\ModelController.hpp">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\BufferController.hpp">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\ArrayTextureController.hpp">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\code format.txt">
+      <Filter>Text Files</Filter>
+    </Text>
+    <Text Include="..\design.txt">
+      <Filter>Text Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Filter>Text Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

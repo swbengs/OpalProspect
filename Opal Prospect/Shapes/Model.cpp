@@ -71,7 +71,7 @@ const NormalTriangle & Model::getTriangle(size_t index) const
 
 size_t Model::getTriangleCount() const
 {
-    return 0;
+    return triangles.size();
 }
 
 size_t Model::getPointSize() const
@@ -103,7 +103,7 @@ void Model::putPointInArray(const Point3D& point, float * data, size_t start)  c
     data[start + 2] = point.z;
 }
 
-void Model::putPointInArrayExtra(const Point3D& point, float extra, float * data, size_t start)  const
+void Model::putPointInArrayExtra(const Point3D& point, float extra, float* data, size_t start)  const
 {
     putPointInArray(point, data, start);
     data[start + 3] = extra; //to make it a vector with 4 dimensions add an extra float

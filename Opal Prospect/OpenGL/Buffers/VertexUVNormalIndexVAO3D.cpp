@@ -96,6 +96,7 @@ void VertexUVNormalIndexVAO3D::create()
     const static int uv_dimensions = 3;
     const static int normal_dimensions = 4;
 
+    //this block is mostly a test one. looks ugly bust mostly works
     const unsigned int point_size = (vertex_dimensions + uv_dimensions + normal_dimensions) * sizeof(float);
     const unsigned int point_index_size = sizeof(unsigned int);
     const unsigned int triangle_size = 3 * point_size + 3 * point_index_size;

@@ -7,8 +7,8 @@ Currently I am still working on the draw engine, and no support is yet available
 
 TODO:
 1: Add more info about what versions of the below libraries I am using and even a .dll download so you don't have to aquire and build them
-yourself.
-2: CMake support so it isn't a windows only program.
+yourself. If people want or need the help/support I can include all the other libraries with my source.
+2: CMake support so it isn't a windows only program. All the major code bits should work with other OS. Have to make a way of changing the directory paths to be OS independant though.
 
 Info about how to write code is currently in code format.txt.
 

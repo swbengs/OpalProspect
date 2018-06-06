@@ -1,7 +1,13 @@
 #pragma once
 
+//std lib includes
 #include <vector>
-#include "TextureAtlas.hpp"
+#include <unordered_map>
+#include <string>
+
+//other includes
+#include "DrawEngineStructs.hpp"
+#include "..\Shapes\ModelIndex.hpp"
 
 /*
 MIT License
@@ -28,28 +34,24 @@ SOFTWARE.
 */
 
 /*
-Class that contains all texture atlas, and their locations starting byte.
+Description: This class is used to store all models and how they are accessed. Also contains one model pod for each model contained within. Interfaces with BufferController to add information on what VAO the model is stored in and index info to draw it
 */
 
-class TextureAtlasController
+class ModelController
 {
 public:
-    TextureAtlasController();
+    void addModel(const ModelIndex &model);
 
-    void addAtlas(TextureAtlas& atlas);
-    TextureAtlas& modifyAtlas(unsigned int index);
+    size_t getCount() const;
+    const ModelIndex& getModel(unsigned int reference) const; //for reading only
+    model_pod getModelPOD(unsigned int reference) const;
+    unsigned int getModelReference(std::string model_name) const;
 
-    //gets
-    const TextureAtlas& getAtlas(unsigned int index);
-    unsigned int getAtlasStart(unsigned int index) const;
-    unsigned int getIndexSize() const;
-    unsigned int getSize() const;
-    //sets
-    void setIndexSize(unsigned int size);
-
+    ModelIndex& modifyModel(unsigned int reference); //for writing and reading
+    model_pod& modifyModelPOD(unsigned int reference);
 private:
-    unsigned int index_size;
-
-    std::vector<TextureAtlas> atlases;
-    std::vector<unsigned int> starts; //byte location of each atlas's starting point
+    std::vector<ModelIndex> models;
+    std::vector<model_pod> pods;
+    std::unordered_map<std::string, unsigned int> references;
 };
+

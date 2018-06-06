@@ -56,6 +56,7 @@ public:
     void setTextureHeight(int height);
     void setFilename(std::string filename);
 
+    //loads the image and does everything but interact with opengl. Use this to test without having a context created
     void testLoading(std::vector<unsigned char>& store_data);
 
 private:

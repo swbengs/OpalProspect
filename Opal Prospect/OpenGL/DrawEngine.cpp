@@ -1,13 +1,13 @@
+#include "DrawEngine.hpp"
+
 #include <iostream>
 #include <array>
 
-#include "DrawEngine.hpp"
 #include "GL\glew.h"
 #include "OGLHelpers.hpp"
-#include "Constants\axis.hpp"
+#include "..\Constants\axis.hpp"
 
 //glm includes
-#include "vec3.hpp"
 #include "gtc\matrix_transform.hpp" //ortho, rotate, scale, translate
 #include "gtx\io.hpp" //output matrix and vectors to std::cout
 #include "gtc\type_ptr.hpp" //get pointer for any vec or mat to upload to OpenGL
@@ -43,10 +43,12 @@ void DrawEngine::bufferControlTest()
 {
     OGLHelpers::getOpenGLError("pre array texture creation", true);
 
-    test_texture.setFilename("Textures\\soils.png");
+    std::string texture_name = "Textures\\soils.png";
+    test_texture.setFilename(texture_name);
     test_texture.setTextureWidth(16);
     test_texture.setTextureHeight(16);
     test_texture.createTexture();
+    addTexture(test_texture);
 
     OGLHelpers::getOpenGLError("post array texture creation", true);
 
@@ -64,28 +66,32 @@ void DrawEngine::bufferControlTest()
     //front.setXYZ(0, 0, 0);
     //box.setNormal(front, back, left, right, top, bottom);
     
-    convert.convertToModelIndex(box, model);
-    model.setModelName("test.obj");
+    convert.convertToModelIndex(box, test_model);
+    test_model.setModelName("test.obj");
+    test_model.setTextureName(texture_name);
 
     OGLHelpers::getOpenGLError("pre model add", true);
-    buffers.addModel(model);
+    addModel(test_model);
     OGLHelpers::getOpenGLError("post model add", true);
 
     ModelIndex mod2, mod3, mod4;
     box.setTextureNumber(10);
     convert.convertToModelIndex(box, mod2);
     mod2.setModelName("test_two");
-    buffers.addModel(mod2);
+    mod2.setTextureName(texture_name);
+    addModel(mod2);
 
     box.setTextureNumber(11);
     convert.convertToModelIndex(box, mod3);
     mod3.setModelName("test_three");
-    buffers.addModel(mod3);
+    mod3.setTextureName(texture_name);
+    addModel(mod3);
 
     box.setTextureNumber(12);
     convert.convertToModelIndex(box, mod4);
     mod4.setModelName("test_four");
-    buffers.addModel(mod4);
+    mod4.setTextureName(texture_name);
+    addModel(mod4);
 
     std::cout << "\n";
 }
@@ -141,8 +147,8 @@ void DrawEngine::arrayTextureTest()
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     box.setNormal(front, back, left, right, top, bottom);
 
-    model.setIndexOffset(0);
-    convert.convertToModelIndex(box, model);
+    test_model.setIndexOffset(0);
+    convert.convertToModelIndex(box, test_model);
 
     OGLHelpers::getOpenGLError("pre vao creation");
 
@@ -160,9 +166,9 @@ void DrawEngine::arrayTextureTest()
     std::vector<float> uv;
     std::vector<unsigned int> index;
 
-    model.fillVertex(vertex);
-    model.fillUV(uv);
-    model.fillIndex(index);
+    test_model.fillVertex(vertex);
+    test_model.fillUV(uv);
+    test_model.fillIndex(index);
 
     OGLHelpers::getOpenGLError("pre buffering");
 
@@ -187,6 +193,27 @@ DrawEngine::DrawEngine()
     resize();
 }
 
+/*
+Method to properly add a model and update all important references it needs to be drawn. This means the texture it wants must already have been added prior to adding said model.
+*/
+void DrawEngine::addModel(ModelIndex& model)
+{
+    size_t current;
+    models.addModel(model);
+    current = models.getCount();
+    buffers.addModel(models.modifyModel(current));
+    //texture name, model name, and index count are already entered
+    model_pod& pod = models.modifyModelPOD(current);
+    pod.texture_reference = textures.getTextureReference(pod.texture_name);
+    pod.index_offset_bytes = buffers.getIndexByteOffset(pod.model_name);
+    pod.vao_reference = buffers.getModelVAOReference(pod.model_name);
+}
+
+void DrawEngine::addTexture(const ArrayTexture& texture)
+{
+    textures.addTexture(texture);
+}
+
 void DrawEngine::draw(const Camera &camera)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -196,6 +223,14 @@ void DrawEngine::draw(const Camera &camera)
     glm::vec3 third = glm::vec3(0.0f, 3.0f, 0.0f);
     glm::vec3 fourth = glm::vec3(3.0f, 3.0f, 0.0f);
 
+    draw("test.obj", camera, &first, nullptr, nullptr);
+    //draw(models.getModelPOD(1), camera, &first, nullptr, nullptr);
+    draw(models.getModelPOD(2), camera, &second, nullptr, nullptr);
+    draw(models.getModelPOD(3), camera, &third, nullptr, nullptr);
+    draw(models.getModelPOD(4), camera, &fourth, nullptr, nullptr);
+    //draw("error", camera, &first, nullptr, nullptr);
+
+    /*
     draw("test.obj", camera, &first, nullptr, nullptr);
 
     model_pod junk;
@@ -224,6 +259,7 @@ void DrawEngine::draw(const Camera &camera)
     junk4.texture_name = "soils.png";
     junk4.model_name = "test_four";
     draw(junk4, camera, &fourth, nullptr, nullptr);
+    */
 }
 
 void DrawEngine::setup()
@@ -295,14 +331,15 @@ void DrawEngine::setScreenWidthHeight(int width, int height)
 //private
 void DrawEngine::draw(std::string model_name, const Camera &camera, const glm::vec3 *position, const glm::vec3 *rotate, const glm::vec3 *scale)
 {
-    model_pod junk;
-    junk.vao_reference = buffers.getModelVAOReference(model_name);
-    junk.texture_reference = 0;
-    junk.index_offset_bytes = 0;
-    junk.index_count = 36;
-    junk.texture_name = "soils.png";
-    junk.model_name = model_name;
-    draw(junk, camera, position, rotate, scale);
+    unsigned int reference = models.getModelReference(model_name);
+    if (reference > 0)
+    {
+        draw(models.getModelPOD(reference), camera, position, rotate, scale);
+    }
+    else
+    {
+        std::cout << "model named: " << model_name << " does not exist. From draw(model_name)\n";
+    }
 }
 
 void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const glm::vec3 *position, const glm::vec3 *rotate, const glm::vec3 *scale)

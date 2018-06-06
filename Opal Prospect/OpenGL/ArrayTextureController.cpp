@@ -1,7 +1,9 @@
-#pragma once
+#include "ArrayTextureController.hpp"
+//class header
 
-#include <vector>
-#include "TextureAtlas.hpp"
+//std lib includes
+
+//other includes
 
 /*
 MIT License
@@ -27,29 +29,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/*
-Class that contains all texture atlas, and their locations starting byte.
-*/
-
-class TextureAtlasController
+void ArrayTextureController::addTexture(const ArrayTexture &texture)
 {
-public:
-    TextureAtlasController();
+    textures.push_back(texture);
+    references[texture.getFilename()] = textures.size();
+}
 
-    void addAtlas(TextureAtlas& atlas);
-    TextureAtlas& modifyAtlas(unsigned int index);
+size_t ArrayTextureController::getCount() const
+{
+    return textures.size();
+}
 
-    //gets
-    const TextureAtlas& getAtlas(unsigned int index);
-    unsigned int getAtlasStart(unsigned int index) const;
-    unsigned int getIndexSize() const;
-    unsigned int getSize() const;
-    //sets
-    void setIndexSize(unsigned int size);
+const ArrayTexture& ArrayTextureController::getTexture(unsigned int reference) const
+{
+    return textures[reference - 1];
+}
 
-private:
-    unsigned int index_size;
+unsigned int ArrayTextureController::getTextureReference(std::string texture_name) const
+{
+    auto search = references.find(texture_name);
+    if (search != references.end()) //found
+    {
+        return search->second;
+    }
+    else
+    {
+        //std::cout << "model " << model_name << " does not exist from ArrayTextureController\n";
+        return 0;
+    }
+}
 
-    std::vector<TextureAtlas> atlases;
-    std::vector<unsigned int> starts; //byte location of each atlas's starting point
-};
+ArrayTexture& ArrayTextureController::modifyTexture(unsigned int reference)
+{
+    return textures[reference - 1];
+}

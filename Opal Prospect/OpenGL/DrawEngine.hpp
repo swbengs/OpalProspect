@@ -5,32 +5,33 @@
 #include <string>
 
 //shapes and textures
+#include "ArrayTexture.hpp"
 #include "TextureAtlas.hpp"
 #include "TextureAtlasController.hpp"
-#include "Shapes\ColorRectangle.hpp"
-#include "Containers\SortedObjectPool.hpp"
+#include "..\Shapes\ColorRectangle.hpp"
+#include "..\Containers\SortedObjectPool.hpp"
 
 //buffers
-#include "OpenGL\Buffers\VertexColorIndexVAO.hpp"
-#include "OpenGL\Buffers\VertexUVIndexVAO.hpp"
-#include "OpenGL\Buffers\BufferController.hpp"
-#include "OpenGL\Buffers\VertexUVNormalIndexVAO3D.hpp"
+#include "Buffers\VertexColorIndexVAO.hpp"
+#include "Buffers\VertexUVIndexVAO.hpp"
+#include "Buffers\VertexUVNormalIndexVAO3D.hpp"
 
 //programs
-#include "OpenGL\Programs\VertexFragmentProgram.hpp"
+#include "Programs\VertexFragmentProgram.hpp"
 
 //glm types
 #include "mat4x4.hpp"
 #include "vec3.hpp"
 
-#include "DrawEngineStructs.hpp"
-#include "Cameras\Camera.hpp"
-#include "Shapes\Grid3D.hpp"
+#include "..\Cameras\Camera.hpp"
+#include "..\Shapes\Grid3D.hpp"
+#include "..\Shapes\ShapeToModel.hpp"
+#include "..\Shapes\ModelIndex.hpp"
 
-//tests
-#include "Shapes\ShapeToModel.hpp"
-#include "Shapes\ModelIndex.hpp"
-#include "ArrayTexture.hpp"
+#include "DrawEngineStructs.hpp"
+#include "ArrayTextureController.hpp"
+#include "BufferController.hpp"
+#include "ModelController.hpp"
 
 /*
 MIT License
@@ -65,6 +66,8 @@ class DrawEngine
 public:
     DrawEngine();
 
+    void addModel(ModelIndex& model);
+    void addTexture(const ArrayTexture& texture);
     void draw(const Camera &camera);
 
     void setup();
@@ -83,14 +86,17 @@ private:
     const static float Z_NEAR;
     const static float Z_FAR;
     BufferController buffers;
+    ArrayTextureController textures;
+    ModelController models;
     opengl_state state;
+    
 
     TextureAtlasController atlas;
     VertexFragmentProgram texture_program;
     VertexUVIndexVAO uvVAO;
     VertexUVIndexVAO uvVAO3D;
     Grid3D grid;
-    ModelIndex model;
+    ModelIndex test_model;
     ArrayTexture test_texture;
     
 
@@ -123,6 +129,4 @@ private:
     //tests
     void arrayTextureTest();
     void bufferControlTest();
-
-    
 };

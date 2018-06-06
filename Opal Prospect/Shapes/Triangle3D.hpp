@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shapes\Point3D.hpp"
+#include "Point3D.hpp"
 
 /*
 MIT License
