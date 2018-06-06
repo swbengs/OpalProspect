@@ -223,10 +223,12 @@ void DrawEngine::draw(const Camera &camera)
     glm::vec3 third = glm::vec3(0.0f, 3.0f, 0.0f);
     glm::vec3 fourth = glm::vec3(3.0f, 3.0f, 0.0f);
 
-    draw(models.getModelPOD(1), camera, &first, nullptr, nullptr);
+    draw("test.obj", camera, &first, nullptr, nullptr);
+    //draw(models.getModelPOD(1), camera, &first, nullptr, nullptr);
     draw(models.getModelPOD(2), camera, &second, nullptr, nullptr);
     draw(models.getModelPOD(3), camera, &third, nullptr, nullptr);
     draw(models.getModelPOD(4), camera, &fourth, nullptr, nullptr);
+    //draw("error", camera, &first, nullptr, nullptr);
 
     /*
     draw("test.obj", camera, &first, nullptr, nullptr);
@@ -329,14 +331,15 @@ void DrawEngine::setScreenWidthHeight(int width, int height)
 //private
 void DrawEngine::draw(std::string model_name, const Camera &camera, const glm::vec3 *position, const glm::vec3 *rotate, const glm::vec3 *scale)
 {
-    model_pod junk;
-    junk.vao_reference = buffers.getModelVAOReference(model_name);
-    junk.texture_reference = 0;
-    junk.index_offset_bytes = 0;
-    junk.index_count = 36;
-    junk.texture_name = "soils.png";
-    junk.model_name = model_name;
-    draw(junk, camera, position, rotate, scale);
+    unsigned int reference = models.getModelReference(model_name);
+    if (reference > 0)
+    {
+        draw(models.getModelPOD(reference), camera, position, rotate, scale);
+    }
+    else
+    {
+        std::cout << "model named: " << model_name << " does not exist. From draw(model_name)\n";
+    }
 }
 
 void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const glm::vec3 *position, const glm::vec3 *rotate, const glm::vec3 *scale)
