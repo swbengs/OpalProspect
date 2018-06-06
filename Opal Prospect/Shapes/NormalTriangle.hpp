@@ -41,7 +41,7 @@ public:
     void setANormal(Point3D point);
     void setBNormal(Point3D point);
     void setCNormal(Point3D point);
-    void setNormal(Point3D a, Point3D b, Point3D c);
+    void setABCNormal(Point3D a, Point3D b, Point3D c);
 
 private:
     Point3D normal_a;

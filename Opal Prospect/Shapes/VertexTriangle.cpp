@@ -26,36 +26,44 @@ SOFTWARE.
 
 VertexTriangle::VertexTriangle()
 {
-
+    Point3D junk;
+    junk.setXYZ(0.0f, 0.0f, 0.0f);
+    setABC(junk, junk, junk);
 }
 
 Point3D VertexTriangle::getA() const
 {
-    return Point3D();
+    return point_a;
 }
 
 Point3D VertexTriangle::getB() const
 {
-    return Point3D();
+    return point_b;
 }
 
 Point3D VertexTriangle::getC() const
 {
-    return Point3D();
+    return point_c;
 }
 
 void VertexTriangle::setA(Point3D point)
 {
+    point_a = point;
 }
 
 void VertexTriangle::setB(Point3D point)
 {
+    point_b = point;
 }
 
 void VertexTriangle::setC(Point3D point)
 {
+    point_c = point;
 }
 
 void VertexTriangle::setABC(Point3D a, Point3D b, Point3D c)
 {
+    point_a = a;
+    point_b = b;
+    point_c = c;
 }

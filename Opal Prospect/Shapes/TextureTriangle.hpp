@@ -33,18 +33,18 @@ public:
     TextureTriangle();
 
     //gets
-    Point3D getA() const;
-    Point3D getB() const;
-    Point3D getC() const;
+    Point3D getAUV() const;
+    Point3D getBUV() const;
+    Point3D getCUV() const;
 
     //sets
     void setA(Point3D point);
     void setB(Point3D point);
     void setC(Point3D point);
-    void set(Point3D a, Point3D b, Point3D c);
+    void setABCUV(Point3D a, Point3D b, Point3D c);
 
 private:
-    Point3D point_a;
-    Point3D point_b;
-    Point3D point_c;
+    Point3D a_uv;
+    Point3D b_uv;
+    Point3D c_uv;
 };

@@ -24,3 +24,46 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+NormalTriangle::NormalTriangle()
+{
+    Point3D junk;
+    junk.setXYZ(0.0f, 0.0f, 0.0f);
+    setABCNormal(junk, junk, junk);
+}
+
+Point3D NormalTriangle::getANormal() const
+{
+    return normal_a;
+}
+
+Point3D NormalTriangle::getBNormal() const
+{
+    return normal_b;
+}
+
+Point3D NormalTriangle::getCNormal() const
+{
+    return normal_c;
+}
+
+void NormalTriangle::setANormal(Point3D point)
+{
+    normal_a = point;
+}
+
+void NormalTriangle::setBNormal(Point3D point)
+{
+    normal_b = point;
+}
+
+void NormalTriangle::setCNormal(Point3D point)
+{
+    normal_c = point;
+}
+
+void NormalTriangle::setABCNormal(Point3D a, Point3D b, Point3D c)
+{
+    normal_a = a;
+    normal_b = b;
+    normal_c = c;
+}
