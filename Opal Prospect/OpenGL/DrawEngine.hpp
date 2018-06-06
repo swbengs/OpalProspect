@@ -89,7 +89,6 @@ private:
     ArrayTextureController textures;
     ModelController models;
     opengl_state state;
-    
 
     TextureAtlasController atlas;
     VertexFragmentProgram texture_program;
@@ -98,7 +97,6 @@ private:
     Grid3D grid;
     ModelIndex test_model;
     ArrayTexture test_texture;
-    
 
     int screen_width; //the actual screen resolution
     int screen_height;
