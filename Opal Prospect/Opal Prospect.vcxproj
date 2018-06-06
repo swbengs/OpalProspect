@@ -266,6 +266,13 @@
     <ClInclude Include="Shapes\VertexRectangle.hpp" />
     <ClInclude Include="Shapes\VertexTriangle.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\code format.txt" />
+    <Text Include="..\design.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
