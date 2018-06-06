@@ -1,5 +1,5 @@
 #include "Texture.hpp"
-#include "GL\glew.h"
+#include "glew.h"
 #include "png.h"
 
 /*

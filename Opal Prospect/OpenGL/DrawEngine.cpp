@@ -3,7 +3,7 @@
 #include <iostream>
 #include <array>
 
-#include "GL\glew.h"
+#include "glew.h"
 #include "OGLHelpers.hpp"
 #include "..\Constants\axis.hpp"
 
