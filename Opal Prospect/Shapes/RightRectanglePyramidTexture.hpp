@@ -46,6 +46,11 @@ public:
     unsigned int getRightTextureNumber() const;
     unsigned int getBottomTextureNumber() const;
     //sets
+    void setFrontTextureNumber(unsigned int num);
+    void setBackTextureNumber(unsigned int num);
+    void setLeftTextureNumber(unsigned int num);
+    void setRightTextureNumber(unsigned int num);
+    void setBottomTextureNumber(unsigned int num);
     void setTextureNumber(unsigned int texture); //sets all of them to the same texture number
 
 private:

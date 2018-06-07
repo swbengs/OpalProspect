@@ -33,7 +33,7 @@ Model::Model()
     texture_name = "not filled in";
 }
 
-void Model::addTriangle(const NormalTriangle & triangle)
+void Model::addTriangle(const NormalTriangle& triangle)
 {
     triangles.push_back(triangle);
 }
@@ -41,17 +41,46 @@ void Model::addTriangle(const NormalTriangle & triangle)
 
 void Model::fillTriangleVertex(size_t index, std::vector<float>& data)  const
 {
+    Point4D point;
+    float extra = 1.0f; //vertex need w to be 1.0 to be properly placed
 
+    point.setXYZW(triangles[index].getA(), extra);
+    point.fillArray4D(data);
+
+    point.setXYZW(triangles[index].getB(), extra);
+    point.fillArray4D(data);
+
+    point.setXYZW(triangles[index].getC(), extra);
+    point.fillArray4D(data);
 }
 
 void Model::fillTriangleUV(size_t index, std::vector<float>& data)  const
 {
+    Point3D point;
 
+    point = triangles[index].getAUV();
+    point.fillArray3D(data);
+
+    point = triangles[index].getBUV();
+    point.fillArray3D(data);
+
+    point = triangles[index].getCUV();
+    point.fillArray3D(data);
 }
 
 void Model::fillTriangleNormal(size_t index, std::vector<float>& data)  const
 {
+    Point4D point;
+    float extra = 0.0f; //normal need w to be 0.0 to be properly placed
 
+    point.setXYZW(triangles[index].getANormal(), extra);
+    point.fillArray4D(data);
+
+    point.setXYZW(triangles[index].getBNormal(), extra);
+    point.fillArray4D(data);
+
+    point.setXYZW(triangles[index].getCNormal(), extra);
+    point.fillArray4D(data);
 }
 
 //gets

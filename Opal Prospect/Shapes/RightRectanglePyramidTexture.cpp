@@ -76,6 +76,31 @@ unsigned int RightRectanglePyramidTexture::getBottomTextureNumber() const
     return text_num_bottom;
 }
 
+void RightRectanglePyramidTexture::setFrontTextureNumber(unsigned int num)
+{
+    text_num_front = num;
+}
+
+void RightRectanglePyramidTexture::setBackTextureNumber(unsigned int num)
+{
+    text_num_back = num;
+}
+
+void RightRectanglePyramidTexture::setLeftTextureNumber(unsigned int num)
+{
+    text_num_left = num;
+}
+
+void RightRectanglePyramidTexture::setRightTextureNumber(unsigned int num)
+{
+    text_num_right = num;
+}
+
+void RightRectanglePyramidTexture::setBottomTextureNumber(unsigned int num)
+{
+    text_num_bottom = num;
+}
+
 void RightRectanglePyramidTexture::setTextureNumber(unsigned int texture)
 {
     text_num_front = texture;

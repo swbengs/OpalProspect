@@ -28,22 +28,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-void RightRectanglePyramidVertex::fillVertexFace(VertexTriangle& front_triangle, VertexTriangle& back_triangle, VertexTriangle& left_triangle, VertexTriangle& right_triangle, VertexFace& bottom_face) const
+void RightRectanglePyramidVertex::fillVertexTriangleFace(VertexTriangle& front_triangle, VertexTriangle& back_triangle, VertexTriangle& left_triangle, VertexTriangle& right_triangle, VertexFace& bottom_face) const
 {
     Point3D front_left = getFrontLeft();
-    Point3D front_right = getFrontLeft();
+    Point3D front_right = getFrontRight();
     Point3D back_left = getBackLeft();
-    Point3D back_right = getFrontLeft();
+    Point3D back_right = getBackRight();
     Point3D apex = getApex();
 
-    front_triangle.setVertexABC(front_left, front_right, apex);
-    back_triangle.setVertexABC(back_right, back_left, apex);
-    left_triangle.setVertexABC(back_left, front_left, apex);
-    right_triangle.setVertexABC(front_left, front_right, apex);
+    front_triangle.setABC(front_left, front_right, apex);
+    back_triangle.setABC(back_right, back_left, apex);
+    left_triangle.setABC(back_left, front_left, apex);
+    right_triangle.setABC(front_right, back_right, apex);
     bottom_face.setVertex(back_left, back_right, front_left, front_right);
 }
 
-void RightRectanglePyramidVertex::fillIndexFace(VertexTriangle& front_triangle, VertexTriangle& back_triangle, VertexTriangle& left_triangle, VertexTriangle& right_triangle, VertexFace& bottom_face) const
+void RightRectanglePyramidVertex::fillIndexTriangleFace(VertexTriangle& front_triangle, VertexTriangle& back_triangle, VertexTriangle& left_triangle, VertexTriangle& right_triangle, VertexFace& bottom_face) const
 {
     unsigned int offset = 0;
 

@@ -43,6 +43,11 @@ void ModelIndex::fillVertex(std::vector<float>& vector) const
     {
         fillFaceVertex(i, vector);
     }
+
+    for (unsigned int i = 0; i < getTriangleCount(); i++)
+    {
+        fillTriangleVertex(i, vector);
+    }
 }
 
 void ModelIndex::fillUV(std::vector<float>& vector) const
@@ -51,6 +56,11 @@ void ModelIndex::fillUV(std::vector<float>& vector) const
     {
         fillFaceUV(i, vector);
     }
+
+    for (unsigned int i = 0; i < getTriangleCount(); i++)
+    {
+        fillTriangleUV(i, vector);
+    }
 }
 
 void ModelIndex::fillNormal(std::vector<float>& vector) const
@@ -58,6 +68,11 @@ void ModelIndex::fillNormal(std::vector<float>& vector) const
     for (unsigned int i = 0; i < faces.size(); i++)
     {
         fillFaceNormal(i, vector);
+    }
+
+    for (unsigned int i = 0; i < getTriangleCount(); i++)
+    {
+        fillTriangleNormal(i, vector);
     }
 }
 

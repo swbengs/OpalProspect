@@ -31,31 +31,20 @@ class VertexTriangle : public Triangle3D
 public:
 
     VertexTriangle();
-    VertexTriangle(Point3D a, Point3D b, Point3D c);
+    VertexTriangle(unsigned int a, unsigned int b, unsigned int c);
 
     //gets
     unsigned int getIndexA() const;
     unsigned int getIndexB() const;
     unsigned int getIndexC() const;
-    Point3D getVertexA() const;
-    Point3D getVertexB() const;
-    Point3D getVertexC() const;
 
     //sets
     void setIndexA(unsigned int a);
     void setIndexB(unsigned int b);
     void setIndexC(unsigned int c);
     void setIndexABC(unsigned int a, unsigned int b, unsigned int c);
-    void setVertexA(Point3D a);
-    void setVertexB(Point3D b);
-    void setVertexC(Point3D c);
-    void setVertexABC(Point3D a, Point3D b, Point3D c);
 
 private:
-    Point3D point_a;
-    Point3D point_b;
-    Point3D point_c;
-
     unsigned int index_a;
     unsigned int index_b;
     unsigned int index_c;

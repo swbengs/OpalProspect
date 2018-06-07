@@ -25,6 +25,7 @@
 
 #include "..\Cameras\Camera.hpp"
 #include "..\Shapes\Grid3D.hpp"
+#include "..\Shapes\RightRectanglePyramidNormal.hpp"
 #include "..\Shapes\ShapeToModel.hpp"
 #include "..\Shapes\ModelIndex.hpp"
 
