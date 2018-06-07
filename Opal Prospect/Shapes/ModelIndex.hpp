@@ -36,6 +36,8 @@ Class that stores any generic model with indicies
 class ModelIndex : public Model
 {
 public:
+    ModelIndex();
+
     void addFace(const NormalFace& face);
 
     void fillVertex(std::vector<float>& vector) const;

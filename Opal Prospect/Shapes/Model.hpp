@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <array>
 #include <string>
 
 #include "NormalTriangle.hpp"
@@ -41,9 +40,9 @@ public:
 
     void addTriangle(const NormalTriangle& triangle);
 
-    void fillTriangleVertex(size_t index, std::array<float, 16>& data) const;
-    void fillTriangleUV(size_t index, std::array<float, 12>& data) const;
-    void fillTriangleNormal(size_t index, std::array<float, 16>& data) const;
+    void fillTriangleVertex(size_t index, std::vector<float>& data) const;
+    void fillTriangleUV(size_t index, std::vector<float>& data) const;
+    void fillTriangleNormal(size_t index, std::vector<float>& data) const;
 
     //gets
     std::string getModelName() const;

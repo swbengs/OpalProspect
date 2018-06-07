@@ -29,7 +29,8 @@ SOFTWARE.
 
 Model::Model()
 {
-
+    model_name = "not filled in";
+    texture_name = "not filled in";
 }
 
 void Model::addTriangle(const NormalTriangle & triangle)
@@ -38,17 +39,17 @@ void Model::addTriangle(const NormalTriangle & triangle)
 }
 
 
-void Model::fillTriangleVertex(size_t index, std::array<float, 16>& data)  const
+void Model::fillTriangleVertex(size_t index, std::vector<float>& data)  const
 {
 
 }
 
-void Model::fillTriangleUV(size_t index, std::array<float, 12>& data)  const
+void Model::fillTriangleUV(size_t index, std::vector<float>& data)  const
 {
 
 }
 
-void Model::fillTriangleNormal(size_t index, std::array<float, 16>& data)  const
+void Model::fillTriangleNormal(size_t index, std::vector<float>& data)  const
 {
 
 }
@@ -96,7 +97,7 @@ void Model::setTextureName(std::string name)
 }
 
 //protected
-void Model::putPointInArray(const Point3D& point, float * data, size_t start)  const
+void Model::putPointInArray(const Point3D& point, float* data, size_t start)  const
 {
     data[start] = point.x;
     data[start + 1] = point.y;

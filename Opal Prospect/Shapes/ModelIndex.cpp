@@ -27,6 +27,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+ModelIndex::ModelIndex()
+{
+    index_offset = 0;
+}
+
 void ModelIndex::addFace(const NormalFace& face)
 {
     faces.push_back(face);
@@ -50,7 +55,10 @@ void ModelIndex::fillUV(std::vector<float>& vector) const
 
 void ModelIndex::fillNormal(std::vector<float>& vector) const
 {
-
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+        fillFaceNormal(i, vector);
+    }
 }
 
 void ModelIndex::fillIndex(std::vector<unsigned int>& vector) const
@@ -59,11 +67,20 @@ void ModelIndex::fillIndex(std::vector<unsigned int>& vector) const
     {
         fillFaceIndex(i, vector);
     }
+
+    for (unsigned int i = 0; i < getTriangleCount(); i++)
+    {
+        fillTriangleIndex(i, vector);
+    }
 }
 
 void ModelIndex::fillTriangleIndex(size_t index, std::vector<unsigned int>& vector) const
 {
-
+    unsigned int offset = getIndexOffset();
+    const NormalTriangle& triangle = getTriangle(index);
+    vector.push_back(triangle.getIndexA() + offset);
+    vector.push_back(triangle.getIndexB() + offset);
+    vector.push_back(triangle.getIndexC() + offset);
 }
 
 void ModelIndex::fillFaceVertex(size_t index, std::vector<float>& vector) const
@@ -103,7 +120,20 @@ void ModelIndex::fillFaceUV(size_t index, std::vector<float>& vector) const
 
 void ModelIndex::fillFaceNormal(size_t index, std::vector<float>& vector) const
 {
+    Point4D point;
+    float extra = 0.0f; //vertex need w to be 1.0 to be properly placed
 
+    point.setXYZW(faces[index].getBottomLeftNormal(), extra);
+    point.fillArray4D(vector);
+
+    point.setXYZW(faces[index].getBottomRightNormal(), extra);
+    point.fillArray4D(vector);
+
+    point.setXYZW(faces[index].getTopLeftNormal(), extra);
+    point.fillArray4D(vector);
+
+    point.setXYZW(faces[index].getTopRightNormal(), extra);
+    point.fillArray4D(vector);
 }
 
 void ModelIndex::fillFaceIndex(size_t index, std::vector<unsigned int>& vector) const
