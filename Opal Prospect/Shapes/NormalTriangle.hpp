@@ -39,9 +39,9 @@ public:
     Point3D getCNormal() const;
 
     //sets
-    void setANormal(Point3D point);
-    void setBNormal(Point3D point);
-    void setCNormal(Point3D point);
+    void setANormal(Point3D a);
+    void setBNormal(Point3D b);
+    void setCNormal(Point3D c);
     void setABCNormal(Point3D a, Point3D b, Point3D c);
 
 private:

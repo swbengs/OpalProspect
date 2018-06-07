@@ -30,6 +30,14 @@ VertexFace::VertexFace()
     bottom_right_index = 0;
     top_left_index = 0;
     top_right_index = 0;
+    Point3D junk(0.0f, 0.0f, 0.0f);
+    setVertex(junk, junk, junk, junk);
+}
+
+VertexFace::VertexFace(Point3D bottom_left, Point3D bottom_right, Point3D top_left, Point3D top_right)
+{
+    setVertex(bottom_left, bottom_right, top_left, top_right);
+    setIndex(0, 0, 0, 0);
 }
 
 //gets

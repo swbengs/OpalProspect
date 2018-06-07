@@ -36,6 +36,7 @@ class VertexFace
 {
 public:
     VertexFace();
+    VertexFace(Point3D bottom_left, Point3D bottom_right, Point3D top_left, Point3D top_right);
 
     //gets
     Point3D getBottomLeftVertex() const;

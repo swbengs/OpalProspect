@@ -26,47 +26,85 @@ SOFTWARE.
 
 VertexTriangle::VertexTriangle()
 {
-    Point3D junk;
-    junk.setXYZ(0.0f, 0.0f, 0.0f);
-    setABC(junk, junk, junk);
+    Point3D junk(0.0f, 0.0f, 0.0f);
+    setVertexABC(junk, junk, junk);
+    setIndexABC(0, 0, 0);
 }
 
 VertexTriangle::VertexTriangle(Point3D a, Point3D b, Point3D c)
 {
-    setABC(a, b, c);
+    setVertexABC(a, b, c);
+    setIndexABC(0, 0, 0);
 }
 
-Point3D VertexTriangle::getA() const
+unsigned int VertexTriangle::getIndexA() const
+{
+    return index_a;
+}
+
+unsigned int VertexTriangle::getIndexB() const
+{
+    return index_b;
+}
+
+unsigned int VertexTriangle::getIndexC() const
+{
+    return index_c;
+}
+
+Point3D VertexTriangle::getVertexA() const
 {
     return point_a;
 }
 
-Point3D VertexTriangle::getB() const
+Point3D VertexTriangle::getVertexB() const
 {
     return point_b;
 }
 
-Point3D VertexTriangle::getC() const
+Point3D VertexTriangle::getVertexC() const
 {
     return point_c;
 }
 
-void VertexTriangle::setA(Point3D point)
+void VertexTriangle::setIndexA(unsigned int a)
 {
-    point_a = point;
+    index_a = a;
 }
 
-void VertexTriangle::setB(Point3D point)
+void VertexTriangle::setIndexB(unsigned int b)
 {
-    point_b = point;
+    index_b = b;
 }
 
-void VertexTriangle::setC(Point3D point)
+void VertexTriangle::setIndexC(unsigned int c)
 {
-    point_c = point;
+    index_c = c;
 }
 
-void VertexTriangle::setABC(Point3D a, Point3D b, Point3D c)
+void VertexTriangle::setIndexABC(unsigned int a, unsigned int b, unsigned int c)
+{
+    index_a = a;
+    index_b = b;
+    index_c = c;
+}
+
+void VertexTriangle::setVertexA(Point3D a)
+{
+    point_a = a;
+}
+
+void VertexTriangle::setVertexB(Point3D b)
+{
+    point_b = b;
+}
+
+void VertexTriangle::setVertexC(Point3D c)
+{
+    point_c = c;
+}
+
+void VertexTriangle::setVertexABC(Point3D a, Point3D b, Point3D c)
 {
     point_a = a;
     point_b = b;

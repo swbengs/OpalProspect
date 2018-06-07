@@ -51,19 +51,19 @@ Point3D TextureTriangle::getCUV() const
     return c_uv;
 }
 
-void TextureTriangle::setA(Point3D point)
+void TextureTriangle::setA(Point3D a)
 {
-    a_uv = point;
+    a_uv = a;
 }
 
-void TextureTriangle::setB(Point3D point)
+void TextureTriangle::setB(Point3D b)
 {
-    b_uv = point;
+    b_uv = b;
 }
 
-void TextureTriangle::setC(Point3D point)
+void TextureTriangle::setC(Point3D c)
 {
-    c_uv = point;
+    c_uv = c;
 }
 
 void TextureTriangle::setABCUV(Point3D a, Point3D b, Point3D c)

@@ -36,7 +36,8 @@ Description: This is a right regular rectangle pyramid. Apex is at the top and i
 class RightRectanglePyramidVertex : public RightRectanglePyramid
 {
 public:
-    
+    void fillVertexFace(VertexTriangle& front_triangle, VertexTriangle& back_triangle, VertexTriangle& left_triangle, VertexTriangle& right_triangle, VertexFace& bottom_face) const;
+    void fillIndexFace(VertexTriangle& front_triangle, VertexTriangle& back_triangle, VertexTriangle& left_triangle, VertexTriangle& right_triangle, VertexFace& bottom_face)const;
 private:
 };
 
