@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "VertexFragmentProgram.hpp"
-#include "GL\glew.h"
+#include "glew.h"
 
 /*
 MIT License

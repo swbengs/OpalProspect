@@ -25,6 +25,7 @@
 
 #include "..\Cameras\Camera.hpp"
 #include "..\Shapes\Grid3D.hpp"
+#include "..\Shapes\RightRectanglePyramidNormal.hpp"
 #include "..\Shapes\ShapeToModel.hpp"
 #include "..\Shapes\ModelIndex.hpp"
 
@@ -89,7 +90,6 @@ private:
     ArrayTextureController textures;
     ModelController models;
     opengl_state state;
-    
 
     TextureAtlasController atlas;
     VertexFragmentProgram texture_program;
@@ -98,11 +98,10 @@ private:
     Grid3D grid;
     ModelIndex test_model;
     ArrayTexture test_texture;
-    
 
     int screen_width; //the actual screen resolution
     int screen_height;
-    const int game_width = 320; //actual resolution to run at. this will cause largers screens to scale things to be larger
+    const int game_width = 320; //resolution to run at. this will cause largers screens to scale things to be larger
     const int game_height = 240;
 
     //opengl program uniform location members

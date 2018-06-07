@@ -29,7 +29,6 @@ SOFTWARE.
 class Triangle3D
 {
 public:
-
     Triangle3D();
 
     //gets
@@ -41,7 +40,7 @@ public:
     void setA(Point3D point);
     void setB(Point3D point);
     void setC(Point3D point);
-    void set(Point3D a, Point3D b, Point3D c);
+    void setABC(Point3D a, Point3D b, Point3D c);
 
 private:
     Point3D point_a;

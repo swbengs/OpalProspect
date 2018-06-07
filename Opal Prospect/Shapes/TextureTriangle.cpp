@@ -24,3 +24,50 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+TextureTriangle::TextureTriangle()
+{
+    Point3D junk(0.0f, 0.0f, 0.0f);
+    setABCUV(junk, junk, junk);
+}
+
+TextureTriangle::TextureTriangle(Point3D a, Point3D b, Point3D c)
+{
+    setABCUV(a, b, c);
+}
+
+Point3D TextureTriangle::getAUV() const
+{
+    return a_uv;
+}
+
+Point3D TextureTriangle::getBUV() const
+{
+    return b_uv;
+}
+
+Point3D TextureTriangle::getCUV() const
+{
+    return c_uv;
+}
+
+void TextureTriangle::setA(Point3D a)
+{
+    a_uv = a;
+}
+
+void TextureTriangle::setB(Point3D b)
+{
+    b_uv = b;
+}
+
+void TextureTriangle::setC(Point3D c)
+{
+    c_uv = c;
+}
+
+void TextureTriangle::setABCUV(Point3D a, Point3D b, Point3D c)
+{
+    a_uv = a;
+    b_uv = b;
+    c_uv = c;
+}

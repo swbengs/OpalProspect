@@ -1,9 +1,9 @@
 #pragma once
 
-#include <GL\glew.h>
+#include <glew.h>
 
 #define GLFW_DLL
-#include <GLFW/glfw3.h>
+#include <glfw3.h>
 
 #include "OpenGL\DrawEngine.hpp"
 #include "Cameras\FlightCamera.hpp"

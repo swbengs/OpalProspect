@@ -3,7 +3,7 @@
 #include <iostream>
 #include <array>
 
-#include "GL\glew.h"
+#include "glew.h"
 #include "OGLHelpers.hpp"
 #include "..\Constants\axis.hpp"
 
@@ -62,8 +62,13 @@ void DrawEngine::bufferControlTest()
     box.setTopTextureNumber(4);
     box.setBottomTextureNumber(5);
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    //Point3D front, back, left, right, top, bottom;
-    //front.setXYZ(0, 0, 0);
+    Point3D front, back, left, right, top, bottom;
+    front.setXYZ(0, 1, 2);
+    back.setXYZ(3, 4, 5);
+    left.setXYZ(6, 7, 8);
+    right.setXYZ(9, 10, 11);
+    top.setXYZ(12, 13, 14);
+    bottom.setXYZ(15, 16, 17);
     //box.setNormal(front, back, left, right, top, bottom);
     
     convert.convertToModelIndex(box, test_model);
@@ -91,6 +96,26 @@ void DrawEngine::bufferControlTest()
     convert.convertToModelIndex(box, mod4);
     mod4.setModelName("test_four");
     mod4.setTextureName(texture_name);
+    addModel(mod4);
+
+    RightRectanglePyramidNormal pyramid;
+    ModelIndex pyra_mod;
+    pyra_mod.setTextureName(texture_name);
+    pyra_mod.setModelName("pyramid");
+    pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    pyramid.setNormal(front, back, left, right, bottom);
+    pyramid.setTextureNumber(4);
+    /*
+    pyramid.setFrontTextureNumber(100);
+    pyramid.setBackTextureNumber(110);
+    pyramid.setLeftTextureNumber(120);
+    pyramid.setRightTextureNumber(130);
+    pyramid.setBottomTextureNumber(140);
+    */
+    convert.convertToModelIndex(pyramid, pyra_mod);
+    addModel(pyra_mod);
+
+    mod4.setModelName("junk");
     addModel(mod4);
 
     std::cout << "\n";
@@ -222,12 +247,16 @@ void DrawEngine::draw(const Camera &camera)
     glm::vec3 second = glm::vec3(3.0f, 0.0f, 0.0f);
     glm::vec3 third = glm::vec3(0.0f, 3.0f, 0.0f);
     glm::vec3 fourth = glm::vec3(3.0f, 3.0f, 0.0f);
+    glm::vec3 fifth = glm::vec3(0.0f, 0.0f, -2.0f);
+    glm::vec3 sixth = glm::vec3(6.0f, 3.0f, 0.0f);
 
     draw("test.obj", camera, &first, nullptr, nullptr);
     //draw(models.getModelPOD(1), camera, &first, nullptr, nullptr);
     draw(models.getModelPOD(2), camera, &second, nullptr, nullptr);
     draw(models.getModelPOD(3), camera, &third, nullptr, nullptr);
     draw(models.getModelPOD(4), camera, &fourth, nullptr, nullptr);
+    draw(models.getModelPOD(5), camera, &fifth, nullptr, nullptr);
+    draw(models.getModelPOD(6), camera, &sixth, nullptr, nullptr);
     //draw("error", camera, &first, nullptr, nullptr);
 
     /*

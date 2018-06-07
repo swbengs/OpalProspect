@@ -26,7 +26,8 @@ SOFTWARE.
 
 Triangle3D::Triangle3D()
 {
-
+    Point3D junk(0.0f, 0.0f, 0.0f);
+    setABC(junk, junk, junk);
 }
 
 //gets
@@ -46,22 +47,22 @@ Point3D Triangle3D::getC() const
 }
 
 //sets
-void Triangle3D::setA(Point3D point)
+void Triangle3D::setA(Point3D a)
 {
-    point_a = point;
+    point_a = a;
 }
 
-void Triangle3D::setB(Point3D point)
+void Triangle3D::setB(Point3D b)
 {
-    point_b = point;
+    point_b = b;
 }
 
-void Triangle3D::setC(Point3D point)
+void Triangle3D::setC(Point3D c)
 {
-    point_c = point;
+    point_c = c;
 }
 
-void Triangle3D::set(Point3D a, Point3D b, Point3D c)
+void Triangle3D::setABC(Point3D a, Point3D b, Point3D c)
 {
     point_a = a;
     point_b = b;

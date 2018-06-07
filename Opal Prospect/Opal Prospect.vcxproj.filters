@@ -37,6 +37,9 @@
     <Filter Include="Text Files">
       <UniqueIdentifier>{68e5d287-241d-4f41-b747-1de9a8cdad37}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Text Files\Texture texts">
+      <UniqueIdentifier>{f6a17d58-f81d-471f-a696-5e1764da73f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Opal Prospect.cpp">
@@ -196,6 +199,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OpenGL\BufferController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes\RightRectanglePyramidNormal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes\RightRectanglePyramidTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes\RightRectanglePyramidVertex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes\RightRectanglePyramid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -368,6 +383,18 @@
     <ClInclude Include="OpenGL\ArrayTextureController.hpp">
       <Filter>OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="Shapes\RightRectanglePyramidNormal.hpp">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\RightRectanglePyramidTexture.hpp">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\RightRectanglePyramidVertex.hpp">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\RightRectanglePyramid.hpp">
+      <Filter>Shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\code format.txt">
@@ -375,6 +402,24 @@
     </Text>
     <Text Include="..\design.txt">
       <Filter>Text Files</Filter>
+    </Text>
+    <Text Include="Textures\files.txt">
+      <Filter>Text Files\Texture texts</Filter>
+    </Text>
+    <Text Include="Textures\gems.txt">
+      <Filter>Text Files\Texture texts</Filter>
+    </Text>
+    <Text Include="Textures\liquids.txt">
+      <Filter>Text Files\Texture texts</Filter>
+    </Text>
+    <Text Include="Textures\ores.txt">
+      <Filter>Text Files\Texture texts</Filter>
+    </Text>
+    <Text Include="Textures\soils.txt">
+      <Filter>Text Files\Texture texts</Filter>
+    </Text>
+    <Text Include="Textures\stones.txt">
+      <Filter>Text Files\Texture texts</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

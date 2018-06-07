@@ -26,36 +26,48 @@ SOFTWARE.
 
 VertexTriangle::VertexTriangle()
 {
-
+    setIndexABC(0, 0, 0);
 }
 
-Point3D VertexTriangle::getA() const
+VertexTriangle::VertexTriangle(unsigned int a, unsigned int b, unsigned int c)
 {
-    return Point3D();
+    setIndexABC(a, b, c);
 }
 
-Point3D VertexTriangle::getB() const
+unsigned int VertexTriangle::getIndexA() const
 {
-    return Point3D();
+    return index_a;
 }
 
-Point3D VertexTriangle::getC() const
+unsigned int VertexTriangle::getIndexB() const
 {
-    return Point3D();
+    return index_b;
 }
 
-void VertexTriangle::setA(Point3D point)
+unsigned int VertexTriangle::getIndexC() const
 {
+    return index_c;
 }
 
-void VertexTriangle::setB(Point3D point)
+void VertexTriangle::setIndexA(unsigned int a)
 {
+    index_a = a;
 }
 
-void VertexTriangle::setC(Point3D point)
+void VertexTriangle::setIndexB(unsigned int b)
 {
+    index_b = b;
 }
 
-void VertexTriangle::setABC(Point3D a, Point3D b, Point3D c)
+void VertexTriangle::setIndexC(unsigned int c)
 {
+    index_c = c;
 }
+
+void VertexTriangle::setIndexABC(unsigned int a, unsigned int b, unsigned int c)
+{
+    index_a = a;
+    index_b = b;
+    index_c = c;
+}
+

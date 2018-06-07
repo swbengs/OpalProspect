@@ -1,7 +1,7 @@
 #include "OGLHelpers.hpp"
 
 #include <iostream>
-#include "GL\glew.h"
+#include "glew.h"
 
 /*
 MIT License

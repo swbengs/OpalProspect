@@ -89,13 +89,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Programming\Libraries\libs\glew\include;C:\Programming\Libraries\libs\glfw\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\glew;C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\glfw;C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\glm;C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\libpng;C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glew32.lib;opengl32.lib;glfw3dll.lib;zlib.lib;libpng16.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Programming\Libraries\libs\zlib\lib;C:\Programming\Libraries\libs\libpng\lib;C:\Programming\Libraries\libs\glfw\lib;C:\Programming\Libraries\libs\glew\lib;%(AdditionalLibraryDirectories)C:\Programming\Libraries\libs\zlib\lib;C:\Programming\Libraries\libs\libpng\lib;C:\Programming\Libraries\libs\glfw\lib;C:\Programming\Libraries\libs\glew\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -124,14 +124,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Programming\Libraries\libs\zlib\include;C:\Programming\Libraries\libs\libpng\include;C:\Programming\Libraries\libs\glm\glm;C:\Programming\Libraries\\libs\glfw\include;C:\Programming\Libraries\libs\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\glew;C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\glfw;C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\glm;C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\libpng;C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Programming\Libraries\libs\zlib\lib;C:\Programming\Libraries\libs\libpng\lib;C:\Programming\Libraries\libs\glfw\lib;C:\Programming\Libraries\libs\glew\lib;%(AdditionalLibraryDirectories)C:\Programming\Libraries\libs\zlib\lib;C:\Programming\Libraries\libs\libpng\lib;C:\Programming\Libraries\libs\glfw\lib;C:\Programming\Libraries\libs\glew\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Programming\Projects\Opal Prospect\Opal Prospect\libs\library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;opengl32.lib;glfw3dll.lib;zlib.lib;libpng16.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -191,6 +191,10 @@
     <ClCompile Include="Shapes\NormalTriangle.cpp" />
     <ClCompile Include="Shapes\Point1D.cpp" />
     <ClCompile Include="Shapes\Point4D.cpp" />
+    <ClCompile Include="Shapes\RightRectanglePyramid.cpp" />
+    <ClCompile Include="Shapes\RightRectanglePyramidNormal.cpp" />
+    <ClCompile Include="Shapes\RightRectanglePyramidTexture.cpp" />
+    <ClCompile Include="Shapes\RightRectanglePyramidVertex.cpp" />
     <ClCompile Include="Shapes\ShapeToModel.cpp" />
     <ClCompile Include="Shapes\TextureFace.cpp" />
     <ClCompile Include="Shapes\TextureTriangle.cpp" />
@@ -249,6 +253,10 @@
     <ClInclude Include="Shapes\NormalTriangle.hpp" />
     <ClInclude Include="Shapes\Point1D.hpp" />
     <ClInclude Include="Shapes\Point4D.hpp" />
+    <ClInclude Include="Shapes\RightRectanglePyramid.hpp" />
+    <ClInclude Include="Shapes\RightRectanglePyramidNormal.hpp" />
+    <ClInclude Include="Shapes\RightRectanglePyramidTexture.hpp" />
+    <ClInclude Include="Shapes\RightRectanglePyramidVertex.hpp" />
     <ClInclude Include="Shapes\ShapeToModel.hpp" />
     <ClInclude Include="Shapes\TextureFace.hpp" />
     <ClInclude Include="Shapes\TextureTriangle.hpp" />
@@ -272,6 +280,12 @@
   <ItemGroup>
     <Text Include="..\code format.txt" />
     <Text Include="..\design.txt" />
+    <Text Include="Textures\files.txt" />
+    <Text Include="Textures\gems.txt" />
+    <Text Include="Textures\liquids.txt" />
+    <Text Include="Textures\ores.txt" />
+    <Text Include="Textures\soils.txt" />
+    <Text Include="Textures\stones.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
