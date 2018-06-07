@@ -26,8 +26,7 @@ SOFTWARE.
 
 TextureTriangle::TextureTriangle()
 {
-    Point3D junk;
-    junk.setXYZ(0.0f, 0.0f, 0.0f);
+    Point3D junk(0.0f, 0.0f, 0.0f);
     setABCUV(junk, junk, junk);
 }
 

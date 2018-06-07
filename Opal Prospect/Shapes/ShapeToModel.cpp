@@ -1,5 +1,8 @@
 #include "ShapeToModel.hpp"
 
+#include "NormalFace.hpp"
+#include "NormalTriangle.hpp"
+
 /*
 MIT License
 
@@ -39,4 +42,8 @@ void ShapeToModel::convertToModelIndex(const NormalBox& box, ModelIndex& model) 
     model.addFace(right_face);
     model.addFace(top_face);
     model.addFace(bottom_face);
+}
+
+void ShapeToModel::convertToModelIndex(const RightRectanglePyramidNormal & pyramid, ModelIndex & model) const
+{
 }

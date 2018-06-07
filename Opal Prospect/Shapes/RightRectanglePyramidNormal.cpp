@@ -30,3 +30,76 @@ SOFTWARE.
 
 //class code
 
+RightRectanglePyramidNormal::RightRectanglePyramidNormal()
+{
+    Point3D junk(0.0f, 0.0f, 0.0f);
+    setNormal(junk, junk, junk, junk, junk);
+}
+
+void RightRectanglePyramidNormal::fillNormalTriangleFace(NormalTriangle& front_triangle, NormalTriangle& back_triangle, NormalTriangle& left_triangle, NormalTriangle& right_triangle, NormalFace& bottom_face) const
+{
+    front_triangle.setABCNormal(getFrontNormal(), getFrontNormal(), getFrontNormal());
+    back_triangle.setABCNormal(getBackNormal(), getBackNormal(), getBackNormal());
+    left_triangle.setABCNormal(getLeftNormal(), getLeftNormal(), getLeftNormal());
+    right_triangle.setABCNormal(getRightNormal(), getRightNormal(), getRightNormal());
+    bottom_face.setNormal(getBottomNormal(), getBottomNormal(), getBottomNormal(), getBottomNormal());
+}
+
+Point3D RightRectanglePyramidNormal::getFrontNormal() const
+{
+    return front_normal;
+}
+
+Point3D RightRectanglePyramidNormal::getBackNormal() const
+{
+    return back_normal;
+}
+
+Point3D RightRectanglePyramidNormal::getLeftNormal() const
+{
+    return left_normal;
+}
+
+Point3D RightRectanglePyramidNormal::getRightNormal() const
+{
+    return right_normal;
+}
+
+Point3D RightRectanglePyramidNormal::getBottomNormal() const
+{
+    return bottom_normal;
+}
+
+void RightRectanglePyramidNormal::setFrontNormal(Point3D front)
+{
+    front_normal = front;
+}
+
+void RightRectanglePyramidNormal::setBackNormal(Point3D back)
+{
+    back_normal = back;
+}
+
+void RightRectanglePyramidNormal::setLeftNormal(Point3D left)
+{
+    left_normal = left;
+}
+
+void RightRectanglePyramidNormal::setRightNormal(Point3D right)
+{
+    right_normal = right;
+}
+
+void RightRectanglePyramidNormal::setBottomNormal(Point3D bottom)
+{
+    bottom_normal = bottom;
+}
+
+void RightRectanglePyramidNormal::setNormal(const Point3D& front, const Point3D& back, const Point3D& left, const Point3D& right, const Point3D& bottom)
+{
+    front_normal = front;
+    back_normal = back;
+    left_normal = left;
+    right_normal = right;
+    bottom_normal = bottom;
+}

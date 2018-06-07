@@ -4,6 +4,8 @@
 //std lib includes
 
 //other includes
+#include "NormalFace.hpp"
+#include "NormalTriangle.hpp"
 
 /*
 MIT License
@@ -36,6 +38,26 @@ Description: This structure is still not fully decided on. Give a basic descript
 class RightRectanglePyramidNormal : public RightRectanglePyramidTexture
 {
 public:
+    RightRectanglePyramidNormal();
+
+    void fillNormalTriangleFace(NormalTriangle& front_triangle, NormalTriangle& back_triangle, NormalTriangle& left_triangle, NormalTriangle& right_triangle, NormalFace& bottom_face) const;
+
+    //gets
+    Point3D getFrontNormal() const;
+    Point3D getBackNormal() const;
+    Point3D getLeftNormal() const;
+    Point3D getRightNormal() const;
+    Point3D getBottomNormal() const;
+
+    //sets
+    void setFrontNormal(Point3D front);
+    void setBackNormal(Point3D back);
+    void setLeftNormal(Point3D left);
+    void setRightNormal(Point3D right);
+    void setBottomNormal(Point3D bottom);
+    void setNormal(const Point3D& front, const Point3D& back, const Point3D& left, const Point3D& right, const Point3D& bottom);
+
 private:
+    Point3D front_normal, back_normal, left_normal, right_normal, bottom_normal;
 };
 

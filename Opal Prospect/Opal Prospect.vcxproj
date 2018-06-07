@@ -280,6 +280,12 @@
   <ItemGroup>
     <Text Include="..\code format.txt" />
     <Text Include="..\design.txt" />
+    <Text Include="Textures\files.txt" />
+    <Text Include="Textures\gems.txt" />
+    <Text Include="Textures\liquids.txt" />
+    <Text Include="Textures\ores.txt" />
+    <Text Include="Textures\soils.txt" />
+    <Text Include="Textures\stones.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

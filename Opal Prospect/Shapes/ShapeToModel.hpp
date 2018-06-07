@@ -2,7 +2,7 @@
 
 #include "ModelIndex.hpp"
 #include "NormalBox.hpp"
-#include "NormalFace.hpp"
+#include "RightRectanglePyramidNormal.hpp"
 
 /*
 MIT License
@@ -37,6 +37,7 @@ class ShapeToModel
 {
 public:
     void convertToModelIndex(const NormalBox& box, ModelIndex& model) const;
+    void convertToModelIndex(const RightRectanglePyramidNormal& pyramid, ModelIndex& model) const;
 
 private:
 

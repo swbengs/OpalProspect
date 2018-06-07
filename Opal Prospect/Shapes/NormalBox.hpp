@@ -37,12 +37,12 @@ public:
     void fillNormalFace(NormalFace& front_face, NormalFace& back_face, NormalFace& left_face, NormalFace& right_face, NormalFace& top_face, NormalFace& bottom_face) const;
 
     //gets
-    const Point3D& getFrontNormal() const;
-    const Point3D& getBackNormal() const;
-    const Point3D& getLeftNormal() const;
-    const Point3D& getRightNormal() const;
-    const Point3D& getTopNormal() const;
-    const Point3D& getBottomNormal() const;
+    Point3D getFrontNormal() const;
+    Point3D getBackNormal() const;
+    Point3D getLeftNormal() const;
+    Point3D getRightNormal() const;
+    Point3D getTopNormal() const;
+    Point3D getBottomNormal() const;
 
     //sets
     void setFrontNormal(const Point3D& normal);

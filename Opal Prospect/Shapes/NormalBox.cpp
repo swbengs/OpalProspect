@@ -26,12 +26,8 @@ SOFTWARE.
 
 NormalBox::NormalBox()
 {
-    front_normal.setXYZ(0.0f, 0.0f, 0.0f);
-    back_normal.setXYZ(0.0f, 0.0f, 0.0f);
-    left_normal.setXYZ(0.0f, 0.0f, 0.0f);
-    right_normal.setXYZ(0.0f, 0.0f, 0.0f);
-    top_normal.setXYZ(0.0f, 0.0f, 0.0f);
-    bottom_normal.setXYZ(0.0f, 0.0f, 0.0f);
+    Point3D junk(0.0f, 0.0f, 0.0f);
+    setNormal(junk, junk, junk, junk, junk, junk);
 }
 
 void NormalBox::fillNormalFace(NormalFace& front_face, NormalFace& back_face, NormalFace& left_face, NormalFace& right_face, NormalFace& top_face, NormalFace& bottom_face) const
@@ -46,32 +42,32 @@ void NormalBox::fillNormalFace(NormalFace& front_face, NormalFace& back_face, No
 }
 
 //gets
-const Point3D& NormalBox::getFrontNormal() const
+Point3D NormalBox::getFrontNormal() const
 {
     return front_normal;
 }
 
-const Point3D& NormalBox::getBackNormal() const
+Point3D NormalBox::getBackNormal() const
 {
     return back_normal;
 }
 
-const Point3D& NormalBox::getLeftNormal() const
+Point3D NormalBox::getLeftNormal() const
 {
     return left_normal;
 }
 
-const Point3D& NormalBox::getRightNormal() const
+Point3D NormalBox::getRightNormal() const
 {
     return right_normal;
 }
 
-const Point3D& NormalBox::getTopNormal() const
+Point3D NormalBox::getTopNormal() const
 {
     return top_normal;
 }
 
-const Point3D& NormalBox::getBottomNormal() const
+Point3D NormalBox::getBottomNormal() const
 {
     return bottom_normal;
 }
