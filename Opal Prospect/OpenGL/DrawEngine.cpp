@@ -115,6 +115,9 @@ void DrawEngine::bufferControlTest()
     convert.convertToModelIndex(pyramid, pyra_mod);
     addModel(pyra_mod);
 
+    mod4.setModelName("junk");
+    addModel(mod4);
+
     std::cout << "\n";
 }
 
@@ -245,6 +248,7 @@ void DrawEngine::draw(const Camera &camera)
     glm::vec3 third = glm::vec3(0.0f, 3.0f, 0.0f);
     glm::vec3 fourth = glm::vec3(3.0f, 3.0f, 0.0f);
     glm::vec3 fifth = glm::vec3(0.0f, 0.0f, -2.0f);
+    glm::vec3 sixth = glm::vec3(6.0f, 3.0f, 0.0f);
 
     draw("test.obj", camera, &first, nullptr, nullptr);
     //draw(models.getModelPOD(1), camera, &first, nullptr, nullptr);
@@ -252,6 +256,7 @@ void DrawEngine::draw(const Camera &camera)
     draw(models.getModelPOD(3), camera, &third, nullptr, nullptr);
     draw(models.getModelPOD(4), camera, &fourth, nullptr, nullptr);
     draw(models.getModelPOD(5), camera, &fifth, nullptr, nullptr);
+    draw(models.getModelPOD(6), camera, &sixth, nullptr, nullptr);
     //draw("error", camera, &first, nullptr, nullptr);
 
     /*
