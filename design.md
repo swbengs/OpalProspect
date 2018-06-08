@@ -8,10 +8,10 @@ This is to help give an idea what needs to be done and what is currently being w
 All headers should have license info now. Need to check that they all have a description about what they do.(All files should have a license last I checked. Many are missing a description still)
 
 # Language(s)
-C(almost entirely only for supported libraries)
-C++ 11(bulk of the project)
-LUA 5.2(the version that DFHack was using last I checked. Will be used to write script to gather fortress map data)
-OpenGL 3.3 and it's GLSL shader language(version 3.3 I believe the number is. Check the provided shader files for the exact number)
+1. C(almost entirely only for supported libraries)
+2. C++ 11(bulk of the project)
+3. LUA 5.2(the version that DFHack was using last I checked. Will be used to write script to gather fortress map data)
+4. OpenGL 3.3 and it's GLSL shader language(version 3.3 I believe the number is. Check the provided shader files for the exact number)
 
 # Draw engine specifics
 1. OpenGL 3.3 is the version I am building for. Allows more modern shader programming without requiring too new of a card. 4.5 support may be added at a later date when more important features are done(no promises though).
@@ -37,10 +37,11 @@ visiable and make either one or multiple models to be drawn.
 by the system.(DONE just needs actual tests written to make sure it works correctly. Appears to work when used to draw)
 2. Getting most of the test world's map textures placed correctly for first attempt at drawing the DF world
 3. Write ArrayTextureController to be simlar to model controller.(DONE)
+4. Road to 0.1! Requires offset grid so we have have the floors and tiles in a single big grid but still seperate. Floors will be shorter but still the same 1x1 x and z. Thinking 0.1f height for first version. May make that taller or shorter depending on how it looks.
 
 
 # Specifics
--=Finishing model drawing automation=-
+## Finishing model drawing automation
 Currently can look up with model name which VAO it exists in. Need to be able to store and lookup textures by name as well. Should be able
 to use the name only, and not the full path. Requires rewritting ArrayTexture.cpp a little and adding a texture controller.
 
@@ -53,6 +54,11 @@ Thus you can store each face as 4 unique verticies and use 6 indicies per face t
 If you had multiple boxes in a VAO(yes it's actually stored in a VBO but we can bind just the VAO to use them) 
 you can just do 36 * wanted_box as offset and 36 for the count. However, we can store any model in a VAO
 
-# Dwarf Fortress textures
+## Dwarf Fortress textures
 My current system is to copy the actual texture from DF. This is an 8x12 image. Then I draw by hand a similar one in 16x16 and color it the same.
-Once we have all of the different types we just need the color info. Writing a system to do this automatically will take too long so I do it by hand.
+
+Once we have all of the different types we just need the color info. Writing a system to do this automatically will take too long so I do it by hand. 
+
+All the tiles are an ASCII character so once you get the main ones drawn you just fill in the unique color for that material. 3 types of soil ASCII, which might be shared with some stone tiles.
+
+A couple of different ore and gem ASCII art.
