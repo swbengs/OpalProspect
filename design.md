@@ -3,7 +3,7 @@ This is to help give an idea what needs to be done and what is currently being w
 
 ## Updated: 6/8/2018
 
-#Critical issues(try and do this first)
+# Critical issues(try and do this first)
 1. Code cleanup and license adding. Much of the code is fairly old and should be updated to include the license and the some basic description of what it does.
 All headers should have license info now. Need to check that they all have a description about what they do.(All files should have a license last I checked. Many are missing a description still)
 
