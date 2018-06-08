@@ -421,6 +421,12 @@
     <Text Include="Textures\stones.txt">
       <Filter>Text Files\Texture texts</Filter>
     </Text>
+    <Text Include="..\build.txt">
+      <Filter>Text Files</Filter>
+    </Text>
+    <Text Include="..\run.txt">
+      <Filter>Text Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">

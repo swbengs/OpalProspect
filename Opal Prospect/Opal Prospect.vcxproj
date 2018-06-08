@@ -278,8 +278,10 @@
     <None Include="..\README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\build.txt" />
     <Text Include="..\code format.txt" />
     <Text Include="..\design.txt" />
+    <Text Include="..\run.txt" />
     <Text Include="Textures\files.txt" />
     <Text Include="Textures\gems.txt" />
     <Text Include="Textures\liquids.txt" />

@@ -21,9 +21,12 @@ Currently it is designed to be built in Microsoft Visual Studio 2015. I want to 
 Thank you to DFHack, GLEW, GLFW, GLM, LibPNG, and ZLib for their open source code. Without you and your teams, none of this would be possible!
 
 This project uses the aforementioned libraries but I will list them again. Once I get used to marking up the file I will add them in a table with links, their copyright/license info and so on.
-DFHack
-GLEW
-GLFW
-GLM
-LibPNG
-ZLib
+
+Lib name | Lib version | Website | License
+-------- | ----------- | ------- | -------
+DFHack | ?? | ? | ?
+GLEW | ?? | ? | ?
+GLFW | ?? | ? | ?
+GLM | ?? | ? | ?
+LibPNG | ?? | ? | ?
+ZLib | ?? | ? | ?

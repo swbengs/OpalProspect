@@ -1,11 +1,11 @@
 This file describes what to do in order to build the project. 
 
-In my next pull request as part of the pyramid and triangle branch I will include the header files for all libraries that I use so you don't need to download them seperately and a DLL folder.
+You need the headers for GLEW, GLFW, GLM, ZLIB, and LIBPNG and their include directories added in the solution. You also require their .lib files for Windows. This project assumes that GLFW, GLEW, ZLIB, and LIBPNG are all DLL files.
 
-You need the headers for GLEW, GLFW, GLM, ZLIB, and LIBPNG and their include directories added in the solution. This project assumes that GLFW, GLEW, ZLIB, and LIBPNG are all DLL files.
+All the neccesary files are in "Opal Prospect\libs". To make building easy place everything within "C:\Programming\Projects\Opal Prospect". This way you don't need to change anything and it should just build.
 
-VS 2015 needs the lib files to be listed and easily findable.
+libs\library have the library files aka .lib, and the headers are within \glm \glew and so on. If you place the solution file in a different folder you'll have to set all the include and library include locations to be your directory. My exact library location is "C:\Programming\Projects\Opal Prospect\Opal Prospect\libs" to give you an idea how it looks.
+You do this through Project->Opal Prospect properties->C/C++->General->Additional include folders for include folders and Project->Opal Prospect properties->Linker->Additional library directories for the library files.
 
-Currently this is setup in C:\Programming\Libraries\libs\zlib\lib and so on for libraries and the include folder(s) inside each lib directory. If you want a different directory you need to change the general c++ settings, linker settings, and so on to include all the folders that contain needed items. See second paragraph and final paragraph.
 
-Again in my new branch I will try to include everything for all of these libraries so you don't have to hunt them down. And a DLL folder so you have all of the things you need to build and run my code. Sorry for any inconvenience!
+
