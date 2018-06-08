@@ -20,13 +20,14 @@ Currently it is designed to be built in Microsoft Visual Studio 2015. I want to 
 
 Thank you to DFHack, GLEW, GLFW, GLM, LibPNG, and ZLib for their open source code. Without you and your teams, none of this would be possible!
 
-This project uses the aforementioned libraries but I will list them again. Once I get used to marking up the file I will add them in a table with links, their copyright/license info and so on.
-
 Lib name | Lib version | Website | License
 -------- | ----------- | ------- | -------
-DFHack | ?? | ? | ?
-GLEW | ?? | ? | ?
-GLFW | ?? | ? | ?
-GLM | ?? | ? | ?
-LibPNG | ?? | ? | ?
-ZLib | ?? | ? | ?
+DFHack | 43.05 r1 | https://github.com/DFHack/dfhack | Zlib
+GLEW | 1.13.0 | https://github.com/nigels-com/glew | https://github.com/nigels-com/glew#copyright-and-licensing
+GLFW | 3.1.2 | http://www.glfw.org/ | Zlib/libpng
+GLM | 0.9.7.1 | https://glm.g-truc.net/0.9.9/index.html | http://glm.g-truc.net/copying.txt
+LibPNG | 1.6.20 | http://www.libpng.org/pub/png/libpng.html | http://www.libpng.org/pub/png/src/libpng-LICENSE.txt
+ZLib | 1.2.8 | https://zlib.net/ | Zlib
+
+All the license files I could find are now added to the folder with their source code in case there is any confusion. If their license appeared to be different I just included a link to their site license info. If any of this information is wrong let me know and I'll correct it ASAP.
+
