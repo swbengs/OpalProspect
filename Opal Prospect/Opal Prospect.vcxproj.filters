@@ -397,12 +397,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\code format.txt">
-      <Filter>Text Files</Filter>
-    </Text>
-    <Text Include="..\design.txt">
-      <Filter>Text Files</Filter>
-    </Text>
     <Text Include="Textures\files.txt">
       <Filter>Text Files\Texture texts</Filter>
     </Text>
@@ -421,15 +415,24 @@
     <Text Include="Textures\stones.txt">
       <Filter>Text Files\Texture texts</Filter>
     </Text>
-    <Text Include="..\build.txt">
+    <Text Include="..\build.md">
       <Filter>Text Files</Filter>
     </Text>
-    <Text Include="..\run.txt">
+    <Text Include="..\code format.md">
+      <Filter>Text Files</Filter>
+    </Text>
+    <Text Include="..\design.md">
+      <Filter>Text Files</Filter>
+    </Text>
+    <Text Include="..\run.md">
       <Filter>Text Files</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">
+      <Filter>Text Files</Filter>
+    </None>
+    <None Include="..\milestones.md">
       <Filter>Text Files</Filter>
     </None>
   </ItemGroup>

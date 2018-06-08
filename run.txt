@@ -1,8 +1,0 @@
-This file describes how to run the program once it is built.
-
-You need all the .dll files, .png files, and arrayTexture.frag and arrayTexture.vert
-
-Full list below. All files come with the project. 
-
-arrayTexture.frag, arrayTexture.vert, glew32.dll, glfw3.dll, libpng16.dll, zlib.dll, the Textures folder(leave everything as is inside it) and your .exe file. It should run just fine now.
-
