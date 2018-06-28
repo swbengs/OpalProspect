@@ -185,6 +185,7 @@
     <ClCompile Include="Shapes\CenterRectangle.cpp" />
     <ClCompile Include="Shapes\Color.cpp" />
     <ClCompile Include="Shapes\ColorRectangle.cpp" />
+    <ClCompile Include="Shapes\Grid3DYOffset.cpp" />
     <ClCompile Include="Shapes\Model.cpp" />
     <ClCompile Include="Shapes\NormalBox.cpp" />
     <ClCompile Include="Shapes\NormalFace.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Shapes\CenterRectangle.hpp" />
     <ClInclude Include="Shapes\Color.hpp" />
     <ClInclude Include="Shapes\ColorRectangle.hpp" />
+    <ClInclude Include="Shapes\Grid3DYOffset.hpp" />
     <ClInclude Include="Shapes\Model.hpp" />
     <ClInclude Include="Shapes\NormalBox.hpp" />
     <ClInclude Include="Shapes\NormalFace.hpp" />

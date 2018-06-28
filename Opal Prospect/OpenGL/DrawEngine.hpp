@@ -25,6 +25,7 @@
 
 #include "..\Cameras\Camera.hpp"
 #include "..\Shapes\Grid3D.hpp"
+#include "..\Shapes\Grid3DYOffset.hpp"
 #include "..\Shapes\RightRectanglePyramidNormal.hpp"
 #include "..\Shapes\ShapeToModel.hpp"
 #include "..\Shapes\ModelIndex.hpp"
@@ -96,6 +97,7 @@ private:
     VertexUVIndexVAO uvVAO;
     VertexUVIndexVAO uvVAO3D;
     Grid3D grid;
+    Grid3DYOffset grid_off;
     ModelIndex test_model;
     ArrayTexture test_texture;
 

@@ -213,6 +213,9 @@
     <ClCompile Include="Shapes\RightRectanglePyramid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shapes\Grid3DYOffset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\ArrayTexture.hpp">
@@ -393,6 +396,9 @@
       <Filter>Shapes</Filter>
     </ClInclude>
     <ClInclude Include="Shapes\RightRectanglePyramid.hpp">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\Grid3DYOffset.hpp">
       <Filter>Shapes</Filter>
     </ClInclude>
   </ItemGroup>
