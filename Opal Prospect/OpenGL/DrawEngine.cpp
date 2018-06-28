@@ -118,6 +118,11 @@ void DrawEngine::bufferControlTest()
     mod4.setModelName("junk");
     addModel(mod4);
 
+    grid_off.setBoxWidthLengthHeight(1.0f, 1.0f, 1.0f);
+    grid_off.setGridWidthLengthHeight(3, 3, 3);
+    grid_off.setYOffset(0.2f);
+    grid_off.create();
+
     std::cout << "\n";
 }
 
@@ -289,6 +294,17 @@ void DrawEngine::draw(const Camera &camera)
     junk4.model_name = "test_four";
     draw(junk4, camera, &fourth, nullptr, nullptr);
     */
+
+    //draw grid
+    Point3D start(6.0f, 6.0f, 6.0f);
+    CenterBox grid_box;
+    glm::vec3 grid_pos;
+    for (unsigned int i = 0; i < grid_off.getGridCount(); i++)
+    {
+        grid_box = grid_off.getBox(i);
+        grid_pos = glm::vec3(grid_box.getX() + start.x, grid_box.getY() + start.y, grid_box.getZ() + start.z);
+        draw(models.getModelPOD(2), camera, &grid_pos, nullptr, nullptr);
+    }
 }
 
 void DrawEngine::setup()
