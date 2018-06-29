@@ -80,19 +80,21 @@ void DrawEngine::bufferControlTest()
     OGLHelpers::getOpenGLError("post model add", true);
 
     ModelIndex mod2, mod3, mod4;
-    box.setTextureNumber(10);
+    box.setTextureNumber(18);
     convert.convertToModelIndex(box, mod2);
     mod2.setModelName("test_two");
     mod2.setTextureName(texture_name);
     addModel(mod2);
 
-    box.setTextureNumber(11);
+    box.setTextureNumber(19);
+    box.setWidthHeightLength(1.0f, 0.2f, 1.0f);
     convert.convertToModelIndex(box, mod3);
     mod3.setModelName("test_three");
     mod3.setTextureName(texture_name);
     addModel(mod3);
 
     box.setTextureNumber(12);
+    box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     convert.convertToModelIndex(box, mod4);
     mod4.setModelName("test_four");
     mod4.setTextureName(texture_name);
