@@ -120,8 +120,15 @@ void DrawEngine::bufferControlTest()
 
     grid_off.setBoxWidthLengthHeight(1.0f, 1.0f, 1.0f);
     grid_off.setGridWidthLengthHeight(3, 3, 3);
-    grid_off.setYOffset(0.2f);
+    grid_off.setYStride(0.2f);
+    grid_off.setYOffset(0.0f);
     grid_off.create();
+
+    grid_off2.setBoxWidthLengthHeight(1.0f, 1.0f, 1.0f);
+    grid_off2.setGridWidthLengthHeight(3, 3, 3);
+    grid_off2.setYStride(1.0f);
+    grid_off2.setYOffset(0.2f);
+    grid_off2.create();
 
     std::cout << "\n";
 }
@@ -304,6 +311,14 @@ void DrawEngine::draw(const Camera &camera)
         grid_box = grid_off.getBox(i);
         grid_pos = glm::vec3(grid_box.getX() + start.x, grid_box.getY() + start.y, grid_box.getZ() + start.z);
         draw(models.getModelPOD(2), camera, &grid_pos, nullptr, nullptr);
+    }
+
+    start.setXYZ(10.0f, 6.0f, 6.0f);
+    for(unsigned int i = 0; i < grid_off2.getGridCount(); i++)
+    {
+        grid_box = grid_off2.getBox(i);
+        grid_pos = glm::vec3(grid_box.getX() + start.x, grid_box.getY() + start.y, grid_box.getZ() + start.z);
+        draw(models.getModelPOD(3), camera, &grid_pos, nullptr, nullptr);
     }
 }
 

@@ -36,6 +36,7 @@ Grid3DYOffset::Grid3DYOffset()
     grid_height = 0;
     grid_length = 0;
     y_offset = 0.0f;
+    y_stride = 0.0f;
 }
 
 void Grid3DYOffset::create()
@@ -45,11 +46,12 @@ void Grid3DYOffset::create()
 
     grid.resize(total_count);
 
+    float current_y_offset = getYOffset();
     for (unsigned int layer = 0; layer < getGridHeight(); layer++)
     {
         int layer_count_offset = layer_size * layer;
         float layer_offset = layer * getBoxHeight(); //how tall the layer is times how many layers we are currently at
-        float current_y_offset = layer_offset + getYOffset() * layer; //same as above except it's current layer times how much of an extra offset to add per layer
+        float current_y_stride = layer_offset + getYStride() * layer; //same as above except it's current layer times how much of an extra offset to add per layer
 
         for (unsigned int row = 0; row < getGridLength(); row++)
         {
@@ -58,7 +60,7 @@ void Grid3DYOffset::create()
 
             for (unsigned int column = 0; column < getGridWidth(); column++)
             {
-                grid.at(column + row_count_offset + layer_count_offset).setXYZ(column * getBoxWidth() + 0.5f * getBoxWidth(), current_y_offset + 0.5f * getBoxHeight(), row_offset + 0.5f * getBoxLength());
+                grid.at(column + row_count_offset + layer_count_offset).setXYZ(column * getBoxWidth() + 0.5f * getBoxWidth(), current_y_stride + current_y_offset + 0.5f * getBoxHeight(), row_offset + 0.5f * getBoxLength());
             }
         }
     }
@@ -112,6 +114,11 @@ float Grid3DYOffset::getYOffset() const
     return y_offset;
 }
 
+float Grid3DYOffset::getYStride() const
+{
+    return y_stride;
+}
+
 void Grid3DYOffset::setGridWidth(unsigned int width)
 {
     grid_width = width;
@@ -157,4 +164,9 @@ void Grid3DYOffset::setBoxWidthLengthHeight(float width, float height, float len
 void Grid3DYOffset::setYOffset(float offset)
 {
     y_offset = offset;
+}
+
+void Grid3DYOffset::setYStride(float stride)
+{
+    y_stride = stride;
 }

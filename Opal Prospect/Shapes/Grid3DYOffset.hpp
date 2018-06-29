@@ -51,6 +51,7 @@ public:
     float getBoxLength() const;
     CenterBox getBox(unsigned int index) const;
     float getYOffset() const;
+    float getYStride() const;
 
     //sets
     void setGridWidth(unsigned int width);
@@ -64,12 +65,14 @@ public:
     void setBoxWidthLengthHeight(float width, float height, float length);
 
     void setYOffset(float offset);
+    void setYStride(float stride);
 
 private:
     std::vector<Point3D> grid;
     Box box;
 
-    float y_offset;
+    float y_offset; //change from origin
+    float y_stride; //distance between each layer
     unsigned int grid_width;
     unsigned int grid_height;
     unsigned int grid_length;
