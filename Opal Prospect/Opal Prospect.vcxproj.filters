@@ -219,6 +219,9 @@
     <ClCompile Include="OpenGL\Buffers\InterleavedVAO3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OpenGL\Buffers\InterleavedVBO3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\ArrayTexture.hpp">
@@ -405,6 +408,9 @@
       <Filter>Shapes</Filter>
     </ClInclude>
     <ClInclude Include="OpenGL\Buffers\InterleavedVAO3D.hpp">
+      <Filter>OpenGL\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\Buffers\InterleavedVBO3D.hpp">
       <Filter>OpenGL\Buffers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,12 +1,8 @@
 #pragma once
 
 //std lib includes
-#include <vector>
 
 //other includes
-#include "FloatVBO.hpp"
-#include "IntVBO.hpp"
-#include "VAO.hpp"
 
 /*
 MIT License
@@ -33,43 +29,48 @@ SOFTWARE.
 */
 
 /*
-Description: Interleaved VAO class. Vertex, UV, and Normals are packed into the same VBO and indicies are still separate.
+Description: This class contains 3 VBO in one. Vertex, UV, and Normals. Buffer is XYZW,UVZ,Normals for each 3D point.
 */
 
-class InterleavedVAO3D
+class InterleavedVBO
 {
 public:
-    InterleavedVAO3D();
+    InterleavedVBO();
 
-    void bindVAO() const;
-    void unBindVAO() const;
+    void bindVBO() const;
+    void unbindVBO() const;
 
-    void bindMainVBO() const;
-    void bindIndexVBO() const;
+    void addData(size_t count, const void *data);
+    void modifyData(size_t start, size_t count, const void *data);
 
-    void bufferMainVBO(const std::vector<float> &vector);
-    void bufferIndex(const std::vector<unsigned int> &vector);
+    void generateVBOID();
+    void createVBO() const;
+    void destroyVBO();
 
-    void create();
-    void destroy();
+    void vertexPointerSetup() const;
+    void enableVertexIndex() const;
+    void disableVertexIndex() const;
 
     //gets
     unsigned int getID() const;
+    size_t getCurrentSize() const;
     size_t getMaximumSize() const;
     size_t getRemainingSize() const;
-    unsigned int getRemainingIndexSize() const;
-    unsigned int getIndexOffset() const;
 
     //sets
-    void setMaximumSize(size_t size);
-    void setIndexOffset(unsigned int offset);
+    void setCurrentSize(size_t byte_size);
+    void setMaximumSize(size_t byte_size);
 
 private:
-    VAO vao;
-    FloatVBO main; //xyzw,uvz,normals
-    IntVBO index; //indices
+    const static int vertex_dimmensions = 4; //maybe make these a define or static variable included from a file
+    const static int uv_dimmensions = 3;
+    const static int normal_dimmensions = 4;
+    const static int vertex_bind = 0;
+    const static int uv_bind = 1;
+    const static int normal_bind = 2;
 
-    size_t maximum_size; //max size in bytes
-    unsigned int index_offset; //must stay uint as that's what opengl uses
+    unsigned int id;
+    size_t maximum_size; //in bytes
+    size_t current_size; //in bytes
 };
 

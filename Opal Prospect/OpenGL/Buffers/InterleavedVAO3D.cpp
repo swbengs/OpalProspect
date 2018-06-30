@@ -57,12 +57,64 @@ void InterleavedVAO3D::bindIndexVBO() const
 
 void InterleavedVAO3D::bufferMainVBO(const std::vector<float>& vector)
 {
+    main.addData(vector.size() * sizeof(float), vector.data());
+}
 
+void InterleavedVAO3D::bufferIndex(const std::vector<unsigned int>& vector)
+{
+    index.addData(vector.size() * sizeof(unsigned int), vector.data());
 }
 
 void InterleavedVAO3D::create()
 {
+    /*
+    //ensure nothing else is bound and being modified
+    vao.unbindVAO();
+    main.unbindVBO(); //only one call is needed since vertex, uv, and normals all share the same binding spot
+    index.unbindVBO();
 
+    vao.createVAO();
+    vao.bindVAO();
+
+    main.generateVBOID();
+    main.bindVBO();
+    main.setMaximumSize(vertex_size);
+    main.setDimensions(vertex_dimensions);
+    main.setBindIndex(0);
+
+    main.createVBO();
+    main.enableVertexIndex();
+    main.vertexPointer();
+
+    uv.generateVBOID();
+    uv.bindVBO();
+    uv.setMaximumSize(uv_size);
+    uv.setDimensions(uv_dimensions);
+    uv.setBindIndex(1);
+
+    uv.createVBO();
+    uv.enableVertexIndex();
+    uv.vertexPointer();
+
+    normal.generateVBOID();
+    normal.bindVBO();
+    normal.setMaximumSize(normal_size);
+    normal.setDimensions(normal_dimensions);
+    normal.setBindIndex(2);
+
+    normal.createVBO();
+    //normal.enableVertexIndex();
+    //normal.vertexPointer();
+
+    index.generateVBOID();
+    index.bindVBO();
+    index.setMaximumSize(index_size);
+
+    index.createVBO();
+    //dont need to assign how to access the data. therefore no enable index or vertex pointer needed for index data
+
+    vao.unbindVAO(); //ensure this wont be modified elsewhere
+    */
 }
 
 void InterleavedVAO3D::destroy()
@@ -89,12 +141,12 @@ size_t InterleavedVAO3D::getRemainingSize() const
 
 unsigned int InterleavedVAO3D::getRemainingIndexSize() const
 {
-    return 0;
+    return index.getRemainingSize();
 }
 
 unsigned int InterleavedVAO3D::getIndexOffset() const
 {
-    return 0;
+    return index_offset;
 }
 
 void InterleavedVAO3D::setMaximumSize(size_t size)
