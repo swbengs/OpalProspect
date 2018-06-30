@@ -79,7 +79,7 @@ void DrawEngine::bufferControlTest()
     addModel(test_model);
     OGLHelpers::getOpenGLError("post model add", true);
 
-    ModelIndex mod2, mod3, mod4;
+    ModelIndex mod2, mod3, mod4, mod6;
     box.setTextureNumber(18);
     convert.convertToModelIndex(box, mod2);
     mod2.setModelName("test_two");
@@ -93,7 +93,7 @@ void DrawEngine::bufferControlTest()
     mod3.setTextureName(texture_name);
     addModel(mod3);
 
-    box.setTextureNumber(12);
+    box.setTextureNumber(19);
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     convert.convertToModelIndex(box, mod4);
     mod4.setModelName("test_four");
@@ -120,16 +120,23 @@ void DrawEngine::bufferControlTest()
     mod4.setModelName("junk");
     addModel(mod4);
 
+    box.setTextureNumber(18);
+    box.setWidthHeightLength(1.0f, 0.2f, 1.0f);
+    convert.convertToModelIndex(box, mod6);
+    mod6.setModelName("test_six");
+    mod6.setTextureName(texture_name);
+    addModel(mod6);
+
     grid_off.setBoxWidthLengthHeight(1.0f, 1.0f, 1.0f);
     grid_off.setGridWidthLengthHeight(3, 3, 3);
     grid_off.setYStride(0.2f);
-    grid_off.setYOffset(0.0f);
+    grid_off.setYOffset(0.2f);
     grid_off.create();
 
-    grid_off2.setBoxWidthLengthHeight(1.0f, 1.0f, 1.0f);
+    grid_off2.setBoxWidthLengthHeight(1.0f, 0.2f, 1.0f);
     grid_off2.setGridWidthLengthHeight(3, 3, 3);
     grid_off2.setYStride(1.0f);
-    grid_off2.setYOffset(0.2f);
+    grid_off2.setYOffset(0.0f);
     grid_off2.create();
 
     std::cout << "\n";
@@ -312,15 +319,29 @@ void DrawEngine::draw(const Camera &camera)
     {
         grid_box = grid_off.getBox(i);
         grid_pos = glm::vec3(grid_box.getX() + start.x, grid_box.getY() + start.y, grid_box.getZ() + start.z);
-        draw(models.getModelPOD(2), camera, &grid_pos, nullptr, nullptr);
+        if (i % 2 == 0)
+        {
+            draw(models.getModelPOD(2), camera, &grid_pos, nullptr, nullptr);
+        }
+        else
+        {
+            draw(models.getModelPOD(4), camera, &grid_pos, nullptr, nullptr);
+        }
     }
 
-    start.setXYZ(10.0f, 6.0f, 6.0f);
+    start.setXYZ(6.0f, 6.0f, 6.0f);
     for(unsigned int i = 0; i < grid_off2.getGridCount(); i++)
     {
         grid_box = grid_off2.getBox(i);
         grid_pos = glm::vec3(grid_box.getX() + start.x, grid_box.getY() + start.y, grid_box.getZ() + start.z);
-        draw(models.getModelPOD(3), camera, &grid_pos, nullptr, nullptr);
+        if (i % 2 == 0)
+        {
+            draw(models.getModelPOD(3), camera, &grid_pos, nullptr, nullptr);
+        }
+        else
+        {
+            draw(models.getModelPOD(7), camera, &grid_pos, nullptr, nullptr);
+        }
     }
 }
 
