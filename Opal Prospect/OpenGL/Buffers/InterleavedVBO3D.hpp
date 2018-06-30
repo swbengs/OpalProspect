@@ -1,6 +1,7 @@
 #pragma once
 
 //std lib includes
+#include <vector>
 
 //other includes
 
@@ -40,8 +41,8 @@ public:
     void bindVBO() const;
     void unbindVBO() const;
 
-    void addData(size_t count, const void *data);
-    void modifyData(size_t start, size_t count, const void *data);
+    void addData(const std::vector<float>& data);
+    void modifyData(size_t start, const std::vector<float>& data);
 
     void generateVBOID();
     void createVBO() const;
@@ -72,5 +73,8 @@ private:
     unsigned int id;
     size_t maximum_size; //in bytes
     size_t current_size; //in bytes
+
+    void addData(size_t count, const void *data); //raw pointer here so we don't expose them to public interface. OpenGL uses only void pointers so that is why we do it this way
+    void modifyData(size_t start, size_t count, const void *data);
 };
 

@@ -47,14 +47,14 @@ void InterleavedVBO::unbindVBO() const
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void InterleavedVBO::addData(size_t count, const void *data)
+void InterleavedVBO::addData(const std::vector<float>& data)
 {
-
+    addData(data.size(), data.data());
 }
 
-void InterleavedVBO::modifyData(size_t start, size_t count, const void *data)
+void InterleavedVBO::modifyData(size_t start, const std::vector<float>& data)
 {
-
+    modifyData(start, data.size(), data.data());
 }
 
 void InterleavedVBO::generateVBOID()
@@ -64,7 +64,7 @@ void InterleavedVBO::generateVBOID()
 
 void InterleavedVBO::createVBO() const
 {
-
+    glBufferData(GL_ARRAY_BUFFER, getMaximumSize(), nullptr, GL_STATIC_DRAW); //nullptr since we are not uploading when we create the buffer
 }
 
 void InterleavedVBO::destroyVBO()
@@ -121,4 +121,17 @@ void InterleavedVBO::setCurrentSize(size_t byte_size)
 void InterleavedVBO::setMaximumSize(size_t byte_size)
 {
     maximum_size = byte_size;
+}
+
+//private
+void InterleavedVBO::addData(size_t count, const void * data)
+{
+    const size_t size = count * sizeof(float);
+    glBufferSubData(GL_ARRAY_BUFFER, getCurrentSize(), size, data);
+    setCurrentSize(getCurrentSize() + size);
+}
+
+void InterleavedVBO::modifyData(size_t start, size_t count, const void * data)
+{
+    glBufferSubData(GL_ARRAY_BUFFER, start, count * sizeof(float), data);
 }

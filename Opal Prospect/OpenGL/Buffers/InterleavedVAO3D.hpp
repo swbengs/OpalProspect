@@ -66,7 +66,7 @@ public:
 
 private:
     VAO vao;
-    FloatVBO main; //xyzw,uvz,normals
+    FloatVBO main; //xyzw,uvz,normals TODO: change to interleaved vbo
     IntVBO index; //indices
 
     size_t maximum_size; //max size in bytes
