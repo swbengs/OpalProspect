@@ -481,6 +481,8 @@ void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const g
 
 void DrawEngine::setupOpenGLContext()
 {
+    //default OpenGL settings we use
+
     //glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

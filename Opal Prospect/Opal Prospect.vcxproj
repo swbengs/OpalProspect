@@ -162,6 +162,7 @@
     <ClCompile Include="OpenGL\ArrayTextureController.cpp" />
     <ClCompile Include="OpenGL\BufferController.cpp" />
     <ClCompile Include="OpenGL\Buffers\FloatVBO.cpp" />
+    <ClCompile Include="OpenGL\Buffers\InterleavedVAO3D.cpp" />
     <ClCompile Include="OpenGL\Buffers\IntVBO.cpp" />
     <ClCompile Include="OpenGL\Buffers\VAO.cpp" />
     <ClCompile Include="OpenGL\Buffers\VBO.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="OpenGL\ArrayTextureController.hpp" />
     <ClInclude Include="OpenGL\BufferController.hpp" />
     <ClInclude Include="OpenGL\Buffers\FloatVBO.hpp" />
+    <ClInclude Include="OpenGL\Buffers\InterleavedVAO3D.hpp" />
     <ClInclude Include="OpenGL\Buffers\IntVBO.hpp" />
     <ClInclude Include="OpenGL\Buffers\VAO.hpp" />
     <ClInclude Include="OpenGL\Buffers\VBO.hpp" />
