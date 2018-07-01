@@ -39,6 +39,56 @@ SOFTWARE.
 const float DrawEngine::Z_NEAR = 0.1f;
 const float DrawEngine::Z_FAR = 50.0f;
 
+void DrawEngine::interleaveTest()
+{
+    OGLHelpers::getOpenGLError("pre array texture creation", true);
+
+    std::string texture_name = "Textures\\soils.png";
+    test_texture.setFilename(texture_name);
+    test_texture.setTextureWidth(16);
+    test_texture.setTextureHeight(16);
+    test_texture.createTexture();
+    addTexture(test_texture);
+
+    OGLHelpers::getOpenGLError("post array texture creation", true);
+
+    ShapeToModel convert;
+    NormalBox box;
+
+    box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    box.setTextureNumber(18);
+    Point3D front, back, left, right, top, bottom;
+    front.setXYZ(0, 1, 2);
+    back.setXYZ(3, 4, 5);
+    left.setXYZ(6, 7, 8);
+    right.setXYZ(9, 10, 11);
+    top.setXYZ(12, 13, 14);
+    bottom.setXYZ(15, 16, 17);
+    box.setNormal(front, back, left, right, top, bottom);
+
+    convert.convertToModelIndex(box, test_model);
+    test_model.setModelName("test.obj");
+    test_model.setTextureName(texture_name);
+
+    OGLHelpers::getOpenGLError("pre model add", true);
+    //addModel(test_model);
+    OGLHelpers::getOpenGLError("post model add", true);
+
+    ModelIndex mod2;
+    box.setTextureNumber(19);
+    convert.convertToModelIndex(box, mod2);
+    mod2.setModelName("test_two");
+    mod2.setTextureName(texture_name);
+    //addModel(mod2);
+
+    interleave_vao.setIndexOffset(0);
+    interleave_vao.setMaximumVertexSize(1000 * sizeof(unsigned int)); //just throwing a number out there
+    interleave_vao.setMaximumIndexSize(36 * 2 * sizeof(unsigned int));
+    interleave_vao.create();
+
+    std::cout << "\n";
+}
+
 void DrawEngine::bufferControlTest()
 {
     OGLHelpers::getOpenGLError("pre array texture creation", true);
@@ -260,6 +310,38 @@ void DrawEngine::addTexture(const ArrayTexture& texture)
     textures.addTexture(texture);
 }
 
+void DrawEngine::interleaveDraw(const Camera &camera)
+{
+    OGLHelpers::getOpenGLError("pre draw", true);
+
+    glm::vec3 first = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 second = glm::vec3(3.0f, 0.0f, 0.0f);
+
+    texture_program.use();
+    test_texture.bind();
+    interleave_vao.bindVAO();
+
+    glm::mat4 view;
+    camera.fillViewMatrix(view);
+
+    glm::mat4 model;
+    model = glm::translate(model, first);
+    glm::mat4 mvp = persp * view * model;
+    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(0 * 36 * sizeof(unsigned int)));
+
+    view = glm::mat4();
+    camera.fillViewMatrix(view);
+
+    model = glm::mat4();
+    model = glm::translate(model, first);
+    mvp = persp * view * model;
+    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(1 * 36 * sizeof(unsigned int)));
+
+    OGLHelpers::getOpenGLError("post draw", true);
+}
+
 void DrawEngine::draw(const Camera &camera)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -271,6 +353,7 @@ void DrawEngine::draw(const Camera &camera)
     glm::vec3 fifth = glm::vec3(0.0f, 0.0f, -2.0f);
     glm::vec3 sixth = glm::vec3(6.0f, 3.0f, 0.0f);
 
+    /*
     draw("test.obj", camera, &first, nullptr, nullptr);
     //draw(models.getModelPOD(1), camera, &first, nullptr, nullptr);
     draw(models.getModelPOD(2), camera, &second, nullptr, nullptr);
@@ -279,37 +362,6 @@ void DrawEngine::draw(const Camera &camera)
     draw(models.getModelPOD(5), camera, &fifth, nullptr, nullptr);
     draw(models.getModelPOD(6), camera, &sixth, nullptr, nullptr);
     //draw("error", camera, &first, nullptr, nullptr);
-
-    /*
-    draw("test.obj", camera, &first, nullptr, nullptr);
-
-    model_pod junk;
-    junk.vao_reference = buffers.getModelVAOReference("test_two");
-    junk.texture_reference = 0;
-    junk.index_offset_bytes = 1 * 36 * sizeof(unsigned int);
-    junk.index_count = 36;
-    junk.texture_name = "soils.png";
-    junk.model_name = "test_two";
-    draw(junk, camera, &second, nullptr, nullptr);
-
-    model_pod junk3;
-    junk3.vao_reference = buffers.getModelVAOReference("test_three");
-    junk3.texture_reference = 0;
-    junk3.index_offset_bytes = 2 * 36 * sizeof(unsigned int);
-    junk3.index_count = 36;
-    junk3.texture_name = "soils.png";
-    junk3.model_name = "test_three";
-    draw(junk3, camera, &third, nullptr, nullptr);
-
-    model_pod junk4;
-    junk4.vao_reference = buffers.getModelVAOReference("test_four");
-    junk4.texture_reference = 0;
-    junk4.index_offset_bytes = 0 * 36 * sizeof(unsigned int);
-    junk4.index_count = 36;
-    junk4.texture_name = "soils.png";
-    junk4.model_name = "test_four";
-    draw(junk4, camera, &fourth, nullptr, nullptr);
-    */
 
     //draw grid
     Point3D start(6.0f, 6.0f, 6.0f);
@@ -343,6 +395,40 @@ void DrawEngine::draw(const Camera &camera)
             draw(models.getModelPOD(7), camera, &grid_pos, nullptr, nullptr);
         }
     }
+    */
+
+    /* older code. soon can be removed entirely
+    draw("test.obj", camera, &first, nullptr, nullptr);
+
+    model_pod junk;
+    junk.vao_reference = buffers.getModelVAOReference("test_two");
+    junk.texture_reference = 0;
+    junk.index_offset_bytes = 1 * 36 * sizeof(unsigned int);
+    junk.index_count = 36;
+    junk.texture_name = "soils.png";
+    junk.model_name = "test_two";
+    draw(junk, camera, &second, nullptr, nullptr);
+
+    model_pod junk3;
+    junk3.vao_reference = buffers.getModelVAOReference("test_three");
+    junk3.texture_reference = 0;
+    junk3.index_offset_bytes = 2 * 36 * sizeof(unsigned int);
+    junk3.index_count = 36;
+    junk3.texture_name = "soils.png";
+    junk3.model_name = "test_three";
+    draw(junk3, camera, &third, nullptr, nullptr);
+
+    model_pod junk4;
+    junk4.vao_reference = buffers.getModelVAOReference("test_four");
+    junk4.texture_reference = 0;
+    junk4.index_offset_bytes = 0 * 36 * sizeof(unsigned int);
+    junk4.index_count = 36;
+    junk4.texture_name = "soils.png";
+    junk4.model_name = "test_four";
+    draw(junk4, camera, &fourth, nullptr, nullptr);
+    */
+
+    interleaveDraw(camera);
 }
 
 void DrawEngine::setup()
@@ -599,7 +685,8 @@ void DrawEngine::setupObjects()
     }
 
     //arrayTextureTest();
-    bufferControlTest();
+    //bufferControlTest();
+    interleaveTest();
 }
 
 void DrawEngine::resize()

@@ -89,6 +89,19 @@ void ModelIndex::fillIndex(std::vector<unsigned int>& vector) const
     }
 }
 
+void ModelIndex::fillInterleaved(std::vector<float>& vector) const
+{
+    for (unsigned int i = 0; i < faces.size(); i++)
+    {
+        fillInterleavedFace(i, vector);
+    }
+
+    for (unsigned int i = 0; i < getTriangleCount(); i++)
+    {
+        fillInterleavedTriangle(i, vector);
+    }
+}
+
 void ModelIndex::fillTriangleIndex(size_t index, std::vector<unsigned int>& vector) const
 {
     unsigned int offset = getIndexOffset();
@@ -101,7 +114,7 @@ void ModelIndex::fillTriangleIndex(size_t index, std::vector<unsigned int>& vect
 void ModelIndex::fillFaceVertex(size_t index, std::vector<float>& vector) const
 {
     Point4D point;
-    float extra = 1.0f; //vertex need w to be 1.0 to be properly placed
+    const float extra = 1.0f; //vertex need w to be 1.0 to be properly placed
 
     point.setXYZW(faces[index].getBottomLeftVertex(), extra);
     point.fillArray4D(vector);
@@ -136,7 +149,7 @@ void ModelIndex::fillFaceUV(size_t index, std::vector<float>& vector) const
 void ModelIndex::fillFaceNormal(size_t index, std::vector<float>& vector) const
 {
     Point4D point;
-    float extra = 0.0f; //vertex need w to be 1.0 to be properly placed
+    const float extra = 0.0f; //normal needs w to be 0.0 to be properly placed
 
     point.setXYZW(faces[index].getBottomLeftNormal(), extra);
     point.fillArray4D(vector);
@@ -161,6 +174,42 @@ void ModelIndex::fillFaceIndex(size_t index, std::vector<unsigned int>& vector) 
     vector.push_back(faces[index].getTopLeftIndex() + offset);
     vector.push_back(faces[index].getBottomRightIndex() + offset);
     vector.push_back(faces[index].getTopRightIndex() + offset);
+}
+
+void ModelIndex::fillInterleavedFace(size_t index, std::vector<float>& vector) const
+{
+    Point3D uvz;
+    Point4D xyzw;
+    const float vertex_extra = 1.0f;
+    const float normal_extra = 0.0f;
+
+    xyzw.setXYZW(faces[index].getBottomLeftVertex(), vertex_extra);
+    xyzw.fillArray4D(vector);
+    uvz = faces[index].getBottomLeftUV();
+    uvz.fillArray3D(vector);
+    xyzw.setXYZW(faces[index].getBottomLeftNormal(), normal_extra);
+    xyzw.fillArray4D(vector);
+
+    xyzw.setXYZW(faces[index].getBottomRightVertex(), vertex_extra);
+    xyzw.fillArray4D(vector);
+    uvz = faces[index].getBottomRightUV();
+    uvz.fillArray3D(vector);
+    xyzw.setXYZW(faces[index].getBottomRightNormal(), normal_extra);
+    xyzw.fillArray4D(vector);
+
+    xyzw.setXYZW(faces[index].getTopLeftVertex(), vertex_extra);
+    xyzw.fillArray4D(vector);
+    uvz = faces[index].getTopLeftUV();
+    uvz.fillArray3D(vector);
+    xyzw.setXYZW(faces[index].getTopLeftNormal(), normal_extra);
+    xyzw.fillArray4D(vector);
+
+    xyzw.setXYZW(faces[index].getTopRightVertex(), vertex_extra);
+    xyzw.fillArray4D(vector);
+    uvz = faces[index].getTopRightUV();
+    uvz.fillArray3D(vector);
+    xyzw.setXYZW(faces[index].getTopRightNormal(), normal_extra);
+    xyzw.fillArray4D(vector);
 }
 
 //gets

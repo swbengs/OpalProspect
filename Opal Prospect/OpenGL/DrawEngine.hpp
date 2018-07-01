@@ -29,6 +29,7 @@
 #include "..\Shapes\RightRectanglePyramidNormal.hpp"
 #include "..\Shapes\ShapeToModel.hpp"
 #include "..\Shapes\ModelIndex.hpp"
+#include "Buffers\InterleavedVAO3D.hpp"
 
 #include "DrawEngineStructs.hpp"
 #include "ArrayTextureController.hpp"
@@ -100,6 +101,7 @@ private:
     Grid3DYOffset grid_off, grid_off2;
     ModelIndex test_model;
     ArrayTexture test_texture;
+    InterleavedVAO3D interleave_vao;
 
     int screen_width; //the actual screen resolution
     int screen_height;
@@ -130,4 +132,6 @@ private:
     //tests
     void arrayTextureTest();
     void bufferControlTest();
+    void interleaveTest();
+    void interleaveDraw(const Camera &camera);
 };
