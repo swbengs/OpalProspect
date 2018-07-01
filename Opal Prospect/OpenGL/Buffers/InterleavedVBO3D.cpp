@@ -74,23 +74,24 @@ void InterleavedVBO3D::destroyVBO()
 
 void InterleavedVBO3D::vertexPointerSetup() const
 {
-    //glVertexAttribPointer(vertex_bind, vertex_dimmensions, GL_FLOAT, GL_FALSE, stride, offset);
-    //glVertexAttribPointer(uv_bind, uv_dimmensions, GL_FLOAT, GL_FALSE, stride, offset);
-    //glVertexAttribPointer(normal_bind, normal_dimmensions, GL_FLOAT, GL_FALSE, stride, offset);
+    const int stride = (vertex_dimensions + uv_dimensions + normal_dimensions) * sizeof(float);
+    glVertexAttribPointer(vertex_bind, vertex_dimensions, GL_FLOAT, GL_FALSE, stride, (void*)0);
+    glVertexAttribPointer(uv_bind, uv_dimensions, GL_FLOAT, GL_FALSE, stride, (void*)(vertex_dimensions * sizeof(float)));
+    //glVertexAttribPointer(normal_bind, normal_dimmensions, GL_FLOAT, GL_FALSE, stride, (void*)((vertex_dimensions + uv_dimensions) * sizeof(float)); leave disabled until shader uses normals
 }
 
 void InterleavedVBO3D::enableVertexIndex() const
 {
     glEnableVertexAttribArray(vertex_bind);
     glEnableVertexAttribArray(uv_bind);
-    glEnableVertexAttribArray(normal_bind);
+    //glEnableVertexAttribArray(normal_bind); leave disabled until shader uses normals
 }
 
 void InterleavedVBO3D::disableVertexIndex() const
 {
     glDisableVertexAttribArray(vertex_bind);
     glDisableVertexAttribArray(uv_bind);
-    glDisableVertexAttribArray(normal_bind);
+    //glDisableVertexAttribArray(normal_bind); leave disabled until shader uses normals
 }
 
 unsigned int InterleavedVBO3D::getID() const

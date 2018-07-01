@@ -63,9 +63,9 @@ public:
     void setMaximumSize(size_t byte_size);
 
 private:
-    const static int vertex_dimmensions = 4; //maybe make these a define or static variable included from a file
-    const static int uv_dimmensions = 3;
-    const static int normal_dimmensions = 4;
+    const static int vertex_dimensions = 4; //maybe make these a define or static variable included from a file
+    const static int uv_dimensions = 3;
+    const static int normal_dimensions = 4;
     const static int vertex_bind = 0;
     const static int uv_bind = 1;
     const static int normal_bind = 2;

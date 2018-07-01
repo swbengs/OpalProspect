@@ -55,13 +55,15 @@ public:
 
     //gets
     unsigned int getID() const;
-    size_t getMaximumSize() const;
-    size_t getRemainingSize() const;
-    unsigned int getRemainingIndexSize() const;
+    size_t getMaximumVertexSize() const;
+    size_t getRemainingVertexSize() const;
+    size_t getMaximumIndexSize() const;
+    size_t getRemainingIndexSize() const;
     unsigned int getIndexOffset() const;
 
     //sets
-    void setMaximumSize(size_t size);
+    void setMaximumVertexSize(size_t size);
+    void setMaximumIndexSize(size_t size);
     void setIndexOffset(unsigned int offset);
 
 private:
@@ -69,7 +71,8 @@ private:
     InterleavedVBO3D main; //xyzw,uvz,normals TODO: change to interleaved vbo
     IntVBO index; //indices
 
-    size_t maximum_size; //max size in bytes
+    size_t maximum_vertex_size; //max size in bytes for vertex data, not including index
+    size_t maximum_index_size; //maximum size of index
     unsigned int index_offset; //must stay uint as that's what opengl uses
 };
 

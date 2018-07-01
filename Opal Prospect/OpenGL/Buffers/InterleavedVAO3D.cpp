@@ -31,7 +31,7 @@ SOFTWARE.
 
 InterleavedVAO3D::InterleavedVAO3D()
 {
-    maximum_size = 0;
+    maximum_vertex_size = 0;
     index_offset = 0;
 }
 
@@ -67,7 +67,6 @@ void InterleavedVAO3D::bufferIndex(const std::vector<unsigned int>& vector)
 
 void InterleavedVAO3D::create()
 {
-    /*
     //ensure nothing else is bound and being modified
     vao.unbindVAO();
     main.unbindVBO(); //only one call is needed since vertex, uv, and normals all share the same binding spot
@@ -78,43 +77,20 @@ void InterleavedVAO3D::create()
 
     main.generateVBOID();
     main.bindVBO();
-    main.setMaximumSize(vertex_size);
-    main.setDimensions(vertex_dimensions);
-    main.setBindIndex(0);
+    main.setMaximumSize(getMaximumVertexSize());
 
     main.createVBO();
     main.enableVertexIndex();
-    main.vertexPointer();
-
-    uv.generateVBOID();
-    uv.bindVBO();
-    uv.setMaximumSize(uv_size);
-    uv.setDimensions(uv_dimensions);
-    uv.setBindIndex(1);
-
-    uv.createVBO();
-    uv.enableVertexIndex();
-    uv.vertexPointer();
-
-    normal.generateVBOID();
-    normal.bindVBO();
-    normal.setMaximumSize(normal_size);
-    normal.setDimensions(normal_dimensions);
-    normal.setBindIndex(2);
-
-    normal.createVBO();
-    //normal.enableVertexIndex();
-    //normal.vertexPointer();
+    main.vertexPointerSetup();
 
     index.generateVBOID();
     index.bindVBO();
-    index.setMaximumSize(index_size);
+    index.setMaximumSize(getMaximumIndexSize());
 
     index.createVBO();
     //dont need to assign how to access the data. therefore no enable index or vertex pointer needed for index data
 
     vao.unbindVAO(); //ensure this wont be modified elsewhere
-    */
 }
 
 void InterleavedVAO3D::destroy()
@@ -129,17 +105,22 @@ unsigned int InterleavedVAO3D::getID() const
     return vao.getID();
 }
 
-size_t InterleavedVAO3D::getMaximumSize() const
+size_t InterleavedVAO3D::getMaximumVertexSize() const
 {
-    return maximum_size;
+    return maximum_vertex_size;
 }
 
-size_t InterleavedVAO3D::getRemainingSize() const
+size_t InterleavedVAO3D::getRemainingVertexSize() const
 {
     return main.getRemainingSize();
 }
 
-unsigned int InterleavedVAO3D::getRemainingIndexSize() const
+size_t InterleavedVAO3D::getMaximumIndexSize() const
+{
+    return maximum_index_size;
+}
+
+size_t InterleavedVAO3D::getRemainingIndexSize() const
 {
     return index.getRemainingSize();
 }
@@ -149,9 +130,14 @@ unsigned int InterleavedVAO3D::getIndexOffset() const
     return index_offset;
 }
 
-void InterleavedVAO3D::setMaximumSize(size_t size)
+void InterleavedVAO3D::setMaximumVertexSize(size_t size)
 {
-    maximum_size = size;
+    maximum_vertex_size = size;
+}
+
+void InterleavedVAO3D::setMaximumIndexSize(size_t size)
+{
+    maximum_index_size = size;
 }
 
 void InterleavedVAO3D::setIndexOffset(unsigned int offset)
