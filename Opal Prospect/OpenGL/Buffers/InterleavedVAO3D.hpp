@@ -4,7 +4,7 @@
 #include <vector>
 
 //other includes
-#include "FloatVBO.hpp"
+#include "InterleavedVBO3D.hpp"
 #include "IntVBO.hpp"
 #include "VAO.hpp"
 
@@ -66,7 +66,7 @@ public:
 
 private:
     VAO vao;
-    FloatVBO main; //xyzw,uvz,normals TODO: change to interleaved vbo
+    InterleavedVBO3D main; //xyzw,uvz,normals TODO: change to interleaved vbo
     IntVBO index; //indices
 
     size_t maximum_size; //max size in bytes

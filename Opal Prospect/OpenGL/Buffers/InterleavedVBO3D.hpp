@@ -30,19 +30,19 @@ SOFTWARE.
 */
 
 /*
-Description: This class contains 3 VBO in one. Vertex, UV, and Normals. Buffer is XYZW,UVZ,Normals for each 3D point.
+Description: This class contains 3 VBOs in one. Vertex, UV, and Normals. Buffer is XYZW,UVZ,Normals for each 3D point one after another.
 */
 
-class InterleavedVBO
+class InterleavedVBO3D
 {
 public:
-    InterleavedVBO();
+    InterleavedVBO3D();
 
     void bindVBO() const;
     void unbindVBO() const;
 
-    void addData(const std::vector<float>& data);
-    void modifyData(size_t start, const std::vector<float>& data);
+    void addData(const std::vector<float>& data); //adds onto what's already there
+    void modifyData(size_t start, const std::vector<float>& data); //changes what is there from start until data.size()
 
     void generateVBOID();
     void createVBO() const;

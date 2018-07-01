@@ -30,108 +30,108 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-InterleavedVBO::InterleavedVBO()
+InterleavedVBO3D::InterleavedVBO3D()
 {
     id = 0;
     maximum_size = 0;
     current_size = 0;
 }
 
-void InterleavedVBO::bindVBO() const
+void InterleavedVBO3D::bindVBO() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, getID());
 }
 
-void InterleavedVBO::unbindVBO() const
+void InterleavedVBO3D::unbindVBO() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void InterleavedVBO::addData(const std::vector<float>& data)
+void InterleavedVBO3D::addData(const std::vector<float>& data)
 {
     addData(data.size(), data.data());
 }
 
-void InterleavedVBO::modifyData(size_t start, const std::vector<float>& data)
+void InterleavedVBO3D::modifyData(size_t start, const std::vector<float>& data)
 {
     modifyData(start, data.size(), data.data());
 }
 
-void InterleavedVBO::generateVBOID()
+void InterleavedVBO3D::generateVBOID()
 {
     glGenBuffers(1, &id);
 }
 
-void InterleavedVBO::createVBO() const
+void InterleavedVBO3D::createVBO() const
 {
     glBufferData(GL_ARRAY_BUFFER, getMaximumSize(), nullptr, GL_STATIC_DRAW); //nullptr since we are not uploading when we create the buffer
 }
 
-void InterleavedVBO::destroyVBO()
+void InterleavedVBO3D::destroyVBO()
 {
     glDeleteBuffers(1, &id);
 }
 
-void InterleavedVBO::vertexPointerSetup() const
+void InterleavedVBO3D::vertexPointerSetup() const
 {
     //glVertexAttribPointer(vertex_bind, vertex_dimmensions, GL_FLOAT, GL_FALSE, stride, offset);
     //glVertexAttribPointer(uv_bind, uv_dimmensions, GL_FLOAT, GL_FALSE, stride, offset);
     //glVertexAttribPointer(normal_bind, normal_dimmensions, GL_FLOAT, GL_FALSE, stride, offset);
 }
 
-void InterleavedVBO::enableVertexIndex() const
+void InterleavedVBO3D::enableVertexIndex() const
 {
     glEnableVertexAttribArray(vertex_bind);
     glEnableVertexAttribArray(uv_bind);
     glEnableVertexAttribArray(normal_bind);
 }
 
-void InterleavedVBO::disableVertexIndex() const
+void InterleavedVBO3D::disableVertexIndex() const
 {
     glDisableVertexAttribArray(vertex_bind);
     glDisableVertexAttribArray(uv_bind);
     glDisableVertexAttribArray(normal_bind);
 }
 
-unsigned int InterleavedVBO::getID() const
+unsigned int InterleavedVBO3D::getID() const
 {
     return id;
 }
 
-size_t InterleavedVBO::getCurrentSize() const
+size_t InterleavedVBO3D::getCurrentSize() const
 {
     return current_size;
 }
 
-size_t InterleavedVBO::getMaximumSize() const
+size_t InterleavedVBO3D::getMaximumSize() const
 {
     return maximum_size;
 }
 
-size_t InterleavedVBO::getRemainingSize() const
+size_t InterleavedVBO3D::getRemainingSize() const
 {
     return maximum_size - current_size;
 }
 
-void InterleavedVBO::setCurrentSize(size_t byte_size)
+void InterleavedVBO3D::setCurrentSize(size_t byte_size)
 {
     current_size = byte_size;
 }
 
-void InterleavedVBO::setMaximumSize(size_t byte_size)
+void InterleavedVBO3D::setMaximumSize(size_t byte_size)
 {
     maximum_size = byte_size;
 }
 
 //private
-void InterleavedVBO::addData(size_t count, const void * data)
+void InterleavedVBO3D::addData(size_t count, const void * data)
 {
     const size_t size = count * sizeof(float);
     glBufferSubData(GL_ARRAY_BUFFER, getCurrentSize(), size, data);
     setCurrentSize(getCurrentSize() + size);
 }
 
-void InterleavedVBO::modifyData(size_t start, size_t count, const void * data)
+void InterleavedVBO3D::modifyData(size_t start, size_t count, const void * data)
 {
     glBufferSubData(GL_ARRAY_BUFFER, start, count * sizeof(float), data);
 }

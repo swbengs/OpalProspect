@@ -57,7 +57,7 @@ void InterleavedVAO3D::bindIndexVBO() const
 
 void InterleavedVAO3D::bufferMainVBO(const std::vector<float>& vector)
 {
-    main.addData(vector.size() * sizeof(float), vector.data());
+    main.addData(vector);
 }
 
 void InterleavedVAO3D::bufferIndex(const std::vector<unsigned int>& vector)
@@ -136,7 +136,7 @@ size_t InterleavedVAO3D::getMaximumSize() const
 
 size_t InterleavedVAO3D::getRemainingSize() const
 {
-    return size_t();
+    return main.getRemainingSize();
 }
 
 unsigned int InterleavedVAO3D::getRemainingIndexSize() const
