@@ -56,7 +56,7 @@ void DrawEngine::interleaveTest()
     NormalBox box;
 
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    box.setTextureNumber(18);
+    box.setTextureNumber(19);
     Point3D front, back, left, right, top, bottom;
     front.setXYZ(0, 1, 2);
     back.setXYZ(3, 4, 5);
@@ -70,21 +70,31 @@ void DrawEngine::interleaveTest()
     test_model.setModelName("test.obj");
     test_model.setTextureName(texture_name);
 
-    OGLHelpers::getOpenGLError("pre model add", true);
-    //addModel(test_model);
-    OGLHelpers::getOpenGLError("post model add", true);
-
     ModelIndex mod2;
-    box.setTextureNumber(19);
+    box.setTextureNumber(18);
     convert.convertToModelIndex(box, mod2);
     mod2.setModelName("test_two");
     mod2.setTextureName(texture_name);
-    //addModel(mod2);
 
     interleave_vao.setIndexOffset(0);
-    interleave_vao.setMaximumVertexSize(1000 * sizeof(unsigned int)); //just throwing a number out there
+    interleave_vao.setMaximumVertexSize(264 * 2 * sizeof(float));
     interleave_vao.setMaximumIndexSize(36 * 2 * sizeof(unsigned int));
     interleave_vao.create();
+
+    std::vector<float> vertex;
+    std::vector<unsigned int> index;
+    test_model.fillInterleaved(vertex);
+    mod2.fillInterleaved(vertex);
+
+    test_model.setIndexOffset(0);
+    test_model.fillIndex(index);
+    mod2.setIndexOffset(24);
+    mod2.fillIndex(index);
+
+    interleave_vao.bindMainVBO();
+    interleave_vao.bufferMainVBO(vertex);
+    interleave_vao.bindIndexVBO();
+    interleave_vao.bufferIndex(index);
 
     std::cout << "\n";
 }
@@ -328,16 +338,14 @@ void DrawEngine::interleaveDraw(const Camera &camera)
     model = glm::translate(model, first);
     glm::mat4 mvp = persp * view * model;
     glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
-    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(0 * 36 * sizeof(unsigned int)));
-
-    view = glm::mat4();
-    camera.fillViewMatrix(view);
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(1 * 36 * sizeof(unsigned int)));
 
     model = glm::mat4();
-    model = glm::translate(model, first);
+    model = glm::translate(model, second);
+    mvp = glm::mat4();
     mvp = persp * view * model;
     glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
-    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(1 * 36 * sizeof(unsigned int)));
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(0 * 36 * sizeof(unsigned int)));
 
     OGLHelpers::getOpenGLError("post draw", true);
 }
