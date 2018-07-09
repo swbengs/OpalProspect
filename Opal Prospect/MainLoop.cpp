@@ -48,8 +48,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 //public
 void MainLoop::startLoop()
 {
-    int screen_width = 640;
-    int screen_height = 480;
+    const int screen_width = 640;
+    const int screen_height = 480;
+    const char* name = "Opal Prospect v0.01";
 
     GLFWwindow* window;
 
@@ -57,7 +58,7 @@ void MainLoop::startLoop()
 
     if (!glfwInit())
         exit(EXIT_FAILURE);
-    window = glfwCreateWindow(screen_width, screen_height, "It's a secret", NULL, NULL);
+    window = glfwCreateWindow(screen_width, screen_height, name, NULL, NULL);
 
     const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
     //window = glfwCreateWindow(mode->width, mode->height, "My Title", glfwGetPrimaryMonitor(), NULL);

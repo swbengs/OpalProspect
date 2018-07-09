@@ -34,6 +34,7 @@
 #include "DrawEngineStructs.hpp"
 #include "ArrayTextureController.hpp"
 #include "BufferController.hpp"
+#include "InterleavedBufferController.hpp"
 #include "ModelController.hpp"
 
 /*

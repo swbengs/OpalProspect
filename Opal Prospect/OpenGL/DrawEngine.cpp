@@ -96,6 +96,8 @@ void DrawEngine::interleaveTest()
     interleave_vao.bindIndexVBO();
     interleave_vao.bufferIndex(index);
 
+    InterleavedBufferController con_test;
+
     std::cout << "\n";
 }
 
