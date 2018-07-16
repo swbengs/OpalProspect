@@ -44,6 +44,7 @@ unsigned int InterleavedBufferController::addModel(ModelIndex & model)
         //first check if the model will even fit
         size_t vertex_size = model.getPointTotalSize();
         size_t index_size = model.getIndexTotalSize();
+        //std::cout << "Vertex size : " << vertex_size << " Index size : " << index_size << "\n";
 
         if (vertex_size > MAXIMUM_VERTEX_BUFFER_SIZE || index_size > MAXIMUM_INDEX_BUFFER_SIZE)
         {

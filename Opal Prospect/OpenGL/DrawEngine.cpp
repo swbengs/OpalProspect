@@ -69,28 +69,28 @@ void DrawEngine::interleaveTest()
     convert.convertToModelIndex(box, test_model);
     test_model.setModelName("test.obj");
     test_model.setTextureName(texture_name);
-    addModel(test_model);
+    addInterleavedModel(test_model);
 
     ModelIndex mod2, mod3, mod4, mod6;
     box.setTextureNumber(18);
     convert.convertToModelIndex(box, mod2);
     mod2.setModelName("test_two");
     mod2.setTextureName(texture_name);
-    addModel(mod2);
+    addInterleavedModel(mod2);
 
     box.setTextureNumber(19);
     box.setWidthHeightLength(1.0f, 0.2f, 1.0f);
     convert.convertToModelIndex(box, mod3);
     mod3.setModelName("test_three");
     mod3.setTextureName(texture_name);
-    addModel(mod3);
+    addInterleavedModel(mod3);
 
     box.setTextureNumber(19);
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     convert.convertToModelIndex(box, mod4);
     mod4.setModelName("test_four");
     mod4.setTextureName(texture_name);
-    addModel(mod4);
+    addInterleavedModel(mod4);
 
     RightRectanglePyramidNormal pyramid;
     ModelIndex pyra_mod;
@@ -107,17 +107,17 @@ void DrawEngine::interleaveTest()
     pyramid.setBottomTextureNumber(140);
     */
     convert.convertToModelIndex(pyramid, pyra_mod);
-    addModel(pyra_mod);
+    addInterleavedModel(pyra_mod);
 
     mod4.setModelName("junk");
-    addModel(mod4);
+    addInterleavedModel(mod4);
 
     box.setTextureNumber(18);
     box.setWidthHeightLength(1.0f, 0.2f, 1.0f);
     convert.convertToModelIndex(box, mod6);
     mod6.setModelName("test_six");
     mod6.setTextureName(texture_name);
-    addModel(mod6);
+    addInterleavedModel(mod6);
 
     grid_off.setBoxWidthLengthHeight(1.0f, 1.0f, 1.0f);
     grid_off.setGridWidthLengthHeight(3, 3, 3);
@@ -606,11 +606,11 @@ void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const g
         state.texture_id = test_texture.getID();
     }
 
-    if (buffers.getVAOID(model_info.vao_reference) != state.vao_id)
+    if (interleaved_buffers.getVAOID(model_info.vao_reference) != state.vao_id)
     {
         //std::cout << "binding vaoID " << buffers.getVAOID(model_info.vao_reference) << "\n";
-        buffers.bindVAO(model_info.vao_reference);
-        state.vao_id = buffers.getVAOID(model_info.vao_reference);
+        interleaved_buffers.bindVAO(model_info.vao_reference);
+        state.vao_id = interleaved_buffers.getVAOID(model_info.vao_reference);
     }
 
     glm::mat4 view;

@@ -235,7 +235,7 @@ size_t ModelIndex::getUniquePointCount() const
 
 size_t ModelIndex::getPointSize() const
 {
-    return ((4+3+4) * sizeof(float)); //4 vertex floats, 3 uv floats, 4 normal floats, 1 index int
+    return ((4+3+4) * sizeof(float)); //4 vertex floats, 3 uv floats, 4 normal floats
 }
 
 size_t ModelIndex::getPointTotalSize() const
