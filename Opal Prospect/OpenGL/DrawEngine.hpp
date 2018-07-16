@@ -71,6 +71,7 @@ public:
     DrawEngine();
 
     void addModel(ModelIndex& model);
+    void addInterleavedModel(ModelIndex& model);
     void addTexture(const ArrayTexture& texture);
     void draw(const Camera &camera);
 
@@ -90,6 +91,7 @@ private:
     const static float Z_NEAR;
     const static float Z_FAR;
     BufferController buffers;
+    InterleavedBufferController interleaved_buffers;
     ArrayTextureController textures;
     ModelController models;
     opengl_state state;

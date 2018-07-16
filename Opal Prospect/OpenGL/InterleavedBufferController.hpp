@@ -70,7 +70,7 @@ private:
     std::vector<unsigned int> index_byte_offset_totals; //one per vao
     std::unordered_map<std::string, model_info_pod> model_infos;
 
-    int findSuitableBuffer(size_t total_size, size_t index_size) const; //used to find a buffer with enough room for our model
+    int findSuitableBuffer(size_t vertex_size, size_t index_size) const; //used to find a buffer with enough room for our model
     void bufferModel(int index, ModelIndex &model);
     void makeBuffer(); //used when all the current buffers are full or the new model won't fit in them
 

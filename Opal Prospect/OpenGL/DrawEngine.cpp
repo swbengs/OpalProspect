@@ -69,13 +69,69 @@ void DrawEngine::interleaveTest()
     convert.convertToModelIndex(box, test_model);
     test_model.setModelName("test.obj");
     test_model.setTextureName(texture_name);
+    addModel(test_model);
 
-    ModelIndex mod2;
+    ModelIndex mod2, mod3, mod4, mod6;
     box.setTextureNumber(18);
     convert.convertToModelIndex(box, mod2);
     mod2.setModelName("test_two");
     mod2.setTextureName(texture_name);
+    addModel(mod2);
 
+    box.setTextureNumber(19);
+    box.setWidthHeightLength(1.0f, 0.2f, 1.0f);
+    convert.convertToModelIndex(box, mod3);
+    mod3.setModelName("test_three");
+    mod3.setTextureName(texture_name);
+    addModel(mod3);
+
+    box.setTextureNumber(19);
+    box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    convert.convertToModelIndex(box, mod4);
+    mod4.setModelName("test_four");
+    mod4.setTextureName(texture_name);
+    addModel(mod4);
+
+    RightRectanglePyramidNormal pyramid;
+    ModelIndex pyra_mod;
+    pyra_mod.setTextureName(texture_name);
+    pyra_mod.setModelName("pyramid");
+    pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    pyramid.setNormal(front, back, left, right, bottom);
+    pyramid.setTextureNumber(4);
+    /*
+    pyramid.setFrontTextureNumber(100);
+    pyramid.setBackTextureNumber(110);
+    pyramid.setLeftTextureNumber(120);
+    pyramid.setRightTextureNumber(130);
+    pyramid.setBottomTextureNumber(140);
+    */
+    convert.convertToModelIndex(pyramid, pyra_mod);
+    addModel(pyra_mod);
+
+    mod4.setModelName("junk");
+    addModel(mod4);
+
+    box.setTextureNumber(18);
+    box.setWidthHeightLength(1.0f, 0.2f, 1.0f);
+    convert.convertToModelIndex(box, mod6);
+    mod6.setModelName("test_six");
+    mod6.setTextureName(texture_name);
+    addModel(mod6);
+
+    grid_off.setBoxWidthLengthHeight(1.0f, 1.0f, 1.0f);
+    grid_off.setGridWidthLengthHeight(3, 3, 3);
+    grid_off.setYStride(0.2f);
+    grid_off.setYOffset(0.2f);
+    grid_off.create();
+
+    grid_off2.setBoxWidthLengthHeight(1.0f, 0.2f, 1.0f);
+    grid_off2.setGridWidthLengthHeight(3, 3, 3);
+    grid_off2.setYStride(1.0f);
+    grid_off2.setYOffset(0.0f);
+    grid_off2.create();
+
+    /*
     interleave_vao.setIndexOffset(0);
     interleave_vao.setMaximumVertexSize(264 * 2 * sizeof(float));
     interleave_vao.setMaximumIndexSize(36 * 2 * sizeof(unsigned int));
@@ -95,8 +151,7 @@ void DrawEngine::interleaveTest()
     interleave_vao.bufferMainVBO(vertex);
     interleave_vao.bindIndexVBO();
     interleave_vao.bufferIndex(index);
-
-    InterleavedBufferController con_test;
+    */
 
     std::cout << "\n";
 }
@@ -317,6 +372,22 @@ void DrawEngine::addModel(ModelIndex& model)
     pod.vao_reference = buffers.getModelVAOReference(pod.model_name);
 }
 
+/*
+Method to properly add a model interleaved and update all important references it needs to be drawn. This means the texture it wants must already have been added prior to adding said model.
+*/
+void DrawEngine::addInterleavedModel(ModelIndex& model)
+{
+    size_t current;
+    models.addModel(model);
+    current = models.getCount();
+    interleaved_buffers.addModel(models.modifyModel(current));
+    //texture name, model name, and index count are already entered
+    model_pod& pod = models.modifyModelPOD(current);
+    pod.texture_reference = textures.getTextureReference(pod.texture_name);
+    pod.index_offset_bytes = interleaved_buffers.getIndexByteOffset(pod.model_name);
+    pod.vao_reference = interleaved_buffers.getModelVAOReference(pod.model_name);
+}
+
 void DrawEngine::addTexture(const ArrayTexture& texture)
 {
     textures.addTexture(texture);
@@ -363,7 +434,6 @@ void DrawEngine::draw(const Camera &camera)
     glm::vec3 fifth = glm::vec3(0.0f, 0.0f, -2.0f);
     glm::vec3 sixth = glm::vec3(6.0f, 3.0f, 0.0f);
 
-    /*
     draw("test.obj", camera, &first, nullptr, nullptr);
     //draw(models.getModelPOD(1), camera, &first, nullptr, nullptr);
     draw(models.getModelPOD(2), camera, &second, nullptr, nullptr);
@@ -405,7 +475,6 @@ void DrawEngine::draw(const Camera &camera)
             draw(models.getModelPOD(7), camera, &grid_pos, nullptr, nullptr);
         }
     }
-    */
 
     /* older code. soon can be removed entirely
     draw("test.obj", camera, &first, nullptr, nullptr);
@@ -438,7 +507,7 @@ void DrawEngine::draw(const Camera &camera)
     draw(junk4, camera, &fourth, nullptr, nullptr);
     */
 
-    interleaveDraw(camera);
+    //interleaveDraw(camera);
 }
 
 void DrawEngine::setup()
