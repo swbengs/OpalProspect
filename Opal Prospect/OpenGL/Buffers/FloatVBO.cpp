@@ -39,7 +39,7 @@ void FloatVBO::bindVBO() const
 
 void FloatVBO::unbindVBO() const
 {
-    glBindBuffer(GL_ARRAY_BUFFER, getID());
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void FloatVBO::createVBO() const

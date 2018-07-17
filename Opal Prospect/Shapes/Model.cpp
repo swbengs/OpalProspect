@@ -42,7 +42,7 @@ void Model::addTriangle(const NormalTriangle& triangle)
 void Model::fillTriangleVertex(size_t index, std::vector<float>& data)  const
 {
     Point4D point;
-    float extra = 1.0f; //vertex need w to be 1.0 to be properly placed
+    const float extra = 1.0f; //vertex need w to be 1.0 to be properly placed
 
     point.setXYZW(triangles[index].getA(), extra);
     point.fillArray4D(data);
@@ -71,7 +71,7 @@ void Model::fillTriangleUV(size_t index, std::vector<float>& data)  const
 void Model::fillTriangleNormal(size_t index, std::vector<float>& data)  const
 {
     Point4D point;
-    float extra = 0.0f; //normal need w to be 0.0 to be properly placed
+    const float extra = 0.0f; //normal need w to be 0.0 to be properly placed
 
     point.setXYZW(triangles[index].getANormal(), extra);
     point.fillArray4D(data);
@@ -81,6 +81,35 @@ void Model::fillTriangleNormal(size_t index, std::vector<float>& data)  const
 
     point.setXYZW(triangles[index].getCNormal(), extra);
     point.fillArray4D(data);
+}
+
+void Model::fillInterleavedTriangle(size_t index, std::vector<float>& data) const
+{
+    Point3D uvz;
+    Point4D xyzw;
+    const float vertex_extra = 1.0f;
+    const float normal_extra = 0.0f;
+
+    xyzw.setXYZW(triangles[index].getA(), vertex_extra);
+    xyzw.fillArray4D(data);
+    uvz = triangles[index].getAUV();
+    uvz.fillArray3D(data);
+    xyzw.setXYZW(triangles[index].getANormal(), normal_extra);
+    xyzw.fillArray4D(data);
+
+    xyzw.setXYZW(triangles[index].getB(), vertex_extra);
+    xyzw.fillArray4D(data);
+    uvz = triangles[index].getBUV();
+    uvz.fillArray3D(data);
+    xyzw.setXYZW(triangles[index].getBNormal(), normal_extra);
+    xyzw.fillArray4D(data);
+
+    xyzw.setXYZW(triangles[index].getC(), vertex_extra);
+    xyzw.fillArray4D(data);
+    uvz = triangles[index].getCUV();
+    uvz.fillArray3D(data);
+    xyzw.setXYZW(triangles[index].getCNormal(), normal_extra);
+    xyzw.fillArray4D(data);
 }
 
 //gets

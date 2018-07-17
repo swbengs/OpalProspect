@@ -43,6 +43,7 @@ public:
     void fillTriangleVertex(size_t index, std::vector<float>& data) const;
     void fillTriangleUV(size_t index, std::vector<float>& data) const;
     void fillTriangleNormal(size_t index, std::vector<float>& data) const;
+    void fillInterleavedTriangle(size_t index, std::vector<float>& data) const;
 
     //gets
     std::string getModelName() const;

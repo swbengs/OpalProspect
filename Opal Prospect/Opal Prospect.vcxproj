@@ -162,6 +162,8 @@
     <ClCompile Include="OpenGL\ArrayTextureController.cpp" />
     <ClCompile Include="OpenGL\BufferController.cpp" />
     <ClCompile Include="OpenGL\Buffers\FloatVBO.cpp" />
+    <ClCompile Include="OpenGL\Buffers\InterleavedVAO3D.cpp" />
+    <ClCompile Include="OpenGL\Buffers\InterleavedVBO3D.cpp" />
     <ClCompile Include="OpenGL\Buffers\IntVBO.cpp" />
     <ClCompile Include="OpenGL\Buffers\VAO.cpp" />
     <ClCompile Include="OpenGL\Buffers\VBO.cpp" />
@@ -169,6 +171,7 @@
     <ClCompile Include="OpenGL\Buffers\VertexUVIndexVAO.cpp" />
     <ClCompile Include="OpenGL\Buffers\VertexUVNormalIndexVAO3D.cpp" />
     <ClCompile Include="OpenGL\DrawEngine.cpp" />
+    <ClCompile Include="OpenGL\InterleavedBufferController.cpp" />
     <ClCompile Include="OpenGL\ModelController.cpp" />
     <ClCompile Include="OpenGL\OGLHelpers.cpp" />
     <ClCompile Include="OpenGL\Programs\FragmentShader.cpp" />
@@ -185,6 +188,7 @@
     <ClCompile Include="Shapes\CenterRectangle.cpp" />
     <ClCompile Include="Shapes\Color.cpp" />
     <ClCompile Include="Shapes\ColorRectangle.cpp" />
+    <ClCompile Include="Shapes\Grid3DYOffset.cpp" />
     <ClCompile Include="Shapes\Model.cpp" />
     <ClCompile Include="Shapes\NormalBox.cpp" />
     <ClCompile Include="Shapes\NormalFace.cpp" />
@@ -218,11 +222,14 @@
     <ClInclude Include="Constants\axis.hpp" />
     <ClInclude Include="Containers\ObjectPool.hpp" />
     <ClInclude Include="Containers\SortedObjectPool.hpp" />
+    <ClInclude Include="DwarfFortress\tile_types.hpp" />
     <ClInclude Include="MainLoop.hpp" />
     <ClInclude Include="OpenGL\ArrayTexture.hpp" />
     <ClInclude Include="OpenGL\ArrayTextureController.hpp" />
     <ClInclude Include="OpenGL\BufferController.hpp" />
     <ClInclude Include="OpenGL\Buffers\FloatVBO.hpp" />
+    <ClInclude Include="OpenGL\Buffers\InterleavedVAO3D.hpp" />
+    <ClInclude Include="OpenGL\Buffers\InterleavedVBO3D.hpp" />
     <ClInclude Include="OpenGL\Buffers\IntVBO.hpp" />
     <ClInclude Include="OpenGL\Buffers\VAO.hpp" />
     <ClInclude Include="OpenGL\Buffers\VBO.hpp" />
@@ -231,6 +238,7 @@
     <ClInclude Include="OpenGL\Buffers\VertexUVNormalIndexVAO3D.hpp" />
     <ClInclude Include="OpenGL\DrawEngine.hpp" />
     <ClInclude Include="OpenGL\DrawEngineStructs.hpp" />
+    <ClInclude Include="OpenGL\InterleavedBufferController.hpp" />
     <ClInclude Include="OpenGL\ModelController.hpp" />
     <ClInclude Include="OpenGL\OGLHelpers.hpp" />
     <ClInclude Include="OpenGL\Programs\FragmentShader.hpp" />
@@ -247,6 +255,7 @@
     <ClInclude Include="Shapes\CenterRectangle.hpp" />
     <ClInclude Include="Shapes\Color.hpp" />
     <ClInclude Include="Shapes\ColorRectangle.hpp" />
+    <ClInclude Include="Shapes\Grid3DYOffset.hpp" />
     <ClInclude Include="Shapes\Model.hpp" />
     <ClInclude Include="Shapes\NormalBox.hpp" />
     <ClInclude Include="Shapes\NormalFace.hpp" />

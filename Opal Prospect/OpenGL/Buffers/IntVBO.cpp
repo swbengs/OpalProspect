@@ -39,7 +39,7 @@ void IntVBO::bindVBO() const
 
 void IntVBO::unbindVBO() const
 {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, getID());
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void IntVBO::createVBO() const

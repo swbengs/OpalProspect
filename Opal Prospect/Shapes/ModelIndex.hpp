@@ -30,7 +30,7 @@ SOFTWARE.
 */
 
 /*
-Class that stores any generic model with indicies
+Class that stores any generic model with indicies. Models fill the given vector in with faces first and then triangles. Indicies assume this stays true as well.
 */
 
 class ModelIndex : public Model
@@ -44,6 +44,7 @@ public:
     void fillUV(std::vector<float>& vector) const;
     void fillNormal(std::vector<float>& vector) const;
     void fillIndex(std::vector<unsigned int>& vector) const;
+    void fillInterleaved(std::vector<float>& vector) const;
     //vertex 4 floats each * 4 points
     //uv 3 floats * 4 points
     //index 6 ints 2 triangles 3 index each
@@ -55,6 +56,7 @@ public:
     void fillFaceUV(size_t index, std::vector<float>& vector) const;
     void fillFaceNormal(size_t index, std::vector<float>& vector) const;
     void fillFaceIndex(size_t index, std::vector<unsigned int>& vector) const;
+    void fillInterleavedFace(size_t index, std::vector<float>& vector) const;
 
     //gets
     const NormalFace& getFace(size_t index) const;

@@ -25,13 +25,16 @@
 
 #include "..\Cameras\Camera.hpp"
 #include "..\Shapes\Grid3D.hpp"
+#include "..\Shapes\Grid3DYOffset.hpp"
 #include "..\Shapes\RightRectanglePyramidNormal.hpp"
 #include "..\Shapes\ShapeToModel.hpp"
 #include "..\Shapes\ModelIndex.hpp"
+#include "Buffers\InterleavedVAO3D.hpp"
 
 #include "DrawEngineStructs.hpp"
 #include "ArrayTextureController.hpp"
 #include "BufferController.hpp"
+#include "InterleavedBufferController.hpp"
 #include "ModelController.hpp"
 
 /*
@@ -68,6 +71,7 @@ public:
     DrawEngine();
 
     void addModel(ModelIndex& model);
+    void addInterleavedModel(ModelIndex& model);
     void addTexture(const ArrayTexture& texture);
     void draw(const Camera &camera);
 
@@ -87,6 +91,7 @@ private:
     const static float Z_NEAR;
     const static float Z_FAR;
     BufferController buffers;
+    InterleavedBufferController interleaved_buffers;
     ArrayTextureController textures;
     ModelController models;
     opengl_state state;
@@ -96,8 +101,10 @@ private:
     VertexUVIndexVAO uvVAO;
     VertexUVIndexVAO uvVAO3D;
     Grid3D grid;
+    Grid3DYOffset grid_off, grid_off2;
     ModelIndex test_model;
     ArrayTexture test_texture;
+    InterleavedVAO3D interleave_vao;
 
     int screen_width; //the actual screen resolution
     int screen_height;
@@ -128,4 +135,6 @@ private:
     //tests
     void arrayTextureTest();
     void bufferControlTest();
+    void interleaveTest();
+    void interleaveDraw(const Camera &camera);
 };

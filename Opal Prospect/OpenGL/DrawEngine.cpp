@@ -39,6 +39,123 @@ SOFTWARE.
 const float DrawEngine::Z_NEAR = 0.1f;
 const float DrawEngine::Z_FAR = 50.0f;
 
+void DrawEngine::interleaveTest()
+{
+    OGLHelpers::getOpenGLError("pre array texture creation", true);
+
+    std::string texture_name = "Textures\\soils.png";
+    test_texture.setFilename(texture_name);
+    test_texture.setTextureWidth(16);
+    test_texture.setTextureHeight(16);
+    test_texture.createTexture();
+    addTexture(test_texture);
+
+    OGLHelpers::getOpenGLError("post array texture creation", true);
+
+    ShapeToModel convert;
+    NormalBox box;
+
+    box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    box.setTextureNumber(19);
+    Point3D front, back, left, right, top, bottom;
+    front.setXYZ(0, 1, 2);
+    back.setXYZ(3, 4, 5);
+    left.setXYZ(6, 7, 8);
+    right.setXYZ(9, 10, 11);
+    top.setXYZ(12, 13, 14);
+    bottom.setXYZ(15, 16, 17);
+    box.setNormal(front, back, left, right, top, bottom);
+
+    convert.convertToModelIndex(box, test_model);
+    test_model.setModelName("test.obj");
+    test_model.setTextureName(texture_name);
+    addInterleavedModel(test_model);
+
+    ModelIndex mod2, mod3, mod4, mod6;
+    box.setTextureNumber(18);
+    convert.convertToModelIndex(box, mod2);
+    mod2.setModelName("test_two");
+    mod2.setTextureName(texture_name);
+    addInterleavedModel(mod2);
+
+    box.setTextureNumber(19);
+    box.setWidthHeightLength(1.0f, 0.2f, 1.0f);
+    convert.convertToModelIndex(box, mod3);
+    mod3.setModelName("test_three");
+    mod3.setTextureName(texture_name);
+    addInterleavedModel(mod3);
+
+    box.setTextureNumber(19);
+    box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    convert.convertToModelIndex(box, mod4);
+    mod4.setModelName("test_four");
+    mod4.setTextureName(texture_name);
+    addInterleavedModel(mod4);
+
+    RightRectanglePyramidNormal pyramid;
+    ModelIndex pyra_mod;
+    pyra_mod.setTextureName(texture_name);
+    pyra_mod.setModelName("pyramid");
+    pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    pyramid.setNormal(front, back, left, right, bottom);
+    pyramid.setTextureNumber(4);
+    /*
+    pyramid.setFrontTextureNumber(100);
+    pyramid.setBackTextureNumber(110);
+    pyramid.setLeftTextureNumber(120);
+    pyramid.setRightTextureNumber(130);
+    pyramid.setBottomTextureNumber(140);
+    */
+    convert.convertToModelIndex(pyramid, pyra_mod);
+    addInterleavedModel(pyra_mod);
+
+    mod4.setModelName("junk");
+    addInterleavedModel(mod4);
+
+    box.setTextureNumber(18);
+    box.setWidthHeightLength(1.0f, 0.2f, 1.0f);
+    convert.convertToModelIndex(box, mod6);
+    mod6.setModelName("test_six");
+    mod6.setTextureName(texture_name);
+    addInterleavedModel(mod6);
+
+    grid_off.setBoxWidthLengthHeight(1.0f, 1.0f, 1.0f);
+    grid_off.setGridWidthLengthHeight(3, 3, 3);
+    grid_off.setYStride(0.2f);
+    grid_off.setYOffset(0.2f);
+    grid_off.create();
+
+    grid_off2.setBoxWidthLengthHeight(1.0f, 0.2f, 1.0f);
+    grid_off2.setGridWidthLengthHeight(3, 3, 3);
+    grid_off2.setYStride(1.0f);
+    grid_off2.setYOffset(0.0f);
+    grid_off2.create();
+
+    /*
+    interleave_vao.setIndexOffset(0);
+    interleave_vao.setMaximumVertexSize(264 * 2 * sizeof(float));
+    interleave_vao.setMaximumIndexSize(36 * 2 * sizeof(unsigned int));
+    interleave_vao.create();
+
+    std::vector<float> vertex;
+    std::vector<unsigned int> index;
+    test_model.fillInterleaved(vertex);
+    mod2.fillInterleaved(vertex);
+
+    test_model.setIndexOffset(0);
+    test_model.fillIndex(index);
+    mod2.setIndexOffset(24);
+    mod2.fillIndex(index);
+
+    interleave_vao.bindMainVBO();
+    interleave_vao.bufferMainVBO(vertex);
+    interleave_vao.bindIndexVBO();
+    interleave_vao.bufferIndex(index);
+    */
+
+    std::cout << "\n";
+}
+
 void DrawEngine::bufferControlTest()
 {
     OGLHelpers::getOpenGLError("pre array texture creation", true);
@@ -79,20 +196,22 @@ void DrawEngine::bufferControlTest()
     addModel(test_model);
     OGLHelpers::getOpenGLError("post model add", true);
 
-    ModelIndex mod2, mod3, mod4;
-    box.setTextureNumber(10);
+    ModelIndex mod2, mod3, mod4, mod6;
+    box.setTextureNumber(18);
     convert.convertToModelIndex(box, mod2);
     mod2.setModelName("test_two");
     mod2.setTextureName(texture_name);
     addModel(mod2);
 
-    box.setTextureNumber(11);
+    box.setTextureNumber(19);
+    box.setWidthHeightLength(1.0f, 0.2f, 1.0f);
     convert.convertToModelIndex(box, mod3);
     mod3.setModelName("test_three");
     mod3.setTextureName(texture_name);
     addModel(mod3);
 
-    box.setTextureNumber(12);
+    box.setTextureNumber(19);
+    box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     convert.convertToModelIndex(box, mod4);
     mod4.setModelName("test_four");
     mod4.setTextureName(texture_name);
@@ -117,6 +236,25 @@ void DrawEngine::bufferControlTest()
 
     mod4.setModelName("junk");
     addModel(mod4);
+
+    box.setTextureNumber(18);
+    box.setWidthHeightLength(1.0f, 0.2f, 1.0f);
+    convert.convertToModelIndex(box, mod6);
+    mod6.setModelName("test_six");
+    mod6.setTextureName(texture_name);
+    addModel(mod6);
+
+    grid_off.setBoxWidthLengthHeight(1.0f, 1.0f, 1.0f);
+    grid_off.setGridWidthLengthHeight(3, 3, 3);
+    grid_off.setYStride(0.2f);
+    grid_off.setYOffset(0.2f);
+    grid_off.create();
+
+    grid_off2.setBoxWidthLengthHeight(1.0f, 0.2f, 1.0f);
+    grid_off2.setGridWidthLengthHeight(3, 3, 3);
+    grid_off2.setYStride(1.0f);
+    grid_off2.setYOffset(0.0f);
+    grid_off2.create();
 
     std::cout << "\n";
 }
@@ -234,9 +372,55 @@ void DrawEngine::addModel(ModelIndex& model)
     pod.vao_reference = buffers.getModelVAOReference(pod.model_name);
 }
 
+/*
+Method to properly add a model interleaved and update all important references it needs to be drawn. This means the texture it wants must already have been added prior to adding said model.
+*/
+void DrawEngine::addInterleavedModel(ModelIndex& model)
+{
+    size_t current;
+    models.addModel(model);
+    current = models.getCount();
+    interleaved_buffers.addModel(models.modifyModel(current));
+    //texture name, model name, and index count are already entered
+    model_pod& pod = models.modifyModelPOD(current);
+    pod.texture_reference = textures.getTextureReference(pod.texture_name);
+    pod.index_offset_bytes = interleaved_buffers.getIndexByteOffset(pod.model_name);
+    pod.vao_reference = interleaved_buffers.getModelVAOReference(pod.model_name);
+}
+
 void DrawEngine::addTexture(const ArrayTexture& texture)
 {
     textures.addTexture(texture);
+}
+
+void DrawEngine::interleaveDraw(const Camera &camera)
+{
+    OGLHelpers::getOpenGLError("pre draw", true);
+
+    glm::vec3 first = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 second = glm::vec3(3.0f, 0.0f, 0.0f);
+
+    texture_program.use();
+    test_texture.bind();
+    interleave_vao.bindVAO();
+
+    glm::mat4 view;
+    camera.fillViewMatrix(view);
+
+    glm::mat4 model;
+    model = glm::translate(model, first);
+    glm::mat4 mvp = persp * view * model;
+    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(1 * 36 * sizeof(unsigned int)));
+
+    model = glm::mat4();
+    model = glm::translate(model, second);
+    mvp = glm::mat4();
+    mvp = persp * view * model;
+    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(0 * 36 * sizeof(unsigned int)));
+
+    OGLHelpers::getOpenGLError("post draw", true);
 }
 
 void DrawEngine::draw(const Camera &camera)
@@ -255,11 +439,45 @@ void DrawEngine::draw(const Camera &camera)
     draw(models.getModelPOD(2), camera, &second, nullptr, nullptr);
     draw(models.getModelPOD(3), camera, &third, nullptr, nullptr);
     draw(models.getModelPOD(4), camera, &fourth, nullptr, nullptr);
-    draw(models.getModelPOD(5), camera, &fifth, nullptr, nullptr);
+    //draw(models.getModelPOD(5), camera, &fifth, nullptr, nullptr);
+    draw("pyramid", camera, &fifth, nullptr, nullptr);
     draw(models.getModelPOD(6), camera, &sixth, nullptr, nullptr);
     //draw("error", camera, &first, nullptr, nullptr);
 
-    /*
+    //draw grid
+    Point3D start(6.0f, 6.0f, 6.0f);
+    CenterBox grid_box;
+    glm::vec3 grid_pos;
+    for (unsigned int i = 0; i < grid_off.getGridCount(); i++)
+    {
+        grid_box = grid_off.getBox(i);
+        grid_pos = glm::vec3(grid_box.getX() + start.x, grid_box.getY() + start.y, grid_box.getZ() + start.z);
+        if (i % 2 == 0)
+        {
+            draw(models.getModelPOD(2), camera, &grid_pos, nullptr, nullptr);
+        }
+        else
+        {
+            draw(models.getModelPOD(4), camera, &grid_pos, nullptr, nullptr);
+        }
+    }
+
+    start.setXYZ(6.0f, 6.0f, 6.0f);
+    for(unsigned int i = 0; i < grid_off2.getGridCount(); i++)
+    {
+        grid_box = grid_off2.getBox(i);
+        grid_pos = glm::vec3(grid_box.getX() + start.x, grid_box.getY() + start.y, grid_box.getZ() + start.z);
+        if (i % 2 == 0)
+        {
+            draw(models.getModelPOD(3), camera, &grid_pos, nullptr, nullptr);
+        }
+        else
+        {
+            draw(models.getModelPOD(7), camera, &grid_pos, nullptr, nullptr);
+        }
+    }
+
+    /* older code. soon can be removed entirely
     draw("test.obj", camera, &first, nullptr, nullptr);
 
     model_pod junk;
@@ -289,6 +507,8 @@ void DrawEngine::draw(const Camera &camera)
     junk4.model_name = "test_four";
     draw(junk4, camera, &fourth, nullptr, nullptr);
     */
+
+    //interleaveDraw(camera);
 }
 
 void DrawEngine::setup()
@@ -387,11 +607,11 @@ void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const g
         state.texture_id = test_texture.getID();
     }
 
-    if (buffers.getVAOID(model_info.vao_reference) != state.vao_id)
+    if (interleaved_buffers.getVAOID(model_info.vao_reference) != state.vao_id)
     {
         //std::cout << "binding vaoID " << buffers.getVAOID(model_info.vao_reference) << "\n";
-        buffers.bindVAO(model_info.vao_reference);
-        state.vao_id = buffers.getVAOID(model_info.vao_reference);
+        interleaved_buffers.bindVAO(model_info.vao_reference);
+        state.vao_id = interleaved_buffers.getVAOID(model_info.vao_reference);
     }
 
     glm::mat4 view;
@@ -427,6 +647,8 @@ void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const g
 
 void DrawEngine::setupOpenGLContext()
 {
+    //default OpenGL settings we use
+
     //glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -543,7 +765,8 @@ void DrawEngine::setupObjects()
     }
 
     //arrayTextureTest();
-    bufferControlTest();
+    //bufferControlTest();
+    interleaveTest();
 }
 
 void DrawEngine::resize()

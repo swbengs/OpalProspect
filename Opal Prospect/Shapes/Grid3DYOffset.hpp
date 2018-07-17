@@ -1,5 +1,4 @@
 #pragma once
-
 //std lib includes
 #include <vector>
 
@@ -30,39 +29,52 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-//Creates a grid in the first quadrant with a given width and height. The first rectangle's bottom left will be at 0,0. The last rectangle will be the furthest top right. All rectangles are of equal size.
+/*
+Description: Grid that will support an offset on the y axis. This allows two grids to be interweaved with each other
+*/
 
-class Grid3D
+class Grid3DYOffset
 {
 public:
-    Grid3D();
+    Grid3DYOffset();
 
     void create(); //create the grid. Any previous grid is deleted and only the new one will exist.
 
     //gets
-    int getGridSize() const;
-    int getGridWidth() const;
-    int getGridHeight() const;
-    int getGridLength() const;
+    unsigned int getGridCount() const;
+    unsigned int getGridWidth() const;
+    unsigned int getGridHeight() const;
+    unsigned int getGridLength() const;
 
     float getBoxWidth() const;
     float getBoxHeight() const;
     float getBoxLength() const;
-    CenterBox getBox(int index) const;
+    CenterBox getBox(unsigned int index) const;
+    float getYOffset() const;
+    float getYStride() const;
+
     //sets
-    void setGridWidth(int width);
-    void setGridHeight(int height);
-    void setGridLength(int length);
+    void setGridWidth(unsigned int width);
+    void setGridHeight(unsigned int height);
+    void setGridLength(unsigned int length);
+    void setGridWidthLengthHeight(unsigned int width, unsigned int height, unsigned int length);
 
     void setBoxWidth(float width);
     void setBoxHeight(float height);
     void setBoxLength(float length);
+    void setBoxWidthLengthHeight(float width, float height, float length);
+
+    void setYOffset(float offset);
+    void setYStride(float stride);
 
 private:
     std::vector<Point3D> grid;
     Box box;
 
-    int grid_width;
-    int grid_height;
-    int grid_length;
+    float y_offset; //change from origin
+    float y_stride; //distance between each layer
+    unsigned int grid_width;
+    unsigned int grid_height;
+    unsigned int grid_length;
 };
+

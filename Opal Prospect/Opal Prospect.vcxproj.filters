@@ -40,6 +40,9 @@
     <Filter Include="Text Files\Texture texts">
       <UniqueIdentifier>{f6a17d58-f81d-471f-a696-5e1764da73f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DwarfFortress">
+      <UniqueIdentifier>{f8f7d195-59d7-4df9-90d0-6cb8bc16783b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Opal Prospect.cpp">
@@ -211,6 +214,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Shapes\RightRectanglePyramid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes\Grid3DYOffset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Buffers\InterleavedVAO3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\Buffers\InterleavedVBO3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL\InterleavedBufferController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -394,6 +409,21 @@
     </ClInclude>
     <ClInclude Include="Shapes\RightRectanglePyramid.hpp">
       <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\Grid3DYOffset.hpp">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\Buffers\InterleavedVAO3D.hpp">
+      <Filter>OpenGL\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\Buffers\InterleavedVBO3D.hpp">
+      <Filter>OpenGL\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\InterleavedBufferController.hpp">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="DwarfFortress\tile_types.hpp">
+      <Filter>DwarfFortress</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

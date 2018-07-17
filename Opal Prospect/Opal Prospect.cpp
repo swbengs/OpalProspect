@@ -18,6 +18,7 @@
 #include "Shapes\Point3D.hpp"
 #include "Shapes\Point3DInt.hpp"
 #include "Shapes\Point4D.hpp"
+#include "Shapes\Grid3DYOffset.hpp"
 
 /*
 MIT License
@@ -239,14 +240,36 @@ void pointConversion()
     std::cout << "\n";
 }
 
+void offest_grid_test()
+{
+    Grid3DYOffset grid;
+
+    unsigned int grid_width = 3;
+    unsigned int grid_height = 2;
+    unsigned int grid_length = 3;
+    float offset = 100.0f;
+    float box_width = 1.0f;
+    float box_height = 1.0f;
+    float box_length = 1.0f;
+
+    grid.setGridWidthLengthHeight(grid_width, grid_height, grid_length);
+    grid.setYOffset(offset);
+    grid.setBoxWidthLengthHeight(box_width, box_height, box_length);
+
+    grid.create();
+
+    std::cout << "Done\n";
+}
+
 void tests()
 {
     //texture_array_test();
     //normalFaceTest();
     //shapeToModelTest();
-    trivialTests();
-    podTest();
+    //trivialTests();
+    //podTest();
     //pointConversion();
+    offest_grid_test();
 }
 
 int main(void)
