@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 /*
 MIT License
 
@@ -56,4 +58,63 @@ enum DF_TileTypeMaterial
     DF_TREE,
     DF_UNDERWORLD_GATE
 };
+
+std::string DFTileTypeMaterialString(DF_TileTypeMaterial e)
+{
+    switch (e)
+    {
+    case DF_AIR:
+        return "air";
+    case DF_ASHES:
+        return "ashes";
+    case DF_BROOK:
+        return "brook";
+    case DF_CAMPFIRE:
+        return "campfire";
+    case DF_CONSTRUCTION:
+        return "construction";
+    case DF_DRIFTWOOD:
+        return "driftwood";
+    case DF_FEATURE:
+        return "feature";
+    case DF_FIRE:
+        return "fire";
+    case DF_FROZEN_LIQUID:
+        return "frozen liquid";
+    case DF_GRASS_DARK:
+        return "grass dark";
+    case DF_GRASS_DEAD:
+        return "grass dead";
+    case DF_GRASS_DRY:
+        return "grass dry";
+    case DF_GRASS_LIGHT:
+        return "grass light";
+    case DF_HFS:
+        return "hfs";
+    case DF_LAVA_STONE:
+        return "lava stone";
+    case DF_MAGMA:
+        return "magma";
+    case DF_MINERAL:
+        return "mineral";
+    case DF_MUSHROOM:
+        return "mushroom";
+    case DF_PLANT:
+        return "plant";
+    case DF_POOL:
+        return "pool";
+    case DF_ROOT:
+        return "root";
+    case DF_SOIL:
+        return "soil";
+    case DF_STONE:
+        return "stone";
+    case DF_TREE:
+        return "tree";
+    case DF_UNDERWORLD_GATE:
+        return "underworld gate";
+    default:
+        return "bad DF_TileTypeMaterial enum ";
+    }
+}
 
