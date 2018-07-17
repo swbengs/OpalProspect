@@ -439,7 +439,8 @@ void DrawEngine::draw(const Camera &camera)
     draw(models.getModelPOD(2), camera, &second, nullptr, nullptr);
     draw(models.getModelPOD(3), camera, &third, nullptr, nullptr);
     draw(models.getModelPOD(4), camera, &fourth, nullptr, nullptr);
-    draw(models.getModelPOD(5), camera, &fifth, nullptr, nullptr);
+    //draw(models.getModelPOD(5), camera, &fifth, nullptr, nullptr);
+    draw("pyramid", camera, &fifth, nullptr, nullptr);
     draw(models.getModelPOD(6), camera, &sixth, nullptr, nullptr);
     //draw("error", camera, &first, nullptr, nullptr);
 

@@ -222,6 +222,7 @@
     <ClInclude Include="Constants\axis.hpp" />
     <ClInclude Include="Containers\ObjectPool.hpp" />
     <ClInclude Include="Containers\SortedObjectPool.hpp" />
+    <ClInclude Include="DwarfFortress\tile_types.hpp" />
     <ClInclude Include="MainLoop.hpp" />
     <ClInclude Include="OpenGL\ArrayTexture.hpp" />
     <ClInclude Include="OpenGL\ArrayTextureController.hpp" />
