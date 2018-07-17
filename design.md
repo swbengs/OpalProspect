@@ -16,8 +16,8 @@ All headers should have license info now. Need to check that they all have a des
 # Draw engine specifics
 1. OpenGL 3.3 is the version I am building for. Allows more modern shader programming without requiring too new of a card. 4.5 support may be added at a later date when more important features are done(no promises though).
 2. Array Textures(Finished) 16x16 pixel textures currently. Anyone is free to add their own higher quality textures.
-3. Indexed models aka gl draw elements(good progress)
-4. Basic shadow maps(not started)
+3. Indexed models aka gl draw elements
+4. Basic shadow maps
 5. Simple models for workstations and other built structures.
 6. Currently all data is broken up and stored in multiple VBOs. Vertex, UV, and normals each have a seperate buffer. Might be easier to manage if it was all interweaved instead. Hampers our ability to change model data though. Tradeoffs!
 
@@ -33,12 +33,12 @@ one that allows an offset, and then combine two offset grids to make this single
 visiable and make either one or multiple models to be drawn. 
 
 # Current WIP(s)
-1. Finishing model drawing automation. Currently you can load them in and fill in the model POD to draw, but it should all be filled in
-by the system.(DONE just needs actual tests written to make sure it works correctly. Appears to work when used to draw)
-2. Getting most of the test world's map textures placed correctly for first attempt at drawing the DF world
-3. Write ArrayTextureController to be simlar to model controller.(DONE)
-4. Road to 0.1! Requires offset grid so we have have the floors and tiles in a single big grid but still seperate. Floors will be shorter but still the same 1x1 x and z. Thinking 0.1f height for first version. May make that taller or shorter depending on how it looks.
-
+1. Getting most of the test world's map textures placed correctly for first attempt at drawing the DF world
+2. Planning how a tile should be designed. One super tile that fills all roles or specialized ones.
+3. System to combine terrain into a single big model or multiple seperate if I keep the textures as they are. Single is preferred.
+4. Support to take individual array textures and combine them into a single large array texture up to the limit(256 for OpenGL 3.3).
+5. Ramp model and support to have it rotate so only one copy is needed. Texture number/name can change and its rotation can change and the required faces/triangles can be added to the terrain model instead of making lots of new models. Terrain class should probably take care of this.
+6. Terrain class in all its superclass glory. Try to split this up into smaller classes
 
 # Specifics
 ## Finishing model drawing automation
