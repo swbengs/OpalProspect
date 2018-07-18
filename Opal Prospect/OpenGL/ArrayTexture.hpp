@@ -1,7 +1,10 @@
 #pragma once
 
+//std lib includes
 #include <string>
 #include <vector>
+
+//other includes
 
 /*
 MIT License
@@ -28,7 +31,8 @@ SOFTWARE.
 */
 
 /*
-Class to load and store a texture.
+Class to load and store a texture that is array of textures. 256 max supported z depth with OpenGL 3.3. 4.0+ adds support for 1024 or more I believe. Also can load multiple files and combine them into a single array texture as long as they all
+share the same individual size. Instead of a texture atlas, one big image that you divide with texture coordinates, you have lots of smaller textures of the same size. Such as 16x16px
 */
 
 class ArrayTexture
@@ -40,7 +44,6 @@ public:
     void unbind() const;
     void createTexture(); //creates the id and loads the texture file the given filename
     void destroy();
-    
 
     //gets
     unsigned int getID() const;
@@ -50,6 +53,7 @@ public:
     int getAtlasWidth() const;
     int getAtlasHeight() const;
     int getAtlasDepth() const;
+    size_t getAtlasCount() const;
 
     //sets
     void setTextureWidth(int width);
@@ -64,7 +68,7 @@ private:
     std::string name; //filename
     std::vector<unsigned char> atlas_data;
 
-    //these two are given by user/file
+    //these two are given by file
     int texture_width; //in pixels for each individual texture in the array
     int texture_height; 
 

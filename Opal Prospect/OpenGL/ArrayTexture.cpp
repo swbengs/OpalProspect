@@ -53,12 +53,12 @@ void ArrayTexture::unbind() const
 
 void ArrayTexture::createTexture()
 {
-    int color_components = 4;
+    const int color_components = 4;
 
     //values to fill in so it's more easily readable
-    int level = 0; //not using mipmaps so it's always 0
-    int border = 0; //no border being used so set to 0
-    void* data = NULL; //will upload data later so leave it NULL
+    const int level = 0; //not using mipmaps so it's always 0
+    const int border = 0; //no border being used so set to 0
+    void* data = nullptr; //will upload data later so leave it NULL
 
     //UV(xy) = ST
     if (name.compare("") != 0) //make sure it contains something
@@ -81,7 +81,6 @@ void ArrayTexture::createTexture()
         atlas_depth = getAtlasWidth() * getAtlasHeight();
 
         OGLHelpers::getOpenGLError("pre teximage3d");
-
         //void glTexImage3D( GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid * data);
         glTexImage3D(GL_TEXTURE_2D_ARRAY, level, GL_RGBA8, getWidth(), getHeight(), getAtlasDepth(), border, GL_RGBA, GL_UNSIGNED_BYTE, data); //fill in the data on the graphics card
 
@@ -159,6 +158,11 @@ int ArrayTexture::getAtlasHeight() const
 int ArrayTexture::getAtlasDepth() const
 {
     return atlas_depth;
+}
+
+size_t ArrayTexture::getAtlasCount() const
+{
+    return getAtlasDepth();
 }
 
 std::string ArrayTexture::getFilename() const
