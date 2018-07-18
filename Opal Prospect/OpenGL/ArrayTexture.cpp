@@ -73,7 +73,7 @@ void ArrayTexture::createTexture()
 
         loadTexture(name, image_width, image_height, atlas_data); //takes the filename and loads from it
 
-        flipVertical(image_width*color_components, image_height, atlas_data);
+        flipVertical(image_width*color_components, image_height, atlas_data[0]);
 
         //calculate atlas width, height, and depth
         atlas_width = image_width / getWidth();
@@ -110,7 +110,7 @@ void ArrayTexture::createTexture()
             int atlas_y = n / getAtlasWidth();
             int atlas_x = n - getAtlasWidth() * atlas_y;
 
-            extractTexture(pixel_data, start, atlas_x, atlas_y, pixel_size);
+            extractTexture(pixel_data, atlas_data[0], start, atlas_x, atlas_y, pixel_size);
             uploadTexture(n, pixel_data.data());
             OGLHelpers::getOpenGLError("loop array texture uploads", true);
         }
@@ -207,7 +207,7 @@ void ArrayTexture::testLoading(std::vector<unsigned char>& store_data)
 
         loadTexture(name, image_width, image_height, atlas_data); //takes the filename and loads from it
 
-        flipVertical(image_width*color_components, image_height, atlas_data);
+        flipVertical(image_width*color_components, image_height, atlas_data[0]);
 
         //calculate atlas width, height, and depth
         atlas_width = image_width / getWidth();
@@ -239,7 +239,7 @@ void ArrayTexture::testLoading(std::vector<unsigned char>& store_data)
             int atlas_y = n / getAtlasWidth();
             int atlas_x = n - getAtlasWidth() * atlas_y;
 
-            extractTexture(pixel_data, start, atlas_x, atlas_y, pixel);
+            extractTexture(pixel_data, atlas_data[0], start, atlas_x, atlas_y, pixel);
             //uploadTexture(n, data.data());
             for (unsigned int a = 0; a < pixel_data.size(); a++)
             {
@@ -253,10 +253,11 @@ void ArrayTexture::testLoading(std::vector<unsigned char>& store_data)
 }
 
 //private
-void ArrayTexture::loadTexture(std::string filename, int& width, int& height, std::vector<unsigned char>& vector)
+void ArrayTexture::loadTexture(std::string filename, int& width, int& height, std::vector<std::vector<unsigned char>>& vector)
 {
     png_image image;
 
+    //library is in C so some C calls are used. C++ is used when possible
     memset(&image, 0, (sizeof image));
     image.version = PNG_IMAGE_VERSION;
 
@@ -266,11 +267,14 @@ void ArrayTexture::loadTexture(std::string filename, int& width, int& height, st
 
         //buffer = malloc(PNG_IMAGE_SIZE(image));
         //unsigned char* buffer = new unsigned char[PNG_IMAGE_SIZE(image)];
-        vector.resize(PNG_IMAGE_SIZE(image)); //create the buffer to hold the image
+        std::vector<unsigned char> temp;
+        vector.push_back(temp);
+        size_t index = vector.size() - 1;
+        vector[index].resize(PNG_IMAGE_SIZE(image)); //create the buffer to hold the image
 
-        if (vector.size() == PNG_IMAGE_SIZE(image) &&
-            png_image_finish_read(&image, NULL/*background*/, vector.data(),
-                0/*row_stride*/, NULL/*colormap*/) != 0)
+        if (vector[index].size() == PNG_IMAGE_SIZE(image) &&
+            png_image_finish_read(&image, nullptr/*background*/, vector[index].data(),
+                0/*row_stride*/, nullptr/*colormap*/) != 0)
         {
             //do something with the image
 
@@ -297,6 +301,9 @@ void ArrayTexture::loadTexture(std::string filename, int& width, int& height, st
     }
 }
 
+/*
+This method flips image since it starts at the top left, while OpenGL starts from the bottom left. This makes it look correct when rendered
+*/
 void ArrayTexture::flipVertical(int width, int height, std::vector<unsigned char>& vector)
 {
     int current_row;
@@ -328,7 +335,7 @@ void ArrayTexture::uploadTexture(int z_offset, void* data) const
     glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, x_offset, y_offset, z_offset, getWidth(), getHeight(), count, GL_RGBA, GL_UNSIGNED_BYTE, data);
 }
 
-void ArrayTexture::extractTexture(std::vector<unsigned char>& data, size_t start, int atlas_x, int atlas_y, int pixel_size) const
+void ArrayTexture::extractTexture(std::vector<unsigned char>& data, std::vector<unsigned char>& atlas, size_t start, int atlas_x, int atlas_y, int pixel_size) const
 {
     int texture_row_size = pixel_size * getWidth(); //single texture
     int atlas_row_size = texture_row_size * getAtlasWidth(); //entire atlas which is texture row size * atlas width
@@ -341,7 +348,7 @@ void ArrayTexture::extractTexture(std::vector<unsigned char>& data, size_t start
     {
         for (int x = 0; x < texture_row_size; x++)
         {
-            data[start + x + y * texture_row_size] = atlas_data[bottom_left_start + x + y * atlas_row_size];
+            data[start + x + y * texture_row_size] = atlas[bottom_left_start + x + y * atlas_row_size];
             //data.at(start + x + y * texture_row_size) = atlas_data.at(bottom_left_start + x + y * atlas_row_size);
         }
     }

@@ -66,7 +66,7 @@ public:
 private:
     unsigned int id; //opengl ID to this texture
     std::string name; //filename
-    std::vector<unsigned char> atlas_data;
+    std::vector<std::vector<unsigned char>> atlas_data; //this way we can have the images completely seperate. Each image is loaded into its own unsigned char vector we can access
 
     //these two are given by file
     int texture_width; //in pixels for each individual texture in the array
@@ -77,9 +77,9 @@ private:
     int atlas_height;
     int atlas_depth;//in total layers. OpenGL 3.0 and above has 256 minimum. 4.0 and above has 2048 or more
 
-    void loadTexture(std::string filename, int& texture_width, int& texture_height, std::vector<unsigned char>& vector);
+    void loadTexture(std::string filename, int& texture_width, int& texture_height, std::vector<std::vector<unsigned char>>& vector);
     void flipVertical(int width, int height, std::vector<unsigned char>& vector);
     void uploadTexture(int z_offset, void* data) const;
 
-    void extractTexture(std::vector<unsigned char>& data, size_t start, int atlas_x, int atlas_y, int pixel_size) const;
+    void extractTexture(std::vector<unsigned char>& data, std::vector<unsigned char>& atlas, size_t start, int atlas_x, int atlas_y, int pixel_size) const;
 };
