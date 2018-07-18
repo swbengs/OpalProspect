@@ -8,29 +8,23 @@ This is to help give an idea what needs to be done and what is currently being w
 All headers should have license info now. Need to check that they all have a description about what they do.(All files should have a license last I checked. Many are missing a description still)
 
 # Language(s)
-1. C(almost entirely only for supported libraries)
+1. C89 and C99(almost entirely only for supported libraries and mostly C89)
 2. C++ 11(bulk of the project)
 3. LUA 5.2(the version that DFHack was using last I checked. Will be used to write script to gather fortress map data)
 4. OpenGL 3.3 and it's GLSL shader language(version 3.3 I believe the number is. Check the provided shader files for the exact number)
 
 # Draw engine specifics
 1. OpenGL 3.3 is the version I am building for. Allows more modern shader programming without requiring too new of a card. 4.5 support may be added at a later date when more important features are done(no promises though).
-2. Array Textures(Finished) 16x16 pixel textures currently. Anyone is free to add their own higher quality textures.
+2. Array Textures 16x16 pixel textures currently. Anyone is free to add their own higher quality textures.
 3. Indexed models aka gl draw elements
 4. Basic shadow maps
 5. Simple models for workstations and other built structures.
-6. Currently all data is broken up and stored in multiple VBOs. Vertex, UV, and normals each have a seperate buffer. Might be easier to manage if it was all interweaved instead. Hampers our ability to change model data though. Tradeoffs!
+6. Interleaved and non interleaved VBO.
 
 # Dwarf Fortress stuff
 1. LUA script to extract map info(not started)
 2. Way of reading in file created by LUA script into visualizer(not started)
 3. Textures for all terrain types(started but only barely) See the screenshots included and the 8x12 pixel copies from DF. Re draw as 16x16 pixel textures. Actual realistic textures or your own style are more than welcome! I am not an artist.
-
-# Current ideas/plans
-1: Terrain will be done as an two interweaved grids. One for the tiles themself, and one for the floors that seperate them. 
-This will allow the two types to be the same or even different. I already have a 2D and 3D grid class read to go. Won't be hard to make
-one that allows an offset, and then combine two offset grids to make this single class. Will be used to generate what tiles/floors are 
-visiable and make either one or multiple models to be drawn. 
 
 # Current WIP(s)
 1. Getting most of the test world's map textures placed correctly for first attempt at drawing the DF world
@@ -39,6 +33,7 @@ visiable and make either one or multiple models to be drawn.
 4. Support to take individual array textures and combine them into a single large array texture up to the limit(256 for OpenGL 3.3).
 5. Ramp model and support to have it rotate so only one copy is needed. Texture number/name can change and its rotation can change and the required faces/triangles can be added to the terrain model instead of making lots of new models. Terrain class should probably take care of this.
 6. Terrain class in all its superclass glory. Try to split this up into smaller classes
+7. Generic file path and filename class that can handle windows or linux
 
 # Specifics
 ## Finishing model drawing automation
