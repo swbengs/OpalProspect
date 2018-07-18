@@ -1,7 +1,7 @@
 This document is an overview of what's been done and what still needs to be done. Try to keep this about general topics and not specifics.
 This is to help give an idea what needs to be done and what is currently being worked on. Further below I go into specifics about what is being done and why.
 
-## Updated: 6/8/2018
+## Updated: 7/18/2018
 
 # Critical issues(try and do this first)
 1. Code cleanup and license adding. Much of the code is fairly old and should be updated to include the license and the some basic description of what it does.
