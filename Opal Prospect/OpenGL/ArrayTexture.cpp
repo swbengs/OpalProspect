@@ -99,7 +99,9 @@ void ArrayTexture::createTexture()
         int pixel_size = sizeof(unsigned char) * color_components;
 
         std::vector<unsigned char> pixel_data;
-        pixel_data.resize(pixel_size * getWidth() * getHeight()); //we need actual elements to be there
+        std::vector<unsigned char> complete_texture;
+        pixel_data.resize(pixel_size * getWidth() * getHeight()); //we need actual elements to be there. this is for a single texture and gets reused. This must be resize since we assume that all items are already inside the vector
+        complete_texture.reserve(pixel_data.size() * getAtlasCount()); //holds the complete texture that is uploaded in one go. Only reserve them since we insert later
 
         //load each atlas part seperately
         int start = 0;
@@ -111,9 +113,12 @@ void ArrayTexture::createTexture()
             int atlas_x = n - getAtlasWidth() * atlas_y;
 
             extractTexture(pixel_data, atlas_data[0], start, atlas_x, atlas_y, pixel_size);
-            uploadTexture(n, pixel_data.data());
+            //uploadTexture(n, pixel_data.data());
+            complete_texture.insert(complete_texture.end(), pixel_data.begin(), pixel_data.end());
             OGLHelpers::getOpenGLError("loop array texture uploads", true);
         }
+
+        uploadCompleteTexture(getAtlasDepth(), complete_texture.data());
 
         OGLHelpers::getOpenGLError("post array texture uploads");
         std::cout << "\n \n";
@@ -162,7 +167,7 @@ int ArrayTexture::getAtlasDepth() const
 
 size_t ArrayTexture::getAtlasCount() const
 {
-    return getAtlasDepth();
+    return static_cast<size_t>(getAtlasDepth());
 }
 
 std::string ArrayTexture::getFilename() const
@@ -324,10 +329,26 @@ void ArrayTexture::flipVertical(int width, int height, std::vector<unsigned char
 
 void ArrayTexture::uploadTexture(int z_offset, void* data) const
 {
-    int level = 0;
-    int x_offset = 0;
-    int y_offset = 0;
-    int count = 1;
+    const int level = 0;
+    const int x_offset = 0;
+    const int y_offset = 0;
+    const int count = 1; //always one since we only send the textures up one by one
+
+    //z offset specifies what level you want to start on. 0 is base. You can upload it all from 0 or just do them idividually
+
+    //void glTexSubImage3D(	GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid * pixels);
+    glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, x_offset, y_offset, z_offset, getWidth(), getHeight(), count, GL_RGBA, GL_UNSIGNED_BYTE, data);
+}
+
+/*
+Sends the entire texture up in one go instead of individual layers
+*/
+void ArrayTexture::uploadCompleteTexture(int count, void* data) const
+{
+    const int level = 0;
+    const int x_offset = 0;
+    const int y_offset = 0;
+    const int z_offset = 0; //start at the beginning
 
     //z offset specifies what level you want to start on. 0 is base. You can upload it all from 0 or just do them idividually
 

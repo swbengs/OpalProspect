@@ -79,7 +79,8 @@ private:
 
     void loadTexture(std::string filename, int& texture_width, int& texture_height, std::vector<std::vector<unsigned char>>& vector);
     void flipVertical(int width, int height, std::vector<unsigned char>& vector);
-    void uploadTexture(int z_offset, void* data) const;
+    void uploadTexture(int z_offset, void* data) const; //void pointers because we don't care what the data is. Just send it up byte by byte
+    void uploadCompleteTexture(int count, void* data) const;
 
     void extractTexture(std::vector<unsigned char>& data, std::vector<unsigned char>& atlas, size_t start, int atlas_x, int atlas_y, int pixel_size) const;
 };
