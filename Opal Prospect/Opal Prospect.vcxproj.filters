@@ -228,6 +228,12 @@
     <ClCompile Include="OpenGL\InterleavedBufferController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OpenGL\Image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FilePath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\ArrayTexture.hpp">
@@ -424,6 +430,12 @@
     </ClInclude>
     <ClInclude Include="DwarfFortress\tile_types.hpp">
       <Filter>DwarfFortress</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\Image.hpp">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="FilePath.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

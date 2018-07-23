@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClCompile Include="Cameras\Camera.cpp" />
     <ClCompile Include="Cameras\FlightCamera.cpp" />
+    <ClCompile Include="FilePath.cpp" />
     <ClCompile Include="MainLoop.cpp" />
     <ClCompile Include="Opal Prospect.cpp" />
     <ClCompile Include="OpenGL\ArrayTexture.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="OpenGL\Buffers\VertexUVIndexVAO.cpp" />
     <ClCompile Include="OpenGL\Buffers\VertexUVNormalIndexVAO3D.cpp" />
     <ClCompile Include="OpenGL\DrawEngine.cpp" />
+    <ClCompile Include="OpenGL\Image.cpp" />
     <ClCompile Include="OpenGL\InterleavedBufferController.cpp" />
     <ClCompile Include="OpenGL\ModelController.cpp" />
     <ClCompile Include="OpenGL\OGLHelpers.cpp" />
@@ -223,6 +225,7 @@
     <ClInclude Include="Containers\ObjectPool.hpp" />
     <ClInclude Include="Containers\SortedObjectPool.hpp" />
     <ClInclude Include="DwarfFortress\tile_types.hpp" />
+    <ClInclude Include="FilePath.hpp" />
     <ClInclude Include="MainLoop.hpp" />
     <ClInclude Include="OpenGL\ArrayTexture.hpp" />
     <ClInclude Include="OpenGL\ArrayTextureController.hpp" />
@@ -238,6 +241,7 @@
     <ClInclude Include="OpenGL\Buffers\VertexUVNormalIndexVAO3D.hpp" />
     <ClInclude Include="OpenGL\DrawEngine.hpp" />
     <ClInclude Include="OpenGL\DrawEngineStructs.hpp" />
+    <ClInclude Include="OpenGL\Image.hpp" />
     <ClInclude Include="OpenGL\InterleavedBufferController.hpp" />
     <ClInclude Include="OpenGL\ModelController.hpp" />
     <ClInclude Include="OpenGL\OGLHelpers.hpp" />

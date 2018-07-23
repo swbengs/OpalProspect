@@ -19,6 +19,7 @@
 #include "Shapes\Point3DInt.hpp"
 #include "Shapes\Point4D.hpp"
 #include "Shapes\Grid3DYOffset.hpp"
+#include "OpenGL\Image.hpp"
 
 /*
 MIT License
@@ -261,6 +262,19 @@ void offest_grid_test()
     std::cout << "Done\n";
 }
 
+void image_test()
+{
+    Image test;
+    test.setFilePath("test.png");
+    std::cout << "filename: " << test.getFilename() << "\n";
+
+    test.setFilePath("C:\\test.png");
+    std::cout << "filename: " << test.getFilename() << "\n";
+
+    test.setFilePath("C:\\junk\\a.png");
+    std::cout << "filename: " << test.getFilename() << "\n";
+}
+
 void tests()
 {
     //texture_array_test();
@@ -269,14 +283,15 @@ void tests()
     //trivialTests();
     //podTest();
     //pointConversion();
-    offest_grid_test();
+    //offest_grid_test();
+    image_test();
 }
 
 int main(void)
 {
     MainLoop loop;
-    loop.startLoop();
-    //tests();
+    //loop.startLoop();
+    tests();
 
     exit(EXIT_SUCCESS);
 }
