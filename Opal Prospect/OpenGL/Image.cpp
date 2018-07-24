@@ -32,12 +32,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-
-
 Image::Image()
 {
     image_width = 0;
     image_height = 0;
+}
+
+void Image::loadImage()
+{
+    setupImage(file_path.getPath());
 }
 
 int Image::getWidth() const
@@ -87,7 +90,7 @@ void Image::flipVertical(int width, int height)
     }
 }
 
-void Image::loadImage(std::string filename)
+void Image::setupImage(std::string filename)
 {
     png_image image;
     const int color_components = 4;

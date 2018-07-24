@@ -159,6 +159,7 @@
     <ClCompile Include="FilePath.cpp" />
     <ClCompile Include="MainLoop.cpp" />
     <ClCompile Include="Opal Prospect.cpp" />
+    <ClCompile Include="OpenGL\ArrayTexture.cpp" />
     <ClCompile Include="OpenGL\ArrayTextureAtlas.cpp" />
     <ClCompile Include="OpenGL\ArrayTextureController.cpp" />
     <ClCompile Include="OpenGL\BufferController.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="DwarfFortress\tile_types.hpp" />
     <ClInclude Include="FilePath.hpp" />
     <ClInclude Include="MainLoop.hpp" />
+    <ClInclude Include="OpenGL\ArrayTexture.hpp" />
     <ClInclude Include="OpenGL\ArrayTextureAtlas.hpp" />
     <ClInclude Include="OpenGL\ArrayTextureController.hpp" />
     <ClInclude Include="OpenGL\BufferController.hpp" />

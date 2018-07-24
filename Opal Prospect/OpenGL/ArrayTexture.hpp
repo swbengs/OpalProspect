@@ -1,10 +1,11 @@
 #pragma once
 
 //std lib includes
+#include <string>
 #include <vector>
 
 //other includes
-#include "..\FilePath.hpp"
+#include "Image.hpp"
 
 /*
 MIT License
@@ -31,32 +32,33 @@ SOFTWARE.
 */
 
 /*
-Description: Class to hold an image and the filename to that image. Automatically flipped vertically to be ready for OpenGL use.
+Description: Class to store array texture that is made up of a maximum of 256 files. All images must be the same format and size(width and height). No support for an atlas(single large image that contains many smaller ones inside it). Must all be individual image files.
 */
 
-class Image
+class ArrayTexture
 {
 public:
-    Image();
+    ArrayTexture();
 
-    void loadImage();
+    void bind() const;
+    void unbind() const;
+    void loadImages(std::vector<std::string> file_paths); //loads the images but does not upload to video card
+    void createTexture(); //creates the id and loads the texture file the given filename
+    void destroy();
 
     //gets
-    int getWidth() const;
-    int getHeight() const;
-    std::string getFilename() const;
-    const std::vector<unsigned char>& getImageData() const;
+    unsigned int getID() const;
+    int getImageWidth() const;
+    int getImageHeight() const;
+    size_t getImageCount() const;
+    std::string getTextureName() const;
 
     //sets
-    void setFilePath(std::string path); //sets the full filepath and the filename is extracted from this
+    void setTextureName(std::string name);
 
 private:
-    int image_width;
-    int image_height;
-    std::vector<unsigned char> image_data;
-    FilePath file_path;
-
-    void flipVertical(int width, int height);
-    void setupImage(std::string filename);
+    unsigned int id; //opengl ID to this texture
+    std::string texture_name; //does not need to match filename
+    std::vector<Image> images;
 };
 

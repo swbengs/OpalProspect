@@ -273,6 +273,10 @@ void image_test()
 
     test.setFilePath("C:\\junk\\a.png");
     std::cout << "filename: " << test.getFilename() << "\n";
+
+    test.setFilePath("Textures\\soils.png");
+    test.loadImage();
+    std::cout << "filename: " << test.getFilename() << "\n";
 }
 
 void tests()

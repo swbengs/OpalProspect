@@ -129,7 +129,7 @@ void ArrayTextureAtlas::createTexture()
 
 void ArrayTextureAtlas::destroy()
 {
-    int count = 1;
+    const int count = 1;
     unbind();
     glDeleteTextures(count, &id);
 }
@@ -193,7 +193,7 @@ void ArrayTextureAtlas::setFilename(std::string filename)
 
 void ArrayTextureAtlas::testLoading(std::vector<unsigned char>& store_data)
 {
-    int color_components = 4;
+    const int color_components = 4;
 
     //values to fill in so it's more easily readable
     //int level = 0; //not using mipmaps so it's always 0

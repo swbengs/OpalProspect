@@ -234,6 +234,9 @@
     <ClCompile Include="OpenGL\ArrayTextureAtlas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OpenGL\ArrayTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\DrawEngine.hpp">
@@ -435,6 +438,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OpenGL\ArrayTextureAtlas.hpp">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL\ArrayTexture.hpp">
       <Filter>OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
