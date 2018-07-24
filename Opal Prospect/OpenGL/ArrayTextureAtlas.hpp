@@ -35,10 +35,10 @@ Class to load and store a texture that is array of textures. 256 max supported z
 share the same individual size. Instead of a texture atlas, one big image that you divide with texture coordinates, you have lots of smaller textures of the same size. Such as 16x16px
 */
 
-class ArrayTexture
+class ArrayTextureAtlas
 {
 public:
-    ArrayTexture();
+    ArrayTextureAtlas();
 
     void bind() const;
     void unbind() const;

@@ -388,7 +388,7 @@ void DrawEngine::addInterleavedModel(ModelIndex& model)
     pod.vao_reference = interleaved_buffers.getModelVAOReference(pod.model_name);
 }
 
-void DrawEngine::addTexture(const ArrayTexture& texture)
+void DrawEngine::addTexture(const ArrayTextureAtlas& texture)
 {
     textures.addTexture(texture);
 }

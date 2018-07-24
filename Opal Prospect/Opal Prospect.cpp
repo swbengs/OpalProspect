@@ -8,7 +8,7 @@
 #include "MainLoop.hpp"
 
 //test includes
-#include "OpenGL\ArrayTexture.hpp"
+#include "OpenGL\ArrayTextureAtlas.hpp"
 #include "Shapes\NormalFace.hpp"
 #include "Shapes\NormalBox.hpp"
 #include "Shapes\ModelIndex.hpp"
@@ -48,14 +48,14 @@ SOFTWARE.
 //put test functions here but before tests()
 void texture_array_test()
 {
-    ArrayTexture t2x2;
-    ArrayTexture t2x4;
-    ArrayTexture t4x2;
-    ArrayTexture t4x4;
-    ArrayTexture bad;
-    ArrayTexture terrain;
-    ArrayTexture t6x15;
-    ArrayTexture t15x5;
+    ArrayTextureAtlas t2x2;
+    ArrayTextureAtlas t2x4;
+    ArrayTextureAtlas t4x2;
+    ArrayTextureAtlas t4x4;
+    ArrayTextureAtlas bad;
+    ArrayTextureAtlas terrain;
+    ArrayTextureAtlas t6x15;
+    ArrayTextureAtlas t15x5;
 
     std::vector<unsigned char> data_t2x2;
     std::vector<unsigned char> data_t2x4;

@@ -1,4 +1,4 @@
-#include "ArrayTexture.hpp"
+#include "ArrayTextureAtlas.hpp"
 
 #include "glew.h"
 #include "png.h"
@@ -30,7 +30,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-ArrayTexture::ArrayTexture()
+ArrayTextureAtlas::ArrayTextureAtlas()
 {
     id = 0;
     name = "";
@@ -41,17 +41,17 @@ ArrayTexture::ArrayTexture()
     atlas_depth = 0;
 }
 
-void ArrayTexture::bind() const
+void ArrayTextureAtlas::bind() const
 {
     glBindTexture(GL_TEXTURE_2D_ARRAY, getID());
 }
 
-void ArrayTexture::unbind() const
+void ArrayTextureAtlas::unbind() const
 {
     glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 }
 
-void ArrayTexture::createTexture()
+void ArrayTextureAtlas::createTexture()
 {
     const int color_components = 4;
 
@@ -127,7 +127,7 @@ void ArrayTexture::createTexture()
     }
 }
 
-void ArrayTexture::destroy()
+void ArrayTextureAtlas::destroy()
 {
     int count = 1;
     unbind();
@@ -135,63 +135,63 @@ void ArrayTexture::destroy()
 }
 
 //gets
-unsigned int ArrayTexture::getID() const
+unsigned int ArrayTextureAtlas::getID() const
 {
     return id;
 }
 
-int ArrayTexture::getWidth() const
+int ArrayTextureAtlas::getWidth() const
 {
     return texture_width;
 }
 
-int ArrayTexture::getHeight() const
+int ArrayTextureAtlas::getHeight() const
 {
     return texture_height;
 }
 
-int ArrayTexture::getAtlasWidth() const
+int ArrayTextureAtlas::getAtlasWidth() const
 {
     return atlas_width;
 }
 
-int ArrayTexture::getAtlasHeight() const
+int ArrayTextureAtlas::getAtlasHeight() const
 {
     return atlas_height;
 }
 
-int ArrayTexture::getAtlasDepth() const
+int ArrayTextureAtlas::getAtlasDepth() const
 {
     return atlas_depth;
 }
 
-size_t ArrayTexture::getAtlasCount() const
+size_t ArrayTextureAtlas::getAtlasCount() const
 {
     return static_cast<size_t>(getAtlasDepth());
 }
 
-std::string ArrayTexture::getFilename() const
+std::string ArrayTextureAtlas::getFilename() const
 {
     return name;
 }
 
 //sets
-void ArrayTexture::setTextureWidth(int width)
+void ArrayTextureAtlas::setTextureWidth(int width)
 {
     texture_width = width;
 }
 
-void ArrayTexture::setTextureHeight(int height)
+void ArrayTextureAtlas::setTextureHeight(int height)
 {
     texture_height = height;
 }
 
-void ArrayTexture::setFilename(std::string filename)
+void ArrayTextureAtlas::setFilename(std::string filename)
 {
     name = filename;
 }
 
-void ArrayTexture::testLoading(std::vector<unsigned char>& store_data)
+void ArrayTextureAtlas::testLoading(std::vector<unsigned char>& store_data)
 {
     int color_components = 4;
 
@@ -258,7 +258,7 @@ void ArrayTexture::testLoading(std::vector<unsigned char>& store_data)
 }
 
 //private
-void ArrayTexture::loadTexture(std::string filename, int& width, int& height, std::vector<std::vector<unsigned char>>& vector)
+void ArrayTextureAtlas::loadTexture(std::string filename, int& width, int& height, std::vector<std::vector<unsigned char>>& vector)
 {
     png_image image;
 
@@ -309,7 +309,7 @@ void ArrayTexture::loadTexture(std::string filename, int& width, int& height, st
 /*
 This method flips image since it starts at the top left, while OpenGL starts from the bottom left. This makes it look correct when rendered
 */
-void ArrayTexture::flipVertical(int width, int height, std::vector<unsigned char>& vector)
+void ArrayTextureAtlas::flipVertical(int width, int height, std::vector<unsigned char>& vector)
 {
     int current_row;
     int flip_row;
@@ -327,7 +327,7 @@ void ArrayTexture::flipVertical(int width, int height, std::vector<unsigned char
     }
 }
 
-void ArrayTexture::uploadTexture(int z_offset, void* data) const
+void ArrayTextureAtlas::uploadTexture(int z_offset, void* data) const
 {
     const int level = 0;
     const int x_offset = 0;
@@ -343,7 +343,7 @@ void ArrayTexture::uploadTexture(int z_offset, void* data) const
 /*
 Sends the entire texture up in one go instead of individual layers
 */
-void ArrayTexture::uploadCompleteTexture(int count, void* data) const
+void ArrayTextureAtlas::uploadCompleteTexture(int count, void* data) const
 {
     const int level = 0;
     const int x_offset = 0;
@@ -356,7 +356,7 @@ void ArrayTexture::uploadCompleteTexture(int count, void* data) const
     glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, x_offset, y_offset, z_offset, getWidth(), getHeight(), count, GL_RGBA, GL_UNSIGNED_BYTE, data);
 }
 
-void ArrayTexture::extractTexture(std::vector<unsigned char>& data, std::vector<unsigned char>& atlas, size_t start, int atlas_x, int atlas_y, int pixel_size) const
+void ArrayTextureAtlas::extractTexture(std::vector<unsigned char>& data, std::vector<unsigned char>& atlas, size_t start, int atlas_x, int atlas_y, int pixel_size) const
 {
     int texture_row_size = pixel_size * getWidth(); //single texture
     int atlas_row_size = texture_row_size * getAtlasWidth(); //entire atlas which is texture row size * atlas width

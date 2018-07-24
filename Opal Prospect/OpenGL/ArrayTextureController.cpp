@@ -29,7 +29,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-void ArrayTextureController::addTexture(const ArrayTexture &texture)
+void ArrayTextureController::addTexture(const ArrayTextureAtlas &texture)
 {
     textures.push_back(texture);
     references[texture.getFilename()] = textures.size();
@@ -40,7 +40,7 @@ size_t ArrayTextureController::getCount() const
     return textures.size();
 }
 
-const ArrayTexture& ArrayTextureController::getTexture(unsigned int reference) const
+const ArrayTextureAtlas& ArrayTextureController::getTexture(unsigned int reference) const
 {
     return textures[reference - 1];
 }
@@ -59,7 +59,7 @@ unsigned int ArrayTextureController::getTextureReference(std::string texture_nam
     }
 }
 
-ArrayTexture& ArrayTextureController::modifyTexture(unsigned int reference)
+ArrayTextureAtlas& ArrayTextureController::modifyTexture(unsigned int reference)
 {
     return textures[reference - 1];
 }

@@ -5,7 +5,7 @@
 #include <string>
 
 //shapes and textures
-#include "ArrayTexture.hpp"
+#include "ArrayTextureAtlas.hpp"
 #include "TextureAtlas.hpp"
 #include "TextureAtlasController.hpp"
 #include "..\Shapes\ColorRectangle.hpp"
@@ -72,7 +72,7 @@ public:
 
     void addModel(ModelIndex& model);
     void addInterleavedModel(ModelIndex& model);
-    void addTexture(const ArrayTexture& texture);
+    void addTexture(const ArrayTextureAtlas& texture);
     void draw(const Camera &camera);
 
     void setup();
@@ -103,7 +103,7 @@ private:
     Grid3D grid;
     Grid3DYOffset grid_off, grid_off2;
     ModelIndex test_model;
-    ArrayTexture test_texture;
+    ArrayTextureAtlas test_texture;
     InterleavedVAO3D interleave_vao;
 
     int screen_width; //the actual screen resolution
