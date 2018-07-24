@@ -40,20 +40,21 @@ public:
     Image();
 
     //gets
-    unsigned int getWidth() const;
-    unsigned int getHeight() const;
+    int getWidth() const;
+    int getHeight() const;
     std::string getFilename() const;
+    const std::vector<unsigned char>& getImageData() const;
 
     //sets
-    void setFilePath(std::string path);
+    void setFilePath(std::string path); //sets the full filepath and the filename is extracted from this
 
 private:
-    unsigned int image_width;
-    unsigned int image_height;
+    int image_width;
+    int image_height;
     std::vector<unsigned char> image_data;
     FilePath file_path;
 
-    void flipVertical(int width, int height, std::vector<unsigned char>& vector);
-    void loadTexture(std::string filename);
+    void flipVertical(int width, int height);
+    void loadImage(std::string filename);
 };
 

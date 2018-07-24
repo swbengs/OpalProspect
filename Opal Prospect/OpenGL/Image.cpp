@@ -40,12 +40,12 @@ Image::Image()
     image_height = 0;
 }
 
-unsigned int Image::getWidth() const
+int Image::getWidth() const
 {
     return image_width;
 }
 
-unsigned int Image::getHeight() const
+int Image::getHeight() const
 {
     return image_height;
 }
@@ -53,6 +53,11 @@ unsigned int Image::getHeight() const
 std::string Image::getFilename() const
 {
     return file_path.getFilename();
+}
+
+const std::vector<unsigned char>& Image::getImageData() const
+{
+    return image_data;
 }
 
 void Image::setFilePath(std::string path)
@@ -64,7 +69,7 @@ void Image::setFilePath(std::string path)
 /*
 This method flips image since it starts at the top left, while OpenGL starts from the bottom left. This makes it look correct when rendered
 */
-void Image::flipVertical(int width, int height, std::vector<unsigned char>& vector)
+void Image::flipVertical(int width, int height)
 {
     int current_row;
     int flip_row;
@@ -77,14 +82,15 @@ void Image::flipVertical(int width, int height, std::vector<unsigned char>& vect
 
         for (int m = 0; m < width; m++)
         {
-            std::swap(vector.at(current_row + m), vector.at(flip_row + m));
+            std::swap(image_data.at(current_row + m), image_data.at(flip_row + m));
         }
     }
 }
 
-void Image::loadTexture(std::string filename)
+void Image::loadImage(std::string filename)
 {
     png_image image;
+    const int color_components = 4;
 
     //library is in C so some C calls are used. C++ is used when possible
     memset(&image, 0, (sizeof image));
@@ -123,5 +129,7 @@ void Image::loadTexture(std::string filename)
         std::cout << "image file doesn't exist\n";
         std::cout << filename << "\n \n";
     }
+
+    flipVertical(getWidth() * color_components, getHeight());
 }
 

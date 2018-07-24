@@ -55,23 +55,7 @@ std::string FilePath::getPath() const
 void FilePath::setFullPath(std::string path)
 {
     full_path = path;
-
     size_t filename_start = 0;
-    /*
-    size_t i = path.size() - 1;
-    while (i > 0)
-    {
-        if (path.at(i) == os_seperator)
-        {
-            filename_start = i + 1; //we just found serpator at i, so add 1 to get the start
-            i = 0; //exit loop
-        }
-        else
-        {
-            i--;
-        }
-    }
-    */
 
     for (size_t i = path.size() - 1; i > 0; i--)
     {
