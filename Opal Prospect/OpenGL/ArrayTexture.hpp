@@ -3,6 +3,7 @@
 //std lib includes
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 //other includes
 #include "Image.hpp"
@@ -42,9 +43,9 @@ public:
 
     void bind() const;
     void unbind() const;
-    void loadImages(std::vector<std::string> file_paths); //loads the images but does not upload to video card
+    void loadImages(std::vector<std::string> file_paths); //loads the images but does not upload to video card. Clears all previous loaded images so send up complete vector with all filenames
     void createTexture(); //creates the id and loads the texture file the given filename
-    void destroy();
+    void destroy(); //cleans up this texture on the OpenGL side. Frees the id and calls command to clear the buffer
 
     //gets
     unsigned int getID() const;
@@ -60,5 +61,8 @@ private:
     unsigned int id; //opengl ID to this texture
     std::string texture_name; //does not need to match filename
     std::vector<Image> images;
+    std::unordered_map<std::string, float> texture_numbers; //what z offset is needed to access the texture within this array with the given name
+
+    void uploadCompleteTexture(int count, void* data) const;
 };
 

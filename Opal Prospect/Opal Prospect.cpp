@@ -20,6 +20,7 @@
 #include "Shapes\Point4D.hpp"
 #include "Shapes\Grid3DYOffset.hpp"
 #include "OpenGL\Image.hpp"
+#include "OpenGL\ArrayTexture.hpp"
 
 /*
 MIT License
@@ -279,6 +280,19 @@ void image_test()
     std::cout << "filename: " << test.getFilename() << "\n";
 }
 
+void array_texture_test()
+{
+    ArrayTexture test;
+    std::vector<std::string> files;
+    test.loadImages(files);
+
+    files.push_back("Textures\\singles\\soils\\white sand 16.png");
+    files.push_back("Textures\\singles\\soils\\silty clay loam 16.png");
+    test.loadImages(files);
+
+    std::cout << "done\n";
+}
+
 void tests()
 {
     //texture_array_test();
@@ -288,7 +302,8 @@ void tests()
     //podTest();
     //pointConversion();
     //offest_grid_test();
-    image_test();
+    //image_test();
+    array_texture_test();
 }
 
 int main(void)

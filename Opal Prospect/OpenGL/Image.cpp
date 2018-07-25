@@ -53,6 +53,11 @@ int Image::getHeight() const
     return image_height;
 }
 
+size_t Image::getSize() const
+{
+    return image_data.size();
+}
+
 std::string Image::getFilename() const
 {
     return file_path.getFilename();

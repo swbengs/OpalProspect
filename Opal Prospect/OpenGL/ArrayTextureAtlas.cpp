@@ -66,7 +66,7 @@ void ArrayTextureAtlas::createTexture()
         //both in pixels
         int image_width;
         int image_height;
-        int id_count = 1; //how many ids do you want
+        const int id_count = 1; //how many ids do you want
 
         glGenTextures(id_count, &id); //create an id and bind it
         bind();
@@ -104,7 +104,7 @@ void ArrayTextureAtlas::createTexture()
         complete_texture.reserve(pixel_data.size() * getAtlasCount()); //holds the complete texture that is uploaded in one go. Only reserve them since we insert later
 
         //load each atlas part seperately
-        int start = 0;
+        const int start = 0;
 
         for (int n = 0; n < getAtlasDepth(); n++)
         {

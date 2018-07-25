@@ -39,6 +39,77 @@ SOFTWARE.
 const float DrawEngine::Z_NEAR = 0.1f;
 const float DrawEngine::Z_FAR = 50.0f;
 
+void DrawEngine::arrayTextureTest()
+{
+    OGLHelpers::getOpenGLError("pre array texture creation", true);
+
+    std::string texture_name = "Textures\\soils.png";
+    std::vector<std::string> files;
+    files.push_back("Textures\\bad.png");
+    files.push_back("Textures\\singles\\soils\\white sand 16.png");
+    files.push_back("Textures\\singles\\soils\\silty clay loam 16.png");
+
+    array_texture.setTextureName(texture_name);
+    array_texture.loadImages(files);
+    array_texture.createTexture();
+
+    OGLHelpers::getOpenGLError("post array texture creation", true);
+
+    ShapeToModel convert;
+    NormalBox box;
+
+    box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    box.setTextureNumber(1);
+    Point3D front, back, left, right, top, bottom;
+    front.setXYZ(0, 1, 2);
+    back.setXYZ(3, 4, 5);
+    left.setXYZ(6, 7, 8);
+    right.setXYZ(9, 10, 11);
+    top.setXYZ(12, 13, 14);
+    bottom.setXYZ(15, 16, 17);
+    box.setNormal(front, back, left, right, top, bottom);
+
+    convert.convertToModelIndex(box, test_model);
+    test_model.setModelName("test.obj");
+    test_model.setTextureName(texture_name);
+
+    ModelIndex mod2, mod3;
+    box.setTextureNumber(2);
+    convert.convertToModelIndex(box, mod2);
+    mod2.setModelName("test_two");
+    mod2.setTextureName(texture_name);
+
+    box.setTextureNumber(0);
+    convert.convertToModelIndex(box, mod3);
+    mod3.setModelName("test_three");
+    mod3.setTextureName(texture_name);
+
+    interleave_vao.setIndexOffset(0);
+    interleave_vao.setMaximumVertexSize(264 * 3 * sizeof(float));
+    interleave_vao.setMaximumIndexSize(36 * 3 * sizeof(unsigned int));
+    interleave_vao.create();
+
+    std::vector<float> vertex;
+    std::vector<unsigned int> index;
+    test_model.fillInterleaved(vertex);
+    mod2.fillInterleaved(vertex);
+    mod3.fillInterleaved(vertex);
+
+    test_model.setIndexOffset(0);
+    test_model.fillIndex(index);
+    mod2.setIndexOffset(24);
+    mod2.fillIndex(index);
+    mod3.setIndexOffset(48);
+    mod3.fillIndex(index);
+
+    interleave_vao.bindMainVBO();
+    interleave_vao.bufferMainVBO(vertex);
+    interleave_vao.bindIndexVBO();
+    interleave_vao.bufferIndex(index);
+
+    std::cout << "\n";
+}
+
 void DrawEngine::interleaveTest()
 {
     OGLHelpers::getOpenGLError("pre array texture creation", true);
@@ -259,7 +330,7 @@ void DrawEngine::bufferControlTest()
     std::cout << "\n";
 }
 
-void DrawEngine::arrayTextureTest()
+void DrawEngine::arrayTextureAtlasTest()
 {
     //flight_cam.setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 
@@ -393,6 +464,44 @@ void DrawEngine::addTexture(const ArrayTextureAtlas& texture)
     textures.addTexture(texture);
 }
 
+void DrawEngine::arrayTextureDraw(const Camera &camera)
+{
+    OGLHelpers::getOpenGLError("pre draw", true);
+
+    glm::vec3 first = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 second = glm::vec3(3.0f, 0.0f, 0.0f);
+    glm::vec3 third = glm::vec3(6.0f, 0.0f, 0.0f);
+
+    texture_program.use();
+    array_texture.bind();
+    interleave_vao.bindVAO();
+
+    glm::mat4 view;
+    camera.fillViewMatrix(view);
+
+    glm::mat4 model;
+    model = glm::translate(model, first);
+    glm::mat4 mvp = persp * view * model;
+    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(1 * 36 * sizeof(unsigned int)));
+
+    model = glm::mat4();
+    model = glm::translate(model, second);
+    mvp = glm::mat4();
+    mvp = persp * view * model;
+    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(0 * 36 * sizeof(unsigned int)));
+
+    model = glm::mat4();
+    model = glm::translate(model, third);
+    mvp = glm::mat4();
+    mvp = persp * view * model;
+    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(2 * 36 * sizeof(unsigned int)));
+
+    OGLHelpers::getOpenGLError("post draw", true);
+}
+
 void DrawEngine::interleaveDraw(const Camera &camera)
 {
     OGLHelpers::getOpenGLError("pre draw", true);
@@ -426,7 +535,7 @@ void DrawEngine::interleaveDraw(const Camera &camera)
 void DrawEngine::draw(const Camera &camera)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    /*
     glm::vec3 first = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 second = glm::vec3(3.0f, 0.0f, 0.0f);
     glm::vec3 third = glm::vec3(0.0f, 3.0f, 0.0f);
@@ -476,6 +585,9 @@ void DrawEngine::draw(const Camera &camera)
             draw(models.getModelPOD(7), camera, &grid_pos, nullptr, nullptr);
         }
     }
+    */
+
+
 
     /* older code. soon can be removed entirely
     draw("test.obj", camera, &first, nullptr, nullptr);
@@ -509,6 +621,7 @@ void DrawEngine::draw(const Camera &camera)
     */
 
     //interleaveDraw(camera);
+    arrayTextureDraw(camera);
 }
 
 void DrawEngine::setup()
@@ -764,9 +877,10 @@ void DrawEngine::setupObjects()
         //uvVAO.bufferIndex(n, index.size(), index.data());
     }
 
-    //arrayTextureTest();
+    //arrayTextureAtlasTest();
     //bufferControlTest();
-    interleaveTest();
+    //interleaveTest();
+    arrayTextureTest();
 }
 
 void DrawEngine::resize()

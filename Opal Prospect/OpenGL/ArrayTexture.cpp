@@ -62,6 +62,54 @@ void ArrayTexture::loadImages(std::vector<std::string> file_paths)
 void ArrayTexture::createTexture()
 {
     const int color_components = 4;
+    const int id_count = 1;
+    const int level = 0; //not using mipmaps so it's always 0
+    const int border = 0; //no border being used so set to 0
+    void* data = nullptr;
+    std::vector<unsigned char> complete_texture;
+
+    if (images.size() == 0)
+    {
+        return; //nothing to setup so just exit
+    }
+
+    if (id > 0)
+    {
+        destroy(); //make sure we clean up our current texture before we generate another
+    }
+
+    glGenTextures(id_count, &id); //create an id and bind it
+    bind();
+
+    OGLHelpers::getOpenGLError("pre teximage3d");
+    //void glTexImage3D( GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid * data);
+    glTexImage3D(GL_TEXTURE_2D_ARRAY, level, GL_RGBA8, images[0].getWidth(), images[0].getHeight(), static_cast<int>(getImageCount()), border, GL_RGBA, GL_UNSIGNED_BYTE, data); //fill in the data on the graphics card
+
+    OGLHelpers::getOpenGLError("post teximage3d");
+
+    //GL_NEAREST, GL_LINEAR
+    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    // GL_CLAMP_TO_EDGE, GL_CLAMP_TO_BORDER, GL_MIRRORED_REPEAT, GL_REPEAT, or GL_MIRROR_CLAMP_TO_EDGE
+    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    OGLHelpers::getOpenGLError("post texparam");
+
+    complete_texture.reserve(images[0].getSize() * getImageCount()); //holds the complete texture that is uploaded in one go. Only reserve them since we insert later
+
+    for (size_t i = 0; i < images.size(); i++)
+    {
+        const std::vector<unsigned char>& ref = images[i].getImageData();
+        complete_texture.insert(complete_texture.end(), ref.begin(), ref.end());
+        OGLHelpers::getOpenGLError("loop array texture uploads", true);
+    }
+
+    uploadCompleteTexture(static_cast<int>(getImageCount()), complete_texture.data());
+    OGLHelpers::getOpenGLError("post array texture uploads");
+
+    unbind();
 }
 
 void ArrayTexture::destroy()
@@ -114,3 +162,19 @@ void ArrayTexture::setTextureName(std::string name)
 {
     texture_name = name;
 }
+
+/*
+Sends the entire texture up in one go instead of individual layers
+*/
+void ArrayTexture::uploadCompleteTexture(int count, void* data) const
+{
+    const int level = 0;
+    const int x_offset = 0;
+    const int y_offset = 0;
+    const int z_offset = 0; //start at the beginning
+    //z offset specifies what level you want to start on. 0 is base. You can upload it all from 0 or just do them idividually
+
+    //void glTexSubImage3D(	GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid * pixels);
+    glTexSubImage3D(GL_TEXTURE_2D_ARRAY, level, x_offset, y_offset, z_offset, images[0].getWidth(), images[0].getHeight(), count, GL_RGBA, GL_UNSIGNED_BYTE, data);
+}
+

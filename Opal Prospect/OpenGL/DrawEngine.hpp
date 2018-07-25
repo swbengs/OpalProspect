@@ -6,6 +6,7 @@
 
 //shapes and textures
 #include "ArrayTextureAtlas.hpp"
+#include "ArrayTexture.hpp"
 #include "TextureAtlas.hpp"
 #include "TextureAtlasController.hpp"
 #include "..\Shapes\ColorRectangle.hpp"
@@ -104,6 +105,7 @@ private:
     Grid3DYOffset grid_off, grid_off2;
     ModelIndex test_model;
     ArrayTextureAtlas test_texture;
+    ArrayTexture array_texture;
     InterleavedVAO3D interleave_vao;
 
     int screen_width; //the actual screen resolution
@@ -133,8 +135,10 @@ private:
     void calculatePersp();
 
     //tests
-    void arrayTextureTest();
+    void arrayTextureAtlasTest();
     void bufferControlTest();
     void interleaveTest();
     void interleaveDraw(const Camera &camera);
+    void arrayTextureTest();
+    void arrayTextureDraw(const Camera &camera);
 };

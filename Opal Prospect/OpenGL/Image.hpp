@@ -44,6 +44,7 @@ public:
     //gets
     int getWidth() const;
     int getHeight() const;
+    size_t getSize() const; //size of the image vector
     std::string getFilename() const;
     const std::vector<unsigned char>& getImageData() const;
 
