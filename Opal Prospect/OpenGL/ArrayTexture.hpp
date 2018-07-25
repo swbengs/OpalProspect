@@ -53,7 +53,7 @@ public:
     int getImageHeight() const;
     size_t getImageCount() const;
     std::string getTextureName() const;
-    unsigned int getTextureNumber(std::string filename) const;
+    unsigned int getTextureNumberReference(std::string filename) const;
 
     //sets
     void setTextureName(std::string name);

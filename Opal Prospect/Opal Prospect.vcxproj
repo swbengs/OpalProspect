@@ -161,6 +161,7 @@
     <ClCompile Include="Opal Prospect.cpp" />
     <ClCompile Include="OpenGL\ArrayTexture.cpp" />
     <ClCompile Include="OpenGL\ArrayTextureAtlas.cpp" />
+    <ClCompile Include="OpenGL\ArrayTextureAtlasController.cpp" />
     <ClCompile Include="OpenGL\ArrayTextureController.cpp" />
     <ClCompile Include="OpenGL\BufferController.cpp" />
     <ClCompile Include="OpenGL\Buffers\FloatVBO.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="MainLoop.hpp" />
     <ClInclude Include="OpenGL\ArrayTexture.hpp" />
     <ClInclude Include="OpenGL\ArrayTextureAtlas.hpp" />
+    <ClInclude Include="OpenGL\ArrayTextureAtlasController.hpp" />
     <ClInclude Include="OpenGL\ArrayTextureController.hpp" />
     <ClInclude Include="OpenGL\BufferController.hpp" />
     <ClInclude Include="OpenGL\Buffers\FloatVBO.hpp" />

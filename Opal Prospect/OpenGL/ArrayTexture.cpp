@@ -159,7 +159,7 @@ std::string ArrayTexture::getTextureName() const
     return texture_name;
 }
 
-unsigned int ArrayTexture::getTextureNumber(std::string filename) const
+unsigned int ArrayTexture::getTextureNumberReference(std::string filename) const
 {
     auto it = texture_numbers.find(filename);
     if (it == texture_numbers.end())
@@ -169,7 +169,7 @@ unsigned int ArrayTexture::getTextureNumber(std::string filename) const
     }
     else
     {
-        return it->second;
+        return it->second + 1;
     }
 }
 

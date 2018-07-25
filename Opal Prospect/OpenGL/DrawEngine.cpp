@@ -107,10 +107,10 @@ void DrawEngine::arrayTextureTest()
     interleave_vao.bindIndexVBO();
     interleave_vao.bufferIndex(index);
 
-    std::cout << "texture number for silty_clay_loam: " << array_texture.getTextureNumber("silty_clay_loam.png") << "\n";
-    std::cout << "texture number for white_sand: " << array_texture.getTextureNumber("white_sand.png") << "\n";
-    std::cout << "texture number for bad: " << array_texture.getTextureNumber("bad.png") << "\n";
-    std::cout << "texture number for junk: " << array_texture.getTextureNumber("junk") << "\n";
+    std::cout << "texture number for silty_clay_loam: " << array_texture.getTextureNumberReference("silty_clay_loam.png") << "\n";
+    std::cout << "texture number for white_sand: " << array_texture.getTextureNumberReference("white_sand.png") << "\n";
+    std::cout << "texture number for bad: " << array_texture.getTextureNumberReference("bad.png") << "\n";
+    std::cout << "texture number for junk: " << array_texture.getTextureNumberReference("junk") << "\n";
     std::cout << "array texture test end\n";
 }
 
