@@ -43,7 +43,7 @@ void DrawEngine::arrayTextureTest()
 {
     OGLHelpers::getOpenGLError("pre array texture creation", true);
 
-    std::string texture_name = "Textures\\soils.png";
+    std::string texture_name = "terrain.png";
     std::vector<std::string> files;
     files.push_back("Textures\\bad.png");
     files.push_back("Textures\\singles\\soils\\white_sand.png");
