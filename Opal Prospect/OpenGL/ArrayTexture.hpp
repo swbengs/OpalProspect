@@ -53,6 +53,7 @@ public:
     int getImageHeight() const;
     size_t getImageCount() const;
     std::string getTextureName() const;
+    unsigned int getTextureNumber(std::string filename) const;
 
     //sets
     void setTextureName(std::string name);
@@ -61,7 +62,7 @@ private:
     unsigned int id; //opengl ID to this texture
     std::string texture_name; //does not need to match filename
     std::vector<Image> images;
-    std::unordered_map<std::string, float> texture_numbers; //what z offset is needed to access the texture within this array with the given name
+    std::unordered_map<std::string, unsigned int> texture_numbers; //what z offset is needed to access the texture within this array with the given name
 
     void uploadCompleteTexture(int count, void* data) const;
 };

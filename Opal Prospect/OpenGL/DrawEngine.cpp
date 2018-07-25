@@ -46,8 +46,8 @@ void DrawEngine::arrayTextureTest()
     std::string texture_name = "Textures\\soils.png";
     std::vector<std::string> files;
     files.push_back("Textures\\bad.png");
-    files.push_back("Textures\\singles\\soils\\white sand 16.png");
-    files.push_back("Textures\\singles\\soils\\silty clay loam 16.png");
+    files.push_back("Textures\\singles\\soils\\white_sand.png");
+    files.push_back("Textures\\singles\\soils\\silty_clay_loam.png");
 
     array_texture.setTextureName(texture_name);
     array_texture.loadImages(files);
@@ -107,7 +107,11 @@ void DrawEngine::arrayTextureTest()
     interleave_vao.bindIndexVBO();
     interleave_vao.bufferIndex(index);
 
-    std::cout << "\n";
+    std::cout << "texture number for silty_clay_loam: " << array_texture.getTextureNumber("silty_clay_loam.png") << "\n";
+    std::cout << "texture number for white_sand: " << array_texture.getTextureNumber("white_sand.png") << "\n";
+    std::cout << "texture number for bad: " << array_texture.getTextureNumber("bad.png") << "\n";
+    std::cout << "texture number for junk: " << array_texture.getTextureNumber("junk") << "\n";
+    std::cout << "array texture test end\n";
 }
 
 void DrawEngine::interleaveTest()

@@ -70,6 +70,7 @@ void ArrayTexture::createTexture()
 
     if (images.size() == 0)
     {
+        std::cout << "No images have been loaded. Exiting\n";
         return; //nothing to setup so just exit
     }
 
@@ -103,7 +104,7 @@ void ArrayTexture::createTexture()
     {
         const std::vector<unsigned char>& ref = images[i].getImageData();
         complete_texture.insert(complete_texture.end(), ref.begin(), ref.end());
-        OGLHelpers::getOpenGLError("loop array texture uploads", true);
+        texture_numbers[images[i].getFilename()] = i;
     }
 
     uploadCompleteTexture(static_cast<int>(getImageCount()), complete_texture.data());
@@ -156,6 +157,20 @@ size_t ArrayTexture::getImageCount() const
 std::string ArrayTexture::getTextureName() const
 {
     return texture_name;
+}
+
+unsigned int ArrayTexture::getTextureNumber(std::string filename) const
+{
+    auto it = texture_numbers.find(filename);
+    if (it == texture_numbers.end())
+    {
+        //std::cout << "name: " << filename << " was not found\n";
+        return 0;
+    }
+    else
+    {
+        return it->second;
+    }
 }
 
 void ArrayTexture::setTextureName(std::string name)
