@@ -33,6 +33,7 @@
 #include "Buffers\InterleavedVAO3D.hpp"
 
 #include "DrawEngineStructs.hpp"
+#include "ArrayTextureController.hpp"
 #include "ArrayTextureAtlasController.hpp"
 #include "BufferController.hpp"
 #include "InterleavedBufferController.hpp"
@@ -94,6 +95,7 @@ private:
     BufferController buffers;
     InterleavedBufferController interleaved_buffers;
     ArrayTextureAtlasController textures;
+    ArrayTextureController main_textures;
     ModelController models;
     opengl_state state;
 

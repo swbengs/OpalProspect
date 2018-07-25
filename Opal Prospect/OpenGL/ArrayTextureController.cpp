@@ -1,7 +1,8 @@
-#include "ArrayTextureController.hpp"
 //class header
+#include "ArrayTextureController.hpp"
 
 //std lib includes
+#include <iostream>
 
 //other includes
 
@@ -35,6 +36,18 @@ void ArrayTextureController::addTexture(const ArrayTexture &texture)
     references[texture.getTextureName()] = textures.size();
 }
 
+void ArrayTextureController::bindTexture(unsigned int reference) const
+{
+    if (inBounds(reference))
+    {
+        textures[reference - 1].bind();
+    }
+    else
+    {
+        std::cout << "bindVAO reference " << reference << " does not exist\n";
+    }
+}
+
 size_t ArrayTextureController::getCount() const
 {
     return textures.size();
@@ -59,7 +72,39 @@ unsigned int ArrayTextureController::getTextureReference(std::string texture_nam
     }
 }
 
+unsigned int ArrayTextureController::getTextureNumber(std::string image_name) const
+{
+    for (size_t i = 0; i < textures.size(); i++)
+    {
+        unsigned int reference = textures[i].getTextureNumberReference(image_name);
+        if (reference > 0)
+        {
+            return reference - 1;
+        }
+    }
+    //if we get here we did not find it. Return bad.png
+
+    for (size_t i = 0; i < textures.size(); i++)
+    {
+        unsigned int reference = textures[i].getTextureNumberReference("bad.png");
+        if (reference > 0)
+        {
+            std::cout << image_name << " not found. Returning bad.png\n";
+            return reference - 1;
+        }
+    }
+
+    std::cout << image_name << " not found. Can't find bad.png\n";
+    return 0; //worst casse we can't find either so return 0, which is a bad reference
+}
+
 ArrayTexture& ArrayTextureController::modifyTexture(unsigned int reference)
 {
     return textures[reference - 1];
+}
+
+bool ArrayTextureController::inBounds(unsigned int reference) const
+{
+    unsigned int actual = reference - 1;
+    return (actual >= 0 && actual < textures.size());
 }

@@ -42,13 +42,19 @@ class ArrayTextureController
 public:
     void addTexture(const ArrayTexture &texture);
 
+    void bindTexture(unsigned int reference) const;
+
+    //gets
     size_t getCount() const;
     const ArrayTexture& getTexture(unsigned int reference) const; //for reading only
     unsigned int getTextureReference(std::string texture_name) const;
+    unsigned int getTextureNumber(std::string image_name) const;
 
     ArrayTexture& modifyTexture(unsigned int reference); //for writing and reading
 private:
     std::vector<ArrayTexture> textures;
     std::unordered_map<std::string, unsigned int> references;
+
+    bool inBounds(unsigned int reference) const;
 };
 

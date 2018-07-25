@@ -52,6 +52,7 @@ void DrawEngine::arrayTextureTest()
     array_texture.setTextureName(texture_name);
     array_texture.loadImages(files);
     array_texture.createTexture();
+    main_textures.addTexture(array_texture);
 
     OGLHelpers::getOpenGLError("post array texture creation", true);
 
@@ -59,7 +60,8 @@ void DrawEngine::arrayTextureTest()
     NormalBox box;
 
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    box.setTextureNumber(1);
+    //box.setTextureNumber(1);
+    box.setTextureNumber(main_textures.getTextureNumber("white_sand.png"));
     Point3D front, back, left, right, top, bottom;
     front.setXYZ(0, 1, 2);
     back.setXYZ(3, 4, 5);
@@ -74,12 +76,14 @@ void DrawEngine::arrayTextureTest()
     test_model.setTextureName(texture_name);
 
     ModelIndex mod2, mod3;
-    box.setTextureNumber(2);
+    //box.setTextureNumber(2);
+    box.setTextureNumber(main_textures.getTextureNumber("silty_clay_loam.png"));
     convert.convertToModelIndex(box, mod2);
     mod2.setModelName("test_two");
     mod2.setTextureName(texture_name);
 
-    box.setTextureNumber(0);
+    //box.setTextureNumber(0);
+    box.setTextureNumber(main_textures.getTextureNumber("junk.png"));
     convert.convertToModelIndex(box, mod3);
     mod3.setModelName("test_three");
     mod3.setTextureName(texture_name);
@@ -477,7 +481,7 @@ void DrawEngine::arrayTextureDraw(const Camera &camera)
     glm::vec3 third = glm::vec3(6.0f, 0.0f, 0.0f);
 
     texture_program.use();
-    array_texture.bind();
+    main_textures.bindTexture(1);
     interleave_vao.bindVAO();
 
     glm::mat4 view;
