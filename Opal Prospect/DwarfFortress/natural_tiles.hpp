@@ -36,7 +36,133 @@ Description: Enums, strings, and filenames for all natural tiles. This means soi
 enum DF_Natural_Tile
 {
     //gem start
-
+    DF_ALEXANDRITE,
+    DF_AMBER_OPAL,
+    DF_AMETHYST,
+    DF_AQUAMARINE,
+    DF_AVENTURINE,
+    DF_BANDED_AGATE,
+    DF_BANDIRE_OPAL,
+    DF_BLACK_DIAMOND,
+    DF_BLACK_OPAL,
+    DF_BLACK_PYROPE,
+    DF_BLACK_ZIRCON,
+    DF_BLOODSTONE,
+    DF_BLUE_DIAMOND,
+    DF_BLUE_GARNET,
+    DF_BLUE_JADE,
+    DF_BONE_OPAL,
+    DF_BROWN_JASPER,
+    DF_BROWN_ZIRCON,
+    DF_CARNELIAN,
+    DF_CATS_EYE,
+    DF_CHERRY_OPAL,
+    DF_CHRYSOBERYL,
+    DF_CHRYSOCOLLA,
+    DF_CHRYSOPRASE,
+    DF_CINNAMON_GROSSULAR,
+    DF_CITRINE,
+    DF_CLARO_OPAL,
+    DF_CLEAR_DIAMOND,
+    DF_CLEAR_GARNET,
+    DF_CLEAR_GLASS,
+    DF_CLEAR_TOURMALINE,
+    DF_CLEAR_ZIRCON,
+    DF_CRYSTAL_GLASS,
+    DF_CRYSTAL_OPAL,
+    DF_DEMATOID,
+    DF_DENDRITIC_AGATE,
+    DF_EMERALD,
+    DF_FAINT_YELLOW_DIAMOND,
+    DF_FIRE_AGATE,
+    DF_FIRE_OPAL,
+    DF_FORTIFICATION_AGATE,
+    DF_GOLD_OPAL,
+    DF_GOLDEN_BERYL,
+    DF_GOSHENITE,
+    DF_GRAY_CHALCEDONY,
+    DF_GREEN_DIAMOND,
+    DF_GREEN_GLASS,
+    DF_GREEN_JADE,
+    DF_GREEN_TOURMALINE,
+    DF_GREEN_ZIRCON,
+    DF_HARLEQUIN_OPAL,
+    DF_HELIODOR,
+    DF_HONEY_YELLOW_BERYL,
+    DF_INDIGO_TOURMALINE,
+    DF_JASPER_OPAL,
+    DF_JELLY_OPAL,
+    DF_KUNZITE,
+    DF_LACE_AGATE,
+    DF_LAPIS_LAZULI,
+    DF_LAVENDER_JADE,
+    DF_LEVIN_OPAL,
+    DF_LIGHT_YELLOW_DIAMOND,
+    DF_MELANITE,
+    DF_MILK_OPAL,
+    DF_MILK_QUARTZ,
+    DF_MORGANITE,
+    DF_MORION,
+    DF_MOSS_AGATE,
+    DF_MOSS_OPAL,
+    DF_ONYX_OPAL,
+    DF_PERIDOT,
+    DF_PICTURE_JASPER,
+    DF_PINEAPPLE_OPAL,
+    DF_PINFIRE_OPAL,
+    DF_PINK_GARNET,
+    DF_PINK_JADE,
+    DF_PINK_TOURMALINE,
+    DF_PIPE_OPAL,
+    DF_PLUME_AGATE,
+    DF_PRASE,
+    DF_PRASE_OPAL,
+    DF_PRECIOUS_FIRE_OPAL,
+    DF_PURPLE_SPINEL,
+    DF_PYRITE,
+    DF_RED_BERYL,
+    DF_RED_DIAMOND,
+    DF_RED_FLASH_OPAL,
+    DF_RED_GRSSULAR,
+    DF_RED_PYROPE,
+    DF_RED_SPINEL,
+    DF_RED_TOURMALINE,
+    DF_RED_ZIRCON,
+    DF_RESIN_OPAL,
+    DF_RHODOLITE,
+    DF_ROCK_CRYSTAL,
+    DF_ROSE_QUARTZ,
+    DF_RUBICELLE,
+    DF_RUBY,
+    DF_SAPPHIRE,
+    DF_SARD,
+    DF_SARDONYX,
+    DF_SCHORL,
+    DF_SHELL_OPAL,
+    DF_SMOKY_QUARTZ,
+    DF_STAR_RUBY,
+    DF_STAR_SAPPHIRE,
+    DF_SUNSTONE,
+    DF_TANZANITE,
+    DF_TIGER_IRON,
+    DF_TIGEREYE,
+    DF_TOPAZ,
+    DF_TOPAZOLITE,
+    DF_TSAVORITE,
+    DF_TUBE_AGATE,
+    DF_TURQUOISE,
+    DF_VARISCITE,
+    DF_VIOLET_SPESSARTINE,
+    DF_WAX_OPAL,
+    DF_WHITE_CHALCEDONY,
+    DF_WHITE_JADE,
+    DF_WHITE_OPAL,
+    DF_WOOD_OPAL,
+    DF_YELLOW_DIAMOND,
+    DF_YELLOW_GROSSULAR,
+    DF_YELLOW_JASPER,
+    DF_YELLOW_SPESSARTINE,
+    DF_YELLOW_ZIRCON,
     //gem end
 
     //liquid start
@@ -161,6 +287,13 @@ std::string DFNaturalTileString(DF_Natural_Tile e)
 {
     switch (e)
     {
+        //liquid start
+    case DF_MAGMA:
+        return "magma";
+    case DF_WATER:
+        return "water";
+            //liquid end
+
         //ore start
     case DF_ADAMANTINE:
         return "adamantine";
@@ -385,6 +518,13 @@ std::string DFNaturalTileFile(DF_Natural_Tile e)
 {
     switch (e)
     {
+        //liquid start
+    case DF_MAGMA:
+        return "magma.png";
+    case DF_WATER:
+        return "water.png";
+        //liquid end
+
         //ore start
     case DF_ADAMANTINE:
         return "adamantine.png";
