@@ -824,18 +824,10 @@ void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const g
 
     if (main_textures.getTextureID(model_info.texture_reference) != state.texture_id)
     {
-        std::cout << "binding textureid: " << main_textures.getTextureID(model_info.texture_reference) << "\n";
+        //std::cout << "binding textureid: " << main_textures.getTextureID(model_info.texture_reference) << "\n";
         main_textures.bindTexture(model_info.texture_reference);
         state.texture_id = main_textures.getTextureID(model_info.vao_reference);
     }
-
-    /*
-    if (array_texture.getID() != state.texture_id)
-    {
-        array_texture.bind();
-        state.texture_id = array_texture.getID();
-    }
-    */
 
     if (interleaved_buffers.getVAOID(model_info.vao_reference) != state.vao_id)
     {
@@ -857,7 +849,7 @@ void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const g
     if (rotate != nullptr)
     {
         model = glm::rotate(model, rotate[0][1], Y_AXIS); //left right
-                                                          //model = glm::rotate(model, (*rotate)[1], Y_AXIS); //left right
+        //model = glm::rotate(model, (*rotate)[1], Y_AXIS); //left right
         model = glm::rotate(model, rotate[0][0], X_AXIS); //up down
         model = glm::rotate(model, rotate[0][2], Z_AXIS); //rolling
     }
