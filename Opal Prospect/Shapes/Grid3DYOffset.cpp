@@ -180,6 +180,13 @@ bool Grid3DYOffset::isBottomSide(unsigned int index, unsigned int width, unsigne
     }
 
     unsigned int layer_size = width * length;
+    unsigned int total_size = width * height * length;
+
+    if (index >= total_size) //if index falls outside the possible range return false
+    {
+        return false;
+    }
+
     if (index < layer_size)
     {
         return true;
@@ -198,6 +205,13 @@ bool Grid3DYOffset::isTopSide(unsigned int index, unsigned int width, unsigned i
     }
 
     unsigned int layer_size = width * length;
+    unsigned int total_size = width * height * length;
+
+    if (index >= total_size)
+    {
+        return false;
+    }
+
     if (index >= layer_size * (height - 1))
     {
         return true;
@@ -210,22 +224,100 @@ bool Grid3DYOffset::isTopSide(unsigned int index, unsigned int width, unsigned i
 
 bool Grid3DYOffset::isLeftSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
 {
-    return false;
+    if (width == 1)
+    {
+        return true;
+    }
+
+    unsigned int total_size = width * height * length;
+
+    if (index >= total_size)
+    {
+        return false;
+    }
+
+    if (index % width == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool Grid3DYOffset::isRightSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
 {
-    return false;
+    if (width == 1)
+    {
+        return true;
+    }
+
+    unsigned int total_size = width * height * length;
+
+    if (index >= total_size)
+    {
+        return false;
+    }
+
+    if (index % width == width - 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool Grid3DYOffset::isFrontSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
 {
-    return false;
+    //if on +z side
+    if (length == 1)
+    {
+        return true;
+    }
+
+    unsigned int total_size = width * height * length;
+
+    if (index >= total_size)
+    {
+        return false;
+    }
+
+    if ((index / width) % length == length - 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 bool Grid3DYOffset::isBackSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
 {
-    return false;
+    //if -z side is showing
+    if (length == 1)
+    {
+        return true;
+    }
+
+    unsigned int total_size = width * height * length;
+
+    if (index >= total_size)
+    {
+        return false;
+    }
+
+    if ((index / width) % length == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 unsigned int Grid3DYOffset::getIndexDown(unsigned int index, unsigned int width, unsigned int height, unsigned int length)

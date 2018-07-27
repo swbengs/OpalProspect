@@ -61,8 +61,12 @@ std::string outputBool(bool boo)
 
 void offset_grid_test_index(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
 {
-    std::cout << "index " << index << " isbottom: " << outputBool(Grid3DYOffset::isBottomSide(index, width, height, length)) << "\n";
-    std::cout << "index " << index << " istop: " << outputBool(Grid3DYOffset::isTopSide(index, width, height, length)) << "\n";
+    std::cout << "index " << index << " is bottom: " << outputBool(Grid3DYOffset::isBottomSide(index, width, height, length)) << "\n";
+    std::cout << "index " << index << " is top: " << outputBool(Grid3DYOffset::isTopSide(index, width, height, length)) << "\n";
+    std::cout << "index " << index << " is left: " << outputBool(Grid3DYOffset::isLeftSide(index, width, height, length)) << "\n";
+    std::cout << "index " << index << " is right: " << outputBool(Grid3DYOffset::isRightSide(index, width, height, length)) << "\n";
+    std::cout << "index " << index << " is front: " << outputBool(Grid3DYOffset::isFrontSide(index, width, height, length)) << "\n";
+    std::cout << "index " << index << " is back: " << outputBool(Grid3DYOffset::isBackSide(index, width, height, length)) << "\n";
     std::cout << "\n";
 }
 
@@ -331,6 +335,11 @@ void df_natural_tile_enum_test()
 
 void offset_grid_3x3_test()
 {
+    /* single layer
+    6 7 8
+    3 4 5
+    0 1 2
+    */
     Grid3DYOffset grid;
 
     unsigned int grid_width = 3;
@@ -371,6 +380,114 @@ void offset_grid_3x3_test()
     std::cout << "Done\n";
 }
 
+void offset_grid_5x3x4_test()
+{
+    /* single layer
+    15 16 17 18 19
+    10 11 12 13 14
+    5  6  7  8  9
+    0  1  2  3  4
+    */
+    Grid3DYOffset grid;
+
+    unsigned int grid_width = 5;
+    unsigned int grid_height = 3;
+    unsigned int grid_length = 4;
+    float offset = 0.0f;
+    float stride = 0.0f;
+    float box_width = 1.0f;
+    float box_height = 1.0f;
+    float box_length = 1.0f;
+    unsigned int index;
+
+    grid.setGridWidthLengthHeight(grid_width, grid_height, grid_length);
+    grid.setYOffset(offset);
+    grid.setYStride(stride);
+    grid.setBoxWidthLengthHeight(box_width, box_height, box_length);
+
+    grid.create();
+
+    index = 0;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 4;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 10;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 14;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 45;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 49;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 54;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 59;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    std::cout << "Done\n";
+}
+
+void offset_grid_3x2x4_test()
+{
+    /* single layer
+    9 10 11
+    6 7  8
+    3 4  5
+    0 1  2
+    */
+    Grid3DYOffset grid;
+
+    unsigned int grid_width = 3;
+    unsigned int grid_height = 2;
+    unsigned int grid_length = 4;
+    float offset = 0.0f;
+    float stride = 0.0f;
+    float box_width = 1.0f;
+    float box_height = 1.0f;
+    float box_length = 1.0f;
+    unsigned int index;
+
+    grid.setGridWidthLengthHeight(grid_width, grid_height, grid_length);
+    grid.setYOffset(offset);
+    grid.setYStride(stride);
+    grid.setBoxWidthLengthHeight(box_width, box_height, box_length);
+
+    grid.create();
+
+    index = 0;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 2;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 9;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 11;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 12;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 13;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 21;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 23;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    std::cout << "Done\n";
+}
+
 void tests()
 {
     //texture_array_test();
@@ -383,7 +500,9 @@ void tests()
     //image_test();
     //array_texture_test();
     //df_natural_tile_enum_test();
-    offset_grid_3x3_test();
+    //offset_grid_3x3_test();
+    //offset_grid_5x3x4_test();
+    offset_grid_3x2x4_test();
 }
 
 int main(void)
