@@ -143,4 +143,5 @@ private:
     void interleaveDraw(const Camera &camera);
     void arrayTextureTest();
     void arrayTextureDraw(const Camera &camera);
+    void properDrawTest();
 };

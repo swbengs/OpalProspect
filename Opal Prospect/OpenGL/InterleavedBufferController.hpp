@@ -48,7 +48,7 @@ public:
 
     //gets
     size_t getVAOCount() const;
-    unsigned int getVAOID(unsigned int reference) const;
+    unsigned int getVAOID(unsigned int reference) const; //returns actual id to bind
     unsigned int getModelVAOReference(std::string model_name) const;
     unsigned int getIndexByteOffset(std::string model_name) const;
     unsigned int getIndexCount(std::string model_name) const;

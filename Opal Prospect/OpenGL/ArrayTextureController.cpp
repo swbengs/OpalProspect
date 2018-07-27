@@ -58,6 +58,19 @@ const ArrayTexture& ArrayTextureController::getTexture(unsigned int reference) c
     return textures[reference - 1];
 }
 
+unsigned int ArrayTextureController::getTextureID(unsigned int reference) const
+{
+    if (inBounds(reference))
+    {
+        return textures[reference - 1].getID();
+    }
+    else
+    {
+        std::cout << "texture reference " << reference << " does not exist\n";
+        return 0;
+    }
+}
+
 unsigned int ArrayTextureController::getTextureReference(std::string texture_name) const
 {
     auto search = references.find(texture_name);

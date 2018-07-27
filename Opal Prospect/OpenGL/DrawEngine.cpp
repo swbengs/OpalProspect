@@ -39,6 +39,123 @@ SOFTWARE.
 const float DrawEngine::Z_NEAR = 0.1f;
 const float DrawEngine::Z_FAR = 50.0f;
 
+void DrawEngine::properDrawTest()
+{
+    OGLHelpers::getOpenGLError("pre array texture creation", true);
+
+    std::string texture_name = "terrain.png";
+    std::vector<std::string> files;
+    files.push_back("Textures\\bad.png");
+    files.push_back("Textures\\singles\\soils\\white_sand.png");
+    files.push_back("Textures\\singles\\soils\\silty_clay_loam.png");
+
+    array_texture.setTextureName(texture_name);
+    array_texture.loadImages(files);
+    array_texture.createTexture();
+    main_textures.addTexture(array_texture);
+    state.texture_id = 0;
+    array_texture.unbind(); //test binding
+
+    OGLHelpers::getOpenGLError("post array texture creation", true);
+
+    ShapeToModel convert;
+    NormalBox box;
+
+    box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    //box.setTextureNumber(1);
+    box.setTextureNumber(main_textures.getTextureNumber("white_sand.png"));
+    Point3D front, back, left, right, top, bottom;
+    front.setXYZ(0, 1, 2);
+    back.setXYZ(3, 4, 5);
+    left.setXYZ(6, 7, 8);
+    right.setXYZ(9, 10, 11);
+    top.setXYZ(12, 13, 14);
+    bottom.setXYZ(15, 16, 17);
+    box.setNormal(front, back, left, right, top, bottom);
+
+    convert.convertToModelIndex(box, test_model);
+    test_model.setModelName("test.obj");
+    test_model.setTextureName(texture_name);
+    addInterleavedModel(test_model);
+
+    ModelIndex mod2, mod3, mod4, mod6;
+    //box.setTextureNumber(2);
+    box.setTextureNumber(main_textures.getTextureNumber("silty_clay_loam.png"));
+    convert.convertToModelIndex(box, mod2);
+    mod2.setModelName("test_two");
+    mod2.setTextureName(texture_name);
+    addInterleavedModel(mod2);
+
+    //box.setTextureNumber(0);
+    box.setTextureNumber(main_textures.getTextureNumber("junk.png"));
+    convert.convertToModelIndex(box, mod3);
+    mod3.setModelName("test_three");
+    mod3.setTextureName(texture_name);
+    addInterleavedModel(mod3);
+
+    //box.setTextureNumber(19);
+    box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    convert.convertToModelIndex(box, mod4);
+    mod4.setModelName("test_four");
+    mod4.setTextureName(texture_name);
+    addInterleavedModel(mod4);
+
+    RightRectanglePyramidNormal pyramid;
+    ModelIndex pyra_mod;
+    pyra_mod.setTextureName(texture_name);
+    pyra_mod.setModelName("pyramid");
+    pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
+    pyramid.setNormal(front, back, left, right, bottom);
+    pyramid.setTextureNumber(4);
+    convert.convertToModelIndex(pyramid, pyra_mod);
+    addInterleavedModel(pyra_mod);
+
+    //box.setTextureNumber(18);
+    box.setTextureNumber(main_textures.getTextureNumber("white_sand.png"));
+    box.setWidthHeightLength(1.0f, 0.2f, 1.0f);
+    convert.convertToModelIndex(box, mod6);
+    mod6.setModelName("test_six");
+    mod6.setTextureName(texture_name);
+    addInterleavedModel(mod6);
+
+    grid_off.setBoxWidthLengthHeight(1.0f, 1.0f, 1.0f);
+    grid_off.setGridWidthLengthHeight(3, 3, 3);
+    grid_off.setYStride(0.2f);
+    grid_off.setYOffset(0.2f);
+    grid_off.create();
+
+    grid_off2.setBoxWidthLengthHeight(1.0f, 0.2f, 1.0f);
+    grid_off2.setGridWidthLengthHeight(3, 3, 3);
+    grid_off2.setYStride(1.0f);
+    grid_off2.setYOffset(0.0f);
+    grid_off2.create();
+
+    interleave_vao.setIndexOffset(0);
+    interleave_vao.setMaximumVertexSize(264 * 3 * sizeof(float));
+    interleave_vao.setMaximumIndexSize(36 * 3 * sizeof(unsigned int));
+    interleave_vao.create();
+
+    std::vector<float> vertex;
+    std::vector<unsigned int> index;
+    test_model.fillInterleaved(vertex);
+    mod2.fillInterleaved(vertex);
+    mod3.fillInterleaved(vertex);
+
+    test_model.setIndexOffset(0);
+    test_model.fillIndex(index);
+    mod2.setIndexOffset(24);
+    mod2.fillIndex(index);
+    mod3.setIndexOffset(48);
+    mod3.fillIndex(index);
+
+    interleave_vao.bindMainVBO();
+    interleave_vao.bufferMainVBO(vertex);
+    interleave_vao.bindIndexVBO();
+    interleave_vao.bufferIndex(index);
+
+    std::cout << "proper draw test end\n";
+}
+
 void DrawEngine::arrayTextureTest()
 {
     OGLHelpers::getOpenGLError("pre array texture creation", true);
@@ -462,7 +579,7 @@ void DrawEngine::addInterleavedModel(ModelIndex& model)
     interleaved_buffers.addModel(models.modifyModel(current));
     //texture name, model name, and index count are already entered
     model_pod& pod = models.modifyModelPOD(current);
-    pod.texture_reference = textures.getTextureReference(pod.texture_name);
+    pod.texture_reference = main_textures.getTextureReference(pod.texture_name);
     pod.index_offset_bytes = interleaved_buffers.getIndexByteOffset(pod.model_name);
     pod.vao_reference = interleaved_buffers.getModelVAOReference(pod.model_name);
 }
@@ -543,7 +660,7 @@ void DrawEngine::interleaveDraw(const Camera &camera)
 void DrawEngine::draw(const Camera &camera)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    /*
+
     glm::vec3 first = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 second = glm::vec3(3.0f, 0.0f, 0.0f);
     glm::vec3 third = glm::vec3(0.0f, 3.0f, 0.0f);
@@ -569,14 +686,7 @@ void DrawEngine::draw(const Camera &camera)
     {
         grid_box = grid_off.getBox(i);
         grid_pos = glm::vec3(grid_box.getX() + start.x, grid_box.getY() + start.y, grid_box.getZ() + start.z);
-        if (i % 2 == 0)
-        {
-            draw(models.getModelPOD(2), camera, &grid_pos, nullptr, nullptr);
-        }
-        else
-        {
-            draw(models.getModelPOD(4), camera, &grid_pos, nullptr, nullptr);
-        }
+        draw(models.getModelPOD(2), camera, &grid_pos, nullptr, nullptr);
     }
 
     start.setXYZ(6.0f, 6.0f, 6.0f);
@@ -584,18 +694,8 @@ void DrawEngine::draw(const Camera &camera)
     {
         grid_box = grid_off2.getBox(i);
         grid_pos = glm::vec3(grid_box.getX() + start.x, grid_box.getY() + start.y, grid_box.getZ() + start.z);
-        if (i % 2 == 0)
-        {
-            draw(models.getModelPOD(3), camera, &grid_pos, nullptr, nullptr);
-        }
-        else
-        {
-            draw(models.getModelPOD(7), camera, &grid_pos, nullptr, nullptr);
-        }
+        draw(models.getModelPOD(6), camera, &grid_pos, nullptr, nullptr);
     }
-    */
-
-
 
     /* older code. soon can be removed entirely
     draw("test.obj", camera, &first, nullptr, nullptr);
@@ -629,7 +729,7 @@ void DrawEngine::draw(const Camera &camera)
     */
 
     //interleaveDraw(camera);
-    arrayTextureDraw(camera);
+    //arrayTextureDraw(camera);
 }
 
 void DrawEngine::setup()
@@ -722,15 +822,24 @@ void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const g
         state.program_id = texture_program.getID();
     }
 
-    if (test_texture.getID() != state.texture_id)
+    if (main_textures.getTextureID(model_info.texture_reference) != state.texture_id)
     {
-        test_texture.bind();
-        state.texture_id = test_texture.getID();
+        std::cout << "binding textureid: " << main_textures.getTextureID(model_info.texture_reference) << "\n";
+        main_textures.bindTexture(model_info.texture_reference);
+        state.texture_id = main_textures.getTextureID(model_info.vao_reference);
     }
+
+    /*
+    if (array_texture.getID() != state.texture_id)
+    {
+        array_texture.bind();
+        state.texture_id = array_texture.getID();
+    }
+    */
 
     if (interleaved_buffers.getVAOID(model_info.vao_reference) != state.vao_id)
     {
-        //std::cout << "binding vaoID " << buffers.getVAOID(model_info.vao_reference) << "\n";
+        //std::cout << "binding vaoID: " << buffers.getVAOID(model_info.vao_reference) << "\n";
         interleaved_buffers.bindVAO(model_info.vao_reference);
         state.vao_id = interleaved_buffers.getVAOID(model_info.vao_reference);
     }
@@ -888,7 +997,8 @@ void DrawEngine::setupObjects()
     //arrayTextureAtlasTest();
     //bufferControlTest();
     //interleaveTest();
-    arrayTextureTest();
+    //arrayTextureTest();
+    properDrawTest();
 }
 
 void DrawEngine::resize()

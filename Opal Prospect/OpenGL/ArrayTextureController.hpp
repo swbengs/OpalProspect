@@ -47,6 +47,7 @@ public:
     //gets
     size_t getCount() const;
     const ArrayTexture& getTexture(unsigned int reference) const; //for reading only
+    unsigned int getTextureID(unsigned int reference) const; //get actual texture id to bind
     unsigned int getTextureReference(std::string texture_name) const;
     unsigned int getTextureNumber(std::string image_name) const;
 
