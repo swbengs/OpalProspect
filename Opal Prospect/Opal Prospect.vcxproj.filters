@@ -449,6 +449,9 @@
     <ClInclude Include="OpenGL\ArrayTextureAtlasController.hpp">
       <Filter>OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="DwarfFortress\soils.hpp">
+      <Filter>DwarfFortress</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Textures\files.txt">
