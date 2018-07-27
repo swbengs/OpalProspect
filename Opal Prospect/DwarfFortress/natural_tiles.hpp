@@ -97,6 +97,44 @@ std::string DFNaturalTileString(DF_Natural_Tile e)
 {
     switch (e)
     {
+        //ore start
+    case DF_ADAMANTINE:
+        return "adamantine";
+    case DF_ALUMINUM:
+        return "aluminum";
+    case DF_BISMUTHINITE:
+        return "bismuthinite";
+    case DF_CASSITERITE:
+        return "cassiterite";
+    case  DF_COPPER:
+        return "copper";
+    case  DF_GALENA:
+        return "galena";
+    case  DF_GARNIERITE:
+        return "garnierite";
+    case  DF_GOLD:
+        return "gold";
+    case  DF_HEMATITE:
+        return "hematite";
+    case  DF_HORN_SILVER:
+        return "horn_silver";
+    case  DF_LIMONITE:
+        return "limonite";
+    case  DF_MAGNETITE:
+        return "magnetite";
+    case  DF_MALACHITE:
+        return "malachite";
+    case  DF_PLATINUM:
+        return "platinum";
+    case  DF_SILVER:
+        return "silver";
+    case  DF_SPHALERITE:
+        return "sphalerite";
+    case  DF_TETRAHEDRITE:
+        return "tetrahedrite";
+        //ore end
+
+        //soil start
     case DF_BLACK_SAND:
         return "black_sand";
     case DF_CALCAREOUS_OOZE:
@@ -139,8 +177,9 @@ std::string DFNaturalTileString(DF_Natural_Tile e)
         return "white_sand";
     case DF_YELLOW_SAND:
         return "yellow_sand";
+        //soil end
     default:
-        return "bad DFSoilString enum ";
+        return "bad DF_Natural_Tile enum ";
     }
 }
 
@@ -148,6 +187,44 @@ std::string DFNaturalTileFile(DF_Natural_Tile e)
 {
     switch (e)
     {
+        //ore start
+    case DF_ADAMANTINE:
+        return "adamantine.png";
+    case DF_ALUMINUM:
+        return "aluminum.png";
+    case DF_BISMUTHINITE:
+        return "bismuthinite.png";
+    case DF_CASSITERITE:
+        return "cassiterite.png";
+    case  DF_COPPER:
+        return "copper.png";
+    case  DF_GALENA:
+        return "galena.png";
+    case  DF_GARNIERITE:
+        return "garnierite.png";
+    case  DF_GOLD:
+        return "gold.png";
+    case  DF_HEMATITE:
+        return "hematite.png";
+    case  DF_HORN_SILVER:
+        return "horn_silver.png";
+    case  DF_LIMONITE:
+        return "limonite.png";
+    case  DF_MAGNETITE:
+        return "magnetite.png";
+    case  DF_MALACHITE:
+        return "malachite.png";
+    case  DF_PLATINUM:
+        return "platinum.png";
+    case  DF_SILVER:
+        return "silver.png";
+    case  DF_SPHALERITE:
+        return "sphalerite.png";
+    case  DF_TETRAHEDRITE:
+        return "tetrahedrite.png";
+        //ore end
+
+        //soil start
     case DF_BLACK_SAND:
         return "black_sand.png";
     case DF_CALCAREOUS_OOZE:
@@ -190,8 +267,9 @@ std::string DFNaturalTileFile(DF_Natural_Tile e)
         return "white_sand.png";
     case DF_YELLOW_SAND:
         return "yellow_sand.png";
+        //soil end
     default:
-        return "bad DFSoilString enum ";
+        return "bad DF_Natural_Tile enum ";
     }
 }
 
