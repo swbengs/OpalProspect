@@ -455,96 +455,6 @@ void DrawEngine::bufferControlTest()
     std::cout << "\n";
 }
 
-void DrawEngine::arrayTextureAtlasTest()
-{
-    //flight_cam.setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-
-    OGLHelpers::getOpenGLError("pre array texture creation");
-
-    test_texture.setFilename("soils.png");
-    test_texture.setTextureWidth(16);
-    test_texture.setTextureHeight(16);
-    test_texture.createTexture();
-
-    OGLHelpers::getOpenGLError("post array texture creation");
-    std::cout << "\n";
-
-    ShapeToModel convert;
-    NormalBox box;
-    Point3D front, back, left, right, top, bottom;
-
-    float offset = 1.0f;
-    front.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-    offset += 3.0f;
-    back.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-    offset += 3.0f;
-    left.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-    offset += 3.0f;
-    right.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-    offset += 3.0f;
-    top.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-    offset += 3.0f;
-    bottom.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-
-    /*
-    box.setFrontTextureNumber(240);
-    box.setBackTextureNumber(241);
-    box.setLeftTextureNumber(242);
-    box.setRightTextureNumber(243);
-    box.setTopTextureNumber(244);
-    box.setBottomTextureNumber(245);
-    */
-
-    box.setFrontTextureNumber(248);
-    box.setBackTextureNumber(241);
-    box.setLeftTextureNumber(242);
-    box.setRightTextureNumber(243);
-    box.setTopTextureNumber(244);
-    box.setBottomTextureNumber(245);
-    //box.setTextureNumber(240);
-    //box.setTextureNumber(248);
-    box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    box.setNormal(front, back, left, right, top, bottom);
-
-    test_model.setIndexOffset(0);
-    convert.convertToModelIndex(box, test_model);
-
-    OGLHelpers::getOpenGLError("pre vao creation");
-
-    //array texture size
-    uvVAO3D.setObjectCount(1);
-    uvVAO3D.setObjectVertexSize(96);
-    uvVAO3D.setObjectUVSize(72);
-    uvVAO3D.setObjectIndexSize(36);
-    uvVAO3D.create();
-
-    OGLHelpers::getOpenGLError("post vao creation");
-
-    //model uploads
-    std::vector<float> vertex;
-    std::vector<float> uv;
-    std::vector<unsigned int> index;
-
-    test_model.fillVertex(vertex);
-    test_model.fillUV(uv);
-    test_model.fillIndex(index);
-
-    OGLHelpers::getOpenGLError("pre buffering");
-
-    uvVAO3D.bindVertex();
-    uvVAO3D.bufferVertex(0, vertex);
-
-    uvVAO3D.bindUV();
-    uvVAO3D.bufferUV(0, uv);
-
-    uvVAO3D.bindIndex();
-    uvVAO3D.bufferIndex(0, index);
-
-    OGLHelpers::getOpenGLError("post buffering");
-
-    std::cout << "done \n";
-}
-
 DrawEngine::DrawEngine()
 {
     screen_width = 1;
@@ -744,11 +654,6 @@ void DrawEngine::cleanup()
 {
     texture_program.unUse();
     texture_program.destroy();
-
-    uvVAO.unBind();
-    uvVAO.destroy();
-    uvVAO3D.unBind();
-    uvVAO3D.destroy();
 
     test_texture.unbind();
     test_texture.destroy();

@@ -69,7 +69,10 @@ void InterleavedVBO3D::createVBO() const
 
 void InterleavedVBO3D::destroyVBO()
 {
-    glDeleteBuffers(1, &id);
+    if (id > 0)
+    {
+        glDeleteBuffers(1, &id);
+    }
 }
 
 void InterleavedVBO3D::vertexPointerSetup() const

@@ -117,7 +117,10 @@ void ArrayTexture::destroy()
 {
     const int count = 1;
     unbind();
-    glDeleteTextures(count, &id);
+    if (id > 0)
+    {
+        glDeleteTextures(count, &id);
+    }
 }
 
 unsigned int ArrayTexture::getID() const

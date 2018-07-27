@@ -13,9 +13,7 @@
 #include "..\Containers\SortedObjectPool.hpp"
 
 //buffers
-#include "Buffers\VertexColorIndexVAO.hpp"
-#include "Buffers\VertexUVIndexVAO.hpp"
-#include "Buffers\VertexUVNormalIndexVAO3D.hpp"
+#include "Buffers\InterleavedVAO3D.hpp"
 
 //programs
 #include "Programs\VertexFragmentProgram.hpp"
@@ -30,7 +28,7 @@
 #include "..\Shapes\RightRectanglePyramidNormal.hpp"
 #include "..\Shapes\ShapeToModel.hpp"
 #include "..\Shapes\ModelIndex.hpp"
-#include "Buffers\InterleavedVAO3D.hpp"
+
 
 #include "DrawEngineStructs.hpp"
 #include "ArrayTextureController.hpp"
@@ -100,8 +98,6 @@ private:
     opengl_state state;
 
     VertexFragmentProgram texture_program;
-    VertexUVIndexVAO uvVAO;
-    VertexUVIndexVAO uvVAO3D;
     Grid3D grid;
     Grid3DYOffset grid_off, grid_off2;
     ModelIndex test_model;
@@ -136,7 +132,6 @@ private:
     void calculatePersp();
 
     //tests
-    void arrayTextureAtlasTest();
     void bufferControlTest();
     void interleaveTest();
     void interleaveDraw(const Camera &camera);

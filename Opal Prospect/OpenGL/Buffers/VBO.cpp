@@ -43,7 +43,10 @@ void VBO::generateVBOID()
 
 void VBO::destroyVBO()
 {
-    glDeleteBuffers(1, &id);
+    if (id > 0)
+    {
+        glDeleteBuffers(1, &id);
+    }
 }
 
 //gets
