@@ -85,11 +85,75 @@ enum DF_Natural_Tile
     DF_SILTY_CLAY,
     DF_SILTY_CLAY_LOAM,
     DF_WHITE_SAND,
-    DF_YELLOW_SAND
+    DF_YELLOW_SAND,
     //soil end
 
     //stone start
-
+    DF_ALABASTER,
+    DF_ALUNITE,
+    DF_ANDESITE,
+    DF_ANHYDRITE,
+    DF_BASALT,
+    DF_BAUXITE,
+    DF_BITUMINOUS_COAL,
+    DF_BORAX,
+    DF_BRIMSTONE,
+    DF_CALCITE,
+    DF_CHALK,
+    DF_CHERT,
+    DF_CHROMITE,
+    DF_CINNABAR,
+    DF_CLAYSTONE,
+    DF_COBALTITE,
+    DF_CONGLOMERATE,
+    DF_CRYOLITE,
+    DF_DACITE,
+    DF_DIORITE,
+    DF_DOLOMITE,
+    DF_GABBRO,
+    DF_GNEISS,
+    DF_GRANITE,
+    DF_GRAPHITE,
+    DF_GYPSUM,
+    DF_HORNBLENDE,
+    DF_JET,
+    DF_KAOLINITE,
+    DF_KIMBERLITE,
+    DF_LIGNITE,
+    DF_LIMESTONE,
+    DF_LLMENITE,
+    DF_MARBLE,
+    DF_MARCASITE,
+    DF_MICA,
+    DF_MICROCLINE,
+    DF_MUDSTONE,
+    DF_OBSIDIAN,
+    DF_OLIVINE,
+    DF_ORPIMENT,
+    DF_ORTHOCLASE,
+    DF_PERICLASE,
+    DF_PETRIFIED_WOOD,
+    DF_PHYLLITE,
+    DF_PITCHBLENDE,
+    DF_PUDDINGSTONE,
+    DF_PYROLUSITE,
+    DF_QUARTZITE,
+    DF_REALGAR,
+    DF_RHYOLITE,
+    DF_ROCK_SALT,
+    DF_RUTILE,
+    DF_SALTPETER,
+    DF_SANDSTONE,
+    DF_SATINSPAR,
+    DF_SCHIST,
+    DF_SELENITE,
+    DF_SERPENTINE,
+    DF_SHALE,
+    DF_SILTSTONE,
+    DF_SLATE,
+    DF_STIBNITE,
+    DF_SYLVITE,
+    DF_TALC
     //stone end
 };
 
@@ -178,6 +242,140 @@ std::string DFNaturalTileString(DF_Natural_Tile e)
     case DF_YELLOW_SAND:
         return "yellow_sand";
         //soil end
+
+        //stone start
+    case DF_ALABASTER:
+        return "alabaster";
+    case DF_ALUNITE:
+        return "alunite";
+    case DF_ANDESITE:
+        return "andesite";
+    case DF_ANHYDRITE:
+        return "anhydrite";
+    case DF_BASALT:
+        return "basalt";
+    case DF_BAUXITE:
+        return "bauxite";
+    case DF_BITUMINOUS_COAL:
+        return "bituminous_coal";
+    case DF_BORAX:
+        return "borax";
+    case DF_BRIMSTONE:
+        return "brimstone";
+    case DF_CALCITE:
+        return "calcite";
+    case DF_CHALK:
+        return "chalk";
+    case DF_CHERT:
+        return "chert";
+    case DF_CHROMITE:
+        return "chromite";
+    case DF_CINNABAR:
+        return "cinnabar";
+    case DF_CLAYSTONE:
+        return "claystone";
+    case DF_COBALTITE:
+        return "cobaltite";
+    case DF_CONGLOMERATE:
+        return "conglomerate";
+    case DF_CRYOLITE:
+        return "cryolite";
+    case DF_DACITE:
+        return "dacite";
+    case DF_DIORITE:
+        return "diorite";
+    case DF_DOLOMITE:
+        return "dolomite";
+    case DF_GABBRO:
+        return "gabbro";
+    case DF_GNEISS:
+        return "gneiss";
+    case DF_GRANITE:
+        return "granite";
+    case DF_GRAPHITE:
+        return "graphite";
+    case DF_GYPSUM:
+        return "gypsum";
+    case DF_HORNBLENDE:
+        return "hornblende";
+    case DF_JET:
+        return "jet";
+    case DF_KAOLINITE:
+        return "kaolinite";
+    case DF_KIMBERLITE:
+        return "kimberlite";
+    case DF_LIGNITE:
+        return "lignite";
+    case DF_LIMESTONE:
+        return "limestone";
+    case DF_LLMENITE:
+        return "llmenite";
+    case DF_MARBLE:
+        return "marble";
+    case DF_MARCASITE:
+        return "marcasite";
+    case DF_MICA:
+        return "mica";
+    case DF_MICROCLINE:
+        return "microcline";
+    case DF_MUDSTONE:
+        return "mudstone";
+    case DF_OBSIDIAN:
+        return "obsidian";
+    case DF_OLIVINE:
+        return "olivine";
+    case DF_ORPIMENT:
+        return "orpiment";
+    case DF_ORTHOCLASE:
+        return "orthoclase";
+    case DF_PERICLASE:
+        return "periclase";
+    case DF_PETRIFIED_WOOD:
+        return "petrified_wood";
+    case DF_PHYLLITE:
+        return "phyllite";
+    case DF_PITCHBLENDE:
+        return "pitchblende";
+    case DF_PUDDINGSTONE:
+        return "puddingstone";
+    case DF_PYROLUSITE:
+        return "pyrolusite";
+    case DF_QUARTZITE:
+        return "quartzite";
+    case DF_REALGAR:
+        return "realgar";
+    case DF_RHYOLITE:
+        return "rhyolite";
+    case DF_ROCK_SALT:
+        return "rock_salt";
+    case DF_RUTILE:
+        return "rutile";
+    case DF_SALTPETER:
+        return "saltpeter";
+    case DF_SANDSTONE:
+        return "sandstone";
+    case DF_SATINSPAR:
+        return "satinspar";
+    case DF_SCHIST:
+        return "schist";
+    case DF_SELENITE:
+        return "selenite";
+    case DF_SERPENTINE:
+        return "serpentine";
+    case DF_SHALE:
+        return "shale";
+    case DF_SILTSTONE:
+        return "siltstone";
+    case DF_SLATE:
+        return "slate";
+    case DF_STIBNITE:
+        return "stibnite";
+    case DF_SYLVITE:
+        return "sylvite";
+    case DF_TALC:
+        return "talc";
+        //stone end
+
     default:
         return "bad DF_Natural_Tile enum ";
     }
@@ -268,6 +466,140 @@ std::string DFNaturalTileFile(DF_Natural_Tile e)
     case DF_YELLOW_SAND:
         return "yellow_sand.png";
         //soil end
+
+        //stone start
+    case DF_ALABASTER:
+        return "alabaster.png";
+    case DF_ALUNITE:
+        return "alunite.png";
+    case DF_ANDESITE:
+        return "andesite.png";
+    case DF_ANHYDRITE:
+        return "anhydrite.png";
+    case DF_BASALT:
+        return "basalt.png";
+    case DF_BAUXITE:
+        return "bauxite.png";
+    case DF_BITUMINOUS_COAL:
+        return "bituminous_coal.png";
+    case DF_BORAX:
+        return "borax.png";
+    case DF_BRIMSTONE:
+        return "brimstone.png";
+    case DF_CALCITE:
+        return "calcite.png";
+    case DF_CHALK:
+        return "chalk.png";
+    case DF_CHERT:
+        return "chert.png";
+    case DF_CHROMITE:
+        return "chromite.png";
+    case DF_CINNABAR:
+        return "cinnabar.png";
+    case DF_CLAYSTONE:
+        return "claystone.png";
+    case DF_COBALTITE:
+        return "cobaltite.png";
+    case DF_CONGLOMERATE:
+        return "conglomerate.png";
+    case DF_CRYOLITE:
+        return "cryolite.png";
+    case DF_DACITE:
+        return "dacite.png";
+    case DF_DIORITE:
+        return "diorite.png";
+    case DF_DOLOMITE:
+        return "dolomite.png";
+    case DF_GABBRO:
+        return "gabbro.png";
+    case DF_GNEISS:
+        return "gneiss.png";
+    case DF_GRANITE:
+        return "granite.png";
+    case DF_GRAPHITE:
+        return "graphite.png";
+    case DF_GYPSUM:
+        return "gypsum.png";
+    case DF_HORNBLENDE:
+        return "hornblende.png";
+    case DF_JET:
+        return "jet.png";
+    case DF_KAOLINITE:
+        return "kaolinite.png";
+    case DF_KIMBERLITE:
+        return "kimberlite.png";
+    case DF_LIGNITE:
+        return "lignite.png";
+    case DF_LIMESTONE:
+        return "limestone.png";
+    case DF_LLMENITE:
+        return "llmenite.png";
+    case DF_MARBLE:
+        return "marble.png";
+    case DF_MARCASITE:
+        return "marcasite.png";
+    case DF_MICA:
+        return "mica.png";
+    case DF_MICROCLINE:
+        return "microcline.png";
+    case DF_MUDSTONE:
+        return "mudstone.png";
+    case DF_OBSIDIAN:
+        return "obsidian.png";
+    case DF_OLIVINE:
+        return "olivine.png";
+    case DF_ORPIMENT:
+        return "orpiment.png";
+    case DF_ORTHOCLASE:
+        return "orthoclase.png";
+    case DF_PERICLASE:
+        return "periclase.png";
+    case DF_PETRIFIED_WOOD:
+        return "petrified_wood.png";
+    case DF_PHYLLITE:
+        return "phyllite.png";
+    case DF_PITCHBLENDE:
+        return "pitchblende.png";
+    case DF_PUDDINGSTONE:
+        return "puddingstone.png";
+    case DF_PYROLUSITE:
+        return "pyrolusite.png";
+    case DF_QUARTZITE:
+        return "quartzite.png";
+    case DF_REALGAR:
+        return "realgar.png";
+    case DF_RHYOLITE:
+        return "rhyolite.png";
+    case DF_ROCK_SALT:
+        return "rock_salt.png";
+    case DF_RUTILE:
+        return "rutile.png";
+    case DF_SALTPETER:
+        return "saltpeter.png";
+    case DF_SANDSTONE:
+        return "sandstone.png";
+    case DF_SATINSPAR:
+        return "satinspar.png";
+    case DF_SCHIST:
+        return "schist.png";
+    case DF_SELENITE:
+        return "selenite.png";
+    case DF_SERPENTINE:
+        return "serpentine.png";
+    case DF_SHALE:
+        return "shale.png";
+    case DF_SILTSTONE:
+        return "siltstone.png";
+    case DF_SLATE:
+        return "slate.png";
+    case DF_STIBNITE:
+        return "stibnite.png";
+    case DF_SYLVITE:
+        return "sylvite.png";
+    case DF_TALC:
+        return "talc.png";
+        //stone end
+
     default:
         return "bad DF_Natural_Tile enum ";
     }
