@@ -240,6 +240,12 @@
     <ClCompile Include="OpenGL\ArrayTextureAtlasController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DwarfFortress\NaturalTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DwarfFortress\natural_tiles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\DrawEngine.hpp">
@@ -451,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="DwarfFortress\natural_tiles.hpp">
       <Filter>DwarfFortress</Filter>
+    </ClInclude>
+    <ClInclude Include="DwarfFortress\NaturalTile.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

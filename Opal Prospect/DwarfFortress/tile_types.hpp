@@ -27,8 +27,17 @@ SOFTWARE.
 */
 
 /*
-Description: Declaration of the different types tiles that exist
+Description: Declaration of the different types tiles that exist and the internal ones I use as well
 */
+
+enum DF_DrawTileType //types used for drawing. We care about the generic type not the specific. So it can be a block without saying what kind of block eg iron/obsidian etc
+{
+    AIR, //empty
+    BLOCK,//regular block you can mine
+    FLOOR, //each block has a floor below it of the same type unless the dwarves modify it
+    LIQUID, //magma or water
+    RAMP //not a stair
+};
 
 enum DF_TileTypeMaterial
 {
