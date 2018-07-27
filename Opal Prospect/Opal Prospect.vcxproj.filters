@@ -449,7 +449,7 @@
     <ClInclude Include="OpenGL\ArrayTextureAtlasController.hpp">
       <Filter>OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="DwarfFortress\soils.hpp">
+    <ClInclude Include="DwarfFortress\natural_tiles.hpp">
       <Filter>DwarfFortress</Filter>
     </ClInclude>
   </ItemGroup>

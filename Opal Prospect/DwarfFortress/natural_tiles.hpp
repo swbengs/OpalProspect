@@ -30,11 +30,41 @@ SOFTWARE.
 */
 
 /*
-Description: Enums, strings, and filenames for all soils.
+Description: Enums, strings, and filenames for all natural tiles. This means soil, rough stone, liquid, ore, and gems.
 */
 
-enum DF_Soil
+enum DF_Natural_Tile
 {
+    //gem start
+
+    //gem end
+
+    //liquid start
+    DF_MAGMA,
+    DF_WATER,
+    //liquid end
+
+    //ore start
+    DF_ADAMANTINE,
+    DF_ALUMINUM,
+    DF_BISMUTHINITE,
+    DF_CASSITERITE,
+    DF_COPPER,
+    DF_GALENA,
+    DF_GARNIERITE,
+    DF_GOLD,
+    DF_HEMATITE,
+    DF_HORN_SILVER,
+    DF_LIMONITE,
+    DF_MAGNETITE,
+    DF_MALACHITE,
+    DF_PLATINUM,
+    DF_SILVER,
+    DF_SPHALERITE,
+    DF_TETRAHEDRITE,
+    //ore end
+
+    //soils start
     DF_BLACK_SAND,
     DF_CALCAREOUS_OOZE,
     DF_CLAY,
@@ -56,9 +86,14 @@ enum DF_Soil
     DF_SILTY_CLAY_LOAM,
     DF_WHITE_SAND,
     DF_YELLOW_SAND
+    //soil end
+
+    //stone start
+
+    //stone end
 };
 
-std::string DFSoilString(DF_Soil e)
+std::string DFNaturalTileString(DF_Natural_Tile e)
 {
     switch (e)
     {
@@ -109,7 +144,7 @@ std::string DFSoilString(DF_Soil e)
     }
 }
 
-std::string DFSoilFile(DF_Soil e)
+std::string DFNaturalTileFile(DF_Natural_Tile e)
 {
     switch (e)
     {

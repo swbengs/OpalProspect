@@ -226,7 +226,7 @@
     <ClInclude Include="Constants\axis.hpp" />
     <ClInclude Include="Containers\ObjectPool.hpp" />
     <ClInclude Include="Containers\SortedObjectPool.hpp" />
-    <ClInclude Include="DwarfFortress\soils.hpp" />
+    <ClInclude Include="DwarfFortress\natural_tiles.hpp" />
     <ClInclude Include="DwarfFortress\tile_types.hpp" />
     <ClInclude Include="FilePath.hpp" />
     <ClInclude Include="MainLoop.hpp" />
