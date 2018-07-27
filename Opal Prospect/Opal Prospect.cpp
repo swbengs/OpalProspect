@@ -47,6 +47,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+std::string outputBool(bool boo)
+{
+    if (boo)
+    {
+        return "true";
+    }
+    else
+    {
+        return "false";
+    }
+}
+
+void offset_grid_test_index(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    std::cout << "index " << index << " isbottom: " << outputBool(Grid3DYOffset::isBottomSide(index, width, height, length)) << "\n";
+    std::cout << "index " << index << " istop: " << outputBool(Grid3DYOffset::isTopSide(index, width, height, length)) << "\n";
+    std::cout << "\n";
+}
+
 //put test functions here but before tests()
 void texture_array_test()
 {
@@ -310,6 +329,48 @@ void df_natural_tile_enum_test()
     }
 }
 
+void offset_grid_3x3_test()
+{
+    Grid3DYOffset grid;
+
+    unsigned int grid_width = 3;
+    unsigned int grid_height = 3;
+    unsigned int grid_length = 3;
+    float offset = 0.0f;
+    float stride = 0.0f;
+    float box_width = 1.0f;
+    float box_height = 1.0f;
+    float box_length = 1.0f;
+    unsigned int index;
+
+    grid.setGridWidthLengthHeight(grid_width, grid_height, grid_length);
+    grid.setYOffset(offset);
+    grid.setYStride(stride);
+    grid.setBoxWidthLengthHeight(box_width, box_height, box_length);
+
+    grid.create();
+
+    index = 0;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 8;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 9; //start of mid
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 17; //end of mid
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 18; //start of top row
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 26; //end of top row
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    std::cout << "Done\n";
+}
+
 void tests()
 {
     //texture_array_test();
@@ -321,14 +382,15 @@ void tests()
     //offest_grid_test();
     //image_test();
     //array_texture_test();
-    df_natural_tile_enum_test();
+    //df_natural_tile_enum_test();
+    offset_grid_3x3_test();
 }
 
 int main(void)
 {
     MainLoop loop;
-    loop.startLoop();
-    //tests();
+    //loop.startLoop();
+    tests();
 
     exit(EXIT_SUCCESS);
 }

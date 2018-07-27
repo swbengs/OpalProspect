@@ -30,7 +30,7 @@ SOFTWARE.
 */
 
 /*
-Description: Grid that will support an offset on the y axis. This allows two grids to be interweaved with each other
+Description: Grid that will support an offset on the y axis. This allows two grids to be interweaved with each other. Grid starts bottom left and goes +x and +z, +y goes up and creates a layer
 */
 
 class Grid3DYOffset
@@ -66,6 +66,21 @@ public:
 
     void setYOffset(float offset);
     void setYStride(float stride);
+
+    //statics: check for borders and to get an index that is in a given direction from the given index's location for a grid of given x, y, z
+    static bool isBottomSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
+    static bool isTopSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
+    static bool isLeftSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
+    static bool isRightSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
+    static bool isFrontSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
+    static bool isBackSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
+
+    static unsigned int getIndexDown(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
+    static unsigned int getIndexUp(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
+    static unsigned int getIndexLeft(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
+    static unsigned int getIndexRight(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
+    static unsigned int getIndexFront(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
+    static unsigned int getIndexBack(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
 
 private:
     std::vector<Point3D> grid;

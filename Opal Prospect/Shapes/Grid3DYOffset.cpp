@@ -170,3 +170,90 @@ void Grid3DYOffset::setYStride(float stride)
 {
     y_stride = stride;
 }
+
+//statics
+bool Grid3DYOffset::isBottomSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    if (height == 1)
+    {
+        return true;
+    }
+
+    unsigned int layer_size = width * length;
+    if (index < layer_size)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Grid3DYOffset::isTopSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    if (height == 1)
+    {
+        return true;
+    }
+
+    unsigned int layer_size = width * length;
+    if (index >= layer_size * (height - 1))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Grid3DYOffset::isLeftSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    return false;
+}
+
+bool Grid3DYOffset::isRightSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    return false;
+}
+
+bool Grid3DYOffset::isFrontSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    return false;
+}
+
+bool Grid3DYOffset::isBackSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    return false;
+}
+
+unsigned int Grid3DYOffset::getIndexDown(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    return 0;
+}
+
+unsigned int Grid3DYOffset::getIndexUp(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    return 0;
+}
+
+unsigned int Grid3DYOffset::getIndexLeft(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    return 0;
+}
+
+unsigned int Grid3DYOffset::getIndexRight(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    return 0;
+}
+
+unsigned int Grid3DYOffset::getIndexFront(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    return 0;
+}
+
+unsigned int Grid3DYOffset::getIndexBack(unsigned int index, unsigned int width, unsigned int height, unsigned int length)
+{
+    return 0;
+}
