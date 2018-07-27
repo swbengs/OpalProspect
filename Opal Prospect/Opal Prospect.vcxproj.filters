@@ -459,7 +459,7 @@
       <Filter>DwarfFortress</Filter>
     </ClInclude>
     <ClInclude Include="DwarfFortress\NaturalTile.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>DwarfFortress</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,8 @@ SOFTWARE.
 
 NaturalTile::NaturalTile()
 {
+    tile_type = DF_Natural_Tile(0);
+    draw_type = DF_DrawTileType(0);
 }
 
 DF_Natural_Tile NaturalTile::getTileType() const

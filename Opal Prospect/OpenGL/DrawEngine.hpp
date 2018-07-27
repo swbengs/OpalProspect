@@ -99,7 +99,6 @@ private:
     ModelController models;
     opengl_state state;
 
-    TextureAtlasController atlas;
     VertexFragmentProgram texture_program;
     VertexUVIndexVAO uvVAO;
     VertexUVIndexVAO uvVAO3D;

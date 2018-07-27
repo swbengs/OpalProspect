@@ -48,6 +48,14 @@ void ArrayTextureController::bindTexture(unsigned int reference) const
     }
 }
 
+void ArrayTextureController::destroyTextures()
+{
+    for (size_t i = 0; i < textures.size(); i++)
+    {
+        textures[i].destroy();
+    }
+}
+
 size_t ArrayTextureController::getCount() const
 {
     return textures.size();

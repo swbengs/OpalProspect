@@ -752,18 +752,11 @@ void DrawEngine::cleanup()
 
     test_texture.unbind();
     test_texture.destroy();
-
-    if (atlas.getSize() > 0) //if at least one texture was created, unbind any that are currently bound and then proceed to delete them all
-    {
-        atlas.modifyAtlas(0).unbind();
-    }
-
-    for (unsigned int n = 0; n < atlas.getSize(); n++)
-    {
-        atlas.modifyAtlas(n).destroy();
-    }
+    main_textures.destroyTextures();
 
     buffers.destroyBuffers();
+    interleaved_buffers.destroyBuffers();
+    OGLHelpers::getOpenGLError("post cleanup", false);
 }
 
 //gets
@@ -883,7 +876,7 @@ void DrawEngine::setupOpenGLContext()
     glDepthFunc(GL_LESS);
     glDepthRangef(0.0f, 1.0f);
 
-    //glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     //glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
     //glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 }
@@ -895,49 +888,6 @@ void DrawEngine::setupOpenGLObjects()
     //texture_program.create("2dtexturebasic.vert", "2dtexturebasic.frag");
     //texture_program.create("Texture2D.vert", "Texture2D.frag");
     texture_program.create("arrayTexture.vert", "arrayTexture.frag");
-
-    atlas.setIndexSize(24);
-
-    //setup textures
-    TextureAtlas text;
-    text.setFilename("bad.png");
-    //text.createTexture();
-    OGLHelpers::getOpenGLError("post texture create", true);
-
-    text.setRectangleWidth(16);
-    text.setRectangleHeight(16);
-    //text.generateAtlas();
-
-    atlas.addAtlas(text);
-
-    text.setFilename("soils.png");
-    //text.createTexture();
-    OGLHelpers::getOpenGLError("post texture create2", true);
-
-    text.setRectangleWidth(16);
-    text.setRectangleHeight(16);
-    //text.generateAtlas();
-
-    //atlas.addAtlas(text);
-    /*
-    int uv_total_size = 0;
-
-    for (unsigned int n = 0; n < atlas.getSize(); n++)
-    {
-        uv_total_size += atlas.getAtlas(n).getAtlasSize();
-    }
-    */
-    //setup VAO, VBO
-    /*
-    uvVAO.setObjectCount(uv_total_size);
-    uvVAO.setObjectVertexSize(16);
-    uvVAO.setObjectUVSize(8);
-    uvVAO.setObjectIndexSize(6);
-    uvVAO.create();
-    getError("post vao1 create");
-    */
-
-    OGLHelpers::getOpenGLError("post vao2 create"), true;
 }
 
 void DrawEngine::setupOpenGLUniforms()
@@ -947,45 +897,6 @@ void DrawEngine::setupOpenGLUniforms()
 
 void DrawEngine::setupObjects()
 {
-    std::array<float, 16> vertex;
-    std::array<float, 8> uv;
-    //std::array<float, 16> color;
-    std::array<unsigned int, 6> index;
-    int total;
-
-    uvVAO.bind();
-
-    uvVAO.bindVertex();
-    total = 0;
-    for (unsigned int n = 0; n < atlas.getSize(); n++)
-    {
-        atlas.getAtlas(n).getVertexRectangle().fillVertexIndexed(vertex); //the vertex are all the same for each rectangle in an atlas
-        for (int m = 0; m < atlas.getAtlas(n).getAtlasSize(); m++)
-        {
-            //uvVAO.bufferVertex(total, vertex.size(), vertex.data());
-            total++;
-        }
-    }
-
-    uvVAO.bindUV();
-    total = 0;
-    for (unsigned int n = 0; n < atlas.getSize(); n++)
-    {
-        for (int m = 0; m < atlas.getAtlas(n).getAtlasSize(); m++)
-        {
-            atlas.getAtlas(n).fillUVIndexedRectangle(m, uv);
-            //uvVAO.bufferUV(total, uv.size(), uv.data());
-            total++;
-        }
-    }
-
-    uvVAO.bindIndex();
-    for (int n = 0; n < uvVAO.getObjectCount(); n++)
-    {
-        atlas.getAtlas(0).getVertexRectangle().fillIndex(n, index);
-        //uvVAO.bufferIndex(n, index.size(), index.data());
-    }
-
     //arrayTextureAtlasTest();
     //bufferControlTest();
     //interleaveTest();
