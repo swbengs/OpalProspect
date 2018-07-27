@@ -7,7 +7,7 @@
 
 //other includes
 #include "DrawEngineStructs.hpp"
-#include "ArrayTexture.hpp"
+#include "ArrayTextureAtlas.hpp"
 
 /*
 MIT License
@@ -37,25 +37,18 @@ SOFTWARE.
 Description: This class stores and maintains all the textures. References start at 1 and count up. Reference of 0 is similar to null, since it does not exist
 */
 
-class ArrayTextureController
+class ArrayTextureAtlasController
 {
 public:
-    void addTexture(const ArrayTexture &texture);
+    void addTexture(const ArrayTextureAtlas &texture);
 
-    void bindTexture(unsigned int reference) const;
-
-    //gets
     size_t getCount() const;
-    const ArrayTexture& getTexture(unsigned int reference) const; //for reading only
-    unsigned int getTextureID(unsigned int reference) const; //get actual texture id to bind
+    const ArrayTextureAtlas& getTexture(unsigned int reference) const; //for reading only
     unsigned int getTextureReference(std::string texture_name) const;
-    unsigned int getTextureNumber(std::string image_name) const;
 
-    ArrayTexture& modifyTexture(unsigned int reference); //for writing and reading
+    ArrayTextureAtlas& modifyTexture(unsigned int reference); //for writing and reading
 private:
-    std::vector<ArrayTexture> textures;
+    std::vector<ArrayTextureAtlas> textures;
     std::unordered_map<std::string, unsigned int> references;
-
-    bool inBounds(unsigned int reference) const;
 };
 

@@ -8,7 +8,7 @@
 #include "MainLoop.hpp"
 
 //test includes
-#include "OpenGL\ArrayTexture.hpp"
+#include "OpenGL\ArrayTextureAtlas.hpp"
 #include "Shapes\NormalFace.hpp"
 #include "Shapes\NormalBox.hpp"
 #include "Shapes\ModelIndex.hpp"
@@ -19,6 +19,8 @@
 #include "Shapes\Point3DInt.hpp"
 #include "Shapes\Point4D.hpp"
 #include "Shapes\Grid3DYOffset.hpp"
+#include "OpenGL\Image.hpp"
+#include "OpenGL\ArrayTexture.hpp"
 
 /*
 MIT License
@@ -47,14 +49,14 @@ SOFTWARE.
 //put test functions here but before tests()
 void texture_array_test()
 {
-    ArrayTexture t2x2;
-    ArrayTexture t2x4;
-    ArrayTexture t4x2;
-    ArrayTexture t4x4;
-    ArrayTexture bad;
-    ArrayTexture terrain;
-    ArrayTexture t6x15;
-    ArrayTexture t15x5;
+    ArrayTextureAtlas t2x2;
+    ArrayTextureAtlas t2x4;
+    ArrayTextureAtlas t4x2;
+    ArrayTextureAtlas t4x4;
+    ArrayTextureAtlas bad;
+    ArrayTextureAtlas terrain;
+    ArrayTextureAtlas t6x15;
+    ArrayTextureAtlas t15x5;
 
     std::vector<unsigned char> data_t2x2;
     std::vector<unsigned char> data_t2x4;
@@ -261,6 +263,36 @@ void offest_grid_test()
     std::cout << "Done\n";
 }
 
+void image_test()
+{
+    Image test;
+    test.setFilePath("test.png");
+    std::cout << "filename: " << test.getFilename() << "\n";
+
+    test.setFilePath("C:\\test.png");
+    std::cout << "filename: " << test.getFilename() << "\n";
+
+    test.setFilePath("C:\\junk\\a.png");
+    std::cout << "filename: " << test.getFilename() << "\n";
+
+    test.setFilePath("Textures\\soils.png");
+    test.loadImage();
+    std::cout << "filename: " << test.getFilename() << "\n";
+}
+
+void array_texture_test()
+{
+    ArrayTexture test;
+    std::vector<std::string> files;
+    test.loadImages(files);
+
+    files.push_back("Textures\\singles\\soils\\white sand 16.png");
+    files.push_back("Textures\\singles\\soils\\silty clay loam 16.png");
+    test.loadImages(files);
+
+    std::cout << "done\n";
+}
+
 void tests()
 {
     //texture_array_test();
@@ -269,7 +301,9 @@ void tests()
     //trivialTests();
     //podTest();
     //pointConversion();
-    offest_grid_test();
+    //offest_grid_test();
+    //image_test();
+    array_texture_test();
 }
 
 int main(void)

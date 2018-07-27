@@ -1,13 +1,9 @@
-#pragma once
+#include "ArrayTextureAtlasController.hpp"
+//class header
 
 //std lib includes
-#include <vector>
-#include <unordered_map>
-#include <string>
 
 //other includes
-#include "DrawEngineStructs.hpp"
-#include "ArrayTexture.hpp"
 
 /*
 MIT License
@@ -33,29 +29,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/*
-Description: This class stores and maintains all the textures. References start at 1 and count up. Reference of 0 is similar to null, since it does not exist
-*/
-
-class ArrayTextureController
+void ArrayTextureAtlasController::addTexture(const ArrayTextureAtlas &texture)
 {
-public:
-    void addTexture(const ArrayTexture &texture);
+    textures.push_back(texture);
+    references[texture.getFilename()] = textures.size();
+}
 
-    void bindTexture(unsigned int reference) const;
+size_t ArrayTextureAtlasController::getCount() const
+{
+    return textures.size();
+}
 
-    //gets
-    size_t getCount() const;
-    const ArrayTexture& getTexture(unsigned int reference) const; //for reading only
-    unsigned int getTextureID(unsigned int reference) const; //get actual texture id to bind
-    unsigned int getTextureReference(std::string texture_name) const;
-    unsigned int getTextureNumber(std::string image_name) const;
+const ArrayTextureAtlas& ArrayTextureAtlasController::getTexture(unsigned int reference) const
+{
+    return textures[reference - 1];
+}
 
-    ArrayTexture& modifyTexture(unsigned int reference); //for writing and reading
-private:
-    std::vector<ArrayTexture> textures;
-    std::unordered_map<std::string, unsigned int> references;
+unsigned int ArrayTextureAtlasController::getTextureReference(std::string texture_name) const
+{
+    auto search = references.find(texture_name);
+    if (search != references.end()) //found
+    {
+        return search->second;
+    }
+    else
+    {
+        //std::cout << "model " << model_name << " does not exist from ArrayTextureAtlasController\n";
+        return 0;
+    }
+}
 
-    bool inBounds(unsigned int reference) const;
-};
-
+ArrayTextureAtlas& ArrayTextureAtlasController::modifyTexture(unsigned int reference)
+{
+    return textures[reference - 1];
+}

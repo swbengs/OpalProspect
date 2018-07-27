@@ -1,13 +1,10 @@
-#pragma once
+//class header
+#include "FilePath.hpp"
 
 //std lib includes
-#include <vector>
-#include <unordered_map>
-#include <string>
+#include <iostream>
 
 //other includes
-#include "DrawEngineStructs.hpp"
-#include "ArrayTexture.hpp"
 
 /*
 MIT License
@@ -33,29 +30,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/*
-Description: This class stores and maintains all the textures. References start at 1 and count up. Reference of 0 is similar to null, since it does not exist
-*/
+const char os_seperator = 
+#if defined(WIN32) || defined(_WIN32)
+'\\';
+#else
+'/';
+#endif
 
-class ArrayTextureController
+FilePath::FilePath()
 {
-public:
-    void addTexture(const ArrayTexture &texture);
+    full_path = "";
+}
 
-    void bindTexture(unsigned int reference) const;
+std::string FilePath::getFilename() const
+{
+    return filename;
+}
 
-    //gets
-    size_t getCount() const;
-    const ArrayTexture& getTexture(unsigned int reference) const; //for reading only
-    unsigned int getTextureID(unsigned int reference) const; //get actual texture id to bind
-    unsigned int getTextureReference(std::string texture_name) const;
-    unsigned int getTextureNumber(std::string image_name) const;
+std::string FilePath::getPath() const
+{
+    return full_path;
+}
 
-    ArrayTexture& modifyTexture(unsigned int reference); //for writing and reading
-private:
-    std::vector<ArrayTexture> textures;
-    std::unordered_map<std::string, unsigned int> references;
+void FilePath::setFullPath(std::string path)
+{
+    full_path = path;
+    size_t filename_start = 0;
 
-    bool inBounds(unsigned int reference) const;
-};
+    for (size_t i = path.size() - 1; i > 0; i--)
+    {
+        if (path.at(i) == os_seperator)
+        {
+            filename_start = i + 1; //we just found serpator at i, so add 1 to get the start
+            break; //exit loop
+        }
+    }
 
+    filename = path.substr(filename_start);
+}

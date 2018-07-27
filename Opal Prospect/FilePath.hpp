@@ -1,13 +1,9 @@
 #pragma once
 
 //std lib includes
-#include <vector>
-#include <unordered_map>
 #include <string>
 
 //other includes
-#include "DrawEngineStructs.hpp"
-#include "ArrayTexture.hpp"
 
 /*
 MIT License
@@ -34,28 +30,22 @@ SOFTWARE.
 */
 
 /*
-Description: This class stores and maintains all the textures. References start at 1 and count up. Reference of 0 is similar to null, since it does not exist
+Description: Class to store generic filename and path that should work on any OS.
 */
 
-class ArrayTextureController
+class FilePath
 {
 public:
-    void addTexture(const ArrayTexture &texture);
-
-    void bindTexture(unsigned int reference) const;
+    FilePath();
 
     //gets
-    size_t getCount() const;
-    const ArrayTexture& getTexture(unsigned int reference) const; //for reading only
-    unsigned int getTextureID(unsigned int reference) const; //get actual texture id to bind
-    unsigned int getTextureReference(std::string texture_name) const;
-    unsigned int getTextureNumber(std::string image_name) const;
+    std::string getFilename() const;
+    std::string getPath() const;
+    //sets
+    void setFullPath(std::string path);
 
-    ArrayTexture& modifyTexture(unsigned int reference); //for writing and reading
 private:
-    std::vector<ArrayTexture> textures;
-    std::unordered_map<std::string, unsigned int> references;
-
-    bool inBounds(unsigned int reference) const;
+    std::string full_path;
+    std::string filename;
 };
 

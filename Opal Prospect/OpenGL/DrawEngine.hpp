@@ -5,6 +5,7 @@
 #include <string>
 
 //shapes and textures
+#include "ArrayTextureAtlas.hpp"
 #include "ArrayTexture.hpp"
 #include "TextureAtlas.hpp"
 #include "TextureAtlasController.hpp"
@@ -33,6 +34,7 @@
 
 #include "DrawEngineStructs.hpp"
 #include "ArrayTextureController.hpp"
+#include "ArrayTextureAtlasController.hpp"
 #include "BufferController.hpp"
 #include "InterleavedBufferController.hpp"
 #include "ModelController.hpp"
@@ -72,7 +74,7 @@ public:
 
     void addModel(ModelIndex& model);
     void addInterleavedModel(ModelIndex& model);
-    void addTexture(const ArrayTexture& texture);
+    void addTexture(const ArrayTextureAtlas& texture);
     void draw(const Camera &camera);
 
     void setup();
@@ -92,7 +94,8 @@ private:
     const static float Z_FAR;
     BufferController buffers;
     InterleavedBufferController interleaved_buffers;
-    ArrayTextureController textures;
+    ArrayTextureAtlasController textures;
+    ArrayTextureController main_textures;
     ModelController models;
     opengl_state state;
 
@@ -103,7 +106,8 @@ private:
     Grid3D grid;
     Grid3DYOffset grid_off, grid_off2;
     ModelIndex test_model;
-    ArrayTexture test_texture;
+    ArrayTextureAtlas test_texture;
+    ArrayTexture array_texture;
     InterleavedVAO3D interleave_vao;
 
     int screen_width; //the actual screen resolution
@@ -133,8 +137,11 @@ private:
     void calculatePersp();
 
     //tests
-    void arrayTextureTest();
+    void arrayTextureAtlasTest();
     void bufferControlTest();
     void interleaveTest();
     void interleaveDraw(const Camera &camera);
+    void arrayTextureTest();
+    void arrayTextureDraw(const Camera &camera);
+    void properDrawTest();
 };

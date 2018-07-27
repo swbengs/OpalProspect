@@ -2,12 +2,9 @@
 
 //std lib includes
 #include <vector>
-#include <unordered_map>
-#include <string>
 
 //other includes
-#include "DrawEngineStructs.hpp"
-#include "ArrayTexture.hpp"
+#include "..\FilePath.hpp"
 
 /*
 MIT License
@@ -34,28 +31,33 @@ SOFTWARE.
 */
 
 /*
-Description: This class stores and maintains all the textures. References start at 1 and count up. Reference of 0 is similar to null, since it does not exist
+Description: Class to hold an image and the filename to that image. Automatically flipped vertically to be ready for OpenGL use.
 */
 
-class ArrayTextureController
+class Image
 {
 public:
-    void addTexture(const ArrayTexture &texture);
+    Image();
 
-    void bindTexture(unsigned int reference) const;
+    void loadImage();
 
     //gets
-    size_t getCount() const;
-    const ArrayTexture& getTexture(unsigned int reference) const; //for reading only
-    unsigned int getTextureID(unsigned int reference) const; //get actual texture id to bind
-    unsigned int getTextureReference(std::string texture_name) const;
-    unsigned int getTextureNumber(std::string image_name) const;
+    int getWidth() const;
+    int getHeight() const;
+    size_t getSize() const; //size of the image vector
+    std::string getFilename() const;
+    const std::vector<unsigned char>& getImageData() const;
 
-    ArrayTexture& modifyTexture(unsigned int reference); //for writing and reading
+    //sets
+    void setFilePath(std::string path); //sets the full filepath and the filename is extracted from this
+
 private:
-    std::vector<ArrayTexture> textures;
-    std::unordered_map<std::string, unsigned int> references;
+    int image_width;
+    int image_height;
+    std::vector<unsigned char> image_data;
+    FilePath file_path;
 
-    bool inBounds(unsigned int reference) const;
+    void flipVertical(int width, int height);
+    void setupImage(std::string filename);
 };
 
