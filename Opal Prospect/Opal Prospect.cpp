@@ -21,6 +21,7 @@
 #include "Shapes\Grid3DYOffset.hpp"
 #include "OpenGL\Image.hpp"
 #include "OpenGL\ArrayTexture.hpp"
+#include "DwarfFortress\natural_tiles.hpp"
 
 /*
 MIT License
@@ -293,6 +294,22 @@ void array_texture_test()
     std::cout << "done\n";
 }
 
+void df_natural_tile_enum_test()
+{
+    //can easily see the string, filename, and enum number for each tile in one place. Easy to check for errors
+    DF_Natural_Tile tile;
+
+    for (int i = 0; i < DF_NATURAL_TILE_COUNT; i++)
+    {
+        tile = static_cast<DF_Natural_Tile>(i);
+        std::cout << "\n";
+        std::cout << "enum: " << tile << "\n";
+        std::cout << "name: " << DFNaturalTileString(tile) << "\n";
+        std::cout << "file: " << DFNaturalTileFile(tile) << "\n";\
+        std::cout << "\n";
+    }
+}
+
 void tests()
 {
     //texture_array_test();
@@ -303,14 +320,15 @@ void tests()
     //pointConversion();
     //offest_grid_test();
     //image_test();
-    array_texture_test();
+    //array_texture_test();
+    df_natural_tile_enum_test();
 }
 
 int main(void)
 {
     MainLoop loop;
-    loop.startLoop();
-    //tests();
+    //loop.startLoop();
+    tests();
 
     exit(EXIT_SUCCESS);
 }
