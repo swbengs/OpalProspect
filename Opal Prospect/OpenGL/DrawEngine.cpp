@@ -48,6 +48,7 @@ void DrawEngine::properDrawTest()
     files.push_back("Textures\\bad.png");
     files.push_back("Textures\\singles\\soils\\white_sand.png");
     files.push_back("Textures\\singles\\soils\\silty_clay_loam.png");
+    files.push_back("Textures\\singles\\stones\\gabbro.png");
 
     array_texture.setTextureName(texture_name);
     array_texture.loadImages(files);
@@ -106,7 +107,8 @@ void DrawEngine::properDrawTest()
     pyra_mod.setModelName("pyramid");
     pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     pyramid.setNormal(front, back, left, right, bottom);
-    pyramid.setTextureNumber(4);
+    //pyramid.setTextureNumber(4);
+    pyramid.setTextureNumber(main_textures.getTextureNumber("gabbro.png"));
     convert.convertToModelIndex(pyramid, pyra_mod);
     addInterleavedModel(pyra_mod);
 
