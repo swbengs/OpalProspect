@@ -156,8 +156,10 @@
   <ItemGroup>
     <ClCompile Include="Cameras\Camera.cpp" />
     <ClCompile Include="Cameras\FlightCamera.cpp" />
+    <ClCompile Include="DwarfFortress\NaturalTerrain.cpp" />
     <ClCompile Include="DwarfFortress\NaturalTile.cpp" />
     <ClCompile Include="DwarfFortress\natural_tiles.cpp" />
+    <ClCompile Include="DwarfFortress\tile_types.cpp" />
     <ClCompile Include="FilePath.cpp" />
     <ClCompile Include="MainLoop.cpp" />
     <ClCompile Include="Opal Prospect.cpp" />
@@ -228,6 +230,8 @@
     <ClInclude Include="Constants\axis.hpp" />
     <ClInclude Include="Containers\ObjectPool.hpp" />
     <ClInclude Include="Containers\SortedObjectPool.hpp" />
+    <ClInclude Include="DwarfFortress\df_constants.hpp" />
+    <ClInclude Include="DwarfFortress\NaturalTerrain.hpp" />
     <ClInclude Include="DwarfFortress\NaturalTile.hpp" />
     <ClInclude Include="DwarfFortress\natural_tiles.hpp" />
     <ClInclude Include="DwarfFortress\tile_types.hpp" />

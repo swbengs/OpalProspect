@@ -1,6 +1,11 @@
 #pragma once
 
-#include <string>
+//std lib includes
+#include <vector>
+
+//other includes
+#include "NaturalTile.hpp"
+#include "..\Shapes\Grid3DYOffset.hpp"
 
 /*
 MIT License
@@ -27,44 +32,23 @@ SOFTWARE.
 */
 
 /*
-Description: Declaration of the different types tiles that exist and the internal ones I use as well
+Description: Class to store the natural terrain.
 */
 
-enum DF_DrawTileType //types used for drawing. We care about the generic type not the specific. So it can be a block without saying what kind of block eg iron/obsidian etc
+class NaturalTerrain
 {
-    AIR, //empty
-    BLOCK,//regular block you can mine
-    FLOOR, //each block has a floor below it of the same type unless the dwarves modify it
-    LIQUID, //magma or water
-    RAMP //not a stair
-};
+public:
+    NaturalTerrain();
 
-enum DF_TileTypeMaterial
-{
-    DF_AIR, //empty tile
-    DF_ASHES,
-    DF_BROOK,
-    DF_CAMPFIRE,
-    DF_CONSTRUCTION,
-    DF_DRIFTWOOD,
-    DF_FEATURE,
-    DF_FIRE,
-    DF_FROZEN_LIQUID, //ice
-    DF_GRASS_DARK,
-    DF_GRASS_DEAD,
-    DF_GRASS_DRY,
-    DF_GRASS_LIGHT,
-    DF_HFS, //happy fun stuff
-    DF_LAVA_STONE,
-    DF_MAGMA,
-    DF_MINERAL, //pockets veins and so on
-    DF_MUSHROOM,
-    DF_PLANT,
-    DF_POOL,
-    DF_ROOT,
-    DF_SOIL, //forms layers
-    DF_STONE, //forms layers
-    DF_TREE,
-    DF_UNDERWORLD_GATE
+    //gets
+
+    //sets
+    void setGridDimensions(unsigned int width, unsigned int height, unsigned int length);
+
+private:
+    Grid3DYOffset block_grid;
+    Grid3DYOffset floor_grid;
+    std::vector<NaturalTile> blocks;
+    std::vector<NaturalTile> floors;
 };
 

@@ -1,6 +1,8 @@
 #pragma once
 
-#include <string>
+//std lib includes
+
+//other includes
 
 /*
 MIT License
@@ -27,44 +29,14 @@ SOFTWARE.
 */
 
 /*
-Description: Declaration of the different types tiles that exist and the internal ones I use as well
+Description: This structure is still not fully decided on. Give a basic description of what this class does at a minimum. More detail is always welcome.
 */
 
-enum DF_DrawTileType //types used for drawing. We care about the generic type not the specific. So it can be a block without saying what kind of block eg iron/obsidian etc
-{
-    AIR, //empty
-    BLOCK,//regular block you can mine
-    FLOOR, //each block has a floor below it of the same type unless the dwarves modify it
-    LIQUID, //magma or water
-    RAMP //not a stair
-};
+const float DF_BLOCK_WIDTH = 1.0f;
+const float DF_BLOCK_HEIGHT = 1.0f;
+const float DF_BLOCK_LENGTH = 1.0f;
 
-enum DF_TileTypeMaterial
-{
-    DF_AIR, //empty tile
-    DF_ASHES,
-    DF_BROOK,
-    DF_CAMPFIRE,
-    DF_CONSTRUCTION,
-    DF_DRIFTWOOD,
-    DF_FEATURE,
-    DF_FIRE,
-    DF_FROZEN_LIQUID, //ice
-    DF_GRASS_DARK,
-    DF_GRASS_DEAD,
-    DF_GRASS_DRY,
-    DF_GRASS_LIGHT,
-    DF_HFS, //happy fun stuff
-    DF_LAVA_STONE,
-    DF_MAGMA,
-    DF_MINERAL, //pockets veins and so on
-    DF_MUSHROOM,
-    DF_PLANT,
-    DF_POOL,
-    DF_ROOT,
-    DF_SOIL, //forms layers
-    DF_STONE, //forms layers
-    DF_TREE,
-    DF_UNDERWORLD_GATE
-};
+const float DF_FLOOR_WIDTH = 1.0f;
+const float DF_FLOOR_HEIGHT = 0.2f;
+const float DF_FLOOR_LENGTH = 1.0f;
 

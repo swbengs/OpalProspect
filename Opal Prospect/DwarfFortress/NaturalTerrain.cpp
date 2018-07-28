@@ -1,6 +1,10 @@
-#pragma once
+#include "NaturalTerrain.hpp"
+//class header
 
-#include <string>
+//std lib includes
+
+//other includes
+#include "df_constants.hpp"
 
 /*
 MIT License
@@ -26,45 +30,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/*
-Description: Declaration of the different types tiles that exist and the internal ones I use as well
-*/
+//class code
 
-enum DF_DrawTileType //types used for drawing. We care about the generic type not the specific. So it can be a block without saying what kind of block eg iron/obsidian etc
+NaturalTerrain::NaturalTerrain()
 {
-    AIR, //empty
-    BLOCK,//regular block you can mine
-    FLOOR, //each block has a floor below it of the same type unless the dwarves modify it
-    LIQUID, //magma or water
-    RAMP //not a stair
-};
+    //setup the boxes within the grids. Don't create or set the # of them yet
+    block_grid.setBoxWidthLengthHeight(DF_BLOCK_WIDTH, DF_BLOCK_HEIGHT, DF_BLOCK_LENGTH);
+    block_grid.setYOffset(DF_FLOOR_HEIGHT);
+    block_grid.setYStride(DF_FLOOR_HEIGHT);
 
-enum DF_TileTypeMaterial
+    floor_grid.setBoxWidthLengthHeight(DF_FLOOR_WIDTH, DF_FLOOR_HEIGHT, DF_FLOOR_LENGTH);
+    floor_grid.setYOffset(0.0f);
+    floor_grid.setYStride(DF_BLOCK_HEIGHT);
+}
+
+void NaturalTerrain::setGridDimensions(unsigned int width, unsigned int height, unsigned int length)
 {
-    DF_AIR, //empty tile
-    DF_ASHES,
-    DF_BROOK,
-    DF_CAMPFIRE,
-    DF_CONSTRUCTION,
-    DF_DRIFTWOOD,
-    DF_FEATURE,
-    DF_FIRE,
-    DF_FROZEN_LIQUID, //ice
-    DF_GRASS_DARK,
-    DF_GRASS_DEAD,
-    DF_GRASS_DRY,
-    DF_GRASS_LIGHT,
-    DF_HFS, //happy fun stuff
-    DF_LAVA_STONE,
-    DF_MAGMA,
-    DF_MINERAL, //pockets veins and so on
-    DF_MUSHROOM,
-    DF_PLANT,
-    DF_POOL,
-    DF_ROOT,
-    DF_SOIL, //forms layers
-    DF_STONE, //forms layers
-    DF_TREE,
-    DF_UNDERWORLD_GATE
-};
+    block_grid.setGridWidthLengthHeight(width, height, length);
+    floor_grid.setGridWidthLengthHeight(width, height, length);
+}
 
