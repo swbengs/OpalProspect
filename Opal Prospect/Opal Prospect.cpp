@@ -22,7 +22,7 @@
 #include "OpenGL\Image.hpp"
 #include "OpenGL\ArrayTexture.hpp"
 #include "DwarfFortress\natural_tiles.hpp"
-#include "DwarfFortress\NaturalTerrain.hpp"
+#include "DwarfFortress\NaturalTerrainModelBuilder.hpp"
 
 /*
 MIT License
@@ -581,6 +581,24 @@ void natural_terrain_test()
     std::cout << "natural terrain test done\n";
 }
 
+void natural_terrain_build_test()
+{
+    NaturalTerrain test;
+    NaturalTerrainModelBuilder builder;
+    const unsigned int width = 3;
+    const unsigned int height = 3;
+    const unsigned int length = 3;
+    test.setGridDimensions(width, height, length);
+    test.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_ADAMANTINE);
+    //test.create();
+
+    //test.setLayerDrawType(1, DF_DRAW_AIR);
+
+    builder.loadFromMemory(test);
+
+    std::cout << "natural terrain builder test done\n";
+}
+
 void tests()
 {
     //texture_array_test();
@@ -598,7 +616,8 @@ void tests()
     //offset_grid_3x2x4_test();
     //offset_grid_5x5x5_test();
     //offset_grid_extreme_test();
-    natural_terrain_test();
+    //natural_terrain_test();
+    natural_terrain_build_test();
 }
 
 int main(void)
