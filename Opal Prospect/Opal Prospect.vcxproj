@@ -203,6 +203,7 @@
     <ClCompile Include="Shapes\NormalFace.cpp" />
     <ClCompile Include="Shapes\NormalTriangle.cpp" />
     <ClCompile Include="Shapes\Point1D.cpp" />
+    <ClCompile Include="Shapes\Point3DUInt.cpp" />
     <ClCompile Include="Shapes\Point4D.cpp" />
     <ClCompile Include="Shapes\RightRectanglePyramid.cpp" />
     <ClCompile Include="Shapes\RightRectanglePyramidNormal.cpp" />
@@ -279,6 +280,7 @@
     <ClInclude Include="Shapes\NormalFace.hpp" />
     <ClInclude Include="Shapes\NormalTriangle.hpp" />
     <ClInclude Include="Shapes\Point1D.hpp" />
+    <ClInclude Include="Shapes\Point3DUInt.hpp" />
     <ClInclude Include="Shapes\Point4D.hpp" />
     <ClInclude Include="Shapes\RightRectanglePyramid.hpp" />
     <ClInclude Include="Shapes\RightRectanglePyramidNormal.hpp" />

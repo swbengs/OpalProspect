@@ -1,10 +1,6 @@
-//class header
-#include "NaturalTerrainModelBuilder.hpp"
+#pragma once
 
-//std lib includes
-#include <iostream>
-
-//other includes
+#include <vector>
 
 /*
 MIT License
@@ -30,36 +26,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-NaturalTerrainModelBuilder::NaturalTerrainModelBuilder()
+/* 
+Class representing a 3d coordinate as an unsigned int
+*/
+
+struct Point3DUInt
 {
+public:
 
-}
+    Point3DUInt() = default;
+    Point3DUInt(unsigned int X, unsigned int Y, unsigned int Z);
 
-void NaturalTerrainModelBuilder::loadFromFile(std::string filename)
-{
+    void fillArray(std::vector<unsigned int>& vector) const;
+    void fillArray(size_t start, std::vector<unsigned int>& vector) const;
 
-}
+    //sets
+    void setXYZ(unsigned int X, unsigned int Y, unsigned int Z);
 
-void NaturalTerrainModelBuilder::loadFromMemory(const NaturalTerrain& memory)
-{
-    terrain = memory;
-    create(terrain.getGridDimensions());
-}
-
-//private
-void NaturalTerrainModelBuilder::addBlock(natural_tile_draw_info block)
-{
-    blocks.push_back(block);
-}
-
-void NaturalTerrainModelBuilder::addFloor(natural_tile_draw_info floor)
-{
-    floors.push_back(floor);
-}
-
-void NaturalTerrainModelBuilder::create(Point3DUInt dimensions)
-{
-    terrain.setGridDimensions(dimensions.x, dimensions.y, dimensions.z);
-    terrain.create();
-}
-
+    unsigned int x;
+    unsigned int y;
+    unsigned int z;
+};

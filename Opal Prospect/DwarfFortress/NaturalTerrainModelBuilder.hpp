@@ -1,6 +1,7 @@
 #pragma once
 
 //std lib includes
+#include <vector>
 
 //other includes
 #include "NaturalTerrain.hpp"
@@ -30,7 +31,7 @@ SOFTWARE.
 */
 
 /*
-Description: Class to convert natural terrain class into a model that can be drawn
+Description: Class to convert natural terrain class into a model that can be drawn. We only store the blocks/floors that have at least one face to be drawn.
 */
 
 class NaturalTerrainModelBuilder
@@ -38,6 +39,32 @@ class NaturalTerrainModelBuilder
 public:
     NaturalTerrainModelBuilder();
 
+    void loadFromFile(std::string filename);
+    void loadFromMemory(const NaturalTerrain& memory); //good for testing and debugging
+
+    //gets
+
+    //sets
+
 private:
+    struct natural_tile_draw_info //struct for what needs to be added to the model, as in what is drawn. 
+    {
+        //sides that should be drawn
+        bool left;
+        bool right;
+        bool bottom;
+        bool top;
+        bool front;
+        bool back;
+        unsigned int tile_index; //what natural tile to grab from. blocks and floors kept seperate so we know if it's a floor or a block
+    };
+
+    std::vector<natural_tile_draw_info> blocks; //only blocks that have at least one side to be drawn are added here
+    std::vector<natural_tile_draw_info> floors; //same as above except for floors
+    NaturalTerrain terrain;
+
+    void addBlock(natural_tile_draw_info block);
+    void addFloor(natural_tile_draw_info floor);
+    void create(Point3DUInt dimensions);
 };
 

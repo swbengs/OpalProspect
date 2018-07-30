@@ -78,6 +78,21 @@ NaturalTile NaturalTerrain::getFloor(unsigned int index) const
     return floors[index];
 }
 
+const std::vector<NaturalTile>& NaturalTerrain::getBlocks() const
+{
+    return blocks;
+}
+
+const std::vector<NaturalTile>& NaturalTerrain::getFloors() const
+{
+    return floors;
+}
+
+Point3DUInt NaturalTerrain::getGridDimensions() const
+{
+    return Point3DUInt(block_grid.getGridWidth(), block_grid.getGridHeight(), block_grid.getGridLength());
+}
+
 void NaturalTerrain::setGridDimensions(unsigned int width, unsigned int height, unsigned int length)
 {
     block_grid.setGridWidthLengthHeight(width, height, length);

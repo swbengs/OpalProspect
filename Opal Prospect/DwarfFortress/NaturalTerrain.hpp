@@ -47,6 +47,9 @@ public:
     //gets
     NaturalTile getBlock(unsigned int index) const;
     NaturalTile getFloor(unsigned int index) const;
+    const std::vector<NaturalTile>& getBlocks() const;
+    const std::vector<NaturalTile>& getFloors() const;
+    Point3DUInt getGridDimensions() const;
 
     //sets
     void setGridDimensions(unsigned int width, unsigned int height, unsigned int length);

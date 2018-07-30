@@ -4,7 +4,7 @@
 
 //other includes
 #include "CenterBox.hpp"
-#include "Point3DInt.hpp"
+#include "Point3DUInt.hpp"
 
 /*
 MIT License
@@ -76,12 +76,12 @@ public:
     static bool isFrontSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
     static bool isBackSide(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
 
-    static bool isBottomSide(Point3DInt xyz, unsigned int width, unsigned int height, unsigned int length); //give x y and z index as individuals. Think of a 3 dimensional array [y][z][x]
-    static bool isTopSide(Point3DInt xyz, unsigned int width, unsigned int height, unsigned int length);
-    static bool isLeftSide(Point3DInt xyz, unsigned int width, unsigned int height, unsigned int length);
-    static bool isRightSide(Point3DInt xyz, unsigned int width, unsigned int height, unsigned int length);
-    static bool isFrontSide(Point3DInt xyz, unsigned int width, unsigned int height, unsigned int length);
-    static bool isBackSide(Point3DInt xyz, unsigned int width, unsigned int height, unsigned int length);
+    static bool isBottomSide(Point3DUInt xyz, unsigned int width, unsigned int height, unsigned int length); //give x y and z index as individuals. Think of a 3 dimensional array [y][z][x]
+    static bool isTopSide(Point3DUInt xyz, unsigned int width, unsigned int height, unsigned int length);
+    static bool isLeftSide(Point3DUInt xyz, unsigned int width, unsigned int height, unsigned int length);
+    static bool isRightSide(Point3DUInt xyz, unsigned int width, unsigned int height, unsigned int length);
+    static bool isFrontSide(Point3DUInt xyz, unsigned int width, unsigned int height, unsigned int length);
+    static bool isBackSide(Point3DUInt xyz, unsigned int width, unsigned int height, unsigned int length);
 
     static unsigned int getIndexDown(unsigned int index, unsigned int width, unsigned int height, unsigned int length);
     static unsigned int getIndexUp(unsigned int index, unsigned int width, unsigned int height, unsigned int length);

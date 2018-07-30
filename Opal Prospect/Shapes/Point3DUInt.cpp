@@ -1,10 +1,4 @@
-//class header
-#include "NaturalTerrainModelBuilder.hpp"
-
-//std lib includes
-#include <iostream>
-
-//other includes
+#include "Point3DUInt.hpp"
 
 /*
 MIT License
@@ -30,36 +24,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-NaturalTerrainModelBuilder::NaturalTerrainModelBuilder()
+Point3DUInt::Point3DUInt(unsigned int X, unsigned int Y, unsigned int Z)
 {
-
+    x = X;
+    y = Y;
+    z = Z;
 }
 
-void NaturalTerrainModelBuilder::loadFromFile(std::string filename)
+void Point3DUInt::fillArray(std::vector<unsigned int>& vector) const
 {
-
+    vector.push_back(x);
+    vector.push_back(y);
+    vector.push_back(z);
 }
 
-void NaturalTerrainModelBuilder::loadFromMemory(const NaturalTerrain& memory)
+void Point3DUInt::fillArray(size_t start, std::vector<unsigned int>& vector) const
 {
-    terrain = memory;
-    create(terrain.getGridDimensions());
+    vector[start] = x;
+    vector[start + 1] = y;
+    vector[start + 2] = z;
 }
 
-//private
-void NaturalTerrainModelBuilder::addBlock(natural_tile_draw_info block)
+//sets
+void Point3DUInt::setXYZ(unsigned int X, unsigned int Y, unsigned int Z)
 {
-    blocks.push_back(block);
+    x = X;
+    y = Y;
+    z = Z;
 }
-
-void NaturalTerrainModelBuilder::addFloor(natural_tile_draw_info floor)
-{
-    floors.push_back(floor);
-}
-
-void NaturalTerrainModelBuilder::create(Point3DUInt dimensions)
-{
-    terrain.setGridDimensions(dimensions.x, dimensions.y, dimensions.z);
-    terrain.create();
-}
-

@@ -255,6 +255,9 @@
     <ClCompile Include="DwarfFortress\NaturalTerrainModelBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shapes\Point3DUInt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\DrawEngine.hpp">
@@ -478,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="DwarfFortress\NaturalTerrainModelBuilder.hpp">
       <Filter>DwarfFortress</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\Point3DUInt.hpp">
+      <Filter>Shapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
