@@ -1,7 +1,8 @@
 //class header
-#include "NaturalTile.hpp"
+#include "NaturalTerrainModelBuilder.hpp"
 
 //std lib includes
+#include <iostream>
 
 //other includes
 
@@ -29,34 +30,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-NaturalTile::NaturalTile()
+NaturalTerrainModelBuilder::NaturalTerrainModelBuilder()
 {
-    tile_material = DF_Natural_Tile_Material(0);
-    draw_type = DF_Draw_Tile_Type(0);
-}
 
-NaturalTile::NaturalTile(DF_Draw_Tile_Type type, DF_Natural_Tile_Material material)
-{
-    tile_material = material;
-    draw_type = type;
-}
-
-DF_Natural_Tile_Material NaturalTile::getTileMaterial() const
-{
-    return tile_material;
-}
-
-DF_Draw_Tile_Type NaturalTile::getDrawType() const
-{
-    return draw_type;
-}
-
-void NaturalTile::setTileMaterial(DF_Natural_Tile_Material material)
-{
-    tile_material = material;
-}
-
-void NaturalTile::setDrawType(DF_Draw_Tile_Type type)
-{
-    draw_type = type;
 }

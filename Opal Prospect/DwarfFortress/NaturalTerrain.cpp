@@ -1,5 +1,5 @@
-#include "NaturalTerrain.hpp"
 //class header
+#include "NaturalTerrain.hpp"
 
 //std lib includes
 #include <assert.h>
@@ -51,7 +51,31 @@ void NaturalTerrain::create()
     floor_grid.create();
     const size_t count = block_grid.getGridCount();
     blocks.resize(count);
-    floors.resize(count);
+    const NaturalTile floor(DF_DRAW_FLOOR, DF_ALEXANDRITE);
+    floors.resize(count, floor);
+}
+
+void NaturalTerrain::create(DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type, DF_Natural_Tile_Material material)
+{
+    block_grid.create();
+    floor_grid.create();
+    const size_t count = block_grid.getGridCount();
+    const NaturalTile block(block_draw_type, material);
+    const NaturalTile floor(floor_draw_type, material);
+    blocks.resize(count, block);
+    floors.resize(count, floor);
+}
+
+NaturalTile NaturalTerrain::getBlock(unsigned int index) const
+{
+    assert(index < block_grid.getGridCount());
+    return blocks[index];
+}
+
+NaturalTile NaturalTerrain::getFloor(unsigned int index) const
+{
+    assert(index < floor_grid.getGridCount());
+    return floors[index];
 }
 
 void NaturalTerrain::setGridDimensions(unsigned int width, unsigned int height, unsigned int length)
@@ -62,9 +86,14 @@ void NaturalTerrain::setGridDimensions(unsigned int width, unsigned int height, 
 
 void NaturalTerrain::setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type)
 {
+    setIndexDrawType(index, draw_type, draw_type);
+}
+
+void NaturalTerrain::setIndexDrawType(unsigned int index, DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type)
+{
     assert(index < block_grid.getGridCount());
-    blocks[index].setDrawType(draw_type);
-    floors[index].setDrawType(draw_type);
+    blocks[index].setDrawType(block_draw_type);
+    floors[index].setDrawType(floor_draw_type);
 }
 
 void NaturalTerrain::setIndexMaterial(unsigned int index, DF_Natural_Tile_Material material)

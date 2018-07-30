@@ -252,6 +252,9 @@
     <ClCompile Include="DwarfFortress\tile_types.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DwarfFortress\NaturalTerrainModelBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\DrawEngine.hpp">
@@ -471,6 +474,9 @@
       <Filter>DwarfFortress</Filter>
     </ClInclude>
     <ClInclude Include="DwarfFortress\df_constants.hpp">
+      <Filter>DwarfFortress</Filter>
+    </ClInclude>
+    <ClInclude Include="DwarfFortress\NaturalTerrainModelBuilder.hpp">
       <Filter>DwarfFortress</Filter>
     </ClInclude>
   </ItemGroup>

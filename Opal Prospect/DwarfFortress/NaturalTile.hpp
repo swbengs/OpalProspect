@@ -39,13 +39,14 @@ class NaturalTile
 {
 public:
     NaturalTile();
+    NaturalTile(DF_Draw_Tile_Type type, DF_Natural_Tile_Material material);
 
     //gets
     DF_Natural_Tile_Material getTileMaterial() const;
     DF_Draw_Tile_Type getDrawType() const;
 
     //sets
-    void setTileMaterial(DF_Natural_Tile_Material type);
+    void setTileMaterial(DF_Natural_Tile_Material material);
     void setDrawType(DF_Draw_Tile_Type type);
 private:
     DF_Natural_Tile_Material tile_material; //used to get texture information

@@ -157,6 +157,7 @@
     <ClCompile Include="Cameras\Camera.cpp" />
     <ClCompile Include="Cameras\FlightCamera.cpp" />
     <ClCompile Include="DwarfFortress\NaturalTerrain.cpp" />
+    <ClCompile Include="DwarfFortress\NaturalTerrainModelBuilder.cpp" />
     <ClCompile Include="DwarfFortress\NaturalTile.cpp" />
     <ClCompile Include="DwarfFortress\natural_tiles.cpp" />
     <ClCompile Include="DwarfFortress\tile_types.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="Containers\SortedObjectPool.hpp" />
     <ClInclude Include="DwarfFortress\df_constants.hpp" />
     <ClInclude Include="DwarfFortress\NaturalTerrain.hpp" />
+    <ClInclude Include="DwarfFortress\NaturalTerrainModelBuilder.hpp" />
     <ClInclude Include="DwarfFortress\NaturalTile.hpp" />
     <ClInclude Include="DwarfFortress\natural_tiles.hpp" />
     <ClInclude Include="DwarfFortress\tile_types.hpp" />

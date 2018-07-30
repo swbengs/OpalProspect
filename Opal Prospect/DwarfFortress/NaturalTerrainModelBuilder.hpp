@@ -1,9 +1,9 @@
-//class header
-#include "NaturalTile.hpp"
+#pragma once
 
 //std lib includes
 
 //other includes
+#include "NaturalTerrain.hpp"
 
 /*
 MIT License
@@ -29,34 +29,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-NaturalTile::NaturalTile()
-{
-    tile_material = DF_Natural_Tile_Material(0);
-    draw_type = DF_Draw_Tile_Type(0);
-}
+/*
+Description: Class to convert natural terrain class into a model that can be drawn
+*/
 
-NaturalTile::NaturalTile(DF_Draw_Tile_Type type, DF_Natural_Tile_Material material)
+class NaturalTerrainModelBuilder
 {
-    tile_material = material;
-    draw_type = type;
-}
+public:
+    NaturalTerrainModelBuilder();
 
-DF_Natural_Tile_Material NaturalTile::getTileMaterial() const
-{
-    return tile_material;
-}
+private:
+};
 
-DF_Draw_Tile_Type NaturalTile::getDrawType() const
-{
-    return draw_type;
-}
-
-void NaturalTile::setTileMaterial(DF_Natural_Tile_Material material)
-{
-    tile_material = material;
-}
-
-void NaturalTile::setDrawType(DF_Draw_Tile_Type type)
-{
-    draw_type = type;
-}
