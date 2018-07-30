@@ -33,6 +33,7 @@ SOFTWARE.
 
 /*
 Description: Class to store the natural terrain.
+TODO: switch to grid class that does not save the locations. Calculate them as needed instead
 */
 
 class NaturalTerrain

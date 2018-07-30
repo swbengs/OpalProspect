@@ -570,7 +570,7 @@ void natural_terrain_test()
     test.setLayerDrawType(1, DF_DRAW_BLOCK);
     test.setLayerMaterial(1, DF_GABBRO);
     test.setIndexDrawType(26, DF_DRAW_LIQUID);
-    test.setLayerMaterial(26, DF_MAGMA_MATERIAL);
+    test.setIndexMaterial(26, DF_MAGMA_MATERIAL);
 
     std::cout << "natural terrain test done\n";
 }
