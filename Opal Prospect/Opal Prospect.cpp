@@ -336,7 +336,7 @@ void df_natural_tile_enum_test()
         std::cout << "\n";
         std::cout << "enum: " << tile << "\n";
         std::cout << "name: " << DFNaturalTileString(tile) << "\n";
-        std::cout << "file: " << DFNaturalTileFile(tile) << "\n";\
+        std::cout << "file: " << DFNaturalTileFilename(tile) << "\n";\
         std::cout << "\n";
     }
 }
@@ -623,8 +623,8 @@ void tests()
 int main(void)
 {
     MainLoop loop;
-    //loop.startLoop();
-    tests();
+    loop.startLoop();
+    //tests();
 
     exit(EXIT_SUCCESS);
 }

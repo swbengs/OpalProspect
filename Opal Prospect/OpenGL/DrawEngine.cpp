@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <array>
+#include <sstream>
 
 #include "glew.h"
 #include "OGLHelpers.hpp"
@@ -41,27 +42,10 @@ const float DrawEngine::Z_FAR = 50.0f;
 
 void DrawEngine::properDrawTest()
 {
-    OGLHelpers::getOpenGLError("pre array texture creation", true);
-
-    std::string texture_name = "terrain.png";
-    std::vector<std::string> files;
-    files.push_back("Textures\\bad.png");
-    files.push_back("Textures\\soils\\white_sand.png");
-    files.push_back("Textures\\soils\\silty_clay_loam.png");
-    files.push_back("Textures\\stones\\gabbro.png");
-
-    array_texture.setTextureName(texture_name);
-    array_texture.loadImages(files);
-    array_texture.createTexture();
-    main_textures.addTexture(array_texture);
-    state.texture_id = 0;
-    array_texture.unbind(); //test binding
-
-    OGLHelpers::getOpenGLError("post array texture creation", true);
-
     ShapeToModel convert;
     NormalBox box;
 
+    std::string texture_name = "terrain.png";
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     //box.setTextureNumber(1);
     box.setTextureNumber(main_textures.getTextureNumber("white_sand.png"));
@@ -804,11 +788,100 @@ void DrawEngine::setupOpenGLUniforms()
 
 void DrawEngine::setupObjects()
 {
+    loadTextures();
+    loadModels();
+    loadTerrain();
     //arrayTextureAtlasTest();
     //bufferControlTest();
     //interleaveTest();
     //arrayTextureTest();
     properDrawTest();
+}
+
+void DrawEngine::loadTextures()
+{
+    std::string texture_name = "terrain.png";
+    std::vector<std::string> files;
+    files.push_back("Textures\\bad.png");
+    files.push_back("Textures\\soils\\white_sand.png");
+    files.push_back("Textures\\soils\\silty_clay_loam.png");
+    files.push_back("Textures\\stones\\gabbro.png");
+
+    array_texture.setTextureName(texture_name);
+    array_texture.loadImages(files);
+    array_texture.createTexture();
+    main_textures.addTexture(array_texture);
+    state.texture_id = 0;
+    array_texture.unbind(); //test binding
+}
+
+void DrawEngine::loadModels()
+{
+    std::stringstream gem, liquid, ore, soil, stone;
+    ShapeToModel convert;
+    NormalBox block, floor;
+    FilePath p;
+    char os_seperator = p.getOSSeperator();
+    std::string gem_path, liquid_path, ore_path, soil_path, stone_path;
+
+    gem << "Textures" <<os_seperator << "gems" << os_seperator;
+    gem_path = gem.str();
+
+    liquid << "Textures" << os_seperator << "liquids" << os_seperator;
+    liquid_path = liquid.str();
+
+    ore << "Textures" << os_seperator << "ores" << os_seperator;
+    ore_path = ore.str();
+
+    soil << "Textures" << os_seperator << "soils" << os_seperator;
+    soil_path = soil.str();
+
+    stone << "Textures" << os_seperator << "stones" << os_seperator;
+    stone_path = stone.str();
+
+    std::string texture_name = "terrain.png";
+    block.setWidthHeightLength(DF_BLOCK_WIDTH, DF_BLOCK_HEIGHT, DF_BLOCK_LENGTH);
+    Point3D front, back, left, right, top, bottom;
+    front.setXYZ(0, 1, 2);
+    back.setXYZ(3, 4, 5);
+    left.setXYZ(6, 7, 8);
+    right.setXYZ(9, 10, 11);
+    top.setXYZ(12, 13, 14);
+    bottom.setXYZ(15, 16, 17);
+    block.setNormal(front, back, left, right, top, bottom);
+
+    floor.setWidthHeightLength(DF_FLOOR_WIDTH, DF_FLOOR_HEIGHT, DF_FLOOR_LENGTH);
+    floor.setNormal(front, back, left, right, top, bottom);
+    /*
+    for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
+    {
+        std::string path;
+        path.append("Textures");
+        block.setTextureNumber(main_textures.getTextureNumber(DFNaturalTileFilename(DF_Natural_Tile_Material(i))));
+        convert.convertToModelIndex(block, test_model);
+        test_model.setModelName(DFNaturalTileString(DF_Natural_Tile_Material(i)).append(" block"));
+        test_model.setTextureName(texture_name);
+        addInterleavedModel(test_model);
+    }
+
+    for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
+    {
+        block.setTextureNumber(main_textures.getTextureNumber(DFNaturalTileFilename(DF_Natural_Tile_Material(i))));
+        convert.convertToModelIndex(block, test_model);
+        test_model.setModelName(DFNaturalTileString(DF_Natural_Tile_Material(i)).append(" floor"));
+        test_model.setTextureName(texture_name);
+        addInterleavedModel(test_model);
+    }
+
+    convert.convertToModelIndex(block, test_model);
+    test_model.setModelName("test.obj");
+    test_model.setTextureName(texture_name);
+    addInterleavedModel(test_model);
+    */
+}
+
+void DrawEngine::loadTerrain()
+{
 }
 
 void DrawEngine::resize()

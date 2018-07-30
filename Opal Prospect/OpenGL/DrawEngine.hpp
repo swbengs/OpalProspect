@@ -31,11 +31,13 @@
 
 
 #include "DrawEngineStructs.hpp"
+#include "..\DwarfFortress\df_constants.hpp"
 #include "ArrayTextureController.hpp"
 #include "ArrayTextureAtlasController.hpp"
 #include "BufferController.hpp"
 #include "InterleavedBufferController.hpp"
 #include "ModelController.hpp"
+#include "..\DwarfFortress\NaturalTerrainModelBuilder.hpp"
 
 /*
 MIT License
@@ -104,6 +106,7 @@ private:
     ArrayTextureAtlas test_texture;
     ArrayTexture array_texture;
     InterleavedVAO3D interleave_vao;
+    NaturalTerrainModelBuilder terrain;
 
     int screen_width; //the actual screen resolution
     int screen_height;
@@ -126,6 +129,9 @@ private:
     void setupOpenGLObjects(); //set up the VBO's, VAO's, and anything else needed for drawing
     void setupOpenGLUniforms(); //get the location of all uniforms
     void setupObjects(); //set up things to draw. testing purposes etc
+    void loadTextures();
+    void loadModels();
+    void loadTerrain();
 
     void resize(); //called when window is resized
     void calculateOrtho();

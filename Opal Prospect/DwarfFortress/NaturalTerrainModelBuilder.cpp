@@ -45,7 +45,7 @@ void NaturalTerrainModelBuilder::loadFromMemory(const NaturalTerrain& memory)
     terrain = memory;
     create(terrain.getGridDimensions());
     checkingLoop();
-    buildModel();
+    //buildModel();
 }
 
 //private
@@ -112,8 +112,9 @@ bool NaturalTerrainModelBuilder::shouldDraw(const natural_tile_draw_info& info, 
     }
 }
 
-void NaturalTerrainModelBuilder::buildModel()
+void NaturalTerrainModelBuilder::buildModel(ModelIndex& model)
 {
+    
 }
 
 void NaturalTerrainModelBuilder::checkingLoop()
