@@ -68,6 +68,13 @@ void offset_grid_test_index(unsigned int index, unsigned int width, unsigned int
     std::cout << "index " << index << " is front: " << outputBool(Grid3DYOffset::isFrontSide(index, width, height, length)) << "\n";
     std::cout << "index " << index << " is back: " << outputBool(Grid3DYOffset::isBackSide(index, width, height, length)) << "\n";
     std::cout << "\n";
+    std::cout << "index " << index << " move left: " << Grid3DYOffset::getIndexLeft(index, width, height, length) << "\n";
+    std::cout << "index " << index << " move right: " << Grid3DYOffset::getIndexRight(index, width, height, length) << "\n";
+    std::cout << "index " << index << " move back: " << Grid3DYOffset::getIndexBack(index, width, height, length) << "\n";
+    std::cout << "index " << index << " move forward: " << Grid3DYOffset::getIndexFront(index, width, height, length) << "\n";
+    std::cout << "index " << index << " move down: " << Grid3DYOffset::getIndexDown(index, width, height, length) << "\n";
+    std::cout << "index " << index << " move up: " << Grid3DYOffset::getIndexUp(index, width, height, length) << "\n";
+    std::cout << "\n";
 }
 
 //put test functions here but before tests()
@@ -377,6 +384,9 @@ void offset_grid_3x3_test()
     index = 26; //end of top row
     offset_grid_test_index(index, grid_width, grid_height, grid_length);
 
+    index = 13; //middle
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
     std::cout << "Done\n";
 }
 
@@ -429,6 +439,9 @@ void offset_grid_5x3x4_test()
     offset_grid_test_index(index, grid_width, grid_height, grid_length);
 
     index = 59;
+    offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
+    index = 27;
     offset_grid_test_index(index, grid_width, grid_height, grid_length);
 
     std::cout << "Done\n";
@@ -485,6 +498,9 @@ void offset_grid_3x2x4_test()
     index = 23;
     offset_grid_test_index(index, grid_width, grid_height, grid_length);
 
+    //index = 100;
+    //offset_grid_test_index(index, grid_width, grid_height, grid_length);
+
     std::cout << "Done\n";
 }
 
@@ -522,6 +538,25 @@ void offset_grid_5x5x5_test()
     }
 }
 
+void offset_grid_extreme_test()
+{
+    //300 deep 5x5 embark test
+    const unsigned int embark_width = 5;
+    const unsigned int embark_length = 5;
+    const unsigned int embark_tile_width = 48 * embark_width ;
+    const unsigned int embark_tile_length = 48 * embark_length;
+    const unsigned int embark_height = 300;
+
+    Grid3DYOffset grid;
+    grid.setYOffset(0.0f);
+    grid.setYStride(0.0f);
+    grid.setBoxWidthLengthHeight(1.0f, 1.0f, 1.0f);
+    grid.setGridWidthLengthHeight(embark_tile_width, embark_height, embark_tile_length);
+    grid.create();
+
+    std::cout << "extreme grid test done\n";
+}
+
 void tests()
 {
     //texture_array_test();
@@ -535,16 +570,17 @@ void tests()
     //array_texture_test();
     //df_natural_tile_enum_test();
     //offset_grid_3x3_test();
-    //offset_grid_5x3x4_test();
+    offset_grid_5x3x4_test();
     //offset_grid_3x2x4_test();
-    offset_grid_5x5x5_test();
+    //offset_grid_5x5x5_test();
+    //offset_grid_extreme_test();
 }
 
 int main(void)
 {
     MainLoop loop;
-    loop.startLoop();
-    //tests();
+    //loop.startLoop();
+    tests();
 
     exit(EXIT_SUCCESS);
 }

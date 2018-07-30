@@ -32,6 +32,10 @@ SOFTWARE.
 Description: This structure is still not fully decided on. Give a basic description of what this class does at a minimum. More detail is always welcome.
 */
 
+const unsigned int DF_EMBARK_WIDTH = 48; //per 1 embark region. so 4x4 embark would be 48x48 * 16 blocks and floors. The height depends on how tall the world is at that spot. can be 200+ levels deep
+const unsigned int DF_EMBARK_LENGTH = 48;
+//height varies depending on the local terrain features
+
 const float DF_BLOCK_WIDTH = 1.0f;
 const float DF_BLOCK_HEIGHT = 1.0f;
 const float DF_BLOCK_LENGTH = 1.0f;
