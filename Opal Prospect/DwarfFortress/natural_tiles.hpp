@@ -35,7 +35,7 @@ Description: Enums, strings, and filenames for all natural tiles. This means soi
 
 static const int DF_NATURAL_TILE_COUNT = 232;
 
-enum DF_Natural_Tile
+enum DF_Natural_Tile_Material
 {
     //gem start
     DF_ALEXANDRITE,
@@ -168,8 +168,8 @@ enum DF_Natural_Tile
     //gem end
 
     //liquid start
-    DF_MAGMA_TILE,
-    DF_WATER_TILE,
+    DF_MAGMA_MATERIAL,
+    DF_WATER_MATERIAL,
     //liquid end
 
     //ore start
@@ -285,6 +285,6 @@ enum DF_Natural_Tile
     //stone end
 };
 
-std::string DFNaturalTileString(DF_Natural_Tile e);
-std::string DFNaturalTileFile(DF_Natural_Tile e);
+std::string DFNaturalTileString(DF_Natural_Tile_Material e);
+std::string DFNaturalTileFile(DF_Natural_Tile_Material e);
 

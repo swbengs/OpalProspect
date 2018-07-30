@@ -31,26 +31,26 @@ SOFTWARE.
 
 NaturalTile::NaturalTile()
 {
-    tile_type = DF_Natural_Tile(0);
-    draw_type = DF_DrawTileType(0);
+    tile_material = DF_Natural_Tile_Material(0);
+    draw_type = DF_Draw_Tile_Type(0);
 }
 
-DF_Natural_Tile NaturalTile::getTileType() const
+DF_Natural_Tile_Material NaturalTile::getTileMaterial() const
 {
-    return tile_type;
+    return tile_material;
 }
 
-DF_DrawTileType NaturalTile::getDrawType() const
+DF_Draw_Tile_Type NaturalTile::getDrawType() const
 {
     return draw_type;
 }
 
-void NaturalTile::setTileType(DF_Natural_Tile type)
+void NaturalTile::setTileMaterial(DF_Natural_Tile_Material type)
 {
-    tile_type = type;
+    tile_material = type;
 }
 
-void NaturalTile::setDrawType(DF_DrawTileType type)
+void NaturalTile::setDrawType(DF_Draw_Tile_Type type)
 {
     draw_type = type;
 }

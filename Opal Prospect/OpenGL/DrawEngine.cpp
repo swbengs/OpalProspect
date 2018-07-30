@@ -46,9 +46,9 @@ void DrawEngine::properDrawTest()
     std::string texture_name = "terrain.png";
     std::vector<std::string> files;
     files.push_back("Textures\\bad.png");
-    files.push_back("Textures\\singles\\soils\\white_sand.png");
-    files.push_back("Textures\\singles\\soils\\silty_clay_loam.png");
-    files.push_back("Textures\\singles\\stones\\gabbro.png");
+    files.push_back("Textures\\soils\\white_sand.png");
+    files.push_back("Textures\\soils\\silty_clay_loam.png");
+    files.push_back("Textures\\stones\\gabbro.png");
 
     array_texture.setTextureName(texture_name);
     array_texture.loadImages(files);
@@ -165,8 +165,8 @@ void DrawEngine::arrayTextureTest()
     std::string texture_name = "terrain.png";
     std::vector<std::string> files;
     files.push_back("Textures\\bad.png");
-    files.push_back("Textures\\singles\\soils\\white_sand.png");
-    files.push_back("Textures\\singles\\soils\\silty_clay_loam.png");
+    files.push_back("Textures\\soils\\white_sand.png");
+    files.push_back("Textures\\soils\\silty_clay_loam.png");
 
     array_texture.setTextureName(texture_name);
     array_texture.loadImages(files);

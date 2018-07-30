@@ -32,6 +32,7 @@ SOFTWARE.
 
 /*
 Description: This class is for storing a single natural tile. This means a ramp, liquid, block, or floor that is made of soil, rough stone, ore, gems, and liquids. Nothing smoothed or constructed by a dwarf
+These tiles comprise the entire world before dwarves modify it with constructions. Will need # of blocks in the map times 2 natural tiles. one for the floor and one for the block itself
 */
 
 class NaturalTile
@@ -40,14 +41,14 @@ public:
     NaturalTile();
 
     //gets
-    DF_Natural_Tile getTileType() const;
-    DF_DrawTileType getDrawType() const;
+    DF_Natural_Tile_Material getTileMaterial() const;
+    DF_Draw_Tile_Type getDrawType() const;
 
     //sets
-    void setTileType(DF_Natural_Tile type);
-    void setDrawType(DF_DrawTileType type);
+    void setTileMaterial(DF_Natural_Tile_Material type);
+    void setDrawType(DF_Draw_Tile_Type type);
 private:
-    DF_Natural_Tile tile_type; //used to get texture information
-    DF_DrawTileType draw_type; //used to see if it is drawn, and if so what kind of model to draw and so on
+    DF_Natural_Tile_Material tile_material; //used to get texture information
+    DF_Draw_Tile_Type draw_type; //used to see if it is drawn, and if so what kind of model to draw and so on
 };
 

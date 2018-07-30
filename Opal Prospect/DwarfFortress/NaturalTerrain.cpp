@@ -2,6 +2,7 @@
 //class header
 
 //std lib includes
+#include <assert.h>
 
 //other includes
 #include "df_constants.hpp"
@@ -44,9 +45,56 @@ NaturalTerrain::NaturalTerrain()
     floor_grid.setYStride(DF_BLOCK_HEIGHT);
 }
 
+void NaturalTerrain::create()
+{
+    block_grid.create();
+    floor_grid.create();
+    const size_t count = block_grid.getGridCount();
+    blocks.resize(count);
+    floors.resize(count);
+}
+
 void NaturalTerrain::setGridDimensions(unsigned int width, unsigned int height, unsigned int length)
 {
     block_grid.setGridWidthLengthHeight(width, height, length);
     floor_grid.setGridWidthLengthHeight(width, height, length);
+}
+
+void NaturalTerrain::setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type)
+{
+    assert(index > block_grid.getGridCount());
+    blocks[index].setDrawType(draw_type);
+    floors[index].setDrawType(draw_type);
+}
+
+void NaturalTerrain::setIndexMaterial(unsigned int index, DF_Natural_Tile_Material material)
+{
+    assert(index > block_grid.getGridCount());
+    blocks[index].setTileMaterial(material);
+    floors[index].setTileMaterial(material);
+}
+
+void NaturalTerrain::setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type draw_type)
+{
+    assert(layer >= block_grid.getGridHeight());
+    unsigned int layer_size = block_grid.getGridWidth() * block_grid.getGridLength();
+    unsigned int start = layer_size*layer;
+    for (unsigned int i = layer_size*layer; i < start + layer_size; i++)
+    {
+        blocks[i].setDrawType(draw_type);
+        floors[i].setDrawType(draw_type);
+    }
+}
+
+void NaturalTerrain::setLayerMaterial(unsigned int layer, DF_Natural_Tile_Material material)
+{
+    assert(layer >= block_grid.getGridHeight());
+    unsigned int layer_size = block_grid.getGridWidth() * block_grid.getGridLength();
+    unsigned int start = layer_size*layer;
+    for (unsigned int i = layer_size*layer; i < start + layer_size; i++)
+    {
+        blocks[i].setTileMaterial(material);
+        floors[i].setTileMaterial(material);
+    }
 }
 

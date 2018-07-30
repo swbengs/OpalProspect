@@ -27,7 +27,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-std::string DFTileTypeMaterialString(DF_TileTypeMaterial e)
+std::string DFTileTypeMaterialString(DF_Tile_Type_Material e)
 {
     switch (e)
     {
@@ -82,7 +82,7 @@ std::string DFTileTypeMaterialString(DF_TileTypeMaterial e)
     case DF_UNDERWORLD_GATE:
         return "underworld gate";
     default:
-        return "bad DF_TileTypeMaterial enum ";
+        return "bad DF_Tile_Type_Material enum ";
     }
 }
 

@@ -34,7 +34,7 @@ SOFTWARE.
 Description: Enums, strings, and filenames for all natural tiles. This means soil, rough stone, liquid, ore, and gems.
 */
 
-std::string DFNaturalTileString(DF_Natural_Tile e)
+std::string DFNaturalTileString(DF_Natural_Tile_Material e)
 {
     switch (e)
     {
@@ -296,9 +296,9 @@ std::string DFNaturalTileString(DF_Natural_Tile e)
         //gem end
 
         //liquid start
-    case DF_MAGMA_TILE:
+    case DF_MAGMA_MATERIAL:
         return "magma";
-    case DF_WATER_TILE:
+    case DF_WATER_MATERIAL:
         return "water";
             //liquid end
 
@@ -522,7 +522,7 @@ std::string DFNaturalTileString(DF_Natural_Tile e)
     }
 }
 
-std::string DFNaturalTileFile(DF_Natural_Tile e)
+std::string DFNaturalTileFile(DF_Natural_Tile_Material e)
 {
     switch (e)
     {
@@ -784,9 +784,9 @@ std::string DFNaturalTileFile(DF_Natural_Tile e)
         //gem end
 
         //liquid start
-    case DF_MAGMA_TILE:
+    case DF_MAGMA_MATERIAL:
         return "magma.png";
-    case DF_WATER_TILE:
+    case DF_WATER_MATERIAL:
         return "water.png";
         //liquid end
 

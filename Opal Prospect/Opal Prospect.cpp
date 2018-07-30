@@ -22,6 +22,7 @@
 #include "OpenGL\Image.hpp"
 #include "OpenGL\ArrayTexture.hpp"
 #include "DwarfFortress\natural_tiles.hpp"
+#include "DwarfFortress\NaturalTerrain.hpp"
 
 /*
 MIT License
@@ -327,11 +328,11 @@ void array_texture_test()
 void df_natural_tile_enum_test()
 {
     //can easily see the string, filename, and enum number for each tile in one place. Easy to check for errors
-    DF_Natural_Tile tile;
+    DF_Natural_Tile_Material tile;
 
     for (int i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
-        tile = static_cast<DF_Natural_Tile>(i);
+        tile = static_cast<DF_Natural_Tile_Material>(i);
         std::cout << "\n";
         std::cout << "enum: " << tile << "\n";
         std::cout << "name: " << DFNaturalTileString(tile) << "\n";
@@ -557,6 +558,23 @@ void offset_grid_extreme_test()
     std::cout << "extreme grid test done\n";
 }
 
+void natural_terrain_test()
+{
+    NaturalTerrain test;
+    const unsigned int width = 3;
+    const unsigned int height = 3;
+    const unsigned int length = 3;
+    test.setGridDimensions(width, height, length);
+    test.create();
+
+    test.setLayerDrawType(1, DF_DRAW_BLOCK);
+    test.setLayerMaterial(1, DF_GABBRO);
+    test.setIndexDrawType(26, DF_DRAW_LIQUID);
+    test.setLayerMaterial(26, DF_MAGMA_MATERIAL);
+
+    std::cout << "natural terrain test done\n";
+}
+
 void tests()
 {
     //texture_array_test();
@@ -570,10 +588,11 @@ void tests()
     //array_texture_test();
     //df_natural_tile_enum_test();
     //offset_grid_3x3_test();
-    offset_grid_5x3x4_test();
+    //offset_grid_5x3x4_test();
     //offset_grid_3x2x4_test();
     //offset_grid_5x5x5_test();
     //offset_grid_extreme_test();
+    natural_terrain_test();
 }
 
 int main(void)
