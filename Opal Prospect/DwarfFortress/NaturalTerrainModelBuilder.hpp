@@ -6,6 +6,7 @@
 //other includes
 #include "NaturalTerrain.hpp"
 #include "..\Shapes\ModelIndex.hpp"
+#include "..\OpenGL\ModelController.hpp" //not the best way but we need access to the already created model info to make our own
 
 /*
 MIT License
@@ -41,7 +42,8 @@ public:
     NaturalTerrainModelBuilder();
 
     void loadFromFile(std::string filename);
-    void loadFromMemory(const NaturalTerrain& memory); //good for testing and debugging
+    void loadFromMemory(const NaturalTerrain& memory, const ModelController& model_controller, ModelIndex& terrain_model); //reads from the given natural terrain and model controller to add faces to the given model for the terrain
+    void debugLoadFromMemory(const NaturalTerrain& memory); //good for testing and debugging
 
     //gets
 
@@ -72,7 +74,9 @@ private:
     bool shouldDraw(const natural_tile_draw_info& info, bool is_floor) const; //final check to see if we should add this tile to be drawn
 
     //methods to build the model
-    void buildModel(ModelIndex& model); //takes the natural tile draw info and uses that to access the models data directly along with the coordinates to place and rotate the face(s) correctly. And those faces are added to the model
+    void addBoxFace(const NormalFace& face, const Point3D& offset, const ModelIndex& terrain_model) const;
+    void addBoxFaces(unsigned int index, const ModelIndex& box_model, const ModelIndex& terrain_model, bool is_floor) const; //checks if proper bool is set and adds the face with the proper offset
+    void buildModel(const ModelController& model_controller, ModelIndex& terrain_model); //takes the natural tile draw info and uses that to access the models data directly along with the coordinates to place and rotate the face(s) correctly. And those faces are added to the model
     void checkingLoop(); //method that contains the main loop to check all terrain for what should be drawn
     void checkNeighbors(natural_tile_draw_info& tile, bool is_floor); //takes index of current block and will handle cases for all neighbors. Modifies given tile info pod
     void checkTile(bool& side, unsigned int start_index, unsigned int check_index, bool is_floor); //check given tile side in vs the index passed in. Sets the boolean

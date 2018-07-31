@@ -857,7 +857,30 @@ void DrawEngine::loadModels()
 
 void DrawEngine::loadTerrain()
 {
+    ModelIndex terrain_model;
+    NaturalTerrain terrain_test;
+    terrain_model.setTextureName("terrain.png");
+    terrain_model.setModelName("terrain");
 
+    //terrain_test stuff here
+    terrain_3x3x3_test(terrain_test);
+    //terrain_test and not after here
+
+    terrain.loadFromMemory(terrain_test, models, terrain_model);
+    addInterleavedModel(terrain_model);
+
+    std::cout << "after terrain load\n";
+}
+
+void DrawEngine::terrain_3x3x3_test(NaturalTerrain& natural_terrain)
+{
+    const unsigned int width = 3;
+    const unsigned int height = 3;
+    const unsigned int length = 3;
+    natural_terrain.setGridDimensions(width, height, length);
+    natural_terrain.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_GABBRO);
+
+    //test.setLayerDrawType(1, DF_DRAW_AIR);
 }
 
 void DrawEngine::resize()

@@ -30,6 +30,16 @@ SOFTWARE.
 Description: Declaration of the different types tiles that exist and the internal ones I use as well
 */
 
+enum DF_Sides
+{
+    DF_BOTTOM_SIDE,
+    DF_TOP_SIDE,
+    DF_LEFT_SIDE,
+    DF_RIGHT_SIDE,
+    DF_FRONT_SIDE,
+    DF_BACK_SIDE
+};
+
 enum DF_Draw_Tile_Type //types used for drawing. We care about the generic type not the specific. So it can be a block without saying what kind of block eg iron/obsidian etc
 {
     DF_DRAW_AIR, //empty

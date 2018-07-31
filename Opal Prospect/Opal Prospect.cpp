@@ -594,7 +594,7 @@ void natural_terrain_build_test()
 
     //test.setLayerDrawType(1, DF_DRAW_AIR);
 
-    builder.loadFromMemory(test);
+    builder.debugLoadFromMemory(test);
 
     std::cout << "natural terrain builder test done\n";
 }

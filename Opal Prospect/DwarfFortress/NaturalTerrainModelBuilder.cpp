@@ -40,12 +40,19 @@ void NaturalTerrainModelBuilder::loadFromFile(std::string filename)
 
 }
 
-void NaturalTerrainModelBuilder::loadFromMemory(const NaturalTerrain& memory)
+void NaturalTerrainModelBuilder::loadFromMemory(const NaturalTerrain& memory, const ModelController& model_controller, ModelIndex& terrain_model)
 {
     terrain = memory;
     create(terrain.getGridDimensions());
     checkingLoop();
-    //buildModel();
+    buildModel(model_controller, terrain_model);
+}
+
+void NaturalTerrainModelBuilder::debugLoadFromMemory(const NaturalTerrain& memory)
+{
+    terrain = memory;
+    create(terrain.getGridDimensions());
+    checkingLoop();
 }
 
 //private
@@ -112,9 +119,84 @@ bool NaturalTerrainModelBuilder::shouldDraw(const natural_tile_draw_info& info, 
     }
 }
 
-void NaturalTerrainModelBuilder::buildModel(ModelIndex& model)
+void NaturalTerrainModelBuilder::addBoxFace(const NormalFace & face, const Point3D& offset, const ModelIndex & terrain_model) const
 {
-    
+
+}
+
+void NaturalTerrainModelBuilder::addBoxFaces(unsigned int index, const ModelIndex& box_model, const ModelIndex& terrain_model, bool is_floor) const
+{
+    //check each face and if the bool is true, add it to model with the vertex offset by position from the proper grid
+    /* order they are added
+    model.addFace(front_face); 0
+    model.addFace(back_face); 1
+    model.addFace(left_face); 2
+    model.addFace(right_face); 3
+    model.addFace(top_face); 4
+    model.addFace(bottom_face); 5
+    */
+
+    Point3D position;
+    if (is_floor)
+    {
+        position = terrain.getFloorPosition(index);
+    }
+    else //block
+    {
+        position = terrain.getBlockPosition(index);
+    }
+
+    if (blocks[index].front)
+    {
+        addBoxFace(box_model.getFace(0), position, terrain_model);
+    }
+
+    if (blocks[index].back)
+    {
+        addBoxFace(box_model.getFace(1), position, terrain_model);
+    }
+
+    if (blocks[index].left)
+    {
+        addBoxFace(box_model.getFace(2), position, terrain_model);
+    }
+
+    if (blocks[index].right)
+    {
+        addBoxFace(box_model.getFace(3), position, terrain_model);
+    }
+
+    if (blocks[index].top)
+    {
+        addBoxFace(box_model.getFace(4), position, terrain_model);
+    }
+
+    if (blocks[index].bottom)
+    {
+        addBoxFace(box_model.getFace(5), position, terrain_model);
+    }
+}
+
+void NaturalTerrainModelBuilder::buildModel(const ModelController& model_controller, ModelIndex& terrain_model)
+{
+    for (size_t i = 0; i < blocks.size(); i++)
+    {
+        NaturalTile tile = terrain.getBlock(blocks[i].tile_index);
+        std::string name;
+
+        switch (tile.getDrawType()) //pick what type of block it is and give proper name to add to material
+        {
+        case DF_DRAW_BLOCK:
+            name = DFNaturalTileString(tile.getTileMaterial()).append(" block");
+            break;
+        case DF_DRAW_LIQUID:
+            break;
+            //and so on
+        }
+
+        const ModelIndex& model = model_controller.getModel(model_controller.getModelReference(name)); //TODO add assert to modelcontroller so we make sure it's always a proper reference
+        addBoxFaces(i, model, terrain_model, false);
+    }
 }
 
 void NaturalTerrainModelBuilder::checkingLoop()
@@ -158,11 +240,11 @@ void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bo
         const unsigned int back = Grid3DYOffset::getIndexBack(index, xyz.x, xyz.y, xyz.z);
         const unsigned int front = Grid3DYOffset::getIndexFront(index, xyz.x, xyz.y, xyz.z);
 
-        checkTile(info.top, index, up, true);
-        checkTile(info.bottom, index, down, true);
+        checkTile(info.top, index, up, false); //if we go up or down we need to check the block above/below us instead of floors
+        checkTile(info.bottom, index, down, false);
         checkTile(info.left, index, left, true);
         checkTile(info.right, index, right, true);
-        checkTile(info.front, index, back, true); //reversed on purpose
+        checkTile(info.front, index, back, true); //reversed on purpose. The model's front face points to the camera, but is the back face for the grid
         checkTile(info.back, index, front, true); //reversed on purpose
     }
     else //is a block
@@ -176,11 +258,11 @@ void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bo
         const unsigned int back = Grid3DYOffset::getIndexBack(index, xyz.x, xyz.y, xyz.z);
         const unsigned int front = Grid3DYOffset::getIndexFront(index, xyz.x, xyz.y, xyz.z);
 
-        checkTile(info.top, index, up, false);
-        checkTile(info.bottom, index, down, false);
+        checkTile(info.top, index, up, true); //if we go up/down we need to read from the floors and not blocks
+        checkTile(info.bottom, index, down, true);
         checkTile(info.left, index, left, false);
         checkTile(info.right, index, right, false);
-        checkTile(info.front, index, back, false); //reversed on purpose
+        checkTile(info.front, index, back, false); //reversed on purpose. Read comment from floor above
         checkTile(info.back, index, front, false); //reversed on purpose
     }
 }

@@ -144,4 +144,5 @@ private:
     void arrayTextureTest();
     void arrayTextureDraw(const Camera &camera);
     void properDrawTest();
+    void terrain_3x3x3_test(NaturalTerrain& natural_terrain);
 };
