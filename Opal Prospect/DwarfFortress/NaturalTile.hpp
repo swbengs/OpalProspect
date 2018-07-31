@@ -48,6 +48,10 @@ public:
     //sets
     void setTileMaterial(DF_Natural_Tile_Material material);
     void setDrawType(DF_Draw_Tile_Type type);
+
+    //statics
+    static std::string DFMaterialFullPath(DF_Natural_Tile_Material e);
+
 private:
     DF_Natural_Tile_Material tile_material; //used to get texture information
     DF_Draw_Tile_Type draw_type; //used to see if it is drawn, and if so what kind of model to draw and so on

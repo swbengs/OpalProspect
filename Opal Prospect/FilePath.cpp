@@ -52,7 +52,7 @@ std::string FilePath::getPath() const
     return full_path;
 }
 
-char FilePath::getOSSeperator() const
+char FilePath::getOSSeperator()
 {
     return os_seperator;
 }

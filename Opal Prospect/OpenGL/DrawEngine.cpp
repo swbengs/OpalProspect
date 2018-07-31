@@ -788,26 +788,26 @@ void DrawEngine::setupOpenGLUniforms()
 
 void DrawEngine::setupObjects()
 {
-    loadTextures();
-    loadModels();
-    loadTerrain();
     //arrayTextureAtlasTest();
     //bufferControlTest();
     //interleaveTest();
     //arrayTextureTest();
+
+    loadTextures();
     properDrawTest();
+    loadModels();
+    loadTerrain();
 }
 
 void DrawEngine::loadTextures()
 {
-    std::string texture_name = "terrain.png";
     std::vector<std::string> files;
     files.push_back("Textures\\bad.png");
     files.push_back("Textures\\soils\\white_sand.png");
     files.push_back("Textures\\soils\\silty_clay_loam.png");
     files.push_back("Textures\\stones\\gabbro.png");
 
-    array_texture.setTextureName(texture_name);
+    array_texture.setTextureName("terrain.png");
     array_texture.loadImages(files);
     array_texture.createTexture();
     main_textures.addTexture(array_texture);
@@ -817,27 +817,8 @@ void DrawEngine::loadTextures()
 
 void DrawEngine::loadModels()
 {
-    std::stringstream gem, liquid, ore, soil, stone;
     ShapeToModel convert;
     NormalBox block, floor;
-    FilePath p;
-    char os_seperator = p.getOSSeperator();
-    std::string gem_path, liquid_path, ore_path, soil_path, stone_path;
-
-    gem << "Textures" <<os_seperator << "gems" << os_seperator;
-    gem_path = gem.str();
-
-    liquid << "Textures" << os_seperator << "liquids" << os_seperator;
-    liquid_path = liquid.str();
-
-    ore << "Textures" << os_seperator << "ores" << os_seperator;
-    ore_path = ore.str();
-
-    soil << "Textures" << os_seperator << "soils" << os_seperator;
-    soil_path = soil.str();
-
-    stone << "Textures" << os_seperator << "stones" << os_seperator;
-    stone_path = stone.str();
 
     std::string texture_name = "terrain.png";
     block.setWidthHeightLength(DF_BLOCK_WIDTH, DF_BLOCK_HEIGHT, DF_BLOCK_LENGTH);
@@ -852,36 +833,31 @@ void DrawEngine::loadModels()
 
     floor.setWidthHeightLength(DF_FLOOR_WIDTH, DF_FLOOR_HEIGHT, DF_FLOOR_LENGTH);
     floor.setNormal(front, back, left, right, top, bottom);
-    /*
+
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
-        std::string path;
-        path.append("Textures");
-        block.setTextureNumber(main_textures.getTextureNumber(DFNaturalTileFilename(DF_Natural_Tile_Material(i))));
-        convert.convertToModelIndex(block, test_model);
-        test_model.setModelName(DFNaturalTileString(DF_Natural_Tile_Material(i)).append(" block"));
-        test_model.setTextureName(texture_name);
-        addInterleavedModel(test_model);
+        ModelIndex model; //model classes should not be reused
+        block.setTextureNumber(main_textures.getTextureNumber(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i))));
+        convert.convertToModelIndex(block, model);
+        model.setModelName(DFNaturalTileString(DF_Natural_Tile_Material(i)).append(" block"));
+        model.setTextureName(texture_name);
+        addInterleavedModel(model);
     }
 
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
-        block.setTextureNumber(main_textures.getTextureNumber(DFNaturalTileFilename(DF_Natural_Tile_Material(i))));
-        convert.convertToModelIndex(block, test_model);
-        test_model.setModelName(DFNaturalTileString(DF_Natural_Tile_Material(i)).append(" floor"));
-        test_model.setTextureName(texture_name);
-        addInterleavedModel(test_model);
+        ModelIndex model; //model classes should not be reused
+        floor.setTextureNumber(main_textures.getTextureNumber(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i))));
+        convert.convertToModelIndex(floor, model);
+        model.setModelName(DFNaturalTileString(DF_Natural_Tile_Material(i)).append(" floor"));
+        model.setTextureName(texture_name);
+        addInterleavedModel(model);
     }
-
-    convert.convertToModelIndex(block, test_model);
-    test_model.setModelName("test.obj");
-    test_model.setTextureName(texture_name);
-    addInterleavedModel(test_model);
-    */
 }
 
 void DrawEngine::loadTerrain()
 {
+
 }
 
 void DrawEngine::resize()

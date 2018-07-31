@@ -2,8 +2,10 @@
 #include "NaturalTile.hpp"
 
 //std lib includes
+#include <sstream>
 
 //other includes
+#include "..\FilePath.hpp"
 
 /*
 MIT License
@@ -59,4 +61,33 @@ void NaturalTile::setTileMaterial(DF_Natural_Tile_Material material)
 void NaturalTile::setDrawType(DF_Draw_Tile_Type type)
 {
     draw_type = type;
+}
+
+//static
+std::string NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material e)
+{
+    std::stringstream stream;
+    char os_seperator = FilePath::getOSSeperator();
+    DF_Material_Type m = DFNaturalType(e);
+
+    switch (m)
+    {
+    case DF_NATURAL_GEM:
+        stream << "Textures" << os_seperator << "gems" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
+        return stream.str();
+    case DF_NATURAL_LIQUID:
+        stream << "Textures" << os_seperator << "liquids" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));;
+        return stream.str();
+    case DF_NATURAL_ORE:
+        stream << "Textures" << os_seperator << "ores" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));;
+        return stream.str();
+    case DF_NATURAL_SOIL:
+        stream << "Textures" << os_seperator << "soils" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));;
+        return stream.str();
+    case DF_NATURAL_STONE:
+        stream << "Textures" << os_seperator << "stones" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));;
+        return stream.str();
+    default:
+        return "";
+    }
 }

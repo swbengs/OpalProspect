@@ -41,9 +41,10 @@ public:
     //gets
     std::string getFilename() const;
     std::string getPath() const;
-    char getOSSeperator() const;
     //sets
     void setFullPath(std::string path);
+
+    static char getOSSeperator();
 
 private:
     std::string full_path;
