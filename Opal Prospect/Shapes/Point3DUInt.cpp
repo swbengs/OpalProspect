@@ -1,6 +1,4 @@
-#pragma once
-
-#include "Triangle3D.hpp"
+#include "Point3DUInt.hpp"
 
 /*
 MIT License
@@ -26,11 +24,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-class VertexTriangle : public Triangle3D
+Point3DUInt::Point3DUInt(unsigned int X, unsigned int Y, unsigned int Z)
 {
-public:
-    //gets
-    unsigned int getIndexA() const;
-    unsigned int getIndexB() const;
-    unsigned int getIndexC() const;
-};
+    x = X;
+    y = Y;
+    z = Z;
+}
+
+void Point3DUInt::fillArray(std::vector<unsigned int>& vector) const
+{
+    vector.push_back(x);
+    vector.push_back(y);
+    vector.push_back(z);
+}
+
+void Point3DUInt::fillArray(size_t start, std::vector<unsigned int>& vector) const
+{
+    vector[start] = x;
+    vector[start + 1] = y;
+    vector[start + 2] = z;
+}
+
+//sets
+void Point3DUInt::setXYZ(unsigned int X, unsigned int Y, unsigned int Z)
+{
+    x = X;
+    y = Y;
+    z = Z;
+}

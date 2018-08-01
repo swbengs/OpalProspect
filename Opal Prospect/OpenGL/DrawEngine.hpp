@@ -13,9 +13,7 @@
 #include "..\Containers\SortedObjectPool.hpp"
 
 //buffers
-#include "Buffers\VertexColorIndexVAO.hpp"
-#include "Buffers\VertexUVIndexVAO.hpp"
-#include "Buffers\VertexUVNormalIndexVAO3D.hpp"
+#include "Buffers\InterleavedVAO3D.hpp"
 
 //programs
 #include "Programs\VertexFragmentProgram.hpp"
@@ -30,14 +28,16 @@
 #include "..\Shapes\RightRectanglePyramidNormal.hpp"
 #include "..\Shapes\ShapeToModel.hpp"
 #include "..\Shapes\ModelIndex.hpp"
-#include "Buffers\InterleavedVAO3D.hpp"
+
 
 #include "DrawEngineStructs.hpp"
+#include "..\DwarfFortress\df_constants.hpp"
 #include "ArrayTextureController.hpp"
 #include "ArrayTextureAtlasController.hpp"
 #include "BufferController.hpp"
 #include "InterleavedBufferController.hpp"
 #include "ModelController.hpp"
+#include "..\DwarfFortress\NaturalTerrainModelBuilder.hpp"
 
 /*
 MIT License
@@ -99,16 +99,14 @@ private:
     ModelController models;
     opengl_state state;
 
-    TextureAtlasController atlas;
     VertexFragmentProgram texture_program;
-    VertexUVIndexVAO uvVAO;
-    VertexUVIndexVAO uvVAO3D;
     Grid3D grid;
     Grid3DYOffset grid_off, grid_off2;
     ModelIndex test_model;
     ArrayTextureAtlas test_texture;
     ArrayTexture array_texture;
     InterleavedVAO3D interleave_vao;
+    NaturalTerrainModelBuilder terrain;
 
     int screen_width; //the actual screen resolution
     int screen_height;
@@ -131,17 +129,22 @@ private:
     void setupOpenGLObjects(); //set up the VBO's, VAO's, and anything else needed for drawing
     void setupOpenGLUniforms(); //get the location of all uniforms
     void setupObjects(); //set up things to draw. testing purposes etc
+    void loadTextures();
+    void loadModels();
+    void loadTerrain();
 
     void resize(); //called when window is resized
     void calculateOrtho();
     void calculatePersp();
 
     //tests
-    void arrayTextureAtlasTest();
     void bufferControlTest();
     void interleaveTest();
     void interleaveDraw(const Camera &camera);
     void arrayTextureTest();
     void arrayTextureDraw(const Camera &camera);
     void properDrawTest();
+    void terrain_3x3x3_test(NaturalTerrain& natural_terrain);
+    void terrain_16x16x16_test(NaturalTerrain& natural_terrain);
+    void terrain_48x48x48_test(NaturalTerrain& natural_terrain);
 };

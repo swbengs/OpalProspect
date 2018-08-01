@@ -43,6 +43,7 @@ public:
     void addTexture(const ArrayTexture &texture);
 
     void bindTexture(unsigned int reference) const;
+    void destroyTextures();
 
     //gets
     size_t getCount() const;

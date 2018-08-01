@@ -50,7 +50,7 @@ public:
     //index 6 ints 2 triangles 3 index each
     //normal 4 floats * 4 points
 
-    //index refers to a given faces array position. start is where to start adding into the vector. vector is modified
+    //index refers to a given faces array position. vector is modified
     void fillTriangleIndex(size_t index, std::vector<unsigned int>& vector) const;
     void fillFaceVertex(size_t index, std::vector<float>& vector) const;
     void fillFaceUV(size_t index, std::vector<float>& vector) const;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Triangle3D.hpp"
+#include <vector>
 
 /*
 MIT License
@@ -26,11 +26,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-class VertexTriangle : public Triangle3D
+/* 
+Class representing a 3d coordinate as an unsigned int
+*/
+
+struct Point3DUInt
 {
 public:
-    //gets
-    unsigned int getIndexA() const;
-    unsigned int getIndexB() const;
-    unsigned int getIndexC() const;
+
+    Point3DUInt() = default;
+    Point3DUInt(unsigned int X, unsigned int Y, unsigned int Z);
+
+    void fillArray(std::vector<unsigned int>& vector) const;
+    void fillArray(size_t start, std::vector<unsigned int>& vector) const;
+
+    //sets
+    void setXYZ(unsigned int X, unsigned int Y, unsigned int Z);
+
+    unsigned int x;
+    unsigned int y;
+    unsigned int z;
 };

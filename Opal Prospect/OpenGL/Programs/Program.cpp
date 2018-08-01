@@ -34,7 +34,10 @@ void Program::createProgramID()
 
 void Program::destroyProgram()
 {
-    glDeleteProgram(id);
+    if (id > 0)
+    {
+        glDeleteProgram(id);
+    }
 }
 
 void Program::useProgram() const

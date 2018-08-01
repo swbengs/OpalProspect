@@ -47,6 +47,7 @@ void VertexBox::fillVertexFace(VertexFace& front_face, VertexFace& back_face, Ve
 
 void VertexBox::fillIndexFace(VertexFace& front_face, VertexFace& back_face, VertexFace& left_face, VertexFace& right_face, VertexFace& top_face, VertexFace& bottom_face) const
 {
+    /*
     unsigned int offset = 0;
 
     front_face.setIndex(offset, offset + 1, offset + 2, offset + 3);
@@ -60,6 +61,7 @@ void VertexBox::fillIndexFace(VertexFace& front_face, VertexFace& back_face, Ver
     top_face.setIndex(offset, offset + 1, offset + 2, offset + 3);
     offset += 4;
     bottom_face.setIndex(offset, offset + 1, offset + 2, offset + 3);
+    */
 }
 
 void VertexBox::fillVertexIndexed(std::array<float, 96> &data) const

@@ -27,10 +27,32 @@ SOFTWARE.
 */
 
 /*
-Description: Declaration of the different types tiles that exist
+Description: Declaration of the different types tiles that exist and the internal ones I use as well
 */
 
-enum DF_TileTypeMaterial
+enum DF_Sides
+{
+    DF_BOTTOM_SIDE,
+    DF_TOP_SIDE,
+    DF_LEFT_SIDE,
+    DF_RIGHT_SIDE,
+    DF_FRONT_SIDE,
+    DF_BACK_SIDE
+};
+
+enum DF_Draw_Tile_Type //types used for drawing. We care about the generic type not the specific. So it can be a block without saying what kind of block eg iron/obsidian etc
+{
+    DF_DRAW_AIR, //empty
+    DF_DRAW_BLOCK,//regular block you can mine
+    DF_DRAW_FLOOR, //each block has a floor below it of the same type unless the dwarves modify it
+    DF_DRAW_LIQUID, //magma or water or ice(anything with transparancy)
+    DF_DRAW_RAMP_NORTH, //not a stair
+    DF_DRAW_RAMP_EAST,
+    DF_DRAW_RAMP_SOUTH,
+    DF_DRAW_RAMP_WEST
+};
+
+enum DF_Tile_Type_Material
 {
     DF_AIR, //empty tile
     DF_ASHES,
@@ -58,63 +80,4 @@ enum DF_TileTypeMaterial
     DF_TREE,
     DF_UNDERWORLD_GATE
 };
-
-std::string DFTileTypeMaterialString(DF_TileTypeMaterial e)
-{
-    switch (e)
-    {
-    case DF_AIR:
-        return "air";
-    case DF_ASHES:
-        return "ashes";
-    case DF_BROOK:
-        return "brook";
-    case DF_CAMPFIRE:
-        return "campfire";
-    case DF_CONSTRUCTION:
-        return "construction";
-    case DF_DRIFTWOOD:
-        return "driftwood";
-    case DF_FEATURE:
-        return "feature";
-    case DF_FIRE:
-        return "fire";
-    case DF_FROZEN_LIQUID:
-        return "frozen liquid";
-    case DF_GRASS_DARK:
-        return "grass dark";
-    case DF_GRASS_DEAD:
-        return "grass dead";
-    case DF_GRASS_DRY:
-        return "grass dry";
-    case DF_GRASS_LIGHT:
-        return "grass light";
-    case DF_HFS:
-        return "hfs";
-    case DF_LAVA_STONE:
-        return "lava stone";
-    case DF_MAGMA:
-        return "magma";
-    case DF_MINERAL:
-        return "mineral";
-    case DF_MUSHROOM:
-        return "mushroom";
-    case DF_PLANT:
-        return "plant";
-    case DF_POOL:
-        return "pool";
-    case DF_ROOT:
-        return "root";
-    case DF_SOIL:
-        return "soil";
-    case DF_STONE:
-        return "stone";
-    case DF_TREE:
-        return "tree";
-    case DF_UNDERWORLD_GATE:
-        return "underworld gate";
-    default:
-        return "bad DF_TileTypeMaterial enum ";
-    }
-}
 

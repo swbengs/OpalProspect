@@ -41,7 +41,10 @@ void VAO::createVAO()
 
 void VAO::destroyVAO()
 {
-    glDeleteVertexArrays(1, &id);
+    if (id > 0)
+    {
+        glDeleteVertexArrays(1, &id);
+    }
 }
 
 void VAO::unbindVAO() const

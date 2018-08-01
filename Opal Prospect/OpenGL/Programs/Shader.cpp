@@ -31,7 +31,10 @@ SOFTWARE.
 
 void Shader::destroyShader()
 {
-    glDeleteShader(getID());
+    if (id > 0)
+    {
+        glDeleteShader(getID());
+    }
 }
 
 void Shader::compile() const

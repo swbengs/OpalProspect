@@ -1,10 +1,10 @@
-//class header
-#include "FilePath.hpp"
+#pragma once
 
 //std lib includes
-#include <iostream>
-
+#include <string>
 //other includes
+#include "tile_types.hpp"
+#include "natural_tiles.hpp"
 
 /*
 MIT License
@@ -30,46 +30,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-const char os_seperator = 
-#if defined(WIN32) || defined(_WIN32)
-'\\';
-#else
-'/';
-#endif
+/*
+Description: This class is for storing a single natural tile. This means a ramp, liquid, block, or floor that is made of soil, rough stone, ore, gems, and liquids. Nothing smoothed or constructed by a dwarf
+These tiles comprise the entire world before dwarves modify it with constructions. Will need # of blocks in the map times 2 natural tiles. one for the floor and one for the block itself
+*/
 
-FilePath::FilePath()
+class NaturalTile
 {
-    full_path = "";
-}
+public:
+    NaturalTile();
+    NaturalTile(DF_Draw_Tile_Type type, DF_Natural_Tile_Material material);
 
-std::string FilePath::getFilename() const
-{
-    return filename;
-}
+    //gets
+    DF_Natural_Tile_Material getTileMaterial() const;
+    DF_Draw_Tile_Type getDrawType() const;
 
-std::string FilePath::getPath() const
-{
-    return full_path;
-}
+    //sets
+    void setTileMaterial(DF_Natural_Tile_Material material);
+    void setDrawType(DF_Draw_Tile_Type type);
 
-char FilePath::getOSSeperator()
-{
-    return os_seperator;
-}
+    //statics
+    static std::string DFMaterialFullPath(DF_Natural_Tile_Material e);
 
-void FilePath::setFullPath(std::string path)
-{
-    full_path = path;
-    size_t filename_start = 0;
+private:
+    DF_Natural_Tile_Material tile_material; //used to get texture information
+    DF_Draw_Tile_Type draw_type; //used to see if it is drawn, and if so what kind of model to draw and so on
+};
 
-    for (size_t i = path.size() - 1; i > 0; i--)
-    {
-        if (path.at(i) == os_seperator)
-        {
-            filename_start = i + 1; //we just found serpator at i, so add 1 to get the start
-            break; //exit loop
-        }
-    }
-
-    filename = path.substr(filename_start);
-}

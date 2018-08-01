@@ -240,6 +240,24 @@
     <ClCompile Include="OpenGL\ArrayTextureAtlasController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DwarfFortress\NaturalTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DwarfFortress\natural_tiles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DwarfFortress\NaturalTerrain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DwarfFortress\tile_types.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DwarfFortress\NaturalTerrainModelBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes\Point3DUInt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\DrawEngine.hpp">
@@ -448,6 +466,24 @@
     </ClInclude>
     <ClInclude Include="OpenGL\ArrayTextureAtlasController.hpp">
       <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="DwarfFortress\natural_tiles.hpp">
+      <Filter>DwarfFortress</Filter>
+    </ClInclude>
+    <ClInclude Include="DwarfFortress\NaturalTile.hpp">
+      <Filter>DwarfFortress</Filter>
+    </ClInclude>
+    <ClInclude Include="DwarfFortress\NaturalTerrain.hpp">
+      <Filter>DwarfFortress</Filter>
+    </ClInclude>
+    <ClInclude Include="DwarfFortress\df_constants.hpp">
+      <Filter>DwarfFortress</Filter>
+    </ClInclude>
+    <ClInclude Include="DwarfFortress\NaturalTerrainModelBuilder.hpp">
+      <Filter>DwarfFortress</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\Point3DUInt.hpp">
+      <Filter>Shapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

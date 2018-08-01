@@ -156,6 +156,11 @@
   <ItemGroup>
     <ClCompile Include="Cameras\Camera.cpp" />
     <ClCompile Include="Cameras\FlightCamera.cpp" />
+    <ClCompile Include="DwarfFortress\NaturalTerrain.cpp" />
+    <ClCompile Include="DwarfFortress\NaturalTerrainModelBuilder.cpp" />
+    <ClCompile Include="DwarfFortress\NaturalTile.cpp" />
+    <ClCompile Include="DwarfFortress\natural_tiles.cpp" />
+    <ClCompile Include="DwarfFortress\tile_types.cpp" />
     <ClCompile Include="FilePath.cpp" />
     <ClCompile Include="MainLoop.cpp" />
     <ClCompile Include="Opal Prospect.cpp" />
@@ -198,6 +203,7 @@
     <ClCompile Include="Shapes\NormalFace.cpp" />
     <ClCompile Include="Shapes\NormalTriangle.cpp" />
     <ClCompile Include="Shapes\Point1D.cpp" />
+    <ClCompile Include="Shapes\Point3DUInt.cpp" />
     <ClCompile Include="Shapes\Point4D.cpp" />
     <ClCompile Include="Shapes\RightRectanglePyramid.cpp" />
     <ClCompile Include="Shapes\RightRectanglePyramidNormal.cpp" />
@@ -226,6 +232,11 @@
     <ClInclude Include="Constants\axis.hpp" />
     <ClInclude Include="Containers\ObjectPool.hpp" />
     <ClInclude Include="Containers\SortedObjectPool.hpp" />
+    <ClInclude Include="DwarfFortress\df_constants.hpp" />
+    <ClInclude Include="DwarfFortress\NaturalTerrain.hpp" />
+    <ClInclude Include="DwarfFortress\NaturalTerrainModelBuilder.hpp" />
+    <ClInclude Include="DwarfFortress\NaturalTile.hpp" />
+    <ClInclude Include="DwarfFortress\natural_tiles.hpp" />
     <ClInclude Include="DwarfFortress\tile_types.hpp" />
     <ClInclude Include="FilePath.hpp" />
     <ClInclude Include="MainLoop.hpp" />
@@ -269,6 +280,7 @@
     <ClInclude Include="Shapes\NormalFace.hpp" />
     <ClInclude Include="Shapes\NormalTriangle.hpp" />
     <ClInclude Include="Shapes\Point1D.hpp" />
+    <ClInclude Include="Shapes\Point3DUInt.hpp" />
     <ClInclude Include="Shapes\Point4D.hpp" />
     <ClInclude Include="Shapes\RightRectanglePyramid.hpp" />
     <ClInclude Include="Shapes\RightRectanglePyramidNormal.hpp" />

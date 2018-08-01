@@ -26,10 +26,6 @@ SOFTWARE.
 
 VertexFace::VertexFace()
 {
-    bottom_left_index = 0;
-    bottom_right_index = 0;
-    top_left_index = 0;
-    top_right_index = 0;
     Point3D junk(0.0f, 0.0f, 0.0f);
     setVertex(junk, junk, junk, junk);
 }
@@ -37,7 +33,6 @@ VertexFace::VertexFace()
 VertexFace::VertexFace(Point3D bottom_left, Point3D bottom_right, Point3D top_left, Point3D top_right)
 {
     setVertex(bottom_left, bottom_right, top_left, top_right);
-    setIndex(0, 0, 0, 0);
 }
 
 //gets
@@ -63,22 +58,22 @@ Point3D VertexFace::getTopRightVertex() const
 
 unsigned int VertexFace::getBottomLeftIndex() const
 {
-    return bottom_left_index;
+    return 0;
 }
 
 unsigned int VertexFace::getBottomRightIndex() const
 {
-    return bottom_right_index;
+    return 1;
 }
 
 unsigned int VertexFace::getTopLeftIndex() const
 {
-    return top_left_index;
+    return 2;
 }
 
 unsigned int VertexFace::getTopRightIndex() const
 {
-    return top_right_index;
+    return 3;
 }
 
 //sets
@@ -110,30 +105,3 @@ void VertexFace::setVertex(Point3D bottom_left, Point3D bottom_right, Point3D to
     top_right_vertex = top_right;
 }
 
-void VertexFace::setBottomLeftIndex(unsigned int index)
-{
-    bottom_left_index = index;
-}
-
-void VertexFace::setBottomRightIndex(unsigned int index)
-{
-    bottom_right_index = index;
-}
-
-void VertexFace::setTopLeftIndex(unsigned int index)
-{
-    top_left_index = index;
-}
-
-void VertexFace::setTopRightIndex(unsigned int index)
-{
-    top_right_index = index;
-}
-
-void VertexFace::setIndex(unsigned int bottom_left, unsigned int bottom_right, unsigned int top_left, unsigned int top_right)
-{
-    bottom_left_index = bottom_left;
-    bottom_right_index = bottom_right;
-    top_left_index = top_left;
-    top_right_index = top_right;
-}

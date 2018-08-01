@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <array>
+#include <sstream>
 
 #include "glew.h"
 #include "OGLHelpers.hpp"
@@ -41,26 +42,10 @@ const float DrawEngine::Z_FAR = 50.0f;
 
 void DrawEngine::properDrawTest()
 {
-    OGLHelpers::getOpenGLError("pre array texture creation", true);
-
-    std::string texture_name = "terrain.png";
-    std::vector<std::string> files;
-    files.push_back("Textures\\bad.png");
-    files.push_back("Textures\\singles\\soils\\white_sand.png");
-    files.push_back("Textures\\singles\\soils\\silty_clay_loam.png");
-
-    array_texture.setTextureName(texture_name);
-    array_texture.loadImages(files);
-    array_texture.createTexture();
-    main_textures.addTexture(array_texture);
-    state.texture_id = 0;
-    array_texture.unbind(); //test binding
-
-    OGLHelpers::getOpenGLError("post array texture creation", true);
-
     ShapeToModel convert;
     NormalBox box;
 
+    std::string texture_name = "terrain.png";
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     //box.setTextureNumber(1);
     box.setTextureNumber(main_textures.getTextureNumber("white_sand.png"));
@@ -106,7 +91,8 @@ void DrawEngine::properDrawTest()
     pyra_mod.setModelName("pyramid");
     pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     pyramid.setNormal(front, back, left, right, bottom);
-    pyramid.setTextureNumber(4);
+    //pyramid.setTextureNumber(4);
+    pyramid.setTextureNumber(main_textures.getTextureNumber("gabbro.png"));
     convert.convertToModelIndex(pyramid, pyra_mod);
     addInterleavedModel(pyra_mod);
 
@@ -163,8 +149,8 @@ void DrawEngine::arrayTextureTest()
     std::string texture_name = "terrain.png";
     std::vector<std::string> files;
     files.push_back("Textures\\bad.png");
-    files.push_back("Textures\\singles\\soils\\white_sand.png");
-    files.push_back("Textures\\singles\\soils\\silty_clay_loam.png");
+    files.push_back("Textures\\soils\\white_sand.png");
+    files.push_back("Textures\\soils\\silty_clay_loam.png");
 
     array_texture.setTextureName(texture_name);
     array_texture.loadImages(files);
@@ -455,96 +441,6 @@ void DrawEngine::bufferControlTest()
     std::cout << "\n";
 }
 
-void DrawEngine::arrayTextureAtlasTest()
-{
-    //flight_cam.setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-
-    OGLHelpers::getOpenGLError("pre array texture creation");
-
-    test_texture.setFilename("soils.png");
-    test_texture.setTextureWidth(16);
-    test_texture.setTextureHeight(16);
-    test_texture.createTexture();
-
-    OGLHelpers::getOpenGLError("post array texture creation");
-    std::cout << "\n";
-
-    ShapeToModel convert;
-    NormalBox box;
-    Point3D front, back, left, right, top, bottom;
-
-    float offset = 1.0f;
-    front.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-    offset += 3.0f;
-    back.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-    offset += 3.0f;
-    left.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-    offset += 3.0f;
-    right.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-    offset += 3.0f;
-    top.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-    offset += 3.0f;
-    bottom.setXYZ(offset, offset + 1.0f, offset + 2.0f);
-
-    /*
-    box.setFrontTextureNumber(240);
-    box.setBackTextureNumber(241);
-    box.setLeftTextureNumber(242);
-    box.setRightTextureNumber(243);
-    box.setTopTextureNumber(244);
-    box.setBottomTextureNumber(245);
-    */
-
-    box.setFrontTextureNumber(248);
-    box.setBackTextureNumber(241);
-    box.setLeftTextureNumber(242);
-    box.setRightTextureNumber(243);
-    box.setTopTextureNumber(244);
-    box.setBottomTextureNumber(245);
-    //box.setTextureNumber(240);
-    //box.setTextureNumber(248);
-    box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    box.setNormal(front, back, left, right, top, bottom);
-
-    test_model.setIndexOffset(0);
-    convert.convertToModelIndex(box, test_model);
-
-    OGLHelpers::getOpenGLError("pre vao creation");
-
-    //array texture size
-    uvVAO3D.setObjectCount(1);
-    uvVAO3D.setObjectVertexSize(96);
-    uvVAO3D.setObjectUVSize(72);
-    uvVAO3D.setObjectIndexSize(36);
-    uvVAO3D.create();
-
-    OGLHelpers::getOpenGLError("post vao creation");
-
-    //model uploads
-    std::vector<float> vertex;
-    std::vector<float> uv;
-    std::vector<unsigned int> index;
-
-    test_model.fillVertex(vertex);
-    test_model.fillUV(uv);
-    test_model.fillIndex(index);
-
-    OGLHelpers::getOpenGLError("pre buffering");
-
-    uvVAO3D.bindVertex();
-    uvVAO3D.bufferVertex(0, vertex);
-
-    uvVAO3D.bindUV();
-    uvVAO3D.bufferUV(0, uv);
-
-    uvVAO3D.bindIndex();
-    uvVAO3D.bufferIndex(0, index);
-
-    OGLHelpers::getOpenGLError("post buffering");
-
-    std::cout << "done \n";
-}
-
 DrawEngine::DrawEngine()
 {
     screen_width = 1;
@@ -667,6 +563,8 @@ void DrawEngine::draw(const Camera &camera)
     glm::vec3 fourth = glm::vec3(3.0f, 3.0f, 0.0f);
     glm::vec3 fifth = glm::vec3(0.0f, 0.0f, -2.0f);
     glm::vec3 sixth = glm::vec3(6.0f, 3.0f, 0.0f);
+    glm::vec3 terrain_position = glm::vec3(15.0f, 0.0f, 0.0f);
+    glm::vec3 test = glm::vec3(-1.0f, -1.0f, -1.0f);
 
     draw("test.obj", camera, &first, nullptr, nullptr);
     //draw(models.getModelPOD(1), camera, &first, nullptr, nullptr);
@@ -677,6 +575,10 @@ void DrawEngine::draw(const Camera &camera)
     draw("pyramid", camera, &fifth, nullptr, nullptr);
     draw(models.getModelPOD(6), camera, &sixth, nullptr, nullptr);
     //draw("error", camera, &first, nullptr, nullptr);
+
+    //draw("gabbro block", camera, &test, nullptr, nullptr);
+    //draw("gabbro floor", camera, &test, nullptr, nullptr);
+    draw("terrain", camera, &terrain_position, nullptr, nullptr);
 
     //draw grid
     Point3D start(6.0f, 6.0f, 6.0f);
@@ -745,25 +647,13 @@ void DrawEngine::cleanup()
     texture_program.unUse();
     texture_program.destroy();
 
-    uvVAO.unBind();
-    uvVAO.destroy();
-    uvVAO3D.unBind();
-    uvVAO3D.destroy();
-
     test_texture.unbind();
     test_texture.destroy();
-
-    if (atlas.getSize() > 0) //if at least one texture was created, unbind any that are currently bound and then proceed to delete them all
-    {
-        atlas.modifyAtlas(0).unbind();
-    }
-
-    for (unsigned int n = 0; n < atlas.getSize(); n++)
-    {
-        atlas.modifyAtlas(n).destroy();
-    }
+    main_textures.destroyTextures();
 
     buffers.destroyBuffers();
+    interleaved_buffers.destroyBuffers();
+    OGLHelpers::getOpenGLError("post cleanup", false);
 }
 
 //gets
@@ -883,7 +773,7 @@ void DrawEngine::setupOpenGLContext()
     glDepthFunc(GL_LESS);
     glDepthRangef(0.0f, 1.0f);
 
-    //glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     //glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
     //glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 }
@@ -895,49 +785,6 @@ void DrawEngine::setupOpenGLObjects()
     //texture_program.create("2dtexturebasic.vert", "2dtexturebasic.frag");
     //texture_program.create("Texture2D.vert", "Texture2D.frag");
     texture_program.create("arrayTexture.vert", "arrayTexture.frag");
-
-    atlas.setIndexSize(24);
-
-    //setup textures
-    TextureAtlas text;
-    text.setFilename("bad.png");
-    //text.createTexture();
-    OGLHelpers::getOpenGLError("post texture create", true);
-
-    text.setRectangleWidth(16);
-    text.setRectangleHeight(16);
-    //text.generateAtlas();
-
-    atlas.addAtlas(text);
-
-    text.setFilename("soils.png");
-    //text.createTexture();
-    OGLHelpers::getOpenGLError("post texture create2", true);
-
-    text.setRectangleWidth(16);
-    text.setRectangleHeight(16);
-    //text.generateAtlas();
-
-    //atlas.addAtlas(text);
-    /*
-    int uv_total_size = 0;
-
-    for (unsigned int n = 0; n < atlas.getSize(); n++)
-    {
-        uv_total_size += atlas.getAtlas(n).getAtlasSize();
-    }
-    */
-    //setup VAO, VBO
-    /*
-    uvVAO.setObjectCount(uv_total_size);
-    uvVAO.setObjectVertexSize(16);
-    uvVAO.setObjectUVSize(8);
-    uvVAO.setObjectIndexSize(6);
-    uvVAO.create();
-    getError("post vao1 create");
-    */
-
-    OGLHelpers::getOpenGLError("post vao2 create"), true;
 }
 
 void DrawEngine::setupOpenGLUniforms()
@@ -947,50 +794,189 @@ void DrawEngine::setupOpenGLUniforms()
 
 void DrawEngine::setupObjects()
 {
-    std::array<float, 16> vertex;
-    std::array<float, 8> uv;
-    //std::array<float, 16> color;
-    std::array<unsigned int, 6> index;
-    int total;
-
-    uvVAO.bind();
-
-    uvVAO.bindVertex();
-    total = 0;
-    for (unsigned int n = 0; n < atlas.getSize(); n++)
-    {
-        atlas.getAtlas(n).getVertexRectangle().fillVertexIndexed(vertex); //the vertex are all the same for each rectangle in an atlas
-        for (int m = 0; m < atlas.getAtlas(n).getAtlasSize(); m++)
-        {
-            //uvVAO.bufferVertex(total, vertex.size(), vertex.data());
-            total++;
-        }
-    }
-
-    uvVAO.bindUV();
-    total = 0;
-    for (unsigned int n = 0; n < atlas.getSize(); n++)
-    {
-        for (int m = 0; m < atlas.getAtlas(n).getAtlasSize(); m++)
-        {
-            atlas.getAtlas(n).fillUVIndexedRectangle(m, uv);
-            //uvVAO.bufferUV(total, uv.size(), uv.data());
-            total++;
-        }
-    }
-
-    uvVAO.bindIndex();
-    for (int n = 0; n < uvVAO.getObjectCount(); n++)
-    {
-        atlas.getAtlas(0).getVertexRectangle().fillIndex(n, index);
-        //uvVAO.bufferIndex(n, index.size(), index.data());
-    }
-
     //arrayTextureAtlasTest();
     //bufferControlTest();
     //interleaveTest();
     //arrayTextureTest();
+
+    loadTextures();
     properDrawTest();
+    loadModels();
+    loadTerrain();
+}
+
+void DrawEngine::loadTextures()
+{
+    std::vector<std::string> files;
+    files.push_back("Textures\\bad.png");
+    files.push_back("Textures\\soils\\white_sand.png");
+    files.push_back("Textures\\soils\\silty_clay_loam.png");
+    files.push_back("Textures\\stones\\gabbro.png");
+
+    /*
+    for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
+    {
+        files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i)));
+    }
+    */
+
+    array_texture.setTextureName("terrain.png");
+    array_texture.loadImages(files);
+    array_texture.createTexture();
+    main_textures.addTexture(array_texture);
+
+    state.texture_id = 0;
+    array_texture.unbind(); //test binding
+}
+
+void DrawEngine::loadModels()
+{
+    ShapeToModel convert;
+    NormalBox block, floor;
+
+    std::string texture_name = "terrain.png";
+    block.setWidthHeightLength(DF_BLOCK_WIDTH, DF_BLOCK_HEIGHT, DF_BLOCK_LENGTH);
+    Point3D front, back, left, right, top, bottom;
+    front.setXYZ(0, 1, 2);
+    back.setXYZ(3, 4, 5);
+    left.setXYZ(6, 7, 8);
+    right.setXYZ(9, 10, 11);
+    top.setXYZ(12, 13, 14);
+    bottom.setXYZ(15, 16, 17);
+    block.setNormal(front, back, left, right, top, bottom);
+
+    floor.setWidthHeightLength(DF_FLOOR_WIDTH, DF_FLOOR_HEIGHT, DF_FLOOR_LENGTH);
+    floor.setNormal(front, back, left, right, top, bottom);
+
+    for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
+    {
+        ModelIndex model; //model classes should not be reused
+        block.setTextureNumber(main_textures.getTextureNumber(DFNaturalTileFilename(DF_Natural_Tile_Material(i))));
+        convert.convertToModelIndex(block, model);
+        model.setModelName(DFNaturalTileString(DF_Natural_Tile_Material(i)).append(" block"));
+        model.setTextureName(texture_name);
+        addInterleavedModel(model);
+    }
+
+    for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
+    {
+        ModelIndex model; //model classes should not be reused
+        floor.setTextureNumber(main_textures.getTextureNumber(DFNaturalTileFilename(DF_Natural_Tile_Material(i))));
+        convert.convertToModelIndex(floor, model);
+        model.setModelName(DFNaturalTileString(DF_Natural_Tile_Material(i)).append(" floor"));
+        model.setTextureName(texture_name);
+        addInterleavedModel(model);
+    }
+}
+
+void DrawEngine::loadTerrain()
+{
+    ModelIndex terrain_model;
+    NaturalTerrain terrain_test;
+    terrain_model.setTextureName("terrain.png");
+    terrain_model.setModelName("terrain");
+
+    //terrain_test stuff here
+
+    //terrain_3x3x3_test(terrain_test);
+    terrain_16x16x16_test(terrain_test);
+    //terrain_48x48x48_test(terrain_test);
+    //terrain_test and not after here
+
+    terrain.loadFromMemory(terrain_test, models, terrain_model);
+    addInterleavedModel(terrain_model);
+
+    //model_pod result = models.getModelPOD(models.getModelReference("terrain"));
+    std::cout << "after terrain load\n";
+}
+
+void DrawEngine::terrain_3x3x3_test(NaturalTerrain& natural_terrain)
+{
+    const unsigned int width = 3;
+    const unsigned int height = 3;
+    const unsigned int length = 3;
+    natural_terrain.setGridDimensions(width, height, length);
+    natural_terrain.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_GABBRO);
+
+    natural_terrain.setLayerBlockMaterial(0, DF_SILTY_CLAY_LOAM);
+
+    natural_terrain.setLayerFloorMaterial(0, DF_WHITE_SAND);
+    natural_terrain.setLayerFloorMaterial(1, DF_WHITE_SAND);
+    natural_terrain.setLayerFloorMaterial(2, DF_SILTY_CLAY_LOAM);
+}
+
+void DrawEngine::terrain_16x16x16_test(NaturalTerrain& natural_terrain)
+{
+    const unsigned int width = 16;
+    const unsigned int height = 16;
+    const unsigned int length = 16;
+    natural_terrain.setGridDimensions(width, height, length);
+    natural_terrain.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_GABBRO);
+
+    for (unsigned int i = 0; i < height; i++)
+    {
+        if (i % 2)
+        {
+            natural_terrain.setLayerBlockMaterial(i, DF_SILTY_CLAY_LOAM);
+        }
+        natural_terrain.setLayerFloorMaterial(i, DF_WHITE_SAND);
+    }
+
+    //natural_terrain.setLayerDrawType(3, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    //natural_terrain.setLayerDrawType(4, DF_DRAW_BLOCK, DF_DRAW_AIR);
+    unsigned int first = 3 * 16;
+    unsigned int next = Grid3DYOffset::getIndexRight(first, width, height, length);
+    natural_terrain.setIndexDrawType(first, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexUp(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
+
+    next = Grid3DYOffset::getIndexUp(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
+
+    next = Grid3DYOffset::getIndexUp(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
+
+    next = Grid3DYOffset::getIndexBack(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexBack(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexBack(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+}
+
+void DrawEngine::terrain_48x48x48_test(NaturalTerrain & natural_terrain)
+{
+    const unsigned int width = 48;
+    const unsigned int height = 48;
+    const unsigned int length = 48;
+    natural_terrain.setGridDimensions(width, height, length);
+    natural_terrain.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_GABBRO);
+
+    for (unsigned int i = 0; i < height; i++)
+    {
+        if (i % 2)
+        {
+            natural_terrain.setLayerBlockMaterial(i, DF_SILTY_CLAY_LOAM);
+        }
+        natural_terrain.setLayerFloorMaterial(i, DF_WHITE_SAND);
+    }
+
+    natural_terrain.setLayerDrawType(3, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    natural_terrain.setLayerDrawType(4, DF_DRAW_BLOCK, DF_DRAW_AIR);
 }
 
 void DrawEngine::resize()
