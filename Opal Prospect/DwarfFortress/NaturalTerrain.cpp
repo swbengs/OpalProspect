@@ -133,6 +133,60 @@ void NaturalTerrain::setIndexMaterial(unsigned int index, DF_Natural_Tile_Materi
     floors[index].setTileMaterial(material);
 }
 
+void NaturalTerrain::setIndexMaterial(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material)
+{
+    assert(index < block_grid.getGridCount());
+    blocks[index].setTileMaterial(block_material);
+    floors[index].setTileMaterial(floor_material);
+}
+
+void NaturalTerrain::setIndexMaterialAround(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material)
+{
+    Point3DUInt xyz = getGridDimensions();
+    const unsigned int up = Grid3DYOffset::getIndexUp(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int down = Grid3DYOffset::getIndexDown(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int left = Grid3DYOffset::getIndexLeft(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int right = Grid3DYOffset::getIndexRight(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int back = Grid3DYOffset::getIndexBack(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int front = Grid3DYOffset::getIndexFront(index, xyz.x, xyz.y, xyz.z);
+
+    if (index != up)
+    {
+        blocks[up].setTileMaterial(block_material);
+        floors[up].setTileMaterial(floor_material);
+    }
+
+    if (index != down)
+    {
+        blocks[down].setTileMaterial(block_material);
+        floors[down].setTileMaterial(floor_material);
+    }
+
+    if (index != left)
+    {
+        blocks[left].setTileMaterial(block_material);
+        floors[left].setTileMaterial(floor_material);
+    }
+
+    if (index != right)
+    {
+        blocks[right].setTileMaterial(block_material);
+        floors[right].setTileMaterial(floor_material);
+    }
+
+    if (index != back)
+    {
+        blocks[back].setTileMaterial(block_material);
+        floors[back].setTileMaterial(floor_material);
+    }
+
+    if (index != front)
+    {
+        blocks[front].setTileMaterial(block_material);
+        floors[front].setTileMaterial(floor_material);
+    }
+}
+
 void NaturalTerrain::setLayerBlockMaterial(unsigned int layer, DF_Natural_Tile_Material material)
 {
     assert(layer < block_grid.getGridHeight());

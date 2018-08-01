@@ -809,9 +809,18 @@ void DrawEngine::loadTextures()
 {
     std::vector<std::string> files;
     files.push_back("Textures\\bad.png");
-    files.push_back("Textures\\soils\\white_sand.png");
-    files.push_back("Textures\\soils\\silty_clay_loam.png");
-    files.push_back("Textures\\stones\\gabbro.png");
+
+    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_WHITE_SAND)));
+    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_SILTY_CLAY_LOAM)));
+    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_GABBRO)));
+    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_WHITE_SAND)));
+
+    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_DEMATOID)));
+    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_TANZANITE)));
+    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_GARNIERITE)));
+    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_TETRAHEDRITE)));
+    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_CHROMITE)));
+    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_OLIVINE)));
 
     /*
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
@@ -927,35 +936,46 @@ void DrawEngine::terrain_16x16x16_test(NaturalTerrain& natural_terrain)
     unsigned int first = 3 * 16;
     unsigned int next = Grid3DYOffset::getIndexRight(first, width, height, length);
     natural_terrain.setIndexDrawType(first, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    natural_terrain.setIndexMaterialAround(first, DF_DEMATOID, DF_GARNIERITE);
 
     natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
 
     next = Grid3DYOffset::getIndexRight(next, width, height, length);
     natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
 
     next = Grid3DYOffset::getIndexRight(next, width, height, length);
     natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
 
     next = Grid3DYOffset::getIndexRight(next, width, height, length);
     natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
 
     next = Grid3DYOffset::getIndexUp(next, width, height, length);
     natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
+    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
 
     next = Grid3DYOffset::getIndexUp(next, width, height, length);
     natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
+    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
 
     next = Grid3DYOffset::getIndexUp(next, width, height, length);
     natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
+    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
 
     next = Grid3DYOffset::getIndexBack(next, width, height, length);
     natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
 
     next = Grid3DYOffset::getIndexBack(next, width, height, length);
     natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
 
     next = Grid3DYOffset::getIndexBack(next, width, height, length);
     natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
 }
 
 void DrawEngine::terrain_48x48x48_test(NaturalTerrain & natural_terrain)
