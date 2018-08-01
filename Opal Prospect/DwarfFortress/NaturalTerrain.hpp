@@ -60,7 +60,10 @@ public:
     void setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type); //useful for testing, not as much for the release version
     void setIndexDrawType(unsigned int index, DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type);
     void setIndexMaterial(unsigned int index, DF_Natural_Tile_Material material);
-    void setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type draw_type);
+    void setLayerBlockMaterial(unsigned int layer, DF_Natural_Tile_Material material);
+    void setLayerFloorMaterial(unsigned int layer, DF_Natural_Tile_Material material);
+    void setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type draw_type); //useful for debug and that is all
+    void setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type);
     void setLayerMaterial(unsigned int layer, DF_Natural_Tile_Material material);
 
 private:

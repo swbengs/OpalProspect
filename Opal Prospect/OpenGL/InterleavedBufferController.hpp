@@ -64,7 +64,7 @@ private:
     };
 
     //const static size_t MAXIMUM_VERTEX_BUFFER_SIZE = 264 * 6 * sizeof(float); //size the vertex data buffer in bytes. specification reccomends data size in the MB range. Lower numbers are being used right now for testing this class
-    const static size_t MAXIMUM_VERTEX_BUFFER_SIZE = 4 * 1024 * 1024;
+    const static size_t MAXIMUM_VERTEX_BUFFER_SIZE = 8 * 1024 * 1024;
     const static size_t MAXIMUM_INDEX_BUFFER_SIZE = static_cast<size_t>(MAXIMUM_VERTEX_BUFFER_SIZE * 0.13636363 + 0.5); //size of the index buffer.
     //worst case 1/11th of vertex size(all triangles with index), best case 0.13636363 between 1/7 and 1/8 (all faces with index)
     std::vector<InterleavedVAO3D> vaos;

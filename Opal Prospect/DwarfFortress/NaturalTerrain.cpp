@@ -133,6 +133,28 @@ void NaturalTerrain::setIndexMaterial(unsigned int index, DF_Natural_Tile_Materi
     floors[index].setTileMaterial(material);
 }
 
+void NaturalTerrain::setLayerBlockMaterial(unsigned int layer, DF_Natural_Tile_Material material)
+{
+    assert(layer < block_grid.getGridHeight());
+    unsigned int layer_size = block_grid.getGridWidth() * block_grid.getGridLength();
+    unsigned int start = layer_size*layer;
+    for (unsigned int i = layer_size*layer; i < start + layer_size; i++)
+    {
+        blocks[i].setTileMaterial(material);
+    }
+}
+
+void NaturalTerrain::setLayerFloorMaterial(unsigned int layer, DF_Natural_Tile_Material material)
+{
+    assert(layer < block_grid.getGridHeight());
+    unsigned int layer_size = block_grid.getGridWidth() * block_grid.getGridLength();
+    unsigned int start = layer_size*layer;
+    for (unsigned int i = layer_size*layer; i < start + layer_size; i++)
+    {
+        floors[i].setTileMaterial(material);
+    }
+}
+
 void NaturalTerrain::setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type draw_type)
 {
     assert(layer < block_grid.getGridHeight());
@@ -142,6 +164,18 @@ void NaturalTerrain::setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type draw
     {
         blocks[i].setDrawType(draw_type);
         floors[i].setDrawType(draw_type);
+    }
+}
+
+void NaturalTerrain::setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type)
+{
+    assert(layer < block_grid.getGridHeight());
+    unsigned int layer_size = block_grid.getGridWidth() * block_grid.getGridLength();
+    unsigned int start = layer_size*layer;
+    for (unsigned int i = layer_size*layer; i < start + layer_size; i++)
+    {
+        blocks[i].setDrawType(block_draw_type);
+        floors[i].setDrawType(floor_draw_type);
     }
 }
 

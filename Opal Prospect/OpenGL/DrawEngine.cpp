@@ -563,7 +563,7 @@ void DrawEngine::draw(const Camera &camera)
     glm::vec3 fourth = glm::vec3(3.0f, 3.0f, 0.0f);
     glm::vec3 fifth = glm::vec3(0.0f, 0.0f, -2.0f);
     glm::vec3 sixth = glm::vec3(6.0f, 3.0f, 0.0f);
-    glm::vec3 terrain_position = glm::vec3(-5.0f, -5.0f, 0.0f);
+    glm::vec3 terrain_position = glm::vec3(15.0f, 0.0f, 0.0f);
     glm::vec3 test = glm::vec3(-1.0f, -1.0f, -1.0f);
 
     draw("test.obj", camera, &first, nullptr, nullptr);
@@ -577,6 +577,7 @@ void DrawEngine::draw(const Camera &camera)
     //draw("error", camera, &first, nullptr, nullptr);
 
     //draw("gabbro block", camera, &test, nullptr, nullptr);
+    //draw("gabbro floor", camera, &test, nullptr, nullptr);
     draw("terrain", camera, &terrain_position, nullptr, nullptr);
 
     //draw grid
@@ -876,7 +877,10 @@ void DrawEngine::loadTerrain()
     terrain_model.setModelName("terrain");
 
     //terrain_test stuff here
-    terrain_3x3x3_test(terrain_test);
+
+    //terrain_3x3x3_test(terrain_test);
+    terrain_16x16x16_test(terrain_test);
+    //terrain_48x48x48_test(terrain_test);
     //terrain_test and not after here
 
     terrain.loadFromMemory(terrain_test, models, terrain_model);
@@ -888,13 +892,59 @@ void DrawEngine::loadTerrain()
 
 void DrawEngine::terrain_3x3x3_test(NaturalTerrain& natural_terrain)
 {
-    const unsigned int width = 1;
-    const unsigned int height = 2;
-    const unsigned int length = 1;
+    const unsigned int width = 3;
+    const unsigned int height = 3;
+    const unsigned int length = 3;
     natural_terrain.setGridDimensions(width, height, length);
     natural_terrain.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_GABBRO);
 
-    //test.setLayerDrawType(1, DF_DRAW_AIR);
+    natural_terrain.setLayerBlockMaterial(0, DF_SILTY_CLAY_LOAM);
+
+    natural_terrain.setLayerFloorMaterial(0, DF_WHITE_SAND);
+    natural_terrain.setLayerFloorMaterial(1, DF_WHITE_SAND);
+    natural_terrain.setLayerFloorMaterial(2, DF_SILTY_CLAY_LOAM);
+}
+
+void DrawEngine::terrain_16x16x16_test(NaturalTerrain& natural_terrain)
+{
+    const unsigned int width = 16;
+    const unsigned int height = 16;
+    const unsigned int length = 16;
+    natural_terrain.setGridDimensions(width, height, length);
+    natural_terrain.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_GABBRO);
+
+    for (unsigned int i = 0; i < height; i++)
+    {
+        if (i % 2)
+        {
+            natural_terrain.setLayerBlockMaterial(i, DF_SILTY_CLAY_LOAM);
+        }
+        natural_terrain.setLayerFloorMaterial(i, DF_WHITE_SAND);
+    }
+
+    natural_terrain.setLayerDrawType(3, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    natural_terrain.setLayerDrawType(4, DF_DRAW_BLOCK, DF_DRAW_AIR);
+}
+
+void DrawEngine::terrain_48x48x48_test(NaturalTerrain & natural_terrain)
+{
+    const unsigned int width = 48;
+    const unsigned int height = 48;
+    const unsigned int length = 48;
+    natural_terrain.setGridDimensions(width, height, length);
+    natural_terrain.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_GABBRO);
+
+    for (unsigned int i = 0; i < height; i++)
+    {
+        if (i % 2)
+        {
+            natural_terrain.setLayerBlockMaterial(i, DF_SILTY_CLAY_LOAM);
+        }
+        natural_terrain.setLayerFloorMaterial(i, DF_WHITE_SAND);
+    }
+
+    natural_terrain.setLayerDrawType(3, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    natural_terrain.setLayerDrawType(4, DF_DRAW_BLOCK, DF_DRAW_AIR);
 }
 
 void DrawEngine::resize()

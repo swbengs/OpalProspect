@@ -137,7 +137,7 @@ void NaturalTerrainModelBuilder::addBoxFace(NormalFace face, const Point3D& offs
     terrain_model.addFace(face);
 }
 
-void NaturalTerrainModelBuilder::addBoxFaces(unsigned int index, const ModelIndex& box_model, ModelIndex& terrain_model, bool is_floor) const
+void NaturalTerrainModelBuilder::addBoxFaces(unsigned int current_index, unsigned int tile_position_index, const ModelIndex& box_model, ModelIndex& terrain_model, bool is_floor) const
 {
     //check each face and if the bool is true, add it to model with the vertex offset by position from the proper grid
     /* order they are added
@@ -149,44 +149,73 @@ void NaturalTerrainModelBuilder::addBoxFaces(unsigned int index, const ModelInde
     model.addFace(bottom_face); 5
     */
 
+    //current_index is for what block or floor we are working with to get the proper sides to draw. tile_position_index is used to grab the proper position from the floor/block array
     Point3D position;
     if (is_floor)
     {
-        position = terrain.getFloorPosition(index);
+        position = terrain.getFloorPosition(tile_position_index);
+        if (floors[current_index].front)
+        {
+            addBoxFace(box_model.getFace(0), position, terrain_model);
+        }
+
+        if (floors[current_index].back)
+        {
+            addBoxFace(box_model.getFace(1), position, terrain_model);
+        }
+
+        if (floors[current_index].left)
+        {
+            addBoxFace(box_model.getFace(2), position, terrain_model);
+        }
+
+        if (floors[current_index].right)
+        {
+            addBoxFace(box_model.getFace(3), position, terrain_model);
+        }
+
+        if (floors[current_index].top)
+        {
+            addBoxFace(box_model.getFace(4), position, terrain_model);
+        }
+
+        if (floors[current_index].bottom)
+        {
+            addBoxFace(box_model.getFace(5), position, terrain_model);
+        }
     }
     else //block
     {
-        position = terrain.getBlockPosition(index);
-    }
+        position = terrain.getBlockPosition(tile_position_index);
+        if (blocks[current_index].front)
+        {
+            addBoxFace(box_model.getFace(0), position, terrain_model);
+        }
 
-    if (blocks[index].front)
-    {
-        addBoxFace(box_model.getFace(0), position, terrain_model);
-    }
+        if (blocks[current_index].back)
+        {
+            addBoxFace(box_model.getFace(1), position, terrain_model);
+        }
 
-    if (blocks[index].back)
-    {
-        addBoxFace(box_model.getFace(1), position, terrain_model);
-    }
+        if (blocks[current_index].left)
+        {
+            addBoxFace(box_model.getFace(2), position, terrain_model);
+        }
 
-    if (blocks[index].left)
-    {
-        addBoxFace(box_model.getFace(2), position, terrain_model);
-    }
+        if (blocks[current_index].right)
+        {
+            addBoxFace(box_model.getFace(3), position, terrain_model);
+        }
 
-    if (blocks[index].right)
-    {
-        addBoxFace(box_model.getFace(3), position, terrain_model);
-    }
+        if (blocks[current_index].top)
+        {
+            addBoxFace(box_model.getFace(4), position, terrain_model);
+        }
 
-    if (blocks[index].top)
-    {
-        addBoxFace(box_model.getFace(4), position, terrain_model);
-    }
-
-    if (blocks[index].bottom)
-    {
-        addBoxFace(box_model.getFace(5), position, terrain_model);
+        if (blocks[current_index].bottom)
+        {
+            addBoxFace(box_model.getFace(5), position, terrain_model);
+        }
     }
 }
 
@@ -194,7 +223,8 @@ void NaturalTerrainModelBuilder::buildModel(const ModelController& model_control
 {
     for (size_t i = 0; i < blocks.size(); i++)
     {
-        NaturalTile tile = terrain.getBlock(blocks[i].tile_index);
+        const unsigned int tile_index = blocks[i].tile_index;
+        NaturalTile tile = terrain.getBlock(tile_index);
         std::string name;
 
         switch (tile.getDrawType()) //pick what type of block it is and give proper name to add to material
@@ -208,7 +238,27 @@ void NaturalTerrainModelBuilder::buildModel(const ModelController& model_control
         }
 
         const ModelIndex& model = model_controller.getModel(model_controller.getModelReference(name)); //TODO add assert to modelcontroller so we make sure it's always a proper reference
-        addBoxFaces(i, model, terrain_model, false);
+        addBoxFaces(i, tile_index, model, terrain_model, false);
+    }
+
+    for (size_t i = 0; i < floors.size(); i++)
+    {
+        const unsigned int tile_index = floors[i].tile_index;
+        NaturalTile tile = terrain.getFloor(tile_index);
+        std::string name;
+
+        switch (tile.getDrawType()) //pick what type of block it is and give proper name to add to material
+        {
+        case DF_DRAW_FLOOR:
+            name = DFNaturalTileString(tile.getTileMaterial()).append(" floor");
+            break;
+        case DF_DRAW_LIQUID:
+            break;
+            //and so on
+        }
+
+        const ModelIndex& model = model_controller.getModel(model_controller.getModelReference(name)); //TODO add assert to modelcontroller so we make sure it's always a proper reference
+        addBoxFaces(i, tile_index, model, terrain_model, true);
     }
 }
 
@@ -240,55 +290,103 @@ void NaturalTerrainModelBuilder::checkingLoop()
 
 void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bool is_floor)
 {
-    NaturalTile tile;
     unsigned int index = info.tile_index;
     if (is_floor)
     {
         Point3DUInt xyz = terrain.getGridDimensions();
-        tile = terrain.getFloor(index);
-        const unsigned int up = Grid3DYOffset::getIndexUp(index, xyz.x, xyz.y, xyz.z);
+        //const unsigned int up = Grid3DYOffset::getIndexUp(index, xyz.x, xyz.y, xyz.z);
         const unsigned int down = Grid3DYOffset::getIndexDown(index, xyz.x, xyz.y, xyz.z);
         const unsigned int left = Grid3DYOffset::getIndexLeft(index, xyz.x, xyz.y, xyz.z);
         const unsigned int right = Grid3DYOffset::getIndexRight(index, xyz.x, xyz.y, xyz.z);
         const unsigned int back = Grid3DYOffset::getIndexBack(index, xyz.x, xyz.y, xyz.z);
         const unsigned int front = Grid3DYOffset::getIndexFront(index, xyz.x, xyz.y, xyz.z);
 
-        checkTile(info.top, index, up, false); //if we go up or down we need to check the block above/below us instead of floors
-        checkTile(info.bottom, index, down, false);
-        checkTile(info.left, index, left, true);
-        checkTile(info.right, index, right, true);
-        checkTile(info.front, index, back, true); //reversed on purpose. The model's front face points to the camera, but is the back face for the grid
-        checkTile(info.back, index, front, true); //reversed on purpose
+        checkVerticalTile(info.top, index, index, true, false); //a floors up is always the block at its index, aka the one that sits on top of it
+        checkVerticalTile(info.bottom, index, down, true, true);
+        checkHorizontalTile(info.left, index, left, true);
+        checkHorizontalTile(info.right, index, right, true);
+        checkHorizontalTile(info.front, index, back, true); //reversed on purpose. The model's front face points to the camera, but is the back face for the grid
+        checkHorizontalTile(info.back, index, front, true); //reversed on purpose
     }
     else //is a block
     {
         Point3DUInt xyz = terrain.getGridDimensions();
-        tile = terrain.getBlock(index);
         const unsigned int up = Grid3DYOffset::getIndexUp(index, xyz.x, xyz.y, xyz.z);
-        const unsigned int down = Grid3DYOffset::getIndexDown(index, xyz.x, xyz.y, xyz.z);
+        //const unsigned int down = Grid3DYOffset::getIndexDown(index, xyz.x, xyz.y, xyz.z);
         const unsigned int left = Grid3DYOffset::getIndexLeft(index, xyz.x, xyz.y, xyz.z);
         const unsigned int right = Grid3DYOffset::getIndexRight(index, xyz.x, xyz.y, xyz.z);
         const unsigned int back = Grid3DYOffset::getIndexBack(index, xyz.x, xyz.y, xyz.z);
         const unsigned int front = Grid3DYOffset::getIndexFront(index, xyz.x, xyz.y, xyz.z);
 
-        checkTile(info.top, index, up, true); //if we go up/down we need to read from the floors and not blocks
-        checkTile(info.bottom, index, down, true);
-        checkTile(info.left, index, left, false);
-        checkTile(info.right, index, right, false);
-        checkTile(info.front, index, back, false); //reversed on purpose. Read comment from floor above
-        checkTile(info.back, index, front, false); //reversed on purpose
+        checkVerticalTile(info.top, index, up, false, false);
+        checkVerticalTile(info.bottom, index, index, false, true); //down for a block is always the floor at its index
+        checkHorizontalTile(info.left, index, left, false);
+        checkHorizontalTile(info.right, index, right, false);
+        checkHorizontalTile(info.front, index, back, false); //reversed on purpose. Read comment from floor above
+        checkHorizontalTile(info.back, index, front, false); //reversed on purpose
     }
 }
 
-void NaturalTerrainModelBuilder::checkTile(bool& side, unsigned int start_index, unsigned int check_index, bool is_floor)
+void NaturalTerrainModelBuilder::checkHorizontalTile(bool& side, unsigned int start_index, unsigned int check_index, bool is_floor)
 {
-    side = true;
-    /*
-    if (is_floor)
+    NaturalTile tile;
+
+    if (start_index == check_index) //same so we can't move on the x/z axis so draw this face
     {
-        if (start_index != check_index)
+        side = true;
+    }
+    else //check if solid and get proper tile to check
+    {
+        if (is_floor)
         {
-            NaturalTile tile = terrain.getFloor(check_index);
+            tile = terrain.getFloor(check_index);
+        }
+        else
+        {
+            tile = terrain.getBlock(check_index);
+        }
+
+        if (isSolid(tile.getDrawType()))
+        {
+            side = false;
+        }
+        else
+        {
+            side = true;
+        }
+    }
+}
+
+void NaturalTerrainModelBuilder::checkVerticalTile(bool& side, unsigned int start_index, unsigned int check_index, bool is_floor, bool is_down)
+{
+    NaturalTile tile;
+
+    if (is_floor) //if is_down we don't need to check if the index don't match, but if it's false we need to check the block above
+    {
+        if (is_down) //floor and checking down. May need to check block below, but not always
+        {
+            if (start_index == check_index)
+            {
+                side = true;
+            }
+            else //otherwise check the block below
+            {
+                tile = terrain.getBlock(check_index);
+
+                if (isSolid(tile.getDrawType()))
+                {
+                    side = false;
+                }
+                else
+                {
+                    side = true;
+                }
+            }
+        }
+        else //floor and check up. must always check block above
+        {
+            tile = terrain.getBlock(check_index);
+
             if (isSolid(tile.getDrawType()))
             {
                 side = false;
@@ -298,16 +396,13 @@ void NaturalTerrainModelBuilder::checkTile(bool& side, unsigned int start_index,
                 side = true;
             }
         }
-        else //if equal we can't move in the direction wanted so this block/floor must be drawn
-        {
-            side = true;
-        }
     }
-    else
+    else //is block
     {
-        if (start_index != check_index)
+        if (is_down) //check floor below. must always check floor below
         {
-            NaturalTile tile = terrain.getBlock(check_index);
+            tile = terrain.getFloor(check_index);
+
             if (isSolid(tile.getDrawType()))
             {
                 side = false;
@@ -317,11 +412,26 @@ void NaturalTerrainModelBuilder::checkTile(bool& side, unsigned int start_index,
                 side = true;
             }
         }
-        else //if equal we can't move in the direction wanted so this block/floor must be drawn
+        else //block checking up. If indicies match we can just draw it
         {
-            side = true;
+            if (start_index == check_index)
+            {
+                side = true;
+            }
+            else
+            {
+                tile = terrain.getFloor(check_index);
+
+                if (isSolid(tile.getDrawType()))
+                {
+                    side = false;
+                }
+                else
+                {
+                    side = true;
+                }
+            }
         }
     }
-    */
 }
 
