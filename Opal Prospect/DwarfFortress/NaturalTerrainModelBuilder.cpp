@@ -119,12 +119,25 @@ bool NaturalTerrainModelBuilder::shouldDraw(const natural_tile_draw_info& info, 
     }
 }
 
-void NaturalTerrainModelBuilder::addBoxFace(const NormalFace & face, const Point3D& offset, const ModelIndex & terrain_model) const
+void NaturalTerrainModelBuilder::addBoxFace(NormalFace face, const Point3D& offset, ModelIndex& terrain_model) const
 {
+    Point3D bottom_left, bottom_right, top_left, top_right;
+    bottom_left = face.getBottomLeftVertex();
+    bottom_right = face.getBottomRightVertex();
+    top_left = face.getTopLeftVertex();
+    top_right = face.getTopRightVertex();
 
+    bottom_left.setXYZ(bottom_left.x + offset.x, bottom_left.y + offset.y, bottom_left.z + offset.z);
+    bottom_right.setXYZ(bottom_right.x + offset.x, bottom_right.y + offset.y, bottom_right.z + offset.z);
+    top_left.setXYZ(top_left.x + offset.x, top_left.y + offset.y, top_left.z + offset.z);
+    top_right.setXYZ(top_right.x + offset.x, top_right.y + offset.y, top_right.z + offset.z);
+
+    face.setVertex(bottom_left, bottom_right, top_left, top_right);
+
+    terrain_model.addFace(face);
 }
 
-void NaturalTerrainModelBuilder::addBoxFaces(unsigned int index, const ModelIndex& box_model, const ModelIndex& terrain_model, bool is_floor) const
+void NaturalTerrainModelBuilder::addBoxFaces(unsigned int index, const ModelIndex& box_model, ModelIndex& terrain_model, bool is_floor) const
 {
     //check each face and if the bool is true, add it to model with the vertex offset by position from the proper grid
     /* order they are added
@@ -269,6 +282,8 @@ void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bo
 
 void NaturalTerrainModelBuilder::checkTile(bool& side, unsigned int start_index, unsigned int check_index, bool is_floor)
 {
+    side = true;
+    /*
     if (is_floor)
     {
         if (start_index != check_index)
@@ -307,5 +322,6 @@ void NaturalTerrainModelBuilder::checkTile(bool& side, unsigned int start_index,
             side = true;
         }
     }
+    */
 }
 

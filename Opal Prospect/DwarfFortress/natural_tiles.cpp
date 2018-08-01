@@ -1012,19 +1012,19 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
 
 DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
 {
-    if (e >= DF_ALEXANDRITE || e <= DF_YELLOW_ZIRCON)
+    if (e >= DF_ALEXANDRITE && e <= DF_YELLOW_ZIRCON)
     {
         return DF_NATURAL_GEM;
     }
-    else if (e == DF_WATER_MATERIAL || e == DF_MAGMA_MATERIAL)
+    else if (e == DF_WATER_MATERIAL && e == DF_MAGMA_MATERIAL)
     {
         return DF_NATURAL_LIQUID;
     }
-    else if (e >= DF_ADAMANTINE || e <= DF_TETRAHEDRITE)
+    else if (e >= DF_ADAMANTINE && e <= DF_TETRAHEDRITE)
     {
         return DF_NATURAL_ORE;
     }
-    else if (e >= DF_BLACK_SAND || e <= DF_YELLOW_SAND)
+    else if (e >= DF_BLACK_SAND && e <= DF_YELLOW_SAND)
     {
         return DF_NATURAL_SOIL;
     }

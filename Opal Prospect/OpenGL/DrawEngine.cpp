@@ -563,6 +563,8 @@ void DrawEngine::draw(const Camera &camera)
     glm::vec3 fourth = glm::vec3(3.0f, 3.0f, 0.0f);
     glm::vec3 fifth = glm::vec3(0.0f, 0.0f, -2.0f);
     glm::vec3 sixth = glm::vec3(6.0f, 3.0f, 0.0f);
+    glm::vec3 terrain_position = glm::vec3(-5.0f, -5.0f, 0.0f);
+    glm::vec3 test = glm::vec3(-1.0f, -1.0f, -1.0f);
 
     draw("test.obj", camera, &first, nullptr, nullptr);
     //draw(models.getModelPOD(1), camera, &first, nullptr, nullptr);
@@ -573,6 +575,9 @@ void DrawEngine::draw(const Camera &camera)
     draw("pyramid", camera, &fifth, nullptr, nullptr);
     draw(models.getModelPOD(6), camera, &sixth, nullptr, nullptr);
     //draw("error", camera, &first, nullptr, nullptr);
+
+    //draw("gabbro block", camera, &test, nullptr, nullptr);
+    draw("terrain", camera, &terrain_position, nullptr, nullptr);
 
     //draw grid
     Point3D start(6.0f, 6.0f, 6.0f);
@@ -807,10 +812,18 @@ void DrawEngine::loadTextures()
     files.push_back("Textures\\soils\\silty_clay_loam.png");
     files.push_back("Textures\\stones\\gabbro.png");
 
+    /*
+    for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
+    {
+        files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i)));
+    }
+    */
+
     array_texture.setTextureName("terrain.png");
     array_texture.loadImages(files);
     array_texture.createTexture();
     main_textures.addTexture(array_texture);
+
     state.texture_id = 0;
     array_texture.unbind(); //test binding
 }
@@ -837,7 +850,7 @@ void DrawEngine::loadModels()
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
         ModelIndex model; //model classes should not be reused
-        block.setTextureNumber(main_textures.getTextureNumber(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i))));
+        block.setTextureNumber(main_textures.getTextureNumber(DFNaturalTileFilename(DF_Natural_Tile_Material(i))));
         convert.convertToModelIndex(block, model);
         model.setModelName(DFNaturalTileString(DF_Natural_Tile_Material(i)).append(" block"));
         model.setTextureName(texture_name);
@@ -847,7 +860,7 @@ void DrawEngine::loadModels()
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
         ModelIndex model; //model classes should not be reused
-        floor.setTextureNumber(main_textures.getTextureNumber(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i))));
+        floor.setTextureNumber(main_textures.getTextureNumber(DFNaturalTileFilename(DF_Natural_Tile_Material(i))));
         convert.convertToModelIndex(floor, model);
         model.setModelName(DFNaturalTileString(DF_Natural_Tile_Material(i)).append(" floor"));
         model.setTextureName(texture_name);
@@ -869,14 +882,15 @@ void DrawEngine::loadTerrain()
     terrain.loadFromMemory(terrain_test, models, terrain_model);
     addInterleavedModel(terrain_model);
 
+    //model_pod result = models.getModelPOD(models.getModelReference("terrain"));
     std::cout << "after terrain load\n";
 }
 
 void DrawEngine::terrain_3x3x3_test(NaturalTerrain& natural_terrain)
 {
-    const unsigned int width = 3;
-    const unsigned int height = 3;
-    const unsigned int length = 3;
+    const unsigned int width = 1;
+    const unsigned int height = 2;
+    const unsigned int length = 1;
     natural_terrain.setGridDimensions(width, height, length);
     natural_terrain.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_GABBRO);
 
