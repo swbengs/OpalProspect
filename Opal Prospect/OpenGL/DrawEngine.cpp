@@ -922,8 +922,40 @@ void DrawEngine::terrain_16x16x16_test(NaturalTerrain& natural_terrain)
         natural_terrain.setLayerFloorMaterial(i, DF_WHITE_SAND);
     }
 
-    natural_terrain.setLayerDrawType(3, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setLayerDrawType(4, DF_DRAW_BLOCK, DF_DRAW_AIR);
+    //natural_terrain.setLayerDrawType(3, DF_DRAW_AIR, DF_DRAW_FLOOR);
+    //natural_terrain.setLayerDrawType(4, DF_DRAW_BLOCK, DF_DRAW_AIR);
+    unsigned int first = 3 * 16;
+    unsigned int next = Grid3DYOffset::getIndexRight(first, width, height, length);
+    natural_terrain.setIndexDrawType(first, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexUp(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
+
+    next = Grid3DYOffset::getIndexUp(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
+
+    next = Grid3DYOffset::getIndexUp(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
+
+    next = Grid3DYOffset::getIndexBack(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexBack(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
+
+    next = Grid3DYOffset::getIndexBack(next, width, height, length);
+    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
 }
 
 void DrawEngine::terrain_48x48x48_test(NaturalTerrain & natural_terrain)
