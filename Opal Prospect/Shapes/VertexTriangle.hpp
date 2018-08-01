@@ -29,23 +29,8 @@ SOFTWARE.
 class VertexTriangle : public Triangle3D
 {
 public:
-
-    VertexTriangle();
-    VertexTriangle(unsigned int a, unsigned int b, unsigned int c);
-
     //gets
     unsigned int getIndexA() const;
     unsigned int getIndexB() const;
     unsigned int getIndexC() const;
-
-    //sets
-    void setIndexA(unsigned int a);
-    void setIndexB(unsigned int b);
-    void setIndexC(unsigned int c);
-    void setIndexABC(unsigned int a, unsigned int b, unsigned int c);
-
-private:
-    unsigned int index_a;
-    unsigned int index_b;
-    unsigned int index_c;
 };

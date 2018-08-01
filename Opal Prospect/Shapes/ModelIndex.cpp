@@ -105,10 +105,12 @@ void ModelIndex::fillInterleaved(std::vector<float>& vector) const
 void ModelIndex::fillTriangleIndex(size_t index, std::vector<unsigned int>& vector) const
 {
     unsigned int offset = getIndexOffset();
+    const unsigned int face_index_offset = getFaceCount() * 4; //this is the face count * 4. Triangles are added after faces and thus we need to add an extra index offset to keep this going
+    const unsigned int triangle_index_offset = index * 3;
     const NormalTriangle& triangle = getTriangle(index);
-    vector.push_back(triangle.getIndexA() + offset);
-    vector.push_back(triangle.getIndexB() + offset);
-    vector.push_back(triangle.getIndexC() + offset);
+    vector.push_back(triangle.getIndexA() + offset + triangle_index_offset + face_index_offset); //need both extra offsets
+    vector.push_back(triangle.getIndexB() + offset + triangle_index_offset + face_index_offset);
+    vector.push_back(triangle.getIndexC() + offset + triangle_index_offset + face_index_offset);
 }
 
 void ModelIndex::fillFaceVertex(size_t index, std::vector<float>& vector) const
@@ -166,14 +168,15 @@ void ModelIndex::fillFaceNormal(size_t index, std::vector<float>& vector) const
 
 void ModelIndex::fillFaceIndex(size_t index, std::vector<unsigned int>& vector) const
 {
-    unsigned int offset = getIndexOffset();
-    vector.push_back(faces[index].getBottomLeftIndex() + offset);
-    vector.push_back(faces[index].getBottomRightIndex() + offset);
-    vector.push_back(faces[index].getTopLeftIndex() + offset);
+    const unsigned int offset = getIndexOffset();
+    const unsigned int index_face_offset = index * 4; //add in 4 per face before us to our index
+    vector.push_back(faces[index].getBottomLeftIndex() + offset + index_face_offset);
+    vector.push_back(faces[index].getBottomRightIndex() + offset + index_face_offset);
+    vector.push_back(faces[index].getTopLeftIndex() + offset + index_face_offset);
 
-    vector.push_back(faces[index].getTopLeftIndex() + offset);
-    vector.push_back(faces[index].getBottomRightIndex() + offset);
-    vector.push_back(faces[index].getTopRightIndex() + offset);
+    vector.push_back(faces[index].getTopLeftIndex() + offset + index_face_offset);
+    vector.push_back(faces[index].getBottomRightIndex() + offset + index_face_offset);
+    vector.push_back(faces[index].getTopRightIndex() + offset + index_face_offset);
 }
 
 void ModelIndex::fillInterleavedFace(size_t index, std::vector<float>& vector) const

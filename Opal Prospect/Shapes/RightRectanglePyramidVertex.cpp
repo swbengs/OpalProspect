@@ -45,6 +45,7 @@ void RightRectanglePyramidVertex::fillVertexTriangleFace(VertexTriangle& front_t
 
 void RightRectanglePyramidVertex::fillIndexTriangleFace(VertexTriangle& front_triangle, VertexTriangle& back_triangle, VertexTriangle& left_triangle, VertexTriangle& right_triangle, VertexFace& bottom_face) const
 {
+    /*
     unsigned int offset = 0;
 
     bottom_face.setIndex(offset, offset + 1, offset + 2, offset + 3);
@@ -56,4 +57,5 @@ void RightRectanglePyramidVertex::fillIndexTriangleFace(VertexTriangle& front_tr
     left_triangle.setIndexABC(offset, offset + 1, offset + 2);
     offset += 3;
     right_triangle.setIndexABC(offset, offset + 1, offset + 2);
+    */
 }

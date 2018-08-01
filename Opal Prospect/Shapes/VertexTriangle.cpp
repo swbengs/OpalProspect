@@ -24,50 +24,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-VertexTriangle::VertexTriangle()
-{
-    setIndexABC(0, 0, 0);
-}
-
-VertexTriangle::VertexTriangle(unsigned int a, unsigned int b, unsigned int c)
-{
-    setIndexABC(a, b, c);
-}
-
 unsigned int VertexTriangle::getIndexA() const
 {
-    return index_a;
+    return 0;
 }
 
 unsigned int VertexTriangle::getIndexB() const
 {
-    return index_b;
+    return 1;
 }
 
 unsigned int VertexTriangle::getIndexC() const
 {
-    return index_c;
-}
-
-void VertexTriangle::setIndexA(unsigned int a)
-{
-    index_a = a;
-}
-
-void VertexTriangle::setIndexB(unsigned int b)
-{
-    index_b = b;
-}
-
-void VertexTriangle::setIndexC(unsigned int c)
-{
-    index_c = c;
-}
-
-void VertexTriangle::setIndexABC(unsigned int a, unsigned int b, unsigned int c)
-{
-    index_a = a;
-    index_b = b;
-    index_c = c;
+    return 2;
 }
 

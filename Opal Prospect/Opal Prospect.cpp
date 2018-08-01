@@ -148,11 +148,6 @@ void normalFaceTest()
     Point3D bottom_left_uv, bottom_right_uv, top_left_uv, top_right_uv;
     Point3D bottom_left_normal, bottom_right_normal, top_left_normal, top_right_normal;
 
-    test.setBottomLeftIndex(1);
-    test.setBottomRightIndex(2);
-    test.setTopLeftIndex(3);
-    test.setTopRightIndex(4);
-
     bottom_left_vertex.setXYZ(1.0f, 2.0f, 3.0f);
     bottom_left_uv.setXYZ(4.0f, 5.0f, 6.0f);
     bottom_left_normal.setXYZ(7.0f, 8.0f, 9.0f);
@@ -194,7 +189,6 @@ void normalFaceTest()
     top_right_uv.setXYZ(31.0f + 36.0f, 32.0f + 36.0f, 33.0f + 36.0f);
     top_right_normal.setXYZ(34.0f + 36.0f, 35.0f + 36.0f, 36.0f + 36.0f);
 
-    test.setIndex(5, 6, 7, 8);
     test.setVertex(bottom_left_vertex, bottom_right_vertex, top_left_vertex, top_right_vertex);
     test.setUV(bottom_left_uv, bottom_right_uv, top_left_uv, top_right_uv);
     test.setNormal(bottom_left_normal, bottom_right_normal, top_left_normal, top_right_normal);

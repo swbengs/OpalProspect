@@ -56,20 +56,9 @@ public:
     void setTopRightVertex(Point3D point);
     void setVertex(Point3D bottom_left, Point3D bottom_right, Point3D top_left, Point3D top_right);
 
-    void setBottomLeftIndex(unsigned int index);
-    void setBottomRightIndex(unsigned int index);
-    void setTopLeftIndex(unsigned int index);
-    void setTopRightIndex(unsigned int index);
-    void setIndex(unsigned int bottom_left, unsigned int bottom_right, unsigned int top_left, unsigned int top_right);
-
 private:
     Point3D bottom_left_vertex;
     Point3D bottom_right_vertex;
     Point3D top_left_vertex;
     Point3D top_right_vertex;
-
-    unsigned int bottom_left_index;
-    unsigned int bottom_right_index;
-    unsigned int top_left_index;
-    unsigned int top_right_index;
 };
