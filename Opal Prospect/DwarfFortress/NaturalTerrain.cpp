@@ -126,6 +126,53 @@ void NaturalTerrain::setIndexDrawType(unsigned int index, DF_Draw_Tile_Type bloc
     floors[index].setDrawType(floor_draw_type);
 }
 
+void NaturalTerrain::setIndexDrawTypeAround(unsigned int index, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw)
+{
+    Point3DUInt xyz = getGridDimensions();
+    const unsigned int up = Grid3DYOffset::getIndexUp(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int down = Grid3DYOffset::getIndexDown(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int left = Grid3DYOffset::getIndexLeft(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int right = Grid3DYOffset::getIndexRight(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int back = Grid3DYOffset::getIndexBack(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int front = Grid3DYOffset::getIndexFront(index, xyz.x, xyz.y, xyz.z);
+
+    if (index != up)
+    {
+        blocks[up].setDrawType(block_draw);
+        floors[up].setDrawType(floor_draw);
+    }
+
+    if (index != down)
+    {
+        blocks[down].setDrawType(block_draw);
+        floors[down].setDrawType(floor_draw);
+    }
+
+    if (index != left)
+    {
+        blocks[left].setDrawType(block_draw);
+        floors[left].setDrawType(floor_draw);
+    }
+
+    if (index != right)
+    {
+        blocks[right].setDrawType(block_draw);
+        floors[right].setDrawType(floor_draw);
+    }
+
+    if (index != back)
+    {
+        blocks[back].setDrawType(block_draw);
+        floors[back].setDrawType(floor_draw);
+    }
+
+    if (index != front)
+    {
+        blocks[front].setDrawType(block_draw);
+        floors[front].setDrawType(floor_draw);
+    }
+}
+
 void NaturalTerrain::setIndexMaterial(unsigned int index, DF_Natural_Tile_Material material)
 {
     assert(index < block_grid.getGridCount());

@@ -782,16 +782,10 @@ void DrawEngine::setupOpenGLUniforms()
     std::cout << "uniform_sun_light_color_id: " << uniform_sun_light_color_id << "\n";
     std::cout << "uniform_sun_light_direction_id: " << uniform_sun_light_direction_id << "\n";
 
-    const float ambient_r = 0.3f;
-    const float ambient_g = 0.3f;
-    const float ambient_b = 0.3f;
-    glUniform3f(uniform_ambient_color_id, ambient_r, ambient_g, ambient_b);
-    OGLHelpers::getOpenGLError("setup uniforms post ambient", true);
-
     glm::vec4 light_direction;
     light_direction.x = -100.0f;
-    light_direction.y = 50.0f;
-    light_direction.z = 0.0;
+    light_direction.y = 0.0f;
+    light_direction.z = 80.0f;
     light_direction.w = 0.0f;
     light_direction = glm::normalize(light_direction);
     glUniform4f(uniform_sun_light_direction_id, light_direction.x, light_direction.y, light_direction.z, light_direction.w);
@@ -801,6 +795,12 @@ void DrawEngine::setupOpenGLUniforms()
     const float light_g = 1.0f;
     const float light_b = 1.0f;
     glUniform3f(uniform_sun_light_color_id, light_r, light_g, light_b);
+
+    const float ambient_r = 0.3f * light_r;
+    const float ambient_g = 0.3f * light_g;
+    const float ambient_b = 0.3f * light_b;
+    glUniform3f(uniform_ambient_color_id, ambient_r, ambient_g, ambient_b);
+    OGLHelpers::getOpenGLError("setup uniforms post ambient", true);
 
     OGLHelpers::getOpenGLError("post setup uniforms", true);
 }
@@ -936,7 +936,7 @@ void DrawEngine::terrain_16x16x16_test(NaturalTerrain& natural_terrain)
 
     //natural_terrain.setLayerDrawType(3, DF_DRAW_AIR, DF_DRAW_FLOOR);
     //natural_terrain.setLayerDrawType(4, DF_DRAW_BLOCK, DF_DRAW_AIR);
-    unsigned int first = 3 * 16;
+    const unsigned int first = 3 * 16;
     unsigned int next = Grid3DYOffset::getIndexRight(first, width, height, length);
     natural_terrain.setIndexDrawType(first, DF_DRAW_AIR, DF_DRAW_FLOOR);
     natural_terrain.setIndexMaterialAround(first, DF_DEMATOID, DF_GARNIERITE);
@@ -979,6 +979,25 @@ void DrawEngine::terrain_16x16x16_test(NaturalTerrain& natural_terrain)
     next = Grid3DYOffset::getIndexBack(next, width, height, length);
     natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
     natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
+
+    const unsigned int second = 6 * 16;
+    next = second;
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
+
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
+
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
+
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
+
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
+
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
 }
 
 void DrawEngine::terrain_48x48x48_test(NaturalTerrain & natural_terrain)
