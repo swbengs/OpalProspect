@@ -476,21 +476,21 @@ void DrawEngine::arrayTextureDraw(const Camera &camera)
     glm::mat4 model;
     model = glm::translate(model, first);
     glm::mat4 mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(1 * 36 * sizeof(unsigned int)));
 
     model = glm::mat4();
     model = glm::translate(model, second);
     mvp = glm::mat4();
     mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(0 * 36 * sizeof(unsigned int)));
 
     model = glm::mat4();
     model = glm::translate(model, third);
     mvp = glm::mat4();
     mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(2 * 36 * sizeof(unsigned int)));
 
     OGLHelpers::getOpenGLError("post draw", true);
@@ -513,14 +513,14 @@ void DrawEngine::interleaveDraw(const Camera &camera)
     glm::mat4 model;
     model = glm::translate(model, first);
     glm::mat4 mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(1 * 36 * sizeof(unsigned int)));
 
     model = glm::mat4();
     model = glm::translate(model, second);
     mvp = glm::mat4();
     mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(0 * 36 * sizeof(unsigned int)));
 
     OGLHelpers::getOpenGLError("post draw", true);
@@ -528,7 +528,12 @@ void DrawEngine::interleaveDraw(const Camera &camera)
 
 void DrawEngine::draw(const Camera &camera)
 {
+    OGLHelpers::getOpenGLError("pre frame draw", true);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    //set one time uniforms per frame here
+    
+    //end one time sets
 
     glm::vec3 first = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 second = glm::vec3(3.0f, 0.0f, 0.0f);
@@ -605,6 +610,7 @@ void DrawEngine::draw(const Camera &camera)
 
     //interleaveDraw(camera);
     //arrayTextureDraw(camera);
+    OGLHelpers::getOpenGLError("post frame draw", true);
 }
 
 void DrawEngine::setup()
@@ -723,7 +729,8 @@ void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const g
     }
 
     glm::mat4 mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    //glm::mat4 mvp = persp * view * model;
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, model_info.index_count, GL_UNSIGNED_INT, (void*)(model_info.index_offset_bytes));
     //uvVAO3D.getObjectIndexSize() * sizeof(unsigned int) * wanted_drawable;
 
@@ -759,11 +766,43 @@ void DrawEngine::setupOpenGLObjects()
     //texture_program.create("Texture2D.vert", "Texture2D.frag");
     //texture_program.create("arrayTexture.vert", "arrayTexture.frag");
     texture_program.create("arrayTextureBasicLight.vert", "arrayTextureBasicLight.frag");
+    texture_program.use();
 }
 
 void DrawEngine::setupOpenGLUniforms()
 {
-    texture_mvp_id = glGetUniformLocation(texture_program.getID(), "MVP");
+    OGLHelpers::getOpenGLError("pre setup uniforms", true);
+    uniform_mvp_id = glGetUniformLocation(texture_program.getID(), "MVP");
+    uniform_ambient_color_id = glGetUniformLocation(texture_program.getID(), "ambient_color");
+    uniform_sun_light_color_id = glGetUniformLocation(texture_program.getID(), "sun_light_color");
+    uniform_sun_light_direction_id = glGetUniformLocation(texture_program.getID(), "sun_light_direction");
+
+    std::cout << "uniform_mvp_id: " << uniform_mvp_id << "\n";
+    std::cout << "uniform_ambient_color_id: " << uniform_ambient_color_id << "\n";
+    std::cout << "uniform_sun_light_color_id: " << uniform_sun_light_color_id << "\n";
+    std::cout << "uniform_sun_light_direction_id: " << uniform_sun_light_direction_id << "\n";
+
+    const float ambient_r = 0.3f;
+    const float ambient_g = 0.3f;
+    const float ambient_b = 0.3f;
+    glUniform3f(uniform_ambient_color_id, ambient_r, ambient_g, ambient_b);
+    OGLHelpers::getOpenGLError("setup uniforms post ambient", true);
+
+    glm::vec4 light_direction;
+    light_direction.x = -100.0f;
+    light_direction.y = 50.0f;
+    light_direction.z = 0.0;
+    light_direction.w = 0.0f;
+    light_direction = glm::normalize(light_direction);
+    glUniform4f(uniform_sun_light_direction_id, light_direction.x, light_direction.y, light_direction.z, light_direction.w);
+    OGLHelpers::getOpenGLError("setup uniforms post sun light direction", true);
+
+    const float light_r = 1.0f;
+    const float light_g = 1.0f;
+    const float light_b = 1.0f;
+    glUniform3f(uniform_sun_light_color_id, light_r, light_g, light_b);
+
+    OGLHelpers::getOpenGLError("post setup uniforms", true);
 }
 
 void DrawEngine::setupObjects()

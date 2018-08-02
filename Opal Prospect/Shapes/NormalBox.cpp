@@ -38,22 +38,22 @@ void NormalBox::fillNormalFace(NormalFace& front_face, NormalFace& back_face, No
 //gets
 Point3D NormalBox::getFrontNormal() const
 {
-    return Point3D(-1.0f, 0.0f, 0.0f);
+    return Point3D(0.0f, 0.0f, -1.0f);
 }
 
 Point3D NormalBox::getBackNormal() const
 {
-    return Point3D(1.0f, 0.0f, 0.0f);
+    return Point3D(0.0f, 0.0f, 1.0f);
 }
 
 Point3D NormalBox::getLeftNormal() const
 {
-    return Point3D(0.0f, 0.0f, -1.0f);
+    return Point3D(-1.0f, 0.0f, 0.0f);
 }
 
 Point3D NormalBox::getRightNormal() const
 {
-    return Point3D(0.0f, 0.0f, 1.0f);
+    return Point3D(1.0f, 0.0f, 0.0f);
 }
 
 Point3D NormalBox::getTopNormal() const

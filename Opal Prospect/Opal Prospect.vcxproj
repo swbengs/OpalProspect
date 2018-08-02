@@ -306,6 +306,14 @@
   <ItemGroup>
     <None Include="..\milestones.md" />
     <None Include="..\README.md" />
+    <None Include="2dcolorbasic.frag" />
+    <None Include="2dcolorbasic.vert" />
+    <None Include="arrayTexture.frag" />
+    <None Include="arrayTexture.vert" />
+    <None Include="arrayTextureBasicLight.frag" />
+    <None Include="arrayTextureBasicLight.vert" />
+    <None Include="Texture2D.frag" />
+    <None Include="Texture2D.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\build.md" />
