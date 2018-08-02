@@ -225,7 +225,6 @@ void shapeToModelTest()
     box.setBottomTextureNumber(105);
     //box.setTextureNumber(255);
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    box.setNormal(front, back, left, right, top, bottom);
 
     convert.convertToModelIndex(box, model);
 

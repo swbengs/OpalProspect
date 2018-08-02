@@ -49,14 +49,6 @@ void DrawEngine::properDrawTest()
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     //box.setTextureNumber(1);
     box.setTextureNumber(main_textures.getTextureNumber("white_sand.png"));
-    Point3D front, back, left, right, top, bottom;
-    front.setXYZ(0, 1, 2);
-    back.setXYZ(3, 4, 5);
-    left.setXYZ(6, 7, 8);
-    right.setXYZ(9, 10, 11);
-    top.setXYZ(12, 13, 14);
-    bottom.setXYZ(15, 16, 17);
-    box.setNormal(front, back, left, right, top, bottom);
 
     convert.convertToModelIndex(box, test_model);
     test_model.setModelName("test.obj");
@@ -90,7 +82,6 @@ void DrawEngine::properDrawTest()
     pyra_mod.setTextureName(texture_name);
     pyra_mod.setModelName("pyramid");
     pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    pyramid.setNormal(front, back, left, right, bottom);
     //pyramid.setTextureNumber(4);
     pyramid.setTextureNumber(main_textures.getTextureNumber("gabbro.png"));
     convert.convertToModelIndex(pyramid, pyra_mod);
@@ -165,14 +156,6 @@ void DrawEngine::arrayTextureTest()
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     //box.setTextureNumber(1);
     box.setTextureNumber(main_textures.getTextureNumber("white_sand.png"));
-    Point3D front, back, left, right, top, bottom;
-    front.setXYZ(0, 1, 2);
-    back.setXYZ(3, 4, 5);
-    left.setXYZ(6, 7, 8);
-    right.setXYZ(9, 10, 11);
-    top.setXYZ(12, 13, 14);
-    bottom.setXYZ(15, 16, 17);
-    box.setNormal(front, back, left, right, top, bottom);
 
     convert.convertToModelIndex(box, test_model);
     test_model.setModelName("test.obj");
@@ -239,14 +222,6 @@ void DrawEngine::interleaveTest()
 
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     box.setTextureNumber(19);
-    Point3D front, back, left, right, top, bottom;
-    front.setXYZ(0, 1, 2);
-    back.setXYZ(3, 4, 5);
-    left.setXYZ(6, 7, 8);
-    right.setXYZ(9, 10, 11);
-    top.setXYZ(12, 13, 14);
-    bottom.setXYZ(15, 16, 17);
-    box.setNormal(front, back, left, right, top, bottom);
 
     convert.convertToModelIndex(box, test_model);
     test_model.setModelName("test.obj");
@@ -279,7 +254,6 @@ void DrawEngine::interleaveTest()
     pyra_mod.setTextureName(texture_name);
     pyra_mod.setModelName("pyramid");
     pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    pyramid.setNormal(front, back, left, right, bottom);
     pyramid.setTextureNumber(4);
     /*
     pyramid.setFrontTextureNumber(100);
@@ -404,7 +378,6 @@ void DrawEngine::bufferControlTest()
     pyra_mod.setTextureName(texture_name);
     pyra_mod.setModelName("pyramid");
     pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    pyramid.setNormal(front, back, left, right, bottom);
     pyramid.setTextureNumber(4);
     /*
     pyramid.setFrontTextureNumber(100);
@@ -784,7 +757,8 @@ void DrawEngine::setupOpenGLObjects()
     texture_program.setName("texture");
     //texture_program.create("2dtexturebasic.vert", "2dtexturebasic.frag");
     //texture_program.create("Texture2D.vert", "Texture2D.frag");
-    texture_program.create("arrayTexture.vert", "arrayTexture.frag");
+    //texture_program.create("arrayTexture.vert", "arrayTexture.frag");
+    texture_program.create("arrayTextureBasicLight.vert", "arrayTextureBasicLight.frag");
 }
 
 void DrawEngine::setupOpenGLUniforms()
@@ -845,17 +819,7 @@ void DrawEngine::loadModels()
 
     std::string texture_name = "terrain.png";
     block.setWidthHeightLength(DF_BLOCK_WIDTH, DF_BLOCK_HEIGHT, DF_BLOCK_LENGTH);
-    Point3D front, back, left, right, top, bottom;
-    front.setXYZ(0, 1, 2);
-    back.setXYZ(3, 4, 5);
-    left.setXYZ(6, 7, 8);
-    right.setXYZ(9, 10, 11);
-    top.setXYZ(12, 13, 14);
-    bottom.setXYZ(15, 16, 17);
-    block.setNormal(front, back, left, right, top, bottom);
-
     floor.setWidthHeightLength(DF_FLOOR_WIDTH, DF_FLOOR_HEIGHT, DF_FLOOR_LENGTH);
-    floor.setNormal(front, back, left, right, top, bottom);
 
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
