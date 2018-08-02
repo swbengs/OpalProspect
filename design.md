@@ -1,7 +1,7 @@
 This document is an overview of what's been done and what still needs to be done. Try to keep this about general topics and not specifics.
 This is to help give an idea what needs to be done and what is currently being worked on. Further below I go into specifics about what is being done and why.
 
-## Updated: 7/26/2018
+## Updated: 8/1/2018
 
 # Critical issues(try and do this first)
 1. Code cleanup and license adding. Much of the code is fairly old and should be updated to include the license and the some basic description of what it does.
@@ -27,11 +27,8 @@ All headers should have license info now. Need to check that they all have a des
 3. Textures for all terrain types(started but only barely) See the screenshots included and the 8x12 pixel copies from DF. Re draw as 16x16 pixel textures. Actual realistic textures or your own style are more than welcome! I am not an artist.
 
 # Current WIP(s)
-1. Getting most of the test world's map textures placed correctly for first attempt at drawing the DF world
-2. Planning how a tile should be designed. One super tile that fills all roles or specialized ones.
-3. System to combine terrain into a single big model or multiple seperate if I keep the textures as they are. Single is preferred.
-4. Ramp model and support to have it rotate so only one copy is needed. Texture number/name can change and its rotation can change and the required faces/triangles can be added to the terrain model instead of making lots of new models. Terrain class should probably take care of this. both optimization and possibly will not work how I want. May just have each texture number get a model so that we don't create each face many times. Just access the faces directly from each model since we built each one.
-5. Terrain class in all its superclass glory. Try to split this up into smaller classes
+1. Version 0.8 lighting and 0.9 interesting map
+2. Ramp model and support to have it rotate so only one copy is needed. Texture number/name can change and its rotation can change and the required faces/triangles can be added to the terrain model instead of making lots of new models. Terrain class should probably take care of this. both optimization and possibly will not work how I want. May just have each texture number get a model so that we don't create each face many times. Just access the faces directly from each model since we built each one.
 
 # Specifics
 ## Finishing model drawing automation

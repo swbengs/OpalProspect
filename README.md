@@ -5,17 +5,11 @@ This project is to allow you to save fortress info from a LUA script, and then k
 embark, anytime during your play session, and whenever you feel the fortress is done. You will be able to see how the fort grew.
 Currently I am still working on the draw engine, and no support is yet available to grab information from DFHack.
 
-# TODO and WIP
-1. Change all text files to markdown files and make them pretty. Add more information about design.
-2. Keep adding to draw engine so we hit version 0.1 before the summer is over.
-3. Get more DF images and convert to 16x16 pixel textures for list item above this one.
-4. CMake support so it isn't a windows only program. All the major code bits should work with other OS. Have to make a way of changing the directory paths to be OS independant though.
-
 ### Info about how to write code is currently in code format.md.
 
 ### Info about the current design is in design.md.
 
-### Info on building is in built.md
+### Info on building is in build.md
 
 ### Info on running is in run.md
 
