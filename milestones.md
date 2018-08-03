@@ -5,7 +5,7 @@ Version | Major feature(s)
 ------- | ----------------
 0.08 | Basic lighting with just a simple directional light and diffuse coloring. Per vertex normals for the time being.
 0.09 | Ability to use the already created list to load image files. Have a way to make it work even with most of them missing. No more manually typing the full path for files :)
-0.99 | Create interesting hardcoded map to be used to show off version 0.10(blocks and floors only)
+0.099 | Create interesting hardcoded map to be used to show off version 0.10(blocks and floors only)
 0.1(first release) | Draw engine basically finished. Able to draw a map built in memory/hardcoded
 0.12 | Optimizations to get ready for 0.2 and dealing with 48x300x48 size chunks up to 4x4 for sure
 0.14 | Ramps and all their issues.
