@@ -304,6 +304,7 @@
     <ClInclude Include="Shapes\VertexTriangle.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\controls.md" />
     <None Include="..\milestones.md" />
     <None Include="..\README.md" />
     <None Include="2dcolorbasic.frag" />

@@ -820,9 +820,12 @@ void DrawEngine::setupObjects()
 
 void DrawEngine::loadTextures()
 {
+    std::stringstream stream;
     std::vector<std::string> files;
     files.reserve(DF_NATURAL_TILE_COUNT + 1);
-    files.push_back("Textures\\bad.png");
+
+    stream << "Textures" << FilePath::getOSSeperator() << "bad.png";
+    files.push_back(stream.str());
 
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {

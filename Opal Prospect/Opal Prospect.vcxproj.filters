@@ -552,5 +552,8 @@
     <None Include="Texture2D.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\controls.md">
+      <Filter>Text Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
