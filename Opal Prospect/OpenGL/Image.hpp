@@ -40,6 +40,7 @@ public:
     Image();
 
     void loadImage();
+    void loadImageFallback(std::string filename, std::string fallback_filename); //same as load image but if we can't find the given file we instead load the fallback one
 
     //gets
     int getWidth() const;
@@ -58,6 +59,6 @@ private:
     FilePath file_path;
 
     void flipVertical(int width, int height);
-    void setupImage(std::string filename);
+    bool setupImage(std::string filename, bool has_fallback);
 };
 

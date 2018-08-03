@@ -50,7 +50,7 @@ void MainLoop::startLoop()
 {
     const int screen_width = 640;
     const int screen_height = 480;
-    const char* name = "Opal Prospect v0.08";
+    const char* name = "Opal Prospect v0.99";
 
     GLFWwindow* window;
 

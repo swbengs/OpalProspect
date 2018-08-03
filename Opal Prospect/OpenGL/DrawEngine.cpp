@@ -821,26 +821,13 @@ void DrawEngine::setupObjects()
 void DrawEngine::loadTextures()
 {
     std::vector<std::string> files;
+    files.reserve(DF_NATURAL_TILE_COUNT + 1);
     files.push_back("Textures\\bad.png");
 
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_WHITE_SAND)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_SILTY_CLAY_LOAM)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_GABBRO)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_WHITE_SAND)));
-
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_DEMATOID)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_TANZANITE)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_GARNIERITE)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_TETRAHEDRITE)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_CHROMITE)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_OLIVINE)));
-
-    /*
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
         files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i)));
     }
-    */
 
     array_texture.setTextureName("terrain.png");
     array_texture.loadImages(files);
