@@ -881,12 +881,14 @@ void DrawEngine::loadTerrain()
     //terrain_test stuff here
 
     //terrain_3x3x3_test(terrain_test);
-    terrain_16x16x16_test(terrain_test);
-    //terrain_48x48x48_test(terrain_test);
+    //terrain_16x16x16_test(terrain_test);
+    terrain_48x48x48_test(terrain_test);
     //terrain_test and not after here
 
     terrain.loadFromMemory(terrain_test, models, terrain_model);
     addInterleavedModel(terrain_model);
+
+    std::cout << "terrain model total size: " << terrain_model.getTotalSize() << "\n";
 
     //model_pod result = models.getModelPOD(models.getModelReference("terrain"));
     std::cout << "after terrain load\n";
@@ -952,6 +954,10 @@ void DrawEngine::terrain_16x16x16_test(NaturalTerrain& natural_terrain)
     natural_terrain.setIndexDrawTypeAroundToEdge(16 * 4 + 8, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexUp);
     natural_terrain.setIndexMaterialAroundToEdge(16 * 4 + 8, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexUp);
 
+    next = 16 * 16 * 4 + 12;
+    natural_terrain.setIndexDrawTypeAroundToEdge(next, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexFront);
+    natural_terrain.setIndexMaterialAroundToEdge(next, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexFront);
+
     const unsigned int second = 6 * 16;
     next = second;
     natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
@@ -989,8 +995,14 @@ void DrawEngine::terrain_48x48x48_test(NaturalTerrain & natural_terrain)
         natural_terrain.setLayerFloorMaterial(i, DF_WHITE_SAND);
     }
 
-    natural_terrain.setLayerDrawType(3, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setLayerDrawType(4, DF_DRAW_BLOCK, DF_DRAW_AIR);
+    natural_terrain.setIndexDrawTypeAroundToEdge(width * 1 + 8, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexUp);
+    natural_terrain.setIndexMaterialAroundToEdge(width * 1 + 8, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexUp);
+
+    natural_terrain.setIndexDrawTypeAroundToEdge(width * 1 + 8, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexFront);
+    natural_terrain.setIndexMaterialAroundToEdge(width * 1 + 8, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexFront);
+
+    natural_terrain.setIndexDrawTypeAroundToEdge(width * 2, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexRight);
+    natural_terrain.setIndexMaterialAroundToEdge(width * 2, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexRight);
 }
 
 void DrawEngine::resize()
