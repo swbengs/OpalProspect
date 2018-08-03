@@ -114,7 +114,11 @@ private:
     const int game_height = 240;
 
     //opengl program uniform location members
-    int texture_mvp_id;
+    int uniform_mvp_id;
+    int uniform_mv_id;
+    int uniform_ambient_color_id;
+    int uniform_sun_light_color_id;
+    int uniform_sun_light_direction_id;
 
     //glm types
     glm::mat4 ortho;

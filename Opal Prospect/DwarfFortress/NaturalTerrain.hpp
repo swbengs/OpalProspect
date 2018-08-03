@@ -59,9 +59,16 @@ public:
 
     void setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type); //useful for testing, not as much for the release version
     void setIndexDrawType(unsigned int index, DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type);
+    void setIndexDrawTypeN(unsigned int index, unsigned int count, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
+    void setIndexDrawTypeAround(unsigned int index, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw);
+    void setIndexDrawTypeAroundN(unsigned int index, unsigned int count, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
+    void setIndexDrawTypeAroundToEdge(unsigned int index, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
     void setIndexMaterial(unsigned int index, DF_Natural_Tile_Material material);
     void setIndexMaterial(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material);
+    void setIndexMaterialN(unsigned int index, unsigned int count, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
     void setIndexMaterialAround(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material);
+    void setIndexMaterialAroundN(unsigned int index, unsigned int count, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
+    void setIndexMaterialAroundToEdge(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
     void setLayerBlockMaterial(unsigned int layer, DF_Natural_Tile_Material material);
     void setLayerFloorMaterial(unsigned int layer, DF_Natural_Tile_Material material);
     void setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type draw_type); //useful for debug and that is all

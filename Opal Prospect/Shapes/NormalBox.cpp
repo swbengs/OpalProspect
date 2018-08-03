@@ -24,12 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-NormalBox::NormalBox()
-{
-    Point3D junk(0.0f, 0.0f, 0.0f);
-    setNormal(junk, junk, junk, junk, junk, junk);
-}
-
 void NormalBox::fillNormalFace(NormalFace& front_face, NormalFace& back_face, NormalFace& left_face, NormalFace& right_face, NormalFace& top_face, NormalFace& bottom_face) const
 {
     //front back left right top bottom
@@ -44,71 +38,31 @@ void NormalBox::fillNormalFace(NormalFace& front_face, NormalFace& back_face, No
 //gets
 Point3D NormalBox::getFrontNormal() const
 {
-    return front_normal;
+    return Point3D(0.0f, 0.0f, -1.0f);
 }
 
 Point3D NormalBox::getBackNormal() const
 {
-    return back_normal;
+    return Point3D(0.0f, 0.0f, 1.0f);
 }
 
 Point3D NormalBox::getLeftNormal() const
 {
-    return left_normal;
+    return Point3D(-1.0f, 0.0f, 0.0f);
 }
 
 Point3D NormalBox::getRightNormal() const
 {
-    return right_normal;
+    return Point3D(1.0f, 0.0f, 0.0f);
 }
 
 Point3D NormalBox::getTopNormal() const
 {
-    return top_normal;
+    return Point3D(0.0f, 1.0f, 0.0f);
 }
 
 Point3D NormalBox::getBottomNormal() const
 {
-    return bottom_normal;
+    return Point3D(0.0f, -1.0f, 0.0f);
 }
 
-//sets
-void NormalBox::setFrontNormal(const Point3D& normal)
-{
-    front_normal = normal;
-}
-
-void NormalBox::setBackNormal(const Point3D& normal)
-{
-    back_normal = normal;
-}
-
-void NormalBox::setLeftNormal(const Point3D& normal)
-{
-    left_normal = normal;
-}
-
-void NormalBox::setRightNormal(const Point3D& normal)
-{
-    right_normal = normal;
-}
-
-void NormalBox::setTopNormal(const Point3D& normal)
-{
-    top_normal = normal;
-}
-
-void NormalBox::setBottomNormal(const Point3D& normal)
-{
-    bottom_normal = normal;
-}
-
-void NormalBox::setNormal(const Point3D& front, const Point3D& back, const Point3D& left, const Point3D& right, const Point3D& top, const Point3D& bottom)
-{
-    front_normal = front;
-    back_normal = back;
-    left_normal = left;
-    right_normal = right;
-    top_normal = top;
-    bottom_normal = bottom;
-}

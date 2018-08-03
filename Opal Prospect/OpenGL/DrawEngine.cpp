@@ -38,7 +38,7 @@ SOFTWARE.
 */
 
 const float DrawEngine::Z_NEAR = 0.1f;
-const float DrawEngine::Z_FAR = 50.0f;
+const float DrawEngine::Z_FAR = 100.0f;
 
 void DrawEngine::properDrawTest()
 {
@@ -49,14 +49,6 @@ void DrawEngine::properDrawTest()
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     //box.setTextureNumber(1);
     box.setTextureNumber(main_textures.getTextureNumber("white_sand.png"));
-    Point3D front, back, left, right, top, bottom;
-    front.setXYZ(0, 1, 2);
-    back.setXYZ(3, 4, 5);
-    left.setXYZ(6, 7, 8);
-    right.setXYZ(9, 10, 11);
-    top.setXYZ(12, 13, 14);
-    bottom.setXYZ(15, 16, 17);
-    box.setNormal(front, back, left, right, top, bottom);
 
     convert.convertToModelIndex(box, test_model);
     test_model.setModelName("test.obj");
@@ -90,7 +82,6 @@ void DrawEngine::properDrawTest()
     pyra_mod.setTextureName(texture_name);
     pyra_mod.setModelName("pyramid");
     pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    pyramid.setNormal(front, back, left, right, bottom);
     //pyramid.setTextureNumber(4);
     pyramid.setTextureNumber(main_textures.getTextureNumber("gabbro.png"));
     convert.convertToModelIndex(pyramid, pyra_mod);
@@ -165,14 +156,6 @@ void DrawEngine::arrayTextureTest()
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     //box.setTextureNumber(1);
     box.setTextureNumber(main_textures.getTextureNumber("white_sand.png"));
-    Point3D front, back, left, right, top, bottom;
-    front.setXYZ(0, 1, 2);
-    back.setXYZ(3, 4, 5);
-    left.setXYZ(6, 7, 8);
-    right.setXYZ(9, 10, 11);
-    top.setXYZ(12, 13, 14);
-    bottom.setXYZ(15, 16, 17);
-    box.setNormal(front, back, left, right, top, bottom);
 
     convert.convertToModelIndex(box, test_model);
     test_model.setModelName("test.obj");
@@ -239,14 +222,6 @@ void DrawEngine::interleaveTest()
 
     box.setWidthHeightLength(1.0f, 1.0f, 1.0f);
     box.setTextureNumber(19);
-    Point3D front, back, left, right, top, bottom;
-    front.setXYZ(0, 1, 2);
-    back.setXYZ(3, 4, 5);
-    left.setXYZ(6, 7, 8);
-    right.setXYZ(9, 10, 11);
-    top.setXYZ(12, 13, 14);
-    bottom.setXYZ(15, 16, 17);
-    box.setNormal(front, back, left, right, top, bottom);
 
     convert.convertToModelIndex(box, test_model);
     test_model.setModelName("test.obj");
@@ -279,7 +254,6 @@ void DrawEngine::interleaveTest()
     pyra_mod.setTextureName(texture_name);
     pyra_mod.setModelName("pyramid");
     pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    pyramid.setNormal(front, back, left, right, bottom);
     pyramid.setTextureNumber(4);
     /*
     pyramid.setFrontTextureNumber(100);
@@ -404,7 +378,6 @@ void DrawEngine::bufferControlTest()
     pyra_mod.setTextureName(texture_name);
     pyra_mod.setModelName("pyramid");
     pyramid.setWidthHeightLength(1.0f, 1.0f, 1.0f);
-    pyramid.setNormal(front, back, left, right, bottom);
     pyramid.setTextureNumber(4);
     /*
     pyramid.setFrontTextureNumber(100);
@@ -503,21 +476,21 @@ void DrawEngine::arrayTextureDraw(const Camera &camera)
     glm::mat4 model;
     model = glm::translate(model, first);
     glm::mat4 mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(1 * 36 * sizeof(unsigned int)));
 
     model = glm::mat4();
     model = glm::translate(model, second);
     mvp = glm::mat4();
     mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(0 * 36 * sizeof(unsigned int)));
 
     model = glm::mat4();
     model = glm::translate(model, third);
     mvp = glm::mat4();
     mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(2 * 36 * sizeof(unsigned int)));
 
     OGLHelpers::getOpenGLError("post draw", true);
@@ -540,14 +513,14 @@ void DrawEngine::interleaveDraw(const Camera &camera)
     glm::mat4 model;
     model = glm::translate(model, first);
     glm::mat4 mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(1 * 36 * sizeof(unsigned int)));
 
     model = glm::mat4();
     model = glm::translate(model, second);
     mvp = glm::mat4();
     mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)(0 * 36 * sizeof(unsigned int)));
 
     OGLHelpers::getOpenGLError("post draw", true);
@@ -555,7 +528,12 @@ void DrawEngine::interleaveDraw(const Camera &camera)
 
 void DrawEngine::draw(const Camera &camera)
 {
+    OGLHelpers::getOpenGLError("pre frame draw", true);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    //set one time uniforms per frame here
+    
+    //end one time sets
 
     glm::vec3 first = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 second = glm::vec3(3.0f, 0.0f, 0.0f);
@@ -632,6 +610,7 @@ void DrawEngine::draw(const Camera &camera)
 
     //interleaveDraw(camera);
     //arrayTextureDraw(camera);
+    OGLHelpers::getOpenGLError("post frame draw", true);
 }
 
 void DrawEngine::setup()
@@ -750,7 +729,8 @@ void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const g
     }
 
     glm::mat4 mvp = persp * view * model;
-    glUniformMatrix4fv(texture_mvp_id, 1, false, glm::value_ptr(mvp));
+    //glm::mat4 mvp = persp * view * model;
+    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
     glDrawElements(GL_TRIANGLES, model_info.index_count, GL_UNSIGNED_INT, (void*)(model_info.index_offset_bytes));
     //uvVAO3D.getObjectIndexSize() * sizeof(unsigned int) * wanted_drawable;
 
@@ -784,12 +764,45 @@ void DrawEngine::setupOpenGLObjects()
     texture_program.setName("texture");
     //texture_program.create("2dtexturebasic.vert", "2dtexturebasic.frag");
     //texture_program.create("Texture2D.vert", "Texture2D.frag");
-    texture_program.create("arrayTexture.vert", "arrayTexture.frag");
+    //texture_program.create("arrayTexture.vert", "arrayTexture.frag");
+    texture_program.create("arrayTextureBasicLight.vert", "arrayTextureBasicLight.frag");
+    texture_program.use();
 }
 
 void DrawEngine::setupOpenGLUniforms()
 {
-    texture_mvp_id = glGetUniformLocation(texture_program.getID(), "MVP");
+    OGLHelpers::getOpenGLError("pre setup uniforms", true);
+    uniform_mvp_id = glGetUniformLocation(texture_program.getID(), "MVP");
+    uniform_ambient_color_id = glGetUniformLocation(texture_program.getID(), "ambient_color");
+    uniform_sun_light_color_id = glGetUniformLocation(texture_program.getID(), "sun_light_color");
+    uniform_sun_light_direction_id = glGetUniformLocation(texture_program.getID(), "sun_light_direction");
+
+    std::cout << "uniform_mvp_id: " << uniform_mvp_id << "\n";
+    std::cout << "uniform_ambient_color_id: " << uniform_ambient_color_id << "\n";
+    std::cout << "uniform_sun_light_color_id: " << uniform_sun_light_color_id << "\n";
+    std::cout << "uniform_sun_light_direction_id: " << uniform_sun_light_direction_id << "\n";
+
+    glm::vec4 light_direction;
+    light_direction.x = -100.0f;
+    light_direction.y = 0.0f;
+    light_direction.z = 80.0f;
+    light_direction.w = 0.0f;
+    light_direction = glm::normalize(light_direction);
+    glUniform4f(uniform_sun_light_direction_id, light_direction.x, light_direction.y, light_direction.z, light_direction.w);
+    OGLHelpers::getOpenGLError("setup uniforms post sun light direction", true);
+
+    const float light_r = 1.0f;
+    const float light_g = 1.0f;
+    const float light_b = 1.0f;
+    glUniform3f(uniform_sun_light_color_id, light_r, light_g, light_b);
+
+    const float ambient_r = 0.3f * light_r;
+    const float ambient_g = 0.3f * light_g;
+    const float ambient_b = 0.3f * light_b;
+    glUniform3f(uniform_ambient_color_id, ambient_r, ambient_g, ambient_b);
+    OGLHelpers::getOpenGLError("setup uniforms post ambient", true);
+
+    OGLHelpers::getOpenGLError("post setup uniforms", true);
 }
 
 void DrawEngine::setupObjects()
@@ -807,27 +820,17 @@ void DrawEngine::setupObjects()
 
 void DrawEngine::loadTextures()
 {
+    std::stringstream stream;
     std::vector<std::string> files;
-    files.push_back("Textures\\bad.png");
+    files.reserve(DF_NATURAL_TILE_COUNT + 1);
 
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_WHITE_SAND)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_SILTY_CLAY_LOAM)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_GABBRO)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_WHITE_SAND)));
+    stream << "Textures" << FilePath::getOSSeperator() << "bad.png";
+    files.push_back(stream.str());
 
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_DEMATOID)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_TANZANITE)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_GARNIERITE)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_TETRAHEDRITE)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_CHROMITE)));
-    files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(DF_OLIVINE)));
-
-    /*
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
         files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i)));
     }
-    */
 
     array_texture.setTextureName("terrain.png");
     array_texture.loadImages(files);
@@ -845,17 +848,7 @@ void DrawEngine::loadModels()
 
     std::string texture_name = "terrain.png";
     block.setWidthHeightLength(DF_BLOCK_WIDTH, DF_BLOCK_HEIGHT, DF_BLOCK_LENGTH);
-    Point3D front, back, left, right, top, bottom;
-    front.setXYZ(0, 1, 2);
-    back.setXYZ(3, 4, 5);
-    left.setXYZ(6, 7, 8);
-    right.setXYZ(9, 10, 11);
-    top.setXYZ(12, 13, 14);
-    bottom.setXYZ(15, 16, 17);
-    block.setNormal(front, back, left, right, top, bottom);
-
     floor.setWidthHeightLength(DF_FLOOR_WIDTH, DF_FLOOR_HEIGHT, DF_FLOOR_LENGTH);
-    floor.setNormal(front, back, left, right, top, bottom);
 
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
@@ -888,12 +881,14 @@ void DrawEngine::loadTerrain()
     //terrain_test stuff here
 
     //terrain_3x3x3_test(terrain_test);
-    terrain_16x16x16_test(terrain_test);
-    //terrain_48x48x48_test(terrain_test);
+    //terrain_16x16x16_test(terrain_test);
+    terrain_48x48x48_test(terrain_test);
     //terrain_test and not after here
 
     terrain.loadFromMemory(terrain_test, models, terrain_model);
     addInterleavedModel(terrain_model);
+
+    std::cout << "terrain model total size: " << terrain_model.getTotalSize() << "\n";
 
     //model_pod result = models.getModelPOD(models.getModelReference("terrain"));
     std::cout << "after terrain load\n";
@@ -933,49 +928,54 @@ void DrawEngine::terrain_16x16x16_test(NaturalTerrain& natural_terrain)
 
     //natural_terrain.setLayerDrawType(3, DF_DRAW_AIR, DF_DRAW_FLOOR);
     //natural_terrain.setLayerDrawType(4, DF_DRAW_BLOCK, DF_DRAW_AIR);
-    unsigned int first = 3 * 16;
+    const unsigned int first = 3 * 16;
     unsigned int next = Grid3DYOffset::getIndexRight(first, width, height, length);
-    natural_terrain.setIndexDrawType(first, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(first, DF_DEMATOID, DF_GARNIERITE);
-
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
 
     next = Grid3DYOffset::getIndexRight(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+
+    natural_terrain.setIndexDrawTypeN(first, 4, DF_DRAW_AIR, DF_DRAW_FLOOR, &Grid3DYOffset::getIndexRight);
+    natural_terrain.setIndexMaterialN(first, 4, DF_DEMATOID, DF_GARNIERITE, &Grid3DYOffset::getIndexRight);
+
+    next = Grid3DYOffset::getIndexUp(next, width, height, length);
+
+    natural_terrain.setIndexDrawTypeN(next, 2, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexUp);
+    natural_terrain.setIndexMaterialN(next, 2, DF_OLIVINE, DF_CHROMITE, &Grid3DYOffset::getIndexUp);
+
+    next = Grid3DYOffset::getIndexUp(next, width, height, length);
+    next = Grid3DYOffset::getIndexUp(next, width, height, length);
+
+    next = Grid3DYOffset::getIndexBack(next, width, height, length);
+
+    natural_terrain.setIndexDrawTypeN(next, 2, DF_DRAW_AIR, DF_DRAW_FLOOR, &Grid3DYOffset::getIndexBack);
+    natural_terrain.setIndexMaterialN(next, 2, DF_TANZANITE, DF_TETRAHEDRITE, &Grid3DYOffset::getIndexBack);
+
+    natural_terrain.setIndexDrawTypeAroundToEdge(16 * 4 + 8, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexUp);
+    natural_terrain.setIndexMaterialAroundToEdge(16 * 4 + 8, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexUp);
+
+    next = 16 * 16 * 4 + 12;
+    natural_terrain.setIndexDrawTypeAroundToEdge(next, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexFront);
+    natural_terrain.setIndexMaterialAroundToEdge(next, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexFront);
+
+    const unsigned int second = 6 * 16;
+    next = second;
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
 
     next = Grid3DYOffset::getIndexRight(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
 
     next = Grid3DYOffset::getIndexRight(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
 
-    next = Grid3DYOffset::getIndexUp(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
 
-    next = Grid3DYOffset::getIndexUp(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
 
-    next = Grid3DYOffset::getIndexUp(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
-
-    next = Grid3DYOffset::getIndexBack(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
-
-    next = Grid3DYOffset::getIndexBack(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
-
-    next = Grid3DYOffset::getIndexBack(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
+    next = Grid3DYOffset::getIndexRight(next, width, height, length);
+    natural_terrain.setIndexDrawTypeAround(next, DF_DRAW_AIR, DF_DRAW_AIR);
 }
 
 void DrawEngine::terrain_48x48x48_test(NaturalTerrain & natural_terrain)
@@ -995,8 +995,14 @@ void DrawEngine::terrain_48x48x48_test(NaturalTerrain & natural_terrain)
         natural_terrain.setLayerFloorMaterial(i, DF_WHITE_SAND);
     }
 
-    natural_terrain.setLayerDrawType(3, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setLayerDrawType(4, DF_DRAW_BLOCK, DF_DRAW_AIR);
+    natural_terrain.setIndexDrawTypeAroundToEdge(width * 1 + 8, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexUp);
+    natural_terrain.setIndexMaterialAroundToEdge(width * 1 + 8, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexUp);
+
+    natural_terrain.setIndexDrawTypeAroundToEdge(width * 1 + 8, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexFront);
+    natural_terrain.setIndexMaterialAroundToEdge(width * 1 + 8, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexFront);
+
+    natural_terrain.setIndexDrawTypeAroundToEdge(width * 2, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexRight);
+    natural_terrain.setIndexMaterialAroundToEdge(width * 2, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexRight);
 }
 
 void DrawEngine::resize()

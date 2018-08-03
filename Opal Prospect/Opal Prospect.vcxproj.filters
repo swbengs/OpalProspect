@@ -43,6 +43,9 @@
     <Filter Include="DwarfFortress">
       <UniqueIdentifier>{f8f7d195-59d7-4df9-90d0-6cb8bc16783b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{e13cd0d0-2e3f-4155-bb8e-133e13a676e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Opal Prospect.cpp">
@@ -523,6 +526,33 @@
       <Filter>Text Files</Filter>
     </None>
     <None Include="..\milestones.md">
+      <Filter>Text Files</Filter>
+    </None>
+    <None Include="2dcolorbasic.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="2dcolorbasic.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="arrayTexture.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="arrayTexture.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="arrayTextureBasicLight.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="arrayTextureBasicLight.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Texture2D.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Texture2D.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\controls.md">
       <Filter>Text Files</Filter>
     </None>
   </ItemGroup>

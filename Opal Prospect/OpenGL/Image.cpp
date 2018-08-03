@@ -4,6 +4,7 @@
 //std lib includes
 #include <string>
 #include <iostream>
+#include <assert.h>
 
 //other includes
 #include "png.h"
@@ -40,7 +41,19 @@ Image::Image()
 
 void Image::loadImage()
 {
-    setupImage(file_path.getPath());
+    setupImage(file_path.getPath(), false);
+}
+
+void Image::loadImageFallback(std::string filename, std::string fallback_filename)
+{
+    if (setupImage(filename, true) == false)
+    {
+        if (setupImage(fallback_filename, false) == false)
+        {
+            std::cout << "Failed to load fallback file " << fallback_filename << " . Closing program\n";
+            exit(9999);
+        }
+    }
 }
 
 int Image::getWidth() const
@@ -95,7 +108,7 @@ void Image::flipVertical(int width, int height)
     }
 }
 
-void Image::setupImage(std::string filename)
+bool Image::setupImage(std::string filename, bool has_fallback)
 {
     png_image image;
     const int color_components = 4;
@@ -129,15 +142,26 @@ void Image::setupImage(std::string filename)
             */
 
             //image could not load
-
+            std::cout << "image file " << filename << " failed to load.\n";
+            return false;
         }
     }
     else
     {
-        std::cout << "image file doesn't exist\n";
-        std::cout << filename << "\n \n";
+        if (has_fallback)
+        {
+            std::cout << "image file " << filename << " doesn't exist. Switching to fallback.\n";
+        }
+        else
+        {
+            std::cout << "image file " << filename << " doesn't exist. No fallback image given.\n";
+            
+        }
+
+        return false;
     }
 
     flipVertical(getWidth() * color_components, getHeight());
+    return true;
 }
 
