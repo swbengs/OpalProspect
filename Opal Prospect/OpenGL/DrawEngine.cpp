@@ -38,7 +38,7 @@ SOFTWARE.
 */
 
 const float DrawEngine::Z_NEAR = 0.1f;
-const float DrawEngine::Z_FAR = 50.0f;
+const float DrawEngine::Z_FAR = 100.0f;
 
 void DrawEngine::properDrawTest()
 {
@@ -928,47 +928,29 @@ void DrawEngine::terrain_16x16x16_test(NaturalTerrain& natural_terrain)
     //natural_terrain.setLayerDrawType(4, DF_DRAW_BLOCK, DF_DRAW_AIR);
     const unsigned int first = 3 * 16;
     unsigned int next = Grid3DYOffset::getIndexRight(first, width, height, length);
-    natural_terrain.setIndexDrawType(first, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(first, DF_DEMATOID, DF_GARNIERITE);
-
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
 
     next = Grid3DYOffset::getIndexRight(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
-
     next = Grid3DYOffset::getIndexRight(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
-
     next = Grid3DYOffset::getIndexRight(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_OLIVINE, DF_CHROMITE);
+
+    natural_terrain.setIndexDrawTypeN(first, 4, DF_DRAW_AIR, DF_DRAW_FLOOR, &Grid3DYOffset::getIndexRight);
+    natural_terrain.setIndexMaterialN(first, 4, DF_DEMATOID, DF_GARNIERITE, &Grid3DYOffset::getIndexRight);
 
     next = Grid3DYOffset::getIndexUp(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
+
+    natural_terrain.setIndexDrawTypeN(next, 2, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexUp);
+    natural_terrain.setIndexMaterialN(next, 2, DF_OLIVINE, DF_CHROMITE, &Grid3DYOffset::getIndexUp);
 
     next = Grid3DYOffset::getIndexUp(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
-
     next = Grid3DYOffset::getIndexUp(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_AIR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
 
     next = Grid3DYOffset::getIndexBack(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
 
-    next = Grid3DYOffset::getIndexBack(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
+    natural_terrain.setIndexDrawTypeN(next, 2, DF_DRAW_AIR, DF_DRAW_FLOOR, &Grid3DYOffset::getIndexBack);
+    natural_terrain.setIndexMaterialN(next, 2, DF_TANZANITE, DF_TETRAHEDRITE, &Grid3DYOffset::getIndexBack);
 
-    next = Grid3DYOffset::getIndexBack(next, width, height, length);
-    natural_terrain.setIndexDrawType(next, DF_DRAW_AIR, DF_DRAW_FLOOR);
-    natural_terrain.setIndexMaterialAround(next, DF_TANZANITE, DF_TETRAHEDRITE);
+    natural_terrain.setIndexDrawTypeAroundToEdge(16 * 4 + 8, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexUp);
+    natural_terrain.setIndexMaterialAroundToEdge(16 * 4 + 8, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexUp);
 
     const unsigned int second = 6 * 16;
     next = second;
