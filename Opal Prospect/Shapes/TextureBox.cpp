@@ -129,8 +129,9 @@ void TextureBox::setBottomTextureNumber(unsigned int texture)
 //private
 void TextureBox::fillUVPoints(Point3D& bottom_left, Point3D& bottom_right, Point3D& top_left, Point3D& top_right) const
 {
-    float min = 0.0f;
-    float max = 1.0f;
+    //TODO: Make it be based on width, length, and height of the face. 0 will stay 0 but the 1s can be longer to allow repeating and combining faces
+    const float min = 0.0f;
+    const float max = 1.0f;
 
     bottom_left.x = min;
     bottom_left.y = min;

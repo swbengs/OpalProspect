@@ -1016,7 +1016,7 @@ DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
     {
         return DF_NATURAL_GEM;
     }
-    else if (e == DF_WATER_MATERIAL && e == DF_MAGMA_MATERIAL)
+    else if (e == DF_WATER_MATERIAL || e == DF_MAGMA_MATERIAL)
     {
         return DF_NATURAL_LIQUID;
     }

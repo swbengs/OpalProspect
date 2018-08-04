@@ -1033,8 +1033,6 @@ void DrawEngine::terrain_48x48x48_test(NaturalTerrain & natural_terrain)
 
     natural_terrain.setIndexDrawTypeAroundN(hole_start, distance, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexBack);
     natural_terrain.setIndexMaterialAroundN(hole_start, distance, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexBack);
-
-
 }
 
 void DrawEngine::terrain_48x300x48_test(NaturalTerrain & natural_terrain)
