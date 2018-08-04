@@ -784,8 +784,8 @@ void DrawEngine::setupOpenGLUniforms()
 
     glm::vec4 light_direction;
     light_direction.x = -100.0f;
-    light_direction.y = 0.0f;
-    light_direction.z = 80.0f;
+    light_direction.y = 90.0f;
+    light_direction.z = 10.0f;
     light_direction.w = 0.0f;
     light_direction = glm::normalize(light_direction);
     glUniform4f(uniform_sun_light_direction_id, light_direction.x, light_direction.y, light_direction.z, light_direction.w);
@@ -1033,6 +1033,63 @@ void DrawEngine::terrain_48x48x48_test(NaturalTerrain & natural_terrain)
 
     natural_terrain.setIndexDrawTypeAroundN(hole_start, distance, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexBack);
     natural_terrain.setIndexMaterialAroundN(hole_start, distance, DF_TETRAHEDRITE, DF_GABBRO, &Grid3DYOffset::getIndexBack);
+
+    const unsigned int top_crater_start = width * length * (height - 1) + width * (length - 4) + 3;
+
+    unsigned int current;
+    natural_terrain.setIndexDrawTypeAroundN(top_crater_start, distance, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexBack);
+
+    current = top_crater_start;
+    for (size_t i = 0; i < distance; i++)
+    {
+        natural_terrain.setIndexDrawTypeAroundN(current, distance, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexRight);
+        current = Grid3DYOffset::getIndexBack(current, width, height, length);
+    }
+
+    const unsigned int crater_distance = 8;
+    unsigned int current_crater_distance = 8;
+    current = Grid3DYOffset::getIndexBack(top_crater_start, width, height, length);
+    for (size_t a = 0; a < crater_distance; a++)
+    {
+        unsigned crater_current = current;
+        for (size_t i = 0; i < current_crater_distance; i++)
+        {
+            natural_terrain.setIndexDrawTypeAroundN(crater_current, current_crater_distance, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexRight);
+            crater_current = Grid3DYOffset::getIndexDown(crater_current, width, height, length);
+        }
+        current_crater_distance--;
+        current = Grid3DYOffset::getIndexBack(current, width, height, length);
+    }
+
+    unsigned int crater2 = current;
+    current = Grid3DYOffset::getIndexBack(current, width, height, length);
+    current = Grid3DYOffset::getIndexBack(current, width, height, length);
+    current = Grid3DYOffset::getIndexBack(current, width, height, length);
+    current = Grid3DYOffset::getIndexBack(current, width, height, length);
+    current = Grid3DYOffset::getIndexBack(current, width, height, length);
+    current = Grid3DYOffset::getIndexBack(current, width, height, length);
+    current = Grid3DYOffset::getIndexBack(current, width, height, length);
+    current = Grid3DYOffset::getIndexBack(current, width, height, length);
+
+    for (size_t i = 0; i < distance; i++)
+    {
+        natural_terrain.setIndexDrawTypeAroundN(crater2, distance, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexRight);
+        crater2 = Grid3DYOffset::getIndexFront(crater2, width, height, length);
+    }
+
+    current_crater_distance = 8;
+
+    for (size_t a = 0; a < crater_distance; a++)
+    {
+        unsigned crater_current = current;
+        for (size_t i = 0; i < current_crater_distance; i++)
+        {
+            natural_terrain.setIndexDrawTypeAroundN(crater_current, current_crater_distance, DF_DRAW_AIR, DF_DRAW_AIR, &Grid3DYOffset::getIndexRight);
+            crater_current = Grid3DYOffset::getIndexDown(crater_current, width, height, length);
+        }
+        current_crater_distance--;
+        current = Grid3DYOffset::getIndexFront(current, width, height, length);
+    }
 }
 
 void DrawEngine::terrain_48x300x48_test(NaturalTerrain & natural_terrain)
