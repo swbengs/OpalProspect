@@ -151,4 +151,5 @@ private:
     void terrain_3x3x3_test(NaturalTerrain& natural_terrain);
     void terrain_16x16x16_test(NaturalTerrain& natural_terrain);
     void terrain_48x48x48_test(NaturalTerrain& natural_terrain);
+    void terrain_48x300x48_test(NaturalTerrain& natural_terrain);
 };
