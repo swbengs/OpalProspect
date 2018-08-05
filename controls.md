@@ -8,6 +8,8 @@ S | Move backwards
 D | Move right
 Q | Roll left
 E | Roll right
+Space | Move up
+C | Move down
 
 
 
