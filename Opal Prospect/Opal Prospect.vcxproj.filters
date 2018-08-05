@@ -555,5 +555,8 @@
     <None Include="..\controls.md">
       <Filter>Text Files</Filter>
     </None>
+    <None Include="..\optimizations.md">
+      <Filter>Text Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

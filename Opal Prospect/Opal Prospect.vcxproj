@@ -306,6 +306,7 @@
   <ItemGroup>
     <None Include="..\controls.md" />
     <None Include="..\milestones.md" />
+    <None Include="..\optimizations.md" />
     <None Include="..\README.md" />
     <None Include="2dcolorbasic.frag" />
     <None Include="2dcolorbasic.vert" />
