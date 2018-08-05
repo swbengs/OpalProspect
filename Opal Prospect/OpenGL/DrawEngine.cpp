@@ -882,8 +882,8 @@ void DrawEngine::loadTerrain()
 
     //terrain_3x3x3_test(terrain_test);
     //terrain_16x16x16_test(terrain_test);
-    terrain_48x48x48_test(terrain_test);
-    //terrain_48x300x48_test(terrain_test);
+    //terrain_48x48x48_test(terrain_test);
+    terrain_48x300x48_test(terrain_test);
 
     //terrain_test and not after here
 

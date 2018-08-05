@@ -20,3 +20,6 @@ So 10 in a row is 1/10th the vertex data required. 1 Big face with repeating tex
 ### Array Textures(Already in use)
 3.0 added new and improved texture atlas capabilties. The benefits are too large to write here. Can have up to a 256 sized array in OpenGL 3.3.
 
+### Table of needed models
+Greatly reduce wasted memory if only the models that are needed are generated. Currently all possible floors and blocks are made ahead of time.
+
