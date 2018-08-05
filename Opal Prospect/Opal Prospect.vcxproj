@@ -306,6 +306,7 @@
   <ItemGroup>
     <None Include="..\controls.md" />
     <None Include="..\milestones.md" />
+    <None Include="..\optimizations.md" />
     <None Include="..\README.md" />
     <None Include="2dcolorbasic.frag" />
     <None Include="2dcolorbasic.vert" />
@@ -321,12 +322,11 @@
     <Text Include="..\code format.md" />
     <Text Include="..\design.md" />
     <Text Include="..\run.md" />
-    <Text Include="Textures\files.txt" />
-    <Text Include="Textures\gems.txt" />
-    <Text Include="Textures\liquids.txt" />
-    <Text Include="Textures\ores.txt" />
-    <Text Include="Textures\soils.txt" />
-    <Text Include="Textures\stones.txt" />
+    <Text Include="Textures\dev stuff\gems.txt" />
+    <Text Include="Textures\dev stuff\liquids.txt" />
+    <Text Include="Textures\dev stuff\ores.txt" />
+    <Text Include="Textures\dev stuff\soils.txt" />
+    <Text Include="Textures\dev stuff\stones.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

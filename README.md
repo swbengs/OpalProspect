@@ -5,6 +5,9 @@ This project is to allow you to save fortress info from a LUA script, and then k
 embark, anytime during your play session, and whenever you feel the fortress is done. You will be able to see how the fort grew.
 Currently I am still working on the draw engine, and no support is yet available to grab information from DFHack.
 
+https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads
+Go here to get the 2015 runtime install.
+
 ### Info about how to write code is currently in code format.md.
 
 ### Info about the current design is in design.md.

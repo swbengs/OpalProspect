@@ -490,24 +490,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Textures\files.txt">
-      <Filter>Text Files\Texture texts</Filter>
-    </Text>
-    <Text Include="Textures\gems.txt">
-      <Filter>Text Files\Texture texts</Filter>
-    </Text>
-    <Text Include="Textures\liquids.txt">
-      <Filter>Text Files\Texture texts</Filter>
-    </Text>
-    <Text Include="Textures\ores.txt">
-      <Filter>Text Files\Texture texts</Filter>
-    </Text>
-    <Text Include="Textures\soils.txt">
-      <Filter>Text Files\Texture texts</Filter>
-    </Text>
-    <Text Include="Textures\stones.txt">
-      <Filter>Text Files\Texture texts</Filter>
-    </Text>
     <Text Include="..\build.md">
       <Filter>Text Files</Filter>
     </Text>
@@ -519,6 +501,21 @@
     </Text>
     <Text Include="..\run.md">
       <Filter>Text Files</Filter>
+    </Text>
+    <Text Include="Textures\dev stuff\gems.txt">
+      <Filter>Text Files\Texture texts</Filter>
+    </Text>
+    <Text Include="Textures\dev stuff\liquids.txt">
+      <Filter>Text Files\Texture texts</Filter>
+    </Text>
+    <Text Include="Textures\dev stuff\ores.txt">
+      <Filter>Text Files\Texture texts</Filter>
+    </Text>
+    <Text Include="Textures\dev stuff\soils.txt">
+      <Filter>Text Files\Texture texts</Filter>
+    </Text>
+    <Text Include="Textures\dev stuff\stones.txt">
+      <Filter>Text Files\Texture texts</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
@@ -553,6 +550,9 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="..\controls.md">
+      <Filter>Text Files</Filter>
+    </None>
+    <None Include="..\optimizations.md">
       <Filter>Text Files</Filter>
     </None>
   </ItemGroup>
