@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicLog.cpp" />
     <ClCompile Include="Cameras\Camera.cpp" />
     <ClCompile Include="Cameras\FlightCamera.cpp" />
     <ClCompile Include="DwarfFortress\NaturalTerrain.cpp" />
@@ -227,6 +228,7 @@
     <ClCompile Include="Shapes\VertexTriangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicLog.hpp" />
     <ClInclude Include="Cameras\Camera.hpp" />
     <ClInclude Include="Cameras\FlightCamera.hpp" />
     <ClInclude Include="Constants\axis.hpp" />

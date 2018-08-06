@@ -261,6 +261,9 @@
     <ClCompile Include="Shapes\Point3DUInt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BasicLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\DrawEngine.hpp">
@@ -487,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="Shapes\Point3DUInt.hpp">
       <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicLog.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
