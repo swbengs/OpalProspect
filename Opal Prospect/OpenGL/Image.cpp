@@ -51,7 +51,6 @@ void Image::loadImageFallback(std::string filename, std::string fallback_filenam
         if (setupImage(fallback_filename, false) == false)
         {
             std::cout << "Failed to load fallback file " << fallback_filename << " . Closing program\n";
-            exit(9999);
         }
     }
 }

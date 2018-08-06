@@ -4,6 +4,7 @@
 #include <string>
 #include <array>
 #include <chrono>
+#include <fstream>
 
 #include "MainLoop.hpp"
 
@@ -592,6 +593,24 @@ void natural_terrain_build_test()
     std::cout << "natural terrain builder test done\n";
 }
 
+void log_test()
+{
+    auto old_error = std::cerr.rdbuf();
+    auto old_log = std::clog.rdbuf();
+
+    std::ofstream error("error.txt");
+    std::ofstream log("log.txt");
+
+    std::cerr.rdbuf(error.rdbuf());
+    std::clog.rdbuf(log.rdbuf());
+
+    std::cerr << "test 10\n";
+    std::clog << "test 20\n";
+
+    std::cerr.rdbuf(old_error);
+    std::clog.rdbuf(old_log);
+}
+
 void tests()
 {
     //texture_array_test();
@@ -610,14 +629,15 @@ void tests()
     //offset_grid_5x5x5_test();
     //offset_grid_extreme_test();
     //natural_terrain_test();
-    natural_terrain_build_test();
+    //natural_terrain_build_test();
+    log_test();
 }
 
 int main(void)
 {
     MainLoop loop;
-    loop.startLoop();
-    //tests();
+    //loop.startLoop();
+    tests();
 
     exit(EXIT_SUCCESS);
 }
