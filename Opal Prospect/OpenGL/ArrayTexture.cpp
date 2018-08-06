@@ -52,6 +52,8 @@ void ArrayTexture::unbind() const
 
 void ArrayTexture::loadImages(std::vector<std::string> file_paths)
 {
+    int good_width = 0;
+    int good_height = 0;
     std::stringstream stream;
     stream << "Textures" << FilePath::getOSSeperator() << "bad.png";
     std::string fallback = stream.str();
@@ -63,6 +65,38 @@ void ArrayTexture::loadImages(std::vector<std::string> file_paths)
         temp.loadImageFallback(file_paths[i], fallback);
         images.push_back(temp);
     }
+
+    //std::cout << "second loop\n";
+
+    for (size_t i = 0; i < images.size(); i++)
+    {
+        if (images[i].getWidth() > 0)
+        {
+            good_width = images[i].getWidth();
+            good_height = images[i].getHeight();
+            break;
+        }
+    }
+
+    //std::cout << "good_width: " << good_width << "\n";
+    //std::cout << "good_height: " << good_height << "\n";
+    //do sanity check that all array textures are the same size. Any that deviate from the first non 0 one must match that
+    Image junk;
+    junk.setSolidColor(255, 0, 255, good_width, good_height);
+
+    //std::cout << "third loop\n";
+    for (size_t i = 0; i < images.size(); i++)
+    {
+        if (images[i].getWidth() != good_width || images[i].getHeight() != good_height)
+        {
+            //std::cout << "third loop if start\n";
+            junk.setFilePath(images[i].getFilename());
+            images[i] = junk;
+            //std::cout << "third loop if done\n";
+        }
+        //std::cout << "third loop running\n";
+    }
+    //std::cout << "third loop end\n";
 }
 
 void ArrayTexture::createTexture()

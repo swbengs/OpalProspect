@@ -51,6 +51,7 @@ public:
 
     //sets
     void setFilePath(std::string path); //sets the full filepath and the filename is extracted from this
+    void setSolidColor(unsigned char red, unsigned char green, unsigned char blue, int width, int height); //used in case the image size is off. Sets width and height and fills with junk data
 
 private:
     int image_width;

@@ -90,6 +90,34 @@ void Image::setFilePath(std::string path)
     file_path.setFullPath(path);
 }
 
+void Image::setSolidColor(unsigned char red, unsigned char green, unsigned char blue, int width, int height)
+{
+    image_width = width;
+    image_height = height;
+    image_data = std::vector<unsigned char>(); //create new blank slate
+    const int color_components = 4;
+    const unsigned char alpha = 255;
+
+    size_t total_size = getWidth() * getHeight() * color_components;
+    const size_t total_width = static_cast<size_t>(getWidth() * color_components);
+    std::cout << "total_size: " << total_size << "\n";
+
+    image_data.reserve(total_size);
+
+    for (int i = 0; i < height; i++)
+    {
+        for (size_t m = 0; m < total_width; m += color_components)
+        {
+            image_data.push_back(red);
+            image_data.push_back(green);
+            image_data.push_back(blue);
+            image_data.push_back(alpha);
+        }
+    }
+
+    assert(image_data.size() == total_size);
+}
+
 //private
 /*
 This method flips image since it starts at the top left, while OpenGL starts from the bottom left. This makes it look correct when rendered
