@@ -4,6 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <assert.h>
 
 //other includes
 #include "DrawEngineStructs.hpp"
@@ -53,5 +54,7 @@ private:
     std::vector<ModelIndex> models;
     std::vector<model_pod> pods;
     std::unordered_map<std::string, unsigned int> references;
+
+    bool inBounds(unsigned int reference) const;
 };
 
