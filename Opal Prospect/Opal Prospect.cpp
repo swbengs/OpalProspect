@@ -7,6 +7,7 @@
 #include <fstream>
 
 #include "MainLoop.hpp"
+#include "BasicLogger.hpp"
 
 //test includes
 #include "OpenGL\ArrayTextureAtlas.hpp"

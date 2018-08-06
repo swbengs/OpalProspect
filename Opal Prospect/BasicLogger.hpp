@@ -1,13 +1,10 @@
 #pragma once
 
-#include <glew.h>
+//std lib includes
+#include <string>
 
-#define GLFW_DLL
-#include <glfw3.h>
-
-#include "OpenGL\DrawEngine.hpp"
-#include "Cameras\FlightCamera.hpp"
-#include "BasicLogger.hpp"
+//other includes
+#include "BasicLog.hpp"
 
 /*
 MIT License
@@ -34,17 +31,16 @@ SOFTWARE.
 */
 
 /*
-Description: Class that does the main loop. Has callbacks as C functions to interface with GLFW that call C++ class methods.
+Description: This structure is still not fully decided on. Give a basic description of what this class does at a minimum. More detail is always welcome.
 */
 
-class MainLoop
+class BasicLogger
 {
 public:
-    void startLoop();
-    void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    static void writeError(std::string error);
+    static void writeLog(std::string log);
 
 private:
-    static BasicLogger log;
-    DrawEngine draw_engine;
-    FlightCamera camera;
+    static BasicLog log;
 };
+

@@ -57,7 +57,11 @@ void MainLoop::startLoop()
     glfwSetErrorCallback(error_callback);
 
     if (!glfwInit())
+    {
+        BasicLogger::writeError("Failed to start glfw\n");
         exit(EXIT_FAILURE);
+    }
+
     window = glfwCreateWindow(screen_width, screen_height, name, NULL, NULL);
 
     const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
@@ -66,6 +70,7 @@ void MainLoop::startLoop()
     if (!window)
     {
         glfwTerminate();
+        BasicLogger::writeError("Failed to create glfw window\n");
         exit(EXIT_FAILURE);
     }
     glfwMakeContextCurrent(window);
