@@ -7,7 +7,6 @@
 
 #include "OpenGL\DrawEngine.hpp"
 #include "Cameras\FlightCamera.hpp"
-#include "BasicLogger.hpp"
 
 /*
 MIT License
@@ -44,7 +43,6 @@ public:
     void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 private:
-    static BasicLogger log;
     DrawEngine draw_engine;
     FlightCamera camera;
 };

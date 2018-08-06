@@ -30,20 +30,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-BasicLog::BasicLog(std::string error_log_filename, std::string log_filename)
+BasicLog::BasicLog()
 {
     old_error = std::cerr.rdbuf();
     old_log = std::clog.rdbuf();
 
     error_log = std::ofstream("error.txt");
-    log = std::ofstream("log.txt");
+    my_log = std::ofstream("log.txt");
 
     std::cerr.rdbuf(error_log.rdbuf());
-    std::clog.rdbuf(log.rdbuf());
+    std::clog.rdbuf(my_log.rdbuf());
+
+    std::cout << "basic log created\n";
 }
 
 BasicLog::~BasicLog()
 {
     std::cerr.rdbuf(old_error);
     std::clog.rdbuf(old_log);
+
+    std::cout << "basic log destroyed\n";
 }
+
+const BasicLog & BasicLog::getInstance()
+{
+    static BasicLog log;
+    return log;
+}
+
+void BasicLog::writeError(std::string error) const
+{
+    std::cerr << error;
+    std::cout << error;
+}
+
+void BasicLog::writeLog(std::string log) const
+{
+    std::clog << log;
+    std::cout << log;
+}
+

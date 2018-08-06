@@ -110,7 +110,7 @@ void Program::checkProgramLog() const
 
     std::string log(c_log);
 
-    std::cout << "log begin \n \n";
+    std::cout << "opengl program log begin \n \n";
     std::cout << log << "\n";
-    std::cout << "log end \n";
+    std::cout << "opengl program log end \n";
 }

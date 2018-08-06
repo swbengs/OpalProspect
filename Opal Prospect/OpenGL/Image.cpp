@@ -9,7 +9,7 @@
 
 //other includes
 #include "png.h"
-#include "..\BasicLogger.hpp"
+#include "..\BasicLog.hpp"
 
 /*
 MIT License
@@ -55,7 +55,7 @@ void Image::loadImageFallback(std::string filename, std::string fallback_filenam
             //std::cout << "Failed to load fallback file " << fallback_filename << "\n";
             std::stringstream stream;
             stream << "Failed to load fallback file " << fallback_filename << "\n";
-            BasicLogger::writeError(stream.str());
+            BasicLog::getInstance().writeError(stream.str());
         }
     }
 }
@@ -149,7 +149,7 @@ bool Image::setupImage(std::string filename, bool has_fallback)
             //std::cout << "image file " << filename << " failed to load.\n";
             std::stringstream stream;
             stream << "image file " << filename << " failed to load.\n";
-            BasicLogger::writeError(stream.str());
+            BasicLog::getInstance().writeError(stream.str());
             return false;
         }
     }
@@ -164,7 +164,7 @@ bool Image::setupImage(std::string filename, bool has_fallback)
             //std::cout << "image file " << filename << " doesn't exist. No fallback image given.\n";
             std::stringstream stream;
             stream << "image file " << filename << " doesn't exist. No fallback image given.\n";
-            BasicLogger::writeError(stream.str());
+            BasicLog::getInstance().writeError(stream.str());
         }
 
         return false;

@@ -37,12 +37,19 @@ Description: This class can log messages and errors. Meant to be a singleton and
 class BasicLog
 {
 public:
-    BasicLog(std::string error_log_filename, std::string log_filename);
+    BasicLog();
     ~BasicLog();
+
+    BasicLog(BasicLog const&) = delete;
+    void operator=(BasicLog const&) = delete;
+
+    static const BasicLog& getInstance();
+    void writeError(std::string error) const;
+    void writeLog(std::string log) const;
 
 private:
     std::ofstream error_log;
-    std::ofstream log;
+    std::ofstream my_log;
 
     std::streambuf* old_error;
     std::streambuf* old_log;

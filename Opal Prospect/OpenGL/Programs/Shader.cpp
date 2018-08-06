@@ -8,7 +8,7 @@
 //other includes
 #include "Shader.hpp"
 #include "glew.h"
-#include "..\..\BasicLogger.hpp"
+#include "..\..\BasicLog.hpp"
 
 /*
 MIT License
@@ -122,7 +122,7 @@ void Shader::loadShaderFromFileCStyle(std::string filename)
         //std::cout << "error reading file " << filename << "\n";
         std::stringstream stream;
         stream << "error reading file " << filename << "\n";
-        BasicLogger::writeError(stream.str());
+        BasicLog::getInstance().writeError(stream.str());
     }
 
     file.close();
@@ -157,7 +157,7 @@ void Shader::loadShaderFromFileCPPStyle(std::string filename)
         //std::cout << "error reading file " << filename << "\n";
         std::stringstream stream;
         stream << "error reading file " << filename << "\n";
-        BasicLogger::writeError(stream.str());
+        BasicLog::getInstance().writeError(stream.str());
     }
 
     file.close();
@@ -173,7 +173,7 @@ void Shader::checkShaderLog() const
 
     std::string log(c_log);
 
-    std::cout << "log begin \n \n";
+    std::cout << "opengl shader log begin \n \n";
     std::cout << log << "\n";
-    std::cout << "log end \n";
+    std::cout << "opengl shader log end \n";
 }

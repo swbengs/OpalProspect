@@ -5,6 +5,7 @@
 
 #include "OpenGL\OGLHelpers.hpp"
 #include "gtc\matrix_transform.hpp"
+#include "BasicLog.hpp"
 
 /*
 MIT License
@@ -50,7 +51,7 @@ void MainLoop::startLoop()
 {
     const int screen_width = 640;
     const int screen_height = 480;
-    const char* name = "Opal Prospect v0.1";
+    const char* name = "Opal Prospect v0.1.1";
 
     GLFWwindow* window;
 
@@ -58,7 +59,7 @@ void MainLoop::startLoop()
 
     if (!glfwInit())
     {
-        BasicLogger::writeError("Failed to start glfw\n");
+        BasicLog::getInstance().writeError("Failed to start glfw\n");
         exit(EXIT_FAILURE);
     }
 
@@ -70,7 +71,7 @@ void MainLoop::startLoop()
     if (!window)
     {
         glfwTerminate();
-        BasicLogger::writeError("Failed to create glfw window\n");
+        BasicLog::getInstance().writeError("Failed to create glfw window\n");
         exit(EXIT_FAILURE);
     }
     glfwMakeContextCurrent(window);
