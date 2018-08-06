@@ -73,6 +73,7 @@ void Program::link() const
     else
     {
         std::cout << "Linking of " << getName() << " was a success! \n \n";
+        checkProgramLog();
     }
 }
 

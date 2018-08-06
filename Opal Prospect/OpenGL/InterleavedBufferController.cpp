@@ -63,7 +63,7 @@ unsigned int InterleavedBufferController::addModel(ModelIndex & model)
         }
 
         bufferModel(buffer, model);
-        std::cout << "putting in VAO " << (buffer + 1) << "\n";
+        //std::cout << "putting in VAO " << (buffer + 1) << "\n";
         OGLHelpers::getOpenGLError("post buffering", true);
 
         unsigned int reference = static_cast<unsigned int>(buffer + 1);

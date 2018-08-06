@@ -1,9 +1,14 @@
+
+//std includes
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <vector>
 
+//other includes
 #include "Shader.hpp"
 #include "glew.h"
+#include "..\..\BasicLogger.hpp"
 
 /*
 MIT License
@@ -50,6 +55,7 @@ void Shader::compile() const
     else
     {
         std::cout << "Compiling of " << getName() << " was a success! \n \n";
+        checkShaderLog();
     }
 }
 
@@ -113,7 +119,10 @@ void Shader::loadShaderFromFileCStyle(std::string filename)
     }
     else
     {
-        std::cout << "error reading file " << filename << "\n";
+        //std::cout << "error reading file " << filename << "\n";
+        std::stringstream stream;
+        stream << "error reading file " << filename << "\n";
+        BasicLogger::writeError(stream.str());
     }
 
     file.close();
@@ -145,7 +154,10 @@ void Shader::loadShaderFromFileCPPStyle(std::string filename)
     }
     else
     {
-        std::cout << "error reading file " << filename << "\n";
+        //std::cout << "error reading file " << filename << "\n";
+        std::stringstream stream;
+        stream << "error reading file " << filename << "\n";
+        BasicLogger::writeError(stream.str());
     }
 
     file.close();

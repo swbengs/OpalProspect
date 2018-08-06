@@ -4,10 +4,12 @@
 //std lib includes
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <assert.h>
 
 //other includes
 #include "png.h"
+#include "..\BasicLogger.hpp"
 
 /*
 MIT License
@@ -50,7 +52,10 @@ void Image::loadImageFallback(std::string filename, std::string fallback_filenam
     {
         if (setupImage(fallback_filename, false) == false)
         {
-            std::cout << "Failed to load fallback file " << fallback_filename << " . Closing program\n";
+            //std::cout << "Failed to load fallback file " << fallback_filename << "\n";
+            std::stringstream stream;
+            stream << "Failed to load fallback file " << fallback_filename << "\n";
+            BasicLogger::writeError(stream.str());
         }
     }
 }
@@ -141,7 +146,10 @@ bool Image::setupImage(std::string filename, bool has_fallback)
             */
 
             //image could not load
-            std::cout << "image file " << filename << " failed to load.\n";
+            //std::cout << "image file " << filename << " failed to load.\n";
+            std::stringstream stream;
+            stream << "image file " << filename << " failed to load.\n";
+            BasicLogger::writeError(stream.str());
             return false;
         }
     }
@@ -149,12 +157,14 @@ bool Image::setupImage(std::string filename, bool has_fallback)
     {
         if (has_fallback)
         {
-            std::cout << "image file " << filename << " doesn't exist. Switching to fallback.\n";
+            std::cout << "image file " << filename << " doesn't exist. Switching to fallback.\n"; //not am error that needs to be reported
         }
         else
         {
-            std::cout << "image file " << filename << " doesn't exist. No fallback image given.\n";
-            
+            //std::cout << "image file " << filename << " doesn't exist. No fallback image given.\n";
+            std::stringstream stream;
+            stream << "image file " << filename << " doesn't exist. No fallback image given.\n";
+            BasicLogger::writeError(stream.str());
         }
 
         return false;

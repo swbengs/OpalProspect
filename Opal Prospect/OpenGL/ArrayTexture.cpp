@@ -88,11 +88,11 @@ void ArrayTexture::createTexture()
     glGenTextures(id_count, &id); //create an id and bind it
     bind();
 
-    OGLHelpers::getOpenGLError("pre teximage3d");
+    OGLHelpers::getOpenGLError("pre teximage3d", true);
     //void glTexImage3D( GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid * data);
     glTexImage3D(GL_TEXTURE_2D_ARRAY, level, GL_RGBA8, images[0].getWidth(), images[0].getHeight(), static_cast<int>(getImageCount()), border, GL_RGBA, GL_UNSIGNED_BYTE, data); //fill in the data on the graphics card
 
-    OGLHelpers::getOpenGLError("post teximage3d");
+    OGLHelpers::getOpenGLError("post teximage3d", true);
 
     //GL_NEAREST, GL_LINEAR
     glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -101,10 +101,9 @@ void ArrayTexture::createTexture()
     // GL_CLAMP_TO_EDGE, GL_CLAMP_TO_BORDER, GL_MIRRORED_REPEAT, GL_REPEAT, or GL_MIRROR_CLAMP_TO_EDGE
     //glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     //glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_S);
-    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_T);
-
-    OGLHelpers::getOpenGLError("post texparam");
+    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    OGLHelpers::getOpenGLError("post texparam", true);
 
     complete_texture.reserve(images[0].getSize() * getImageCount()); //holds the complete texture that is uploaded in one go. Only reserve them since we insert later
 
@@ -116,7 +115,7 @@ void ArrayTexture::createTexture()
     }
 
     uploadCompleteTexture(static_cast<int>(getImageCount()), complete_texture.data());
-    OGLHelpers::getOpenGLError("post array texture uploads");
+    OGLHelpers::getOpenGLError("post array texture uploads", true);
 
     unbind();
 }
