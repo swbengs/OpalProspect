@@ -2,6 +2,7 @@
 
 //std lib includes
 #include <string>
+#include <unordered_map>
 
 //other includes
 
@@ -297,4 +298,5 @@ enum DF_Natural_Tile_Material
 std::string DFNaturalTileString(DF_Natural_Tile_Material e);
 std::string DFNaturalTileFilename(DF_Natural_Tile_Material e);
 DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e);
+std::unordered_map <std::string, DF_Natural_Tile_Material> getReverseOfDFNaturalStringTable(); //get a table that has the strings point to which enum they are from. Does the opposite of df natural tile string(enum) does. String to enum
 

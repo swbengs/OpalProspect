@@ -1,0 +1,9 @@
+v0.2 w 5 h 5 l 5
+natural_table
+a air
+b white_sand
+c silty_clay_loam
+d gabbro
+e tetrahedrite
+f 
+

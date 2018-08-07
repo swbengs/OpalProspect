@@ -884,15 +884,15 @@ void DrawEngine::loadTerrain()
     terrain_16x16x16_test(terrain_test);
     //terrain_48x48x48_test(terrain_test);
     //terrain_48x300x48_test(terrain_test);
-
     //terrain_test and not after here
 
     terrain.loadFromMemory(terrain_test, models, terrain_model);
+    //terrain.loadFromFile("test.txt");
     addInterleavedModel(terrain_model);
 
-    std::cout << "terrain face count: " << terrain_model.getFaceCount() << "\n";
-    std::cout << "face total size: " << terrain_model.getTotalSize() / terrain_model.getFaceCount() << "\n";
-    std::cout << "terrain model total size: " << terrain_model.getTotalSize() << "\n";
+    //std::cout << "terrain face count: " << terrain_model.getFaceCount() << "\n";
+    //std::cout << "face total size: " << terrain_model.getTotalSize() / terrain_model.getFaceCount() << "\n";
+    //std::cout << "terrain model total size: " << terrain_model.getTotalSize() << "\n";
 
     //model_pod result = models.getModelPOD(models.getModelReference("terrain"));
     std::cout << "after terrain load\n";

@@ -40,6 +40,12 @@ public:
     bool loadWorld(std::string filename);
 
 private:
+    struct run_length_pair
+    {
+        unsigned char letter;
+        unsigned int number;
+    };
+
     std::vector<std::string> run_length_strings;
 
     unsigned int world_width;

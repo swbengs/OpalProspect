@@ -1034,3 +1034,16 @@ DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
     }
 }
 
+std::unordered_map<std::string, DF_Natural_Tile_Material> getReverseOfDFNaturalStringTable()
+{
+    std::unordered_map<std::string, DF_Natural_Tile_Material> temp;
+
+    for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
+    {
+        DF_Natural_Tile_Material m = static_cast<DF_Natural_Tile_Material>(i); //so we only have to do one cast
+        temp[DFNaturalTileString(m)] = m; //get string and put into table
+    }
+
+    return temp;
+}
+

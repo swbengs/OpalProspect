@@ -5,9 +5,11 @@
 #include <sstream>
 #include <iostream>
 #include <assert.h>
+#include <unordered_map>
 
 //other includes
 #include "..\BasicLog.hpp"
+#include "natural_tiles.hpp"
 
 /*
 MIT License
@@ -35,5 +37,9 @@ SOFTWARE.
 
 bool NaturalTerrainFileLoader::loadWorld(std::string filename)
 {
+    std::unordered_map<std::string, DF_Natural_Tile_Material> material_table = getReverseOfDFNaturalStringTable();
+
+    std::cout << "load world end";
+
     return false;
 }
