@@ -264,6 +264,9 @@
     <ClCompile Include="BasicLog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DwarfFortress\NaturalTerrainFileLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\DrawEngine.hpp">
@@ -492,6 +495,9 @@
       <Filter>Shapes</Filter>
     </ClInclude>
     <ClInclude Include="BasicLog.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DwarfFortress\NaturalTerrainFileLoader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
