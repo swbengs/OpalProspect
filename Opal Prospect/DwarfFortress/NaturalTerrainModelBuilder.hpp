@@ -39,7 +39,7 @@ Description: Class to convert natural terrain class into a model that can be dra
 class NaturalTerrainModelBuilder
 {
 public:
-    void loadFromFile(std::string filename);
+    void loadFromFile(std::string filename, const ModelController& model_controller, ModelIndex& terrain_model);
     void loadFromMemory(const NaturalTerrain& memory, const ModelController& model_controller, ModelIndex& terrain_model); //reads from the given natural terrain and model controller to add faces to the given model for the terrain
     void debugLoadFromMemory(const NaturalTerrain& memory); //good for testing and debugging
 

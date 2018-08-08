@@ -38,7 +38,7 @@ Description: Class to load in a file that contains the world size, a table of na
 class NaturalTerrainFileLoader
 {
 public:
-    bool loadWorld(std::string filename, const NaturalTerrain& terrain);
+    bool loadWorld(std::string filename, NaturalTerrain& terrain);
 
 private:
     struct run_length_pair
@@ -47,10 +47,12 @@ private:
         unsigned int number;
     };
 
-    std::vector<std::string> run_length_material_strings;
-    std::vector<std::string> run_length_type_strings;
+    std::vector<std::string> run_length_natural_material;
+    std::vector<std::string> run_length_natural_type;
 
-    bool readFile(std::string filename, const NaturalTerrain& terrain); //read the given file and fill in the two run length vectors
-    bool parseRunLengthStrings(const NaturalTerrain& terrain);
+
+
+    bool readFile(std::string filename, NaturalTerrain& terrain); //read the given file and fill in the two run length vectors
+    bool parseRunLengthStrings(NaturalTerrain& terrain);
 };
 

@@ -35,7 +35,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-bool NaturalTerrainFileLoader::loadWorld(std::string filename, const NaturalTerrain& terrain)
+bool NaturalTerrainFileLoader::loadWorld(std::string filename, NaturalTerrain& terrain)
 {
     if (readFile(filename, terrain))
     {
@@ -55,12 +55,34 @@ bool NaturalTerrainFileLoader::loadWorld(std::string filename, const NaturalTerr
 }
 
 //private
-bool NaturalTerrainFileLoader::readFile(std::string filename, const NaturalTerrain& terrain)
+bool NaturalTerrainFileLoader::readFile(std::string filename, NaturalTerrain& terrain)
 {
     std::ifstream file;
     file.open(filename);
     if (file.is_open())
     {
+        std::string version;
+        unsigned int world_width, world_height, world_length;
+        file >> version;
+        file >> world_width;
+        file >> world_height;
+        file >> world_length;
+
+        run_length_natural_material.reserve(world_height);
+        run_length_natural_type.reserve(world_height);
+
+        for (size_t i = 0; i < world_height; i++)
+        {
+            std::string material, type;
+
+            file >> material;
+            file >> type;
+
+            run_length_natural_material.push_back(material);
+            run_length_natural_type.push_back(type);
+        }
+
+        terrain.setGridDimensions(world_width, world_height, world_length);
 
         file.close();
         return true;
@@ -74,10 +96,9 @@ bool NaturalTerrainFileLoader::readFile(std::string filename, const NaturalTerra
     }
 }
 
-bool NaturalTerrainFileLoader::parseRunLengthStrings(const NaturalTerrain & terrain)
+bool NaturalTerrainFileLoader::parseRunLengthStrings(NaturalTerrain & terrain)
 {
     std::unordered_map<std::string, DF_Natural_Tile_Material> material_table = getReverseOfDFNaturalStringTable();
-
 
     return false;
 }
