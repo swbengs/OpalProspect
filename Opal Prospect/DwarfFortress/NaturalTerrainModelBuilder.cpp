@@ -34,7 +34,7 @@ SOFTWARE.
 void NaturalTerrainModelBuilder::loadFromFile(std::string filename)
 {
     NaturalTerrainFileLoader loader;
-    if (loader.loadWorld(filename))
+    if (loader.loadWorld(filename, terrain))
     {
 
     }

@@ -5,6 +5,7 @@
 #include <vector>
 
 //other includes
+#include "NaturalTerrain.hpp"
 
 /*
 MIT License
@@ -37,7 +38,7 @@ Description: Class to load in a file that contains the world size, a table of na
 class NaturalTerrainFileLoader
 {
 public:
-    bool loadWorld(std::string filename);
+    bool loadWorld(std::string filename, const NaturalTerrain& terrain);
 
 private:
     struct run_length_pair
@@ -46,10 +47,10 @@ private:
         unsigned int number;
     };
 
-    std::vector<std::string> run_length_strings;
+    std::vector<std::string> run_length_material_strings;
+    std::vector<std::string> run_length_type_strings;
 
-    unsigned int world_width;
-    unsigned int world_height;
-    unsigned int world_length;
+    bool readFile(std::string filename, const NaturalTerrain& terrain); //read the given file and fill in the two run length vectors
+    bool parseRunLengthStrings(const NaturalTerrain& terrain);
 };
 
