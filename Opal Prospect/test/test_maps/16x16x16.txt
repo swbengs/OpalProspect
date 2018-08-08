@@ -1,19 +1,52 @@
-v0.2 5 5 5
+v0.2 16 16 16
 
-5a5a5a5a5a
-5b5b5b5b5b
+256a
+256c
 
-5b5b5c5b1a4c
-5b5b5a5b1b4c
+256b
+256b
 
-25a
-25a
+256c
+256b
 
-5c5c5c5c5c
-5b5b5b5b5c
+256a
+256b
 
-5b5b5b5b5b
-5b5b5b5b5b
+256b
+256b
+
+256b
+256b
+
+256c
+16c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c16c
+
+256b
+256b
+
+256c
+256b
+
+256a
+256b
+
+256b
+256b
+
+256c
+256b
+
+256a
+256b
+
+256b
+256b
+
+256c
+256b
+
+256a
+256c
 
 natural_materials
 a tetrahedrite

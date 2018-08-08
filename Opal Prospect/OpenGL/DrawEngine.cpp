@@ -880,8 +880,8 @@ void DrawEngine::loadTerrain()
     std::string filename;
     //filename = "Test\\test_maps\\5x5x5_simple.txt";
     //filename = "Test\\test_maps\\5x5x5.txt";
-    //filename = "Test\\test_maps\\16x16x16.txt";
-    filename = "Test\\test_maps\\16x16x16_simple.txt";
+    filename = "Test\\test_maps\\16x16x16.txt";
+    //filename = "Test\\test_maps\\16x16x16_simple.txt";
 
     //terrain_test stuff here
 

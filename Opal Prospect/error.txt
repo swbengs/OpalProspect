@@ -1,1 +1,0 @@
-Natural Type table missing from Test\test_maps\5x5x5_simple.txt or is in the wrong place.
