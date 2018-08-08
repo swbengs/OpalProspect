@@ -40,8 +40,9 @@ bool NaturalTerrainFileLoader::loadWorld(std::string filename, NaturalTerrain& t
 {
     if (readFile(filename, terrain))
     {
-        if (parseRunLengthStrings(terrain))
+        if (parseRunLengthStrings())
         {
+            createTerrain(terrain);
             return true;
         }
         else
@@ -151,7 +152,7 @@ bool NaturalTerrainFileLoader::readFile(std::string filename, NaturalTerrain& te
     }
 }
 
-bool NaturalTerrainFileLoader::parseRunLengthStrings(NaturalTerrain & terrain)
+bool NaturalTerrainFileLoader::parseRunLengthStrings()
 {
     unsigned int max_digits = 0;
     const unsigned int layer_size = world_width * world_length;
@@ -186,6 +187,189 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
     std::string single;
     single.resize(max_digits + 1); //need extra space for single character
 
+    const std::string& material_rle = run_length_natural_material[layer];
+    const std::string& type_rle = run_length_natural_type[layer];
+
+    unsigned int count = 0;
+
+    unsigned int single_index = 0;
+    for (size_t i = 0; i < material_rle.size(); i++)
+    {
+        if (isdigit(material_rle[i]))
+        {
+            single[single_index] = material_rle[i];
+            single_index++;
+            if (single_index > max_digits)
+            {
+                BasicLog::getInstance().writeError("number exceeds maximum digit allowance for a single layer\n");
+                return false;
+            }
+        }
+        else //add single character, the non number one and seperate the number and character
+        {
+            single[single_index] = material_rle[i];
+            single_index = 0;
+            char* end;
+            unsigned long number_long = strtoul(single.data(), &end, 10);
+            unsigned int number = static_cast<unsigned int>(number_long);
+            unsigned char c = *end;
+
+            if (number == 0)
+            {
+                BasicLog::getInstance().writeError("rle number is 0. Should be at least 1\n");
+                return false;
+            }
+
+            count += number;
+
+            if (count > layer_size)
+            {
+                BasicLog::getInstance().writeError("total count from rle exceeds layer size\n");
+                return false;
+            }
+
+            run_length_pair pair;
+            pair.letter = c;
+            pair.number = number;
+
+            material_pairs.push_back(pair);
+
+            //reset single
+            for (size_t n = 0; n < single.size(); n++)
+            {
+                single[n] = '\0';
+            }
+        }
+    }
+
+    count = 0;
+    single_index = 0;
+    for (size_t i = 0; i < type_rle.size(); i++)
+    {
+        if (isdigit(type_rle[i]))
+        {
+            single[single_index] = type_rle[i];
+            single_index++;
+            if (single_index > max_digits)
+            {
+                BasicLog::getInstance().writeError("number exceeds maximum digit allowance for a single layer\n");
+                return false;
+            }
+        }
+        else //add single character, the non number one and seperate the number and character
+        {
+            single[single_index] = type_rle[i];
+            single_index = 0;
+            char* end;
+            unsigned long number_long = strtoul(single.data(), &end, 10);
+            unsigned int number = static_cast<unsigned int>(number_long);
+            unsigned char c = *end;
+
+            if (number == 0)
+            {
+                BasicLog::getInstance().writeError("rle number is 0. Should be at least 1\n");
+                return false;
+            }
+
+            count += number;
+
+            if (count > layer_size)
+            {
+                BasicLog::getInstance().writeError("total count from rle exceeds layer size\n");
+                return false;
+            }
+
+            run_length_pair pair;
+            pair.letter = c;
+            pair.number = number;
+
+            type_pairs.push_back(pair);
+
+            //reset single
+            for (size_t n = 0; n < single.size(); n++)
+            {
+                single[n] = '\0';
+            }
+        }
+    }
+
     return true;
+}
+
+void NaturalTerrainFileLoader::createTerrain(NaturalTerrain& terrain)
+{
+    terrain.create();
+    const unsigned int world_size = world_width * world_height * world_length;
+
+    unsigned int current_index = 0; //current of total world size
+    for (size_t i = 0; i < material_pairs.size(); i++)
+    {
+        const unsigned char c = material_pairs[i].letter;
+        const unsigned int number = material_pairs[i].number;
+
+        for (unsigned int n = 0; n < number; n++)
+        {
+            terrain.setIndexMaterial(current_index, material_table[c]);
+            current_index++;
+        }
+    }
+
+    assert(current_index == world_size);
+
+    current_index = 0; //current of total world size
+    for (size_t i = 0; i < type_pairs.size(); i++)
+    {
+        const unsigned char c = type_pairs[i].letter;
+        const unsigned int number = type_pairs[i].number;
+
+        for (unsigned int n = 0; n < number; n++)
+        {
+            const DF_Draw_Tile_Type draw = type_table[c];
+            DF_Draw_Tile_Type block_draw;
+            DF_Draw_Tile_Type floor_draw;
+
+            switch (draw)
+            {
+            case DF_DRAW_AIR:
+                block_draw = draw;
+                floor_draw = draw;
+                break;
+            case DF_DRAW_BLOCK:
+                block_draw = draw;
+                floor_draw = DF_DRAW_FLOOR;
+                break;
+            case DF_DRAW_FLOOR:
+                block_draw = DF_DRAW_AIR;
+                floor_draw = DF_DRAW_FLOOR;
+                break;
+            case DF_DRAW_LIQUID:
+                block_draw = DF_DRAW_AIR;
+                floor_draw = DF_DRAW_AIR;
+            case DF_DRAW_RAMP_EAST:
+                block_draw = DF_DRAW_AIR;
+                floor_draw = DF_DRAW_FLOOR;
+                break;
+            case DF_DRAW_RAMP_NORTH:
+                block_draw = DF_DRAW_AIR;
+                floor_draw = DF_DRAW_FLOOR;
+                break;
+            case DF_DRAW_RAMP_SOUTH:
+                block_draw = DF_DRAW_AIR;
+                floor_draw = DF_DRAW_FLOOR;
+                break;
+            case DF_DRAW_RAMP_WEST:
+                block_draw = DF_DRAW_AIR;
+                floor_draw = DF_DRAW_FLOOR;
+                break;
+            default:
+                block_draw = draw;
+                floor_draw = draw;
+            }
+            terrain.setIndexDrawType(current_index, block_draw, floor_draw);
+            current_index++;
+        }
+    }
+
+    assert(current_index == world_size);
 }
 

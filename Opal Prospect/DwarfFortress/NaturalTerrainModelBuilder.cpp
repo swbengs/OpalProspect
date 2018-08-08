@@ -36,10 +36,9 @@ void NaturalTerrainModelBuilder::loadFromFile(std::string filename, const ModelC
     NaturalTerrainFileLoader loader;
     if (loader.loadWorld(filename, terrain))
     {
-        /*
+        std::cout << "world load success\n";
         checkingLoop();
         buildModel(model_controller, terrain_model);
-        */
     }
     else
     {
