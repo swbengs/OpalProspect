@@ -627,6 +627,54 @@ void get_digits_test()
     std::cout << "digit test end\n";
 }
 
+void parse_test()
+{
+    std::string rle = "1000y251d25q1w";
+
+    size_t max_digits = 4;
+    std::string single;
+    single.resize(max_digits + 1);
+
+    unsigned int single_index = 0;
+    for (size_t i = 0; i < rle.size(); i++)
+    {
+        if (isdigit(rle[i]))
+        {
+            single[single_index] = rle[i];
+            single_index++;
+            if (single_index > max_digits)
+            {
+                std::cout << "number: " << single_index << " exceeds digit max: " << max_digits << "\n";
+                return;
+            }
+        }
+        else //add single character, the non number one and seperate the number and character
+        {
+            single[single_index] = rle[i];
+            single_index = 0;
+            char* end;
+            unsigned long number_long = strtoul(single.data(), &end, 10);
+            unsigned int number = static_cast<unsigned int>(number_long);
+            unsigned char c = *end;
+
+            std::cout << "number: " << number << "\n";
+            std::cout << "character: " << c << "\n";
+
+            if (number == 0)
+            {
+                std::cout << "rle number is 0. Should be at least 1\n";
+                return;
+            }
+
+            //reset single
+            for (size_t n = 0; n < single.size(); n++)
+            {
+                single[n] = '\0';
+            }
+        }
+    }
+}
+
 void tests()
 {
     //texture_array_test();
@@ -647,14 +695,15 @@ void tests()
     //natural_terrain_test();
     //natural_terrain_build_test();
     //log_test();
-    get_digits_test();
+    //get_digits_test();
+    parse_test();
 }
 
 int main(void)
 {
     MainLoop loop;
-    loop.startLoop();
-    //tests();
+    //loop.startLoop();
+    tests();
 
     exit(EXIT_SUCCESS);
 }

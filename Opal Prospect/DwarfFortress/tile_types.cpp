@@ -115,6 +115,7 @@ std::string DFDrawTypeString(DF_Draw_Tile_Type e)
 std::unordered_map<std::string, DF_Draw_Tile_Type> getReverseOfDFDrawTypeStringTable()
 {
     std::unordered_map<std::string, DF_Draw_Tile_Type> temp;
+    temp.reserve(DF_DRAW_TYPE_COUNT);
 
     for (size_t i = 0; i < DF_DRAW_TYPE_COUNT; i++)
     {

@@ -183,6 +183,9 @@ bool NaturalTerrainFileLoader::parseRunLengthStrings(NaturalTerrain & terrain)
 
 bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer_size, unsigned int max_digits)
 {
+    std::string single;
+    single.resize(max_digits + 1); //need extra space for single character
+
     return true;
 }
 

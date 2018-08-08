@@ -1037,6 +1037,7 @@ DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
 std::unordered_map<std::string, DF_Natural_Tile_Material> getReverseOfDFNaturalStringTable()
 {
     std::unordered_map<std::string, DF_Natural_Tile_Material> temp;
+    temp.reserve(DF_NATURAL_TILE_COUNT);
 
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
