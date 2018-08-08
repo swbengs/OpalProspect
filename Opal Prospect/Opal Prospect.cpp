@@ -612,6 +612,21 @@ void log_test()
     std::clog.rdbuf(old_log);
 }
 
+void get_digits_test()
+{
+    unsigned int max_digits = 0;
+    const unsigned int layer_count = 10 * 90000 + 1;
+    double layer_count_double = static_cast<double>(layer_count); //need to do double math to check for how many digits we should make
+
+    do
+    {
+        max_digits++;
+        layer_count_double /= 10.0;
+    } while (layer_count_double > 1.0);
+
+    std::cout << "digit test end\n";
+}
+
 void tests()
 {
     //texture_array_test();
@@ -631,7 +646,8 @@ void tests()
     //offset_grid_extreme_test();
     //natural_terrain_test();
     //natural_terrain_build_test();
-    log_test();
+    //log_test();
+    get_digits_test();
 }
 
 int main(void)

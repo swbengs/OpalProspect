@@ -7,6 +7,7 @@
 #include <assert.h>
 #include <unordered_map>
 #include <fstream>
+#include <stdlib.h> //atoi isdigit
 
 //other includes
 #include "..\BasicLog.hpp"
@@ -62,7 +63,6 @@ bool NaturalTerrainFileLoader::readFile(std::string filename, NaturalTerrain& te
     if (file.is_open())
     {
         std::string version;
-        unsigned int world_width, world_height, world_length;
         file >> version;
         file >> world_width;
         file >> world_height;
@@ -104,7 +104,7 @@ bool NaturalTerrainFileLoader::readFile(std::string filename, NaturalTerrain& te
             {
                 unsigned char c = table_input[0];
                 file >> table_input;
-                material_table[table_input[0]] = reverse_material_table[table_input];
+                material_table[c] = reverse_material_table[table_input];
             }
             else
             {
@@ -131,7 +131,7 @@ bool NaturalTerrainFileLoader::readFile(std::string filename, NaturalTerrain& te
             {
                 unsigned char c = table_input[0];
                 file >> table_input;
-                type_table[table_input[0]] = reverse_type_table[table_input];
+                type_table[c] = reverse_type_table[table_input];
             }
             else
             {
@@ -153,6 +153,36 @@ bool NaturalTerrainFileLoader::readFile(std::string filename, NaturalTerrain& te
 
 bool NaturalTerrainFileLoader::parseRunLengthStrings(NaturalTerrain & terrain)
 {
-    return false;
+    unsigned int max_digits = 0;
+    const unsigned int layer_size = world_width * world_length;
+    double layer_size_double = static_cast<double>(layer_size); //need to do double math to check for how many digits we should make
+
+    do
+    {
+        max_digits++;
+        layer_size_double /= 10.0;
+    } while (layer_size_double > 1.0);
+
+    for (unsigned int i = 0; i < world_height; i++)
+    {
+        if (parseLayer(i, layer_size, max_digits))
+        {
+
+        }
+        else
+        {
+            std::stringstream stream;
+            stream << "issue parsing at layer number: " << i << "\n";
+            BasicLog::getInstance().writeError(stream.str());
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer_size, unsigned int max_digits)
+{
+    return true;
 }
 
