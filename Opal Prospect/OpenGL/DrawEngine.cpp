@@ -887,7 +887,7 @@ void DrawEngine::loadTerrain()
     //terrain_test and not after here
 
     //terrain.loadFromMemory(terrain_test, models, terrain_model);
-    terrain.loadFromFile("Test\\test_maps\\5x5_simple.txt", models, terrain_model);
+    terrain.loadFromFile("Test\\test_maps\\5x5x5_simple.txt", models, terrain_model);
     addInterleavedModel(terrain_model);
 
     //std::cout << "terrain face count: " << terrain_model.getFaceCount() << "\n";

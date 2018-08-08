@@ -84,6 +84,61 @@ bool NaturalTerrainFileLoader::readFile(std::string filename, NaturalTerrain& te
 
         terrain.setGridDimensions(world_width, world_height, world_length);
 
+        std::string table_input;
+        file >> table_input;
+        if (table_input.compare("natural_materials") != 0)
+        {
+            std::stringstream stream;
+            stream << "Natural Material table missing from " << filename << " or is in the wrong place.\n";
+            BasicLog::getInstance().writeError(stream.str());
+            return false;
+        }
+
+        std::unordered_map<std::string, DF_Natural_Tile_Material> reverse_material_table = getReverseOfDFNaturalStringTable(); //string to enum table
+
+        bool end_found = false;
+        do
+        {
+            file >> table_input;
+            if (table_input.compare("natural_materials_end") != 0 && !file.eof())
+            {
+                unsigned char c = table_input[0];
+                file >> table_input;
+                material_table[table_input[0]] = reverse_material_table[table_input];
+            }
+            else
+            {
+                end_found = true;
+            }
+        } while (!end_found);
+
+        file >> table_input;
+        if (table_input.compare("natural_types") != 0)
+        {
+            std::stringstream stream;
+            stream << "Natural Type table missing from " << filename << " or is in the wrong place.\n";
+            BasicLog::getInstance().writeError(stream.str());
+            return false;
+        }
+
+        std::unordered_map<std::string, DF_Draw_Tile_Type> reverse_type_table = getReverseOfDFDrawTypeStringTable(); //string to enum table
+
+        end_found = false;
+        do
+        {
+            file >> table_input;
+            if (table_input.compare("natural_types_end") != 0 && !file.eof())
+            {
+                unsigned char c = table_input[0];
+                file >> table_input;
+                type_table[table_input[0]] = reverse_type_table[table_input];
+            }
+            else
+            {
+                end_found = true;
+            }
+        } while (!end_found);
+
         file.close();
         return true;
     }
@@ -98,8 +153,6 @@ bool NaturalTerrainFileLoader::readFile(std::string filename, NaturalTerrain& te
 
 bool NaturalTerrainFileLoader::parseRunLengthStrings(NaturalTerrain & terrain)
 {
-    std::unordered_map<std::string, DF_Natural_Tile_Material> material_table = getReverseOfDFNaturalStringTable();
-
     return false;
 }
 

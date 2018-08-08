@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 
 /*
 MIT License
@@ -29,6 +30,8 @@ SOFTWARE.
 /*
 Description: Declaration of the different types tiles that exist and the internal ones I use as well
 */
+
+static const unsigned int DF_DRAW_TYPE_COUNT = 8;
 
 enum DF_Sides
 {
@@ -80,4 +83,7 @@ enum DF_Tile_Type_Material
     DF_TREE,
     DF_UNDERWORLD_GATE
 };
+
+std::string DFDrawTypeString(DF_Draw_Tile_Type e);
+std::unordered_map <std::string, DF_Draw_Tile_Type> getReverseOfDFDrawTypeStringTable();
 

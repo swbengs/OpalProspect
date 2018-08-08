@@ -49,7 +49,8 @@ private:
 
     std::vector<std::string> run_length_natural_material;
     std::vector<std::string> run_length_natural_type;
-
+    std::unordered_map<unsigned char, DF_Natural_Tile_Material> material_table;
+    std::unordered_map<unsigned char, DF_Draw_Tile_Type> type_table;
 
 
     bool readFile(std::string filename, NaturalTerrain& terrain); //read the given file and fill in the two run length vectors
