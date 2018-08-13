@@ -149,7 +149,7 @@ local count = 0
     material_count = 0
     shape_count = 0
 
-    material_letter = " " 
+    material_letter = " "
     shape_letter = " "
 
     material_output = ""

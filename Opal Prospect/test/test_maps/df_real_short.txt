@@ -50,7 +50,7 @@ v0.2 192 24 192
 36864a
 
 natural_materials
-a white_sand
+a hidden
 b gabbro
 natural_materials_end
 

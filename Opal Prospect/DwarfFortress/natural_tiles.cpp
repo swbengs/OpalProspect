@@ -516,7 +516,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
     case DF_TALC:
         return "talc";
         //stone end
-
+    case DF_HIDDEN:
+        return "hidden";
     default:
         return "bad DF_Natural_Tile enum ";
     }
@@ -1004,7 +1005,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
     case DF_TALC:
         return "talc.png";
         //stone end
-
+    case DF_HIDDEN:
+        return "hidden.png";
     default:
         return "bad DF_Natural_Tile enum ";
     }
@@ -1027,6 +1029,10 @@ DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
     else if (e >= DF_BLACK_SAND && e <= DF_YELLOW_SAND)
     {
         return DF_NATURAL_SOIL;
+    }
+    else if (e == DF_HIDDEN)
+    {
+        return DF_NATURAL_HIDDEN;
     }
     else //stone
     {
