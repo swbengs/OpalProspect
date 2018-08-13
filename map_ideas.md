@@ -17,3 +17,6 @@ will only see the layer material instead of the ore/gem/HFS.
 Another issue is doing seperate material for the floor and block/wall. To have them draw means that on the border you will see the floor as its material, but the block/wall will be the hidden texture. This will look odd. To fix it requires checking
 any hidden floor that is drawn, but only on the bottom side. The top and sides should still be drawn as hidden. This requires more models or changing how we generate the terrain.
 
+## Trees and their trunks
+The tree trunks themself are classified as the wall shape. This means my script picks them up and thinks they are something to be drawn. Causes hilarious results of floating stone/soil
+
