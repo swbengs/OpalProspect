@@ -573,5 +573,8 @@
     <None Include="lua\opal.lua">
       <Filter>Lua</Filter>
     </None>
+    <None Include="..\map_ideas.md">
+      <Filter>Text Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
