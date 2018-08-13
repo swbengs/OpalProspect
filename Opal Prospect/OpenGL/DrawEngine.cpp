@@ -882,7 +882,8 @@ void DrawEngine::loadTerrain()
     //filename = "Test\\test_maps\\5x5x5.txt";
     //filename = "Test\\test_maps\\16x16x16.txt";
     //filename = "Test\\test_maps\\16x16x16_simple.txt";
-    filename = "Test\\test_maps\\df_real.txt";
+    //filename = "Test\\test_maps\\df_real.txt";
+    filename = "Test\\test_maps\\df_real_short.txt";
 
     //terrain_test stuff here
 

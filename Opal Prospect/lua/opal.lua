@@ -71,13 +71,13 @@ TileTypeShapeTable =
   [df.tiletype_shape.STAIR_UPDOWN] = "a",
   [df.tiletype_shape.RAMP] = "f",
   [df.tiletype_shape.RAMP_TOP] = "a",
-  [df.tiletype_shape.BROOK_BED] = "a",
-  [df.tiletype_shape.BROOK_TOP] = "a",
+  [df.tiletype_shape.BROOK_BED] = "w",
+  [df.tiletype_shape.BROOK_TOP] = "f",
   [df.tiletype_shape.BRANCH] = "a",
   [df.tiletype_shape.TRUNK_BRANCH] = "a",
   [df.tiletype_shape.TWIG] = "a",
-  [df.tiletype_shape.SAPLING] = "a",
-  [df.tiletype_shape.SHRUB] = "a",
+  [df.tiletype_shape.SAPLING] = "f",
+  [df.tiletype_shape.SHRUB] = "f",
   [df.tiletype_shape.ENDLESS_PIT] = "a"
 }
 
@@ -137,17 +137,15 @@ local tile_type_shape = {} --tile type value to shape letter. tile type numbers 
 
 local material_count = world_z --default will be used to save having to check for nil every loop
 local shape_count = world_y --instead these are written out right away
-local material_letter = " " --just make sure the character used is not in CharacterTable
-local shape_letter = " "    --same as above
+local material_letter
+local shape_letter
 
-local material_output = ""   --strings that get written in one go
-local shape_output = ""
+local material_output--strings that get written in one go
+local shape_output
 local count = 0
 
   for z = 0, world_z - 1, 1 do
-    material_output = material_output..material_count..material_letter --append the last letter and count to proper string
-    shape_output = shape_output..shape_count..shape_letter
-    writeLayer(material_output, shape_output) --write current output then reset both outputs and all counts and letters
+    --set defaults
     material_count = 0
     shape_count = 0
 
@@ -171,7 +169,6 @@ local count = 0
             if hidden then
               current_material = "a"
               current_shape = "w"
-              
             else
               local tile_type = dfhack.maps.getTileType(x + 16 * x_block, y + 16 * y_block, z)
               current_material = tile_type_material[tile_type]
@@ -185,7 +182,7 @@ local count = 0
                 current_shape = tile_type_shape[tile_type]
               end
             end
-            count = count + 1
+
             if current_material ~= material_letter then --material and shape must be done seperate
               if material_letter ~= " " then --if not default append
                 material_output = material_output..material_count..material_letter
@@ -205,10 +202,14 @@ local count = 0
             else
               shape_count = shape_count + 1
             end
+
           end
         end
       end
     end
+    material_output = material_output..material_count..material_letter --append the last letter and count to proper string
+    shape_output = shape_output..shape_count..shape_letter
+    writeLayer(material_output, shape_output) --write current output then reset both outputs and all counts and letters
   end
 
 local tile_type_shape_count = 0
