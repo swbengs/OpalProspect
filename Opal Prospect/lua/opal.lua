@@ -30,32 +30,32 @@ First version of script to pull data from DFHack
 
 TileTypeMaterialTable = 
 {
-  [df.tiletype_material.AIR] = "a",
-  [df.tiletype_material.SOIL] = "b",
-  [df.tiletype_material.STONE] = "c",
-  [df.tiletype_material.FEATURE] = "a",
-  [df.tiletype_material.LAVA_STONE] = "a",
-  [df.tiletype_material.MINERAL] = "d",
-  [df.tiletype_material.FROZEN_LIQUID] = "a",
-  [df.tiletype_material.CONSTRUCTION] = "a",
-  [df.tiletype_material.GRASS_LIGHT] = "e",
-  [df.tiletype_material.GRASS_DARK] = "e",
-  [df.tiletype_material.GRASS_DRY] = "e",
-  [df.tiletype_material.GRASS_DEAD] = "e",
-  [df.tiletype_material.PLANT] = "e",
-  [df.tiletype_material.HFS] = "a",
-  [df.tiletype_material.CAMPFIRE] = "a",
-  [df.tiletype_material.FIRE] = "a",
-  [df.tiletype_material.ASHES] = "a",
-  [df.tiletype_material.MAGMA] = "a",
-  [df.tiletype_material.DRIFTWOOD] = "a",
-  [df.tiletype_material.POOL] = "e",
-  [df.tiletype_material.BROOK] = "e",
-  [df.tiletype_material.RIVER] = "e",
-  [df.tiletype_material.ROOT] = "e",
-  [df.tiletype_material.TREE] = "e",
-  [df.tiletype_material.MUSHROOM] = "e",
-  [df.tiletype_material.UNDERWORLD_GATE] = "a"
+  [df.tiletype_material.AIR] = "A",
+  [df.tiletype_material.SOIL] = 1,
+  [df.tiletype_material.STONE] = 1,
+  [df.tiletype_material.FEATURE] = "A",
+  [df.tiletype_material.LAVA_STONE] = "A",
+  [df.tiletype_material.MINERAL] = "D",
+  [df.tiletype_material.FROZEN_LIQUID] = "A",
+  [df.tiletype_material.CONSTRUCTION] = "A",
+  [df.tiletype_material.GRASS_LIGHT] = "E",
+  [df.tiletype_material.GRASS_DARK] = "E",
+  [df.tiletype_material.GRASS_DRY] = "E",
+  [df.tiletype_material.GRASS_DEAD] = "E",
+  [df.tiletype_material.PLANT] = "E",
+  [df.tiletype_material.HFS] = "A",
+  [df.tiletype_material.CAMPFIRE] = "A",
+  [df.tiletype_material.FIRE] = "A",
+  [df.tiletype_material.ASHES] = "A",
+  [df.tiletype_material.MAGMA] = "A",
+  [df.tiletype_material.DRIFTWOOD] = "A",
+  [df.tiletype_material.POOL] = "E",
+  [df.tiletype_material.BROOK] = "E",
+  [df.tiletype_material.RIVER] = "E",
+  [df.tiletype_material.ROOT] = "E",
+  [df.tiletype_material.TREE] = "E",
+  [df.tiletype_material.MUSHROOM] = "E",
+  [df.tiletype_material.UNDERWORLD_GATE] = "A"
 }
 
 TileTypeShapeTable = 
@@ -83,6 +83,7 @@ TileTypeShapeTable =
 
 CharacterTable = 
 {
+  [" "] = "a", --start
   ["a"] = "b", --give it the current letter and it will return the next one
   ["b"] = "c",
   ["c"] = "d",
@@ -114,10 +115,6 @@ CharacterTable =
 
 NaturalMaterialsTable = {}
 
-local function getLayerMaterial(biome_table)
-
-end
-
 --all writes will need to made into actual file writes and not just print to console
 local function writeHeader(version, width, height, length)
   print(version)
@@ -126,10 +123,12 @@ end
 
 local function writeMaterialTable()
   print("natural_materials")
-  for key, value in pairs() do
-    print(key.." "..value)
-  end
-    print("natural_materials_end")
+  --for key, value in pairs(NaturalMaterialsTable) do
+  --  print(key.." "..value)
+  --end
+  --printall(NaturalMaterialsTable)
+  printall(NaturalMaterialsTable["a"].material)
+  print("natural_materials_end")
 end
 
 local function writeShapeTable()
@@ -153,16 +152,33 @@ local world_x, world_y, world_z
 world_x, world_y, world_z = dfhack.maps.getTileSize()
 print("world size x: "..world_x.." y: "..world_y.." z: "..world_z)
 
-local block_x_count = world_x / 16
+local block_x_count = world_x / 16 --blocks are 16x16x1 pieces of the map. Each embark tile is 3x3 of these
 local block_y_count = world_y / 16
 print("block_x_count: "..block_x_count)
 print("block_y_count: "..block_y_count)
+local embark_x_count = world_x / 48
+local embark_y_count = world_y / 48
+print("embark_x_count: "..embark_x_count)
+print("embark_y_count: "..embark_y_count)
 
 local block_cache_table = {} --hold a line of blocks to save looking them up multiple times
+local biome_cache_table = {} --hold all embark biomes
 local tile_type_material = {} --same as shape but for material
 local tile_type_shape = {} --tile type value to shape letter. tile type numbers are duplicated since both tables have one
+local next_material_letter = " "
 
 local count = 0
+
+for embark_y = embark_y_count - 1, 0, -1 do
+  for embark_x = 0, embark_x_count - 1, 1 do
+    biome_cache_table[embark_x + embark_y * embark_x_count] = df.world_geo_biome.find(dfhack.maps.getRegionBiome(dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)).geo_index)
+  end
+end
+
+--for key, value in pairs(biome_cache_table) do
+--  print(key)
+--  print(value)
+--end
 
   for z = 160, world_z - 1, 1 do --start at 0 and go until world_z - 1. changes here are just for testing such as starting at higher height
     --set defaults
@@ -180,11 +196,11 @@ local count = 0
       for y = 15, 0, -1 do
         for x_block = 0, block_x_count - 1, 1 do
           for x = 0, 15, 1 do
-            local hidden = block_cache_table[x_block].designation[x][y].hidden
+            local designations = block_cache_table[x_block].designation[x][y]
             local current_material
             local current_shape
             --set defaults for a hidden block which is WALL and HIDDEN
-            if hidden then
+            if designations.hidden then
               current_material = "a"
               current_shape = "w"
             else
@@ -193,8 +209,17 @@ local count = 0
               current_shape =  tile_type_shape[tile_type]
               if current_shape == nil then --if shape is missing then material is also
                 local tile_attributes = df.tiletype.attrs[tile_type]
-                tile_type_material[tile_type] = TileTypeMaterialTable[tile_attributes.material]
                 tile_type_shape[tile_type] = TileTypeShapeTable[tile_attributes.shape]
+
+                if TileTypeMaterialTable[tile_attributes.material] == 1 then --get layer material
+                  local biome = biome_cache_table[math.floor(x_block / 3) + math.floor(y_block / 3)]
+                  next_material_letter = CharacterTable[next_material_letter]
+                  tile_type_material[tile_type] = next_material_letter
+                  local material = biome.layers[designations.geolayer_index].mat_index
+                  NaturalMaterialsTable[next_material_letter] = dfhack.matinfo.decode(0, material)
+                else
+                  tile_type_material[tile_type] = TileTypeMaterialTable[tile_attributes.material]
+                end
 
                 current_material = tile_type_material[tile_type]
                 current_shape = tile_type_shape[tile_type]
@@ -244,7 +269,7 @@ local count = 0
 local version = "v0.2"
 
 writeHeader(version, world_x, world_z, world_y) --z and y need to be swapped for opal prospect
-
+writeMaterialTable()
 writeShapeTable()
 end
 
