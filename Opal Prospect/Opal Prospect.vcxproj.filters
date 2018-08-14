@@ -46,6 +46,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{e13cd0d0-2e3f-4155-bb8e-133e13a676e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{1397b0f2-b185-41f0-9d2d-d651f3c4748d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Opal Prospect.cpp">
@@ -259,6 +262,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Shapes\Point3DUInt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DwarfFortress\NaturalTerrainFileLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -488,6 +497,12 @@
     <ClInclude Include="Shapes\Point3DUInt.hpp">
       <Filter>Shapes</Filter>
     </ClInclude>
+    <ClInclude Include="BasicLog.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DwarfFortress\NaturalTerrainFileLoader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\build.md">
@@ -553,6 +568,12 @@
       <Filter>Text Files</Filter>
     </None>
     <None Include="..\optimizations.md">
+      <Filter>Text Files</Filter>
+    </None>
+    <None Include="lua\opal.lua">
+      <Filter>Lua</Filter>
+    </None>
+    <None Include="..\map_ideas.md">
       <Filter>Text Files</Filter>
     </None>
   </ItemGroup>

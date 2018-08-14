@@ -52,6 +52,8 @@ void ArrayTexture::unbind() const
 
 void ArrayTexture::loadImages(std::vector<std::string> file_paths)
 {
+    int good_width = 0;
+    int good_height = 0;
     std::stringstream stream;
     stream << "Textures" << FilePath::getOSSeperator() << "bad.png";
     std::string fallback = stream.str();
@@ -63,6 +65,38 @@ void ArrayTexture::loadImages(std::vector<std::string> file_paths)
         temp.loadImageFallback(file_paths[i], fallback);
         images.push_back(temp);
     }
+
+    //std::cout << "second loop\n";
+
+    for (size_t i = 0; i < images.size(); i++)
+    {
+        if (images[i].getWidth() > 0)
+        {
+            good_width = images[i].getWidth();
+            good_height = images[i].getHeight();
+            break;
+        }
+    }
+
+    //std::cout << "good_width: " << good_width << "\n";
+    //std::cout << "good_height: " << good_height << "\n";
+    //do sanity check that all array textures are the same size. Any that deviate from the first non 0 one must match that
+    Image junk;
+    junk.setSolidColor(255, 0, 255, good_width, good_height);
+
+    //std::cout << "third loop\n";
+    for (size_t i = 0; i < images.size(); i++)
+    {
+        if (images[i].getWidth() != good_width || images[i].getHeight() != good_height)
+        {
+            //std::cout << "third loop if start\n";
+            junk.setFilePath(images[i].getFilename());
+            images[i] = junk;
+            //std::cout << "third loop if done\n";
+        }
+        //std::cout << "third loop running\n";
+    }
+    //std::cout << "third loop end\n";
 }
 
 void ArrayTexture::createTexture()
@@ -88,11 +122,11 @@ void ArrayTexture::createTexture()
     glGenTextures(id_count, &id); //create an id and bind it
     bind();
 
-    OGLHelpers::getOpenGLError("pre teximage3d");
+    OGLHelpers::getOpenGLError("pre teximage3d", true);
     //void glTexImage3D( GLenum target, GLint level, GLint internalFormat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid * data);
     glTexImage3D(GL_TEXTURE_2D_ARRAY, level, GL_RGBA8, images[0].getWidth(), images[0].getHeight(), static_cast<int>(getImageCount()), border, GL_RGBA, GL_UNSIGNED_BYTE, data); //fill in the data on the graphics card
 
-    OGLHelpers::getOpenGLError("post teximage3d");
+    OGLHelpers::getOpenGLError("post teximage3d", true);
 
     //GL_NEAREST, GL_LINEAR
     glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -101,10 +135,9 @@ void ArrayTexture::createTexture()
     // GL_CLAMP_TO_EDGE, GL_CLAMP_TO_BORDER, GL_MIRRORED_REPEAT, GL_REPEAT, or GL_MIRROR_CLAMP_TO_EDGE
     //glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     //glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_S);
-    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_T);
-
-    OGLHelpers::getOpenGLError("post texparam");
+    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    OGLHelpers::getOpenGLError("post texparam", true);
 
     complete_texture.reserve(images[0].getSize() * getImageCount()); //holds the complete texture that is uploaded in one go. Only reserve them since we insert later
 
@@ -116,7 +149,7 @@ void ArrayTexture::createTexture()
     }
 
     uploadCompleteTexture(static_cast<int>(getImageCount()), complete_texture.data());
-    OGLHelpers::getOpenGLError("post array texture uploads");
+    OGLHelpers::getOpenGLError("post array texture uploads", true);
 
     unbind();
 }

@@ -1,0 +1,29 @@
+v0.2 5 5 5
+
+5a5a5a5a5a
+5b5b5b5b5b
+
+5b5b5c5b1a4c
+5b5b5a5b1b4c
+
+25a
+25a
+
+5c5c5c5c5c
+5b5b5b5b5c
+
+5b5b5b5b5b
+5b5b5b5b5b
+
+natural_materials
+a tetrahedrite
+b white_sand
+c gabbro
+natural_materials_end
+
+natural_types
+a air
+b block
+c floor
+natural_types_end
+

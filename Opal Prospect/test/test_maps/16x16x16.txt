@@ -1,0 +1,62 @@
+v0.2 16 16 16
+
+256a
+256c
+
+256b
+256b
+
+256c
+256b
+
+256a
+256b
+
+256b
+256b
+
+256b
+256b
+
+256c
+16c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c1c14b1c16c
+
+256b
+256b
+
+256c
+256b
+
+256a
+256b
+
+256b
+256b
+
+256c
+256b
+
+256a
+256b
+
+256b
+256b
+
+256c
+256b
+
+256a
+256c
+
+natural_materials
+a tetrahedrite
+b white_sand
+c gabbro
+natural_materials_end
+
+natural_types
+a air
+b block
+c floor
+natural_types_end
+

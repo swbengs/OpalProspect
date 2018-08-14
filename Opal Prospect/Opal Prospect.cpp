@@ -4,8 +4,10 @@
 #include <string>
 #include <array>
 #include <chrono>
+#include <fstream>
 
 #include "MainLoop.hpp"
+#include "BasicLog.hpp"
 
 //test includes
 #include "OpenGL\ArrayTextureAtlas.hpp"
@@ -592,6 +594,87 @@ void natural_terrain_build_test()
     std::cout << "natural terrain builder test done\n";
 }
 
+void log_test()
+{
+    auto old_error = std::cerr.rdbuf();
+    auto old_log = std::clog.rdbuf();
+
+    std::ofstream error("error.txt");
+    std::ofstream log("log.txt");
+
+    std::cerr.rdbuf(error.rdbuf());
+    std::clog.rdbuf(log.rdbuf());
+
+    std::cerr << "test 10\n";
+    std::clog << "test 20\n";
+
+    std::cerr.rdbuf(old_error);
+    std::clog.rdbuf(old_log);
+}
+
+void get_digits_test()
+{
+    unsigned int max_digits = 0;
+    const unsigned int layer_count = 10 * 90000 + 1;
+    double layer_count_double = static_cast<double>(layer_count); //need to do double math to check for how many digits we should make
+
+    do
+    {
+        max_digits++;
+        layer_count_double /= 10.0;
+    } while (layer_count_double > 1.0);
+
+    std::cout << "digit test end\n";
+}
+
+void parse_test()
+{
+    std::string rle = "1000y251d25q1w";
+
+    size_t max_digits = 4;
+    std::string single;
+    single.resize(max_digits + 1);
+
+    unsigned int single_index = 0;
+    for (size_t i = 0; i < rle.size(); i++)
+    {
+        if (isdigit(rle[i]))
+        {
+            single[single_index] = rle[i];
+            single_index++;
+            if (single_index > max_digits)
+            {
+                std::cout << "number: " << single_index << " exceeds digit max: " << max_digits << "\n";
+                return;
+            }
+        }
+        else //add single character, the non number one and seperate the number and character
+        {
+            single[single_index] = rle[i];
+            single_index = 0;
+            char* end;
+            unsigned long number_long = strtoul(single.data(), &end, 10);
+            unsigned int number = static_cast<unsigned int>(number_long);
+            unsigned char c = *end;
+
+            std::cout << "number: " << number << "\n";
+            std::cout << "character: " << c << "\n";
+
+            if (number == 0)
+            {
+                std::cout << "rle number is 0. Should be at least 1\n";
+                return;
+            }
+
+            //reset single
+            for (size_t n = 0; n < single.size(); n++)
+            {
+                single[n] = '\0';
+            }
+        }
+    }
+}
+
 void tests()
 {
     //texture_array_test();
@@ -610,7 +693,10 @@ void tests()
     //offset_grid_5x5x5_test();
     //offset_grid_extreme_test();
     //natural_terrain_test();
-    natural_terrain_build_test();
+    //natural_terrain_build_test();
+    //log_test();
+    //get_digits_test();
+    parse_test();
 }
 
 int main(void)

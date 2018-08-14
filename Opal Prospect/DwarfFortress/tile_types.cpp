@@ -86,3 +86,42 @@ std::string DFTileTypeMaterialString(DF_Tile_Type_Material e)
     }
 }
 
+std::string DFDrawTypeString(DF_Draw_Tile_Type e)
+{
+    switch (e)
+    {
+        //gem start
+    case DF_DRAW_AIR:
+        return "air";
+    case DF_DRAW_BLOCK:
+        return "block";
+    case DF_DRAW_FLOOR:
+        return "floor";
+    case DF_DRAW_LIQUID:
+        return "liquid";
+    case DF_DRAW_RAMP_NORTH:
+        return "ramp_north";
+    case DF_DRAW_RAMP_EAST:
+        return "ramp_east";
+    case DF_DRAW_RAMP_SOUTH:
+        return "ramp_south";
+    case DF_DRAW_RAMP_WEST:
+        return "ramp_west";
+    default:
+        return "bad DF_Draw_Tile_Type enum ";
+    }
+}
+
+std::unordered_map<std::string, DF_Draw_Tile_Type> getReverseOfDFDrawTypeStringTable()
+{
+    std::unordered_map<std::string, DF_Draw_Tile_Type> temp;
+    temp.reserve(DF_DRAW_TYPE_COUNT);
+
+    for (size_t i = 0; i < DF_DRAW_TYPE_COUNT; i++)
+    {
+        DF_Draw_Tile_Type d = static_cast<DF_Draw_Tile_Type>(i); //so we only have to do one cast
+        temp[DFDrawTypeString(d)] = d; //get string and put into table
+    }
+
+    return temp;
+}

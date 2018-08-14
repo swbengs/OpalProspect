@@ -87,6 +87,9 @@ std::string NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material e)
     case DF_NATURAL_STONE:
         stream << "Textures" << os_seperator << "stones" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));;
         return stream.str();
+    case DF_NATURAL_HIDDEN:
+        stream << "Textures" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));;
+        return stream.str();
     default:
         return "";
     }

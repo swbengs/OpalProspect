@@ -4,10 +4,12 @@
 //std lib includes
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <assert.h>
 
 //other includes
 #include "png.h"
+#include "..\BasicLog.hpp"
 
 /*
 MIT License
@@ -50,8 +52,10 @@ void Image::loadImageFallback(std::string filename, std::string fallback_filenam
     {
         if (setupImage(fallback_filename, false) == false)
         {
-            std::cout << "Failed to load fallback file " << fallback_filename << " . Closing program\n";
-            exit(9999);
+            //std::cout << "Failed to load fallback file " << fallback_filename << "\n";
+            std::stringstream stream;
+            stream << "Failed to load fallback file " << fallback_filename << "\n";
+            BasicLog::getInstance().writeError(stream.str());
         }
     }
 }
@@ -84,6 +88,34 @@ const std::vector<unsigned char>& Image::getImageData() const
 void Image::setFilePath(std::string path)
 {
     file_path.setFullPath(path);
+}
+
+void Image::setSolidColor(unsigned char red, unsigned char green, unsigned char blue, int width, int height)
+{
+    image_width = width;
+    image_height = height;
+    image_data = std::vector<unsigned char>(); //create new blank slate
+    const int color_components = 4;
+    const unsigned char alpha = 255;
+
+    size_t total_size = getWidth() * getHeight() * color_components;
+    const size_t total_width = static_cast<size_t>(getWidth() * color_components);
+    std::cout << "total_size: " << total_size << "\n";
+
+    image_data.reserve(total_size);
+
+    for (int i = 0; i < height; i++)
+    {
+        for (size_t m = 0; m < total_width; m += color_components)
+        {
+            image_data.push_back(red);
+            image_data.push_back(green);
+            image_data.push_back(blue);
+            image_data.push_back(alpha);
+        }
+    }
+
+    assert(image_data.size() == total_size);
 }
 
 //private
@@ -142,7 +174,10 @@ bool Image::setupImage(std::string filename, bool has_fallback)
             */
 
             //image could not load
-            std::cout << "image file " << filename << " failed to load.\n";
+            //std::cout << "image file " << filename << " failed to load.\n";
+            std::stringstream stream;
+            stream << "image file " << filename << " failed to load.\n";
+            BasicLog::getInstance().writeError(stream.str());
             return false;
         }
     }
@@ -150,12 +185,14 @@ bool Image::setupImage(std::string filename, bool has_fallback)
     {
         if (has_fallback)
         {
-            std::cout << "image file " << filename << " doesn't exist. Switching to fallback.\n";
+            std::cout << "image file " << filename << " doesn't exist. Switching to fallback.\n"; //not am error that needs to be reported
         }
         else
         {
-            std::cout << "image file " << filename << " doesn't exist. No fallback image given.\n";
-            
+            //std::cout << "image file " << filename << " doesn't exist. No fallback image given.\n";
+            std::stringstream stream;
+            stream << "image file " << filename << " doesn't exist. No fallback image given.\n";
+            BasicLog::getInstance().writeError(stream.str());
         }
 
         return false;

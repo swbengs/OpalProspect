@@ -5,6 +5,7 @@
 #include <iostream>
 
 //other includes
+#include "NaturalTerrainFileLoader.hpp"
 
 /*
 MIT License
@@ -30,14 +31,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-NaturalTerrainModelBuilder::NaturalTerrainModelBuilder()
+void NaturalTerrainModelBuilder::loadFromFile(std::string filename, const ModelController& model_controller, ModelIndex& terrain_model)
 {
+    NaturalTerrainFileLoader loader;
+    if (loader.loadWorld(filename, terrain))
+    {
+        std::cout << "world load success\n";
+        checkingLoop();
+        buildModel(model_controller, terrain_model);
+    }
+    else
+    {
 
-}
-
-void NaturalTerrainModelBuilder::loadFromFile(std::string filename)
-{
-
+    }
 }
 
 void NaturalTerrainModelBuilder::loadFromMemory(const NaturalTerrain& memory, const ModelController& model_controller, ModelIndex& terrain_model)

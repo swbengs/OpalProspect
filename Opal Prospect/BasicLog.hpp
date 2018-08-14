@@ -1,10 +1,10 @@
 #pragma once
 
 //std lib includes
-#include <vector>
+#include <string>
+#include <fstream>
 
 //other includes
-#include "..\FilePath.hpp"
 
 /*
 MIT License
@@ -31,35 +31,27 @@ SOFTWARE.
 */
 
 /*
-Description: Class to hold an image and the filename to that image. Automatically flipped vertically to be ready for OpenGL use.
+Description: This class can log messages and errors. Meant to be a singleton and not be thread safe at all. Error messages go to cerr and log messages go to clog. For cout messages just use good ole cout
 */
 
-class Image
+class BasicLog
 {
 public:
-    Image();
+    BasicLog();
+    ~BasicLog();
 
-    void loadImage();
-    void loadImageFallback(std::string filename, std::string fallback_filename); //same as load image but if we can't find the given file we instead load the fallback one
+    BasicLog(BasicLog const&) = delete;
+    void operator=(BasicLog const&) = delete;
 
-    //gets
-    int getWidth() const;
-    int getHeight() const;
-    size_t getSize() const; //size of the image vector
-    std::string getFilename() const;
-    const std::vector<unsigned char>& getImageData() const;
-
-    //sets
-    void setFilePath(std::string path); //sets the full filepath and the filename is extracted from this
-    void setSolidColor(unsigned char red, unsigned char green, unsigned char blue, int width, int height); //used in case the image size is off. Sets width and height and fills with junk data
+    static const BasicLog& getInstance();
+    void writeError(std::string error) const;
+    void writeLog(std::string log) const;
 
 private:
-    int image_width;
-    int image_height;
-    std::vector<unsigned char> image_data;
-    FilePath file_path;
+    std::ofstream error_log;
+    std::ofstream my_log;
 
-    void flipVertical(int width, int height);
-    bool setupImage(std::string filename, bool has_fallback);
+    std::streambuf* old_error;
+    std::streambuf* old_log;
 };
 

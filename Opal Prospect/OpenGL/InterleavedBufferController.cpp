@@ -3,8 +3,12 @@
 
 //std lib includes
 #include <iostream>
+#include <sstream>
+#include <assert.h>
+
 //other includes
 #include "OGLHelpers.hpp"
+#include "..\BasicLog.hpp"
 
 /*
 MIT License
@@ -48,8 +52,12 @@ unsigned int InterleavedBufferController::addModel(ModelIndex & model)
 
         if (vertex_size > MAXIMUM_VERTEX_BUFFER_SIZE || index_size > MAXIMUM_INDEX_BUFFER_SIZE)
         {
-            std::cout << "Model " << model.getModelName() << " is too large to fit in any buffer. Vertex size: " << vertex_size << " Index size: " << index_size << "\n";
+            //std::cout << "Model " << model.getModelName() << " is too large to fit in any buffer. Vertex size: " << vertex_size << " Index size: " << index_size << "\n";
+            std::stringstream stream;
+            stream << "Model " << model.getModelName() << " is too large to fit in any buffer. Vertex size: " << vertex_size << " Index size: " << index_size << "\n";
+            BasicLog::getInstance().writeError(stream.str());
             std::cout << "max vertex size: " << MAXIMUM_VERTEX_BUFFER_SIZE << " max index size: " << MAXIMUM_INDEX_BUFFER_SIZE << "\n";
+
             return 0; //can't fit so we must exit here
         }
 
@@ -63,7 +71,7 @@ unsigned int InterleavedBufferController::addModel(ModelIndex & model)
         }
 
         bufferModel(buffer, model);
-        std::cout << "putting in VAO " << (buffer + 1) << "\n";
+        //std::cout << "putting in VAO " << (buffer + 1) << "\n";
         OGLHelpers::getOpenGLError("post buffering", true);
 
         unsigned int reference = static_cast<unsigned int>(buffer + 1);
@@ -74,21 +82,18 @@ unsigned int InterleavedBufferController::addModel(ModelIndex & model)
     }
     else
     {
-        std::cout << "Model " << model.getModelName() << " already in a buffer\n";
+        //std::cout << "Model " << model.getModelName() << " already in a buffer\n";
+        std::stringstream stream;
+        stream << "Model " << model.getModelName() << " already in a buffer\n";
+        BasicLog::getInstance().writeError(stream.str());
         return 0;
     }
 }
 
 void InterleavedBufferController::bindVAO(unsigned int reference) const
 {
-    if (inBounds(reference))
-    {
-        vaos[reference - 1].bindVAO();
-    }
-    else
-    {
-        std::cout << "bindVAO reference " << reference << " does not exist\n";
-    }
+    assert(inBounds(reference));
+    vaos[reference - 1].bindVAO();
 }
 
 void InterleavedBufferController::destroyBuffers()

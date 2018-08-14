@@ -1,0 +1,21 @@
+//version number width height length
+v0.2 5 5 5
+
+//rle material and type strings here
+10a2b3c1d1e //material first
+5a3b2c//type second
+
+//natural material table
+natural_materials //must have this and the _end version at the end
+a air
+b white_sand
+c silty_clay_loam
+d gabbro
+e tetrahedrite
+natural_materials_end
+
+natural_types
+//natural type material table
+//same as above
+natural_types_end
+

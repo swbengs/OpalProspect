@@ -154,9 +154,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicLog.cpp" />
     <ClCompile Include="Cameras\Camera.cpp" />
     <ClCompile Include="Cameras\FlightCamera.cpp" />
     <ClCompile Include="DwarfFortress\NaturalTerrain.cpp" />
+    <ClCompile Include="DwarfFortress\NaturalTerrainFileLoader.cpp" />
     <ClCompile Include="DwarfFortress\NaturalTerrainModelBuilder.cpp" />
     <ClCompile Include="DwarfFortress\NaturalTile.cpp" />
     <ClCompile Include="DwarfFortress\natural_tiles.cpp" />
@@ -227,6 +229,7 @@
     <ClCompile Include="Shapes\VertexTriangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicLog.hpp" />
     <ClInclude Include="Cameras\Camera.hpp" />
     <ClInclude Include="Cameras\FlightCamera.hpp" />
     <ClInclude Include="Constants\axis.hpp" />
@@ -234,6 +237,7 @@
     <ClInclude Include="Containers\SortedObjectPool.hpp" />
     <ClInclude Include="DwarfFortress\df_constants.hpp" />
     <ClInclude Include="DwarfFortress\NaturalTerrain.hpp" />
+    <ClInclude Include="DwarfFortress\NaturalTerrainFileLoader.hpp" />
     <ClInclude Include="DwarfFortress\NaturalTerrainModelBuilder.hpp" />
     <ClInclude Include="DwarfFortress\NaturalTile.hpp" />
     <ClInclude Include="DwarfFortress\natural_tiles.hpp" />
@@ -305,6 +309,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\controls.md" />
+    <None Include="..\map_ideas.md" />
     <None Include="..\milestones.md" />
     <None Include="..\optimizations.md" />
     <None Include="..\README.md" />
@@ -314,6 +319,7 @@
     <None Include="arrayTexture.vert" />
     <None Include="arrayTextureBasicLight.frag" />
     <None Include="arrayTextureBasicLight.vert" />
+    <None Include="lua\opal.lua" />
     <None Include="Texture2D.frag" />
     <None Include="Texture2D.vert" />
   </ItemGroup>

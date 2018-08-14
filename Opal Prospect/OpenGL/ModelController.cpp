@@ -2,6 +2,7 @@
 
 //std lib includes
 #include <iostream>
+#include <assert.h>
 
 //other includes
 
@@ -54,11 +55,13 @@ size_t ModelController::getCount() const
 
 const ModelIndex& ModelController::getModel(unsigned int reference) const
 {
+    assert(inBounds(reference));
     return models[reference - 1];
 }
 
 model_pod ModelController::getModelPOD(unsigned int reference) const
 {
+    assert(inBounds(reference));
     return pods[reference - 1];
 }
 
@@ -78,11 +81,19 @@ unsigned int ModelController::getModelReference(std::string model_name) const
 
 ModelIndex& ModelController::modifyModel(unsigned int reference)
 {
+    assert(inBounds(reference));
     return models[reference - 1];
 }
 
 model_pod& ModelController::modifyModelPOD(unsigned int reference)
 {
+    assert(inBounds(reference));
     return pods[reference - 1];
+}
+
+bool ModelController::inBounds(unsigned int reference) const
+{
+    unsigned int actual = reference - 1;
+    return (actual >= 0 && actual < models.size());
 }
 

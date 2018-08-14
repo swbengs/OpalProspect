@@ -1,14 +1,10 @@
-#pragma once
+//class header
+#include "BasicLog.hpp"
 
 //std lib includes
-#include <vector>
-#include <unordered_map>
-#include <string>
-#include <assert.h>
+#include <iostream>
 
 //other includes
-#include "DrawEngineStructs.hpp"
-#include "..\Shapes\ModelIndex.hpp"
 
 /*
 MIT License
@@ -34,27 +30,43 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/*
-Description: This class is used to store all models and how they are accessed. Also contains one model pod for each model contained within. Interfaces with BufferController to add information on what VAO the model is stored in and index info to draw it
-*/
-
-class ModelController
+BasicLog::BasicLog()
 {
-public:
-    void addModel(const ModelIndex &model);
+    old_error = std::cerr.rdbuf();
+    old_log = std::clog.rdbuf();
 
-    size_t getCount() const;
-    const ModelIndex& getModel(unsigned int reference) const; //for reading only
-    model_pod getModelPOD(unsigned int reference) const;
-    unsigned int getModelReference(std::string model_name) const;
+    error_log = std::ofstream("error.txt");
+    my_log = std::ofstream("log.txt");
 
-    ModelIndex& modifyModel(unsigned int reference); //for writing and reading
-    model_pod& modifyModelPOD(unsigned int reference);
-private:
-    std::vector<ModelIndex> models;
-    std::vector<model_pod> pods;
-    std::unordered_map<std::string, unsigned int> references;
+    std::cerr.rdbuf(error_log.rdbuf());
+    std::clog.rdbuf(my_log.rdbuf());
 
-    bool inBounds(unsigned int reference) const;
-};
+    std::cout << "basic log created\n";
+}
+
+BasicLog::~BasicLog()
+{
+    std::cerr.rdbuf(old_error);
+    std::clog.rdbuf(old_log);
+
+    std::cout << "basic log destroyed\n";
+}
+
+const BasicLog & BasicLog::getInstance()
+{
+    static BasicLog log;
+    return log;
+}
+
+void BasicLog::writeError(std::string error) const
+{
+    std::cerr << error;
+    std::cout << error;
+}
+
+void BasicLog::writeLog(std::string log) const
+{
+    std::clog << log;
+    std::cout << log;
+}
 

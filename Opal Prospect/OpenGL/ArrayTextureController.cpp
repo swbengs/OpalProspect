@@ -3,8 +3,11 @@
 
 //std lib includes
 #include <iostream>
+#include <sstream>
+#include <assert.h>
 
 //other includes
+#include "..\BasicLog.hpp"
 
 /*
 MIT License
@@ -38,14 +41,8 @@ void ArrayTextureController::addTexture(const ArrayTexture &texture)
 
 void ArrayTextureController::bindTexture(unsigned int reference) const
 {
-    if (inBounds(reference))
-    {
-        textures[reference - 1].bind();
-    }
-    else
-    {
-        std::cout << "bindVAO reference " << reference << " does not exist\n";
-    }
+    assert(inBounds(reference));
+    textures[reference - 1].bind();
 }
 
 void ArrayTextureController::destroyTextures()
@@ -115,12 +112,17 @@ unsigned int ArrayTextureController::getTextureNumber(std::string image_name) co
         }
     }
 
-    std::cout << image_name << " not found. Can't find bad.png\n";
+    //std::cout << image_name << " not found. Can't find bad.png\n";
+    std::stringstream stream;
+    stream << image_name << " not found. Can't find bad.png\n";
+    BasicLog::getInstance().writeError(stream.str());
+
     return 0; //worst casse we can't find either so return 0, which is a bad reference
 }
 
 ArrayTexture& ArrayTextureController::modifyTexture(unsigned int reference)
 {
+    assert(inBounds(reference));
     return textures[reference - 1];
 }
 

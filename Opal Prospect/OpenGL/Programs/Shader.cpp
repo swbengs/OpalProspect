@@ -1,9 +1,14 @@
+
+//std includes
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <vector>
 
+//other includes
 #include "Shader.hpp"
 #include "glew.h"
+#include "..\..\BasicLog.hpp"
 
 /*
 MIT License
@@ -50,6 +55,7 @@ void Shader::compile() const
     else
     {
         std::cout << "Compiling of " << getName() << " was a success! \n \n";
+        checkShaderLog();
     }
 }
 
@@ -113,7 +119,10 @@ void Shader::loadShaderFromFileCStyle(std::string filename)
     }
     else
     {
-        std::cout << "error reading file " << filename << "\n";
+        //std::cout << "error reading file " << filename << "\n";
+        std::stringstream stream;
+        stream << "error reading file " << filename << "\n";
+        BasicLog::getInstance().writeError(stream.str());
     }
 
     file.close();
@@ -145,7 +154,10 @@ void Shader::loadShaderFromFileCPPStyle(std::string filename)
     }
     else
     {
-        std::cout << "error reading file " << filename << "\n";
+        //std::cout << "error reading file " << filename << "\n";
+        std::stringstream stream;
+        stream << "error reading file " << filename << "\n";
+        BasicLog::getInstance().writeError(stream.str());
     }
 
     file.close();
@@ -161,7 +173,7 @@ void Shader::checkShaderLog() const
 
     std::string log(c_log);
 
-    std::cout << "log begin \n \n";
+    std::cout << "opengl shader log begin \n \n";
     std::cout << log << "\n";
-    std::cout << "log end \n";
+    std::cout << "opengl shader log end \n";
 }

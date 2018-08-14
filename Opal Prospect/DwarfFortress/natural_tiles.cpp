@@ -516,7 +516,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
     case DF_TALC:
         return "talc";
         //stone end
-
+    case DF_HIDDEN:
+        return "hidden";
     default:
         return "bad DF_Natural_Tile enum ";
     }
@@ -1004,7 +1005,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
     case DF_TALC:
         return "talc.png";
         //stone end
-
+    case DF_HIDDEN:
+        return "hidden.png";
     default:
         return "bad DF_Natural_Tile enum ";
     }
@@ -1028,9 +1030,27 @@ DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
     {
         return DF_NATURAL_SOIL;
     }
+    else if (e == DF_HIDDEN)
+    {
+        return DF_NATURAL_HIDDEN;
+    }
     else //stone
     {
         return DF_NATURAL_STONE;
     }
+}
+
+std::unordered_map<std::string, DF_Natural_Tile_Material> getReverseOfDFNaturalStringTable()
+{
+    std::unordered_map<std::string, DF_Natural_Tile_Material> temp;
+    temp.reserve(DF_NATURAL_TILE_COUNT);
+
+    for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
+    {
+        DF_Natural_Tile_Material m = static_cast<DF_Natural_Tile_Material>(i); //so we only have to do one cast
+        temp[DFNaturalTileString(m)] = m; //get string and put into table
+    }
+
+    return temp;
 }
 
