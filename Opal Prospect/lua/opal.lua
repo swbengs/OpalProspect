@@ -30,32 +30,41 @@ First version of script to pull data from DFHack
 
 TileTypeMaterialTable = 
 {
-  [df.tiletype_material.AIR] = "A",
+  [df.tiletype_material.AIR] = "a",
   [df.tiletype_material.SOIL] = 1,
   [df.tiletype_material.STONE] = 1,
-  [df.tiletype_material.FEATURE] = "A",
-  [df.tiletype_material.LAVA_STONE] = "A",
+  [df.tiletype_material.FEATURE] = "a",
+  [df.tiletype_material.LAVA_STONE] = "a",
   [df.tiletype_material.MINERAL] = "D",
-  [df.tiletype_material.FROZEN_LIQUID] = "A",
-  [df.tiletype_material.CONSTRUCTION] = "A",
-  [df.tiletype_material.GRASS_LIGHT] = "E",
-  [df.tiletype_material.GRASS_DARK] = "E",
-  [df.tiletype_material.GRASS_DRY] = "E",
-  [df.tiletype_material.GRASS_DEAD] = "E",
-  [df.tiletype_material.PLANT] = "E",
-  [df.tiletype_material.HFS] = "A",
-  [df.tiletype_material.CAMPFIRE] = "A",
-  [df.tiletype_material.FIRE] = "A",
-  [df.tiletype_material.ASHES] = "A",
-  [df.tiletype_material.MAGMA] = "A",
-  [df.tiletype_material.DRIFTWOOD] = "A",
+  [df.tiletype_material.FROZEN_LIQUID] = "a",
+  [df.tiletype_material.CONSTRUCTION] = 1,
+  [df.tiletype_material.GRASS_LIGHT] = 1,
+  [df.tiletype_material.GRASS_DARK] = 1,
+  [df.tiletype_material.GRASS_DRY] = 1,
+  [df.tiletype_material.GRASS_DEAD] = 1,
+  [df.tiletype_material.PLANT] = 1,
+  [df.tiletype_material.HFS] = "a",
+  [df.tiletype_material.CAMPFIRE] = 1,
+  [df.tiletype_material.FIRE] = "a",
+  [df.tiletype_material.ASHES] = "a",
+  [df.tiletype_material.MAGMA] = "a",
+  [df.tiletype_material.DRIFTWOOD] = 1,
   [df.tiletype_material.POOL] = "E",
   [df.tiletype_material.BROOK] = "E",
   [df.tiletype_material.RIVER] = "E",
   [df.tiletype_material.ROOT] = "E",
-  [df.tiletype_material.TREE] = "E",
-  [df.tiletype_material.MUSHROOM] = "E",
-  [df.tiletype_material.UNDERWORLD_GATE] = "A"
+  [df.tiletype_material.TREE] = 1,
+  [df.tiletype_material.MUSHROOM] = 1,
+  [df.tiletype_material.UNDERWORLD_GATE] = "a"
+}
+
+InorganicMaterialNumberToString = 
+{
+  [172] = "granite",
+  [174] = "gabbro",
+  [249] = "silty_clay_loam",
+  [256] = "yellow_sand",
+  [257] = "white_sand"
 }
 
 TileTypeShapeTable = 
@@ -83,7 +92,6 @@ TileTypeShapeTable =
 
 CharacterTable = 
 {
-  [" "] = "a", --start
   ["a"] = "b", --give it the current letter and it will return the next one
   ["b"] = "c",
   ["c"] = "d",
@@ -113,35 +121,87 @@ CharacterTable =
   ["A"] = "B"
 }
 
-NaturalMaterialsTable = {}
+NaturalMaterialsTable = 
+{
+  ["a"] = "hidden", --defaults and test values
+  ["D"] = "tetrahedrite",
+  ["E"] = "aluminum"
+}
+
+next_material_letter = "a"
+opal_prospect_file = 0
+--end globals
+
+local function materialLocation(table, material)
+  for key, value in pairs(table) do
+    if(value == material) then
+      return key
+    end
+  end
+
+  return nil --failed to find material
+end
+
+local function addMaterial(type_index, material_index)
+  local name
+  local table
+  if type_index == 0 then
+    name = InorganicMaterialNumberToString[material_index]
+    if name == nil then
+      print(dfhack.matinfo.decode(type_index, material_index))
+      error("unknown inorganic material index")
+    end
+    table = NaturalMaterialsTable
+  else
+    error("unknown type index")
+  end
+
+  local letter = materialLocation(table, name)
+  if letter ~= nil then --we already have this material in the table so return the key
+    return letter
+  else --make new key and add this material name to the table
+    next_material_letter = CharacterTable[next_material_letter]
+    table[next_material_letter] = name
+    return next_material_letter
+  end
+end
 
 --all writes will need to made into actual file writes and not just print to console
 local function writeHeader(version, width, height, length)
-  print(version)
-  print(width.." "..height.." "..length)
+  --print(version)
+  --print(width.." "..height.." "..length)
+  io.write(version.." "..width.." "..height.." "..length.."\n\n")
 end
 
 local function writeMaterialTable()
-  print("natural_materials")
-  --for key, value in pairs(NaturalMaterialsTable) do
-  --  print(key.." "..value)
-  --end
-  --printall(NaturalMaterialsTable)
-  printall(NaturalMaterialsTable["a"].material)
-  print("natural_materials_end")
+  --print("natural_materials")
+  io.write("natural_materials\n")
+  for key, value in pairs(NaturalMaterialsTable) do
+    --print(key.." "..value)
+    io.write(key.." "..value.."\n")
+  end
+  --print("natural_materials_end")
+  io.write("natural_materials_end\n")
 end
 
 local function writeShapeTable()
-  print("natural_types")
-  print("a air")
-  print("w block")
-  print("f floor")
-  print("natural_types_end")
+  --print("natural_types")
+  --print("a air")
+  --print("w block")
+  --print("f floor")
+  --print("natural_types_end")
+  io.write("natural_types\n")
+  io.write("a air\n")
+  io.write("w block\n")
+  io.write("f floor\n")
+  io.write("natural_types_end\n")
 end
 
 local function writeLayer(material, shape)
-  print(material)
-  print(shape)
+  --print(material)
+  --print(shape)
+  io.write(material.."\n")
+  io.write(shape.."\n")
 end
 
 local function main()
@@ -165,9 +225,12 @@ local block_cache_table = {} --hold a line of blocks to save looking them up mul
 local biome_cache_table = {} --hold all embark biomes
 local tile_type_material = {} --same as shape but for material
 local tile_type_shape = {} --tile type value to shape letter. tile type numbers are duplicated since both tables have one
-local next_material_letter = " "
 
 local count = 0
+local version = "v0.2"
+opal_prospect_file = io.open("opal.txt", "w")
+io.output(opal_prospect_file)
+writeHeader(version, world_x, world_z, world_y) --z and y need to be swapped for opal prospect
 
 for embark_y = embark_y_count - 1, 0, -1 do
   for embark_x = 0, embark_x_count - 1, 1 do
@@ -213,10 +276,9 @@ end
 
                 if TileTypeMaterialTable[tile_attributes.material] == 1 then --get layer material
                   local biome = biome_cache_table[math.floor(x_block / 3) + math.floor(y_block / 3)]
-                  next_material_letter = CharacterTable[next_material_letter]
-                  tile_type_material[tile_type] = next_material_letter
                   local material = biome.layers[designations.geolayer_index].mat_index
-                  NaturalMaterialsTable[next_material_letter] = dfhack.matinfo.decode(0, material)
+                  current_material = addMaterial(0, material)
+                  tile_type_material[tile_type] = current_material
                 else
                   tile_type_material[tile_type] = TileTypeMaterialTable[tile_attributes.material]
                 end
@@ -266,11 +328,10 @@ end
 --print("tile_type_shape count: "..tile_type_shape_count)
 --print("")
 --print("count: "..count)
-local version = "v0.2"
 
-writeHeader(version, world_x, world_z, world_y) --z and y need to be swapped for opal prospect
 writeMaterialTable()
 writeShapeTable()
+opal_prospect_file.close()
 end
 
 main()
