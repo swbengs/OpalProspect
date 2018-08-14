@@ -112,10 +112,37 @@ CharacterTable =
   ["A"] = "B"
 }
 
+NaturalMaterialsTable = {}
+
+local function getLayerMaterial(biome_table)
+
+end
+
+--all writes will need to made into actual file writes and not just print to console
+local function writeHeader(version, width, height, length)
+  print(version)
+  print(width.." "..height.." "..length)
+end
+
+local function writeMaterialTable()
+  print("natural_materials")
+  for key, value in pairs() do
+    print(key.." "..value)
+  end
+    print("natural_materials_end")
+end
+
+local function writeShapeTable()
+  print("natural_types")
+  print("a air")
+  print("w block")
+  print("f floor")
+  print("natural_types_end")
+end
+
 local function writeLayer(material, shape)
   print(material)
   print(shape)
-  --print("")
 end
 
 local function main()
@@ -132,28 +159,19 @@ print("block_x_count: "..block_x_count)
 print("block_y_count: "..block_y_count)
 
 local block_cache_table = {} --hold a line of blocks to save looking them up multiple times
-local tile_type_material = { ["a"] = "white_sand", ["b"] = "gabbro" } --same as shape but for material
+local tile_type_material = {} --same as shape but for material
 local tile_type_shape = {} --tile type value to shape letter. tile type numbers are duplicated since both tables have one
 
-local material_count = world_z --default will be used to save having to check for nil every loop
-local shape_count = world_y --instead these are written out right away
-local material_letter
-local shape_letter
-
-local material_output--strings that get written in one go
-local shape_output
 local count = 0
 
-  for z = 0, world_z - 1, 1 do
+  for z = 160, world_z - 1, 1 do --start at 0 and go until world_z - 1. changes here are just for testing such as starting at higher height
     --set defaults
-    material_count = 0
-    shape_count = 0
-
-    material_letter = " "
-    shape_letter = " "
-
-    material_output = ""
-    shape_output = ""
+    local material_count = 0
+    local shape_count = 0
+    local material_letter = " "
+    local shape_letter = " "
+    local material_output = ""
+    local shape_output = ""
 
     for y_block = block_y_count - 1, 0, -1 do
       for index = 0, block_x_count - 1, 1 do
@@ -175,7 +193,7 @@ local count = 0
               current_shape =  tile_type_shape[tile_type]
               if current_shape == nil then --if shape is missing then material is also
                 local tile_attributes = df.tiletype.attrs[tile_type]
-                tile_type_material[tile_type] = "b" --set to gabbro for test purpose
+                tile_type_material[tile_type] = TileTypeMaterialTable[tile_attributes.material]
                 tile_type_shape[tile_type] = TileTypeShapeTable[tile_attributes.shape]
 
                 current_material = tile_type_material[tile_type]
@@ -212,10 +230,10 @@ local count = 0
     writeLayer(material_output, shape_output) --write current output then reset both outputs and all counts and letters
   end
 
-local tile_type_shape_count = 0
-for _ in pairs(tile_type_shape) do
-  tile_type_shape_count = tile_type_shape_count + 1
-end
+--local tile_type_shape_count = 0
+--for _ in pairs(tile_type_shape) do
+--  tile_type_shape_count = tile_type_shape_count + 1
+--end
 --print("tile_type_material")
 --printall(tile_type_material)
 --print("tile_type_shape")
@@ -223,6 +241,11 @@ end
 --print("tile_type_shape count: "..tile_type_shape_count)
 --print("")
 --print("count: "..count)
+local version = "v0.2"
+
+writeHeader(version, world_x, world_z, world_y) --z and y need to be swapped for opal prospect
+
+writeShapeTable()
 end
 
 main()
