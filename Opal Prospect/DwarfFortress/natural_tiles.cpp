@@ -303,22 +303,22 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
             //liquid end
 
         //ore start
-    case DF_ADAMANTINE:
-        return "adamantine";
-    case DF_ALUMINUM:
-        return "aluminum";
+    case DF_RAW_ADAMANTINE:
+        return "raw_adamantine";
+    case DF_NATIVE_ALUMINUM:
+        return "native_aluminum";
     case DF_BISMUTHINITE:
         return "bismuthinite";
     case DF_CASSITERITE:
         return "cassiterite";
-    case  DF_COPPER:
-        return "copper";
+    case  DF_NATIVE_COPPER:
+        return "native_copper";
     case  DF_GALENA:
         return "galena";
     case  DF_GARNIERITE:
         return "garnierite";
-    case  DF_GOLD:
-        return "gold";
+    case  DF_NATIVE_GOLD:
+        return "native_gold";
     case  DF_HEMATITE:
         return "hematite";
     case  DF_HORN_SILVER:
@@ -329,10 +329,10 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "magnetite";
     case  DF_MALACHITE:
         return "malachite";
-    case  DF_PLATINUM:
-        return "platinum";
-    case  DF_SILVER:
-        return "silver";
+    case  DF_NATIVE_PLATINUM:
+        return "native_platinum";
+    case  DF_NATIVE_SILVER:
+        return "native_silver";
     case  DF_SPHALERITE:
         return "sphalerite";
     case  DF_TETRAHEDRITE:
@@ -449,8 +449,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "lignite";
     case DF_LIMESTONE:
         return "limestone";
-    case DF_LLMENITE:
-        return "llmenite";
+    case DF_ILMENITE:
+        return "ilmenite";
     case DF_MARBLE:
         return "marble";
     case DF_MARCASITE:
@@ -792,22 +792,22 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         //liquid end
 
         //ore start
-    case DF_ADAMANTINE:
-        return "adamantine.png";
-    case DF_ALUMINUM:
-        return "aluminum.png";
+    case DF_RAW_ADAMANTINE:
+        return "raw_adamantine.png";
+    case DF_NATIVE_ALUMINUM:
+        return "native_aluminum.png";
     case DF_BISMUTHINITE:
         return "bismuthinite.png";
     case DF_CASSITERITE:
         return "cassiterite.png";
-    case  DF_COPPER:
-        return "copper.png";
+    case  DF_NATIVE_COPPER:
+        return "native_copper.png";
     case  DF_GALENA:
         return "galena.png";
     case  DF_GARNIERITE:
         return "garnierite.png";
-    case  DF_GOLD:
-        return "gold.png";
+    case  DF_NATIVE_GOLD:
+        return "native_gold.png";
     case  DF_HEMATITE:
         return "hematite.png";
     case  DF_HORN_SILVER:
@@ -818,10 +818,10 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "magnetite.png";
     case  DF_MALACHITE:
         return "malachite.png";
-    case  DF_PLATINUM:
-        return "platinum.png";
-    case  DF_SILVER:
-        return "silver.png";
+    case  DF_NATIVE_PLATINUM:
+        return "native_platinum.png";
+    case  DF_NATIVE_SILVER:
+        return "native_silver.png";
     case  DF_SPHALERITE:
         return "sphalerite.png";
     case  DF_TETRAHEDRITE:
@@ -938,8 +938,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "lignite.png";
     case DF_LIMESTONE:
         return "limestone.png";
-    case DF_LLMENITE:
-        return "llmenite.png";
+    case DF_ILMENITE:
+        return "ilmenite.png";
     case DF_MARBLE:
         return "marble.png";
     case DF_MARCASITE:
@@ -1022,7 +1022,7 @@ DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
     {
         return DF_NATURAL_LIQUID;
     }
-    else if (e >= DF_ADAMANTINE && e <= DF_TETRAHEDRITE)
+    else if (e >= DF_RAW_ADAMANTINE && e <= DF_TETRAHEDRITE)
     {
         return DF_NATURAL_ORE;
     }
