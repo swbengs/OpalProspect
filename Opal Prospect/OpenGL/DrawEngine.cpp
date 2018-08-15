@@ -947,7 +947,7 @@ void DrawEngine::terrain_16x16x16_test(NaturalTerrain& natural_terrain)
     next = Grid3DYOffset::getIndexRight(next, width, height, length);
 
     natural_terrain.setIndexDrawTypeN(first, 4, DF_DRAW_AIR, DF_DRAW_FLOOR, &Grid3DYOffset::getIndexRight);
-    natural_terrain.setIndexMaterialN(first, 4, DF_DEMATOID, DF_GARNIERITE, &Grid3DYOffset::getIndexRight);
+    natural_terrain.setIndexMaterialN(first, 4, DF_DEMANTOID, DF_GARNIERITE, &Grid3DYOffset::getIndexRight);
 
     next = Grid3DYOffset::getIndexUp(next, width, height, length);
 

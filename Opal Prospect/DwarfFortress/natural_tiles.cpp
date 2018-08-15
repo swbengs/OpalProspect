@@ -39,6 +39,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
     switch (e)
     {
         //gem start
+    case DF_ALMANDINE:
+        return "almandine";
     case DF_ALEXANDRITE:
         return "alexandrite";
     case DF_AMBER_OPAL:
@@ -107,8 +109,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "crystal_glass";
     case DF_CRYSTAL_OPAL:
         return "crystal_opal";
-    case DF_DEMATOID:
-        return "dematoid";
+    case DF_DEMANTOID:
+        return "demantoid";
     case DF_DENDRITIC_AGATE:
         return "dendritic_agate";
     case DF_EMERALD:
@@ -169,6 +171,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "milk_opal";
     case DF_MILK_QUARTZ:
         return "milk_quartz";
+    case DF_MOONSTONE:
+        return "moonstone";
     case DF_MORGANITE:
         return "morganite";
     case DF_MORION:
@@ -177,6 +181,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "moss_agate";
     case DF_MOSS_OPAL:
         return "moss_opal";
+    case DF_ONYX:
+        return "onyx";
     case DF_ONYX_OPAL:
         return "onyx_opal";
     case DF_PERIDOT:
@@ -213,8 +219,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "red_diamond";
     case DF_RED_FLASH_OPAL:
         return "red_flash_opal";
-    case DF_RED_GRSSULAR:
-        return "red_grssular";
+    case DF_RED_GROSSULAR:
+        return "red_grossular";
     case DF_RED_PYROPE:
         return "red_pyrope";
     case DF_RED_SPINEL:
@@ -528,6 +534,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
     switch (e)
     {
         //gem start
+    case DF_ALMANDINE:
+        return "almandine.png";
     case DF_ALEXANDRITE:
         return "alexandrite.png";
     case DF_AMBER_OPAL:
@@ -596,8 +604,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "crystal_glass.png";
     case DF_CRYSTAL_OPAL:
         return "crystal_opal.png";
-    case DF_DEMATOID:
-        return "dematoid.png";
+    case DF_DEMANTOID:
+        return "demantoid.png";
     case DF_DENDRITIC_AGATE:
         return "dendritic_agate.png";
     case DF_EMERALD:
@@ -658,6 +666,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "milk_opal.png";
     case DF_MILK_QUARTZ:
         return "milk_quartz.png";
+    case DF_MOONSTONE:
+        return "moonstone.png";
     case DF_MORGANITE:
         return "morganite.png";
     case DF_MORION:
@@ -666,6 +676,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "moss_agate.png";
     case DF_MOSS_OPAL:
         return "moss_opal.png";
+    case DF_ONYX:
+        return "onyx.png";
     case DF_ONYX_OPAL:
         return "onyx_opal.png";
     case DF_PERIDOT:
@@ -702,8 +714,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "red_diamond.png";
     case DF_RED_FLASH_OPAL:
         return "red_flash_opal.png";
-    case DF_RED_GRSSULAR:
-        return "red_grssular.png";
+    case DF_RED_GROSSULAR:
+        return "red_grossular.png";
     case DF_RED_PYROPE:
         return "red_pyrope.png";
     case DF_RED_SPINEL:
@@ -1014,7 +1026,7 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
 
 DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
 {
-    if (e >= DF_ALEXANDRITE && e <= DF_YELLOW_ZIRCON)
+    if (e >= DF_ALMANDINE && e <= DF_YELLOW_ZIRCON)
     {
         return DF_NATURAL_GEM;
     }

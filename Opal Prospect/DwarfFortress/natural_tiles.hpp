@@ -34,7 +34,7 @@ SOFTWARE.
 Description: Enums, strings, and filenames for all natural tiles. This means soil, rough stone, liquid, ore, and gems. No HFS or grass/organic material
 */
 
-static const int DF_NATURAL_TILE_COUNT = 233;
+static const int DF_NATURAL_TILE_COUNT = 235;
 
 enum DF_Material_Type
 {
@@ -49,6 +49,7 @@ enum DF_Material_Type
 enum DF_Natural_Tile_Material
 {
     //gem start
+    DF_ALMANDINE,
     DF_ALEXANDRITE,
     DF_AMBER_OPAL,
     DF_AMETHYST,
@@ -83,7 +84,7 @@ enum DF_Natural_Tile_Material
     DF_CLEAR_ZIRCON,
     DF_CRYSTAL_GLASS,
     DF_CRYSTAL_OPAL,
-    DF_DEMATOID,
+    DF_DEMANTOID,
     DF_DENDRITIC_AGATE,
     DF_EMERALD,
     DF_FAINT_YELLOW_DIAMOND,
@@ -114,10 +115,12 @@ enum DF_Natural_Tile_Material
     DF_MELANITE,
     DF_MILK_OPAL,
     DF_MILK_QUARTZ,
+    DF_MOONSTONE,
     DF_MORGANITE,
     DF_MORION,
     DF_MOSS_AGATE,
     DF_MOSS_OPAL,
+    DF_ONYX,
     DF_ONYX_OPAL,
     DF_PERIDOT,
     DF_PICTURE_JASPER,
@@ -136,7 +139,7 @@ enum DF_Natural_Tile_Material
     DF_RED_BERYL,
     DF_RED_DIAMOND,
     DF_RED_FLASH_OPAL,
-    DF_RED_GRSSULAR,
+    DF_RED_GROSSULAR,
     DF_RED_PYROPE,
     DF_RED_SPINEL,
     DF_RED_TOURMALINE,
