@@ -513,6 +513,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "shale";
     case DF_SILTSTONE:
         return "siltstone";
+    case DF_SLADE:
+        return "slade";
     case DF_SLATE:
         return "slate";
     case DF_STIBNITE:
@@ -1008,6 +1010,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "shale.png";
     case DF_SILTSTONE:
         return "siltstone.png";
+    case DF_SLADE:
+        return "slade.png";
     case DF_SLATE:
         return "slate.png";
     case DF_STIBNITE:

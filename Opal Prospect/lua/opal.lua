@@ -543,6 +543,10 @@ end
     writeLayer(material_output, shape_output) --write current output then reset both outputs and all counts and letters
   end
 
+writeMaterialTable()
+writeShapeTable()
+opal_prospect_file.close()
+
 --local tile_type_shape_count = 0
 --for _ in pairs(tile_type_shape) do
 --  tile_type_shape_count = tile_type_shape_count + 1
@@ -554,10 +558,9 @@ end
 --print("tile_type_shape count: "..tile_type_shape_count)
 --print("")
 --print("count: "..count)
+print("inorganic table")
+printall(InorganicMaterialNumberToString)
 
-writeMaterialTable()
-writeShapeTable()
-opal_prospect_file.close()
 end
 
 main()

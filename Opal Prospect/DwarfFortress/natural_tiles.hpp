@@ -292,6 +292,7 @@ enum DF_Natural_Tile_Material
     DF_SERPENTINE,
     DF_SHALE,
     DF_SILTSTONE,
+    DF_SLADE,
     DF_SLATE,
     DF_STIBNITE,
     DF_SYLVITE,
