@@ -1046,13 +1046,13 @@ DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
     {
         return DF_NATURAL_SOIL;
     }
-    else if (e == DF_HIDDEN)
-    {
-        return DF_NATURAL_HIDDEN;
-    }
-    else //stone
+    else if(e >= DF_ALABASTER && e <= DF_TALC)
     {
         return DF_NATURAL_STONE;
+    }
+    else //actual hidden and if somehow someone passes in the count enum
+    {
+        return DF_NATURAL_HIDDEN;
     }
 }
 

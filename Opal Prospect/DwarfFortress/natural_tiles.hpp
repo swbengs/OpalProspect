@@ -34,8 +34,6 @@ SOFTWARE.
 Description: Enums, strings, and filenames for all natural tiles. This means soil, rough stone, liquid, ore, and gems. No HFS or grass/organic material
 */
 
-static const int DF_NATURAL_TILE_COUNT = 235;
-
 enum DF_Material_Type
 {
     DF_NATURAL_HIDDEN,
@@ -298,7 +296,8 @@ enum DF_Natural_Tile_Material
     DF_SYLVITE,
     DF_TALC,
     //stone end
-    DF_HIDDEN
+    DF_HIDDEN,
+    DF_NATURAL_TILE_COUNT //never add below this one only above it
 };
 
 std::string DFNaturalTileString(DF_Natural_Tile_Material e);
