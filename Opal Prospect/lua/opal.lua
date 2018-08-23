@@ -34,7 +34,7 @@ TileTypeMaterialTable =
   [df.tiletype_material.SOIL] = 1,
   [df.tiletype_material.STONE] = 1,
   [df.tiletype_material.FEATURE] = "a",
-  [df.tiletype_material.LAVA_STONE] = "a",
+  [df.tiletype_material.LAVA_STONE] = 2,
   [df.tiletype_material.MINERAL] = "D",
   [df.tiletype_material.FROZEN_LIQUID] = "a",
   [df.tiletype_material.CONSTRUCTION] = 1,
@@ -427,28 +427,34 @@ local block_y_count = world_y / 16
 local embark_x_count = world_x / 48
 local embark_y_count = world_y / 48
 
+--caches
 local block_cache_table = {} --hold a line of blocks to save looking them up multiple times
-local biome_cache_table = {} --hold all embark biomes
-local tile_type_material = {} --same as shape but for material
-local tile_type_shape = {} --tile type value to shape letter. tile type numbers are duplicated since both tables have one
+local layer_letter_cache = {} --hold all embark biome's layer letters. These already have their material known and added to the proper table. give the geolayer_index and it gives the letter
+local lava_stone_letter_cache = {} --holds each embark biome's lava letter. give lava_stone to get the letter
+local tile_type_shape_cache = {} --tile type value to shape letter
+local tile_type_material_cache = {} --tile type value to material enum. These are contained in TileTypeMaterialTable
+--end caches
 
 opal_prospect_file = io.open("opal.txt", "w")
 io.output(opal_prospect_file)
 writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for opal prospect
 
+--setup caches
 for embark_y = embark_y_count - 1, 0, -1 do
   for embark_x = 0, embark_x_count - 1, 1 do
     biome_cache_table[embark_x + embark_y * embark_x_count] = df.world_geo_biome.find(dfhack.maps.getRegionBiome(dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)).geo_index)
   end
 end
 
+--end setup caches
+
   for z = 160, world_z - 1, 1 do --start at 0 and go until world_z - 1. changes here are just for testing such as starting at higher height
     --set defaults
     local material_count = 0
     local shape_count = 0
-    local material_letter = " "
-    local shape_letter = " "
-    local material_output = ""
+    local current_wall_material_letter = " "
+    local current_shape_letter = " "
+    local wall_material_output = ""
     local shape_output = ""
 
     for y_block = block_y_count - 1, 0, -1 do
@@ -458,50 +464,51 @@ end
       for y = 15, 0, -1 do
         for x_block = 0, block_x_count - 1, 1 do
           for x = 0, 15, 1 do
+            --check if hidden. if not get the shape and update tiletype to shape cache. then lookup material based on tiletype
             local designations = block_cache_table[x_block].designation[x][y]
-            local current_material
-            local current_shape
+            local wall_material
+            local shape
             --set defaults for a hidden block which is WALL and HIDDEN
             if designations.hidden then
-              current_material = "a"
-              current_shape = "w"
+              material = "a"
+              shape = "w"
             else
               local tile_type = dfhack.maps.getTileType(x + 16 * x_block, y + 16 * y_block, z)
-              current_material = tile_type_material[tile_type]
-              current_shape =  tile_type_shape[tile_type]
-              if current_shape == nil then --if shape is missing then material is also
+              material = tile_type_material[tile_type]
+              shape =  tile_type_shape[tile_type]
+              if shape == nil then --if shape is missing then material is also
                 local tile_attributes = df.tiletype.attrs[tile_type]
                 tile_type_shape[tile_type] = TileTypeShapeTable[tile_attributes.shape]
 
                 if TileTypeMaterialTable[tile_attributes.material] == 1 then --get layer material
                   local biome = biome_cache_table[math.floor(x_block / 3) + math.floor(y_block / 3)]
-                  local material = biome.layers[designations.geolayer_index].mat_index
-                  current_material = addMaterial(0, material)
-                  tile_type_material[tile_type] = current_material
+                  local layer_material = biome.layers[designations.geolayer_index].mat_index
+                  material = addMaterial(0, material)
+                  tile_type_material[tile_type] = layer_material
                 else
                   tile_type_material[tile_type] = TileTypeMaterialTable[tile_attributes.material]
                 end
 
-                current_material = tile_type_material[tile_type]
-                current_shape = tile_type_shape[tile_type]
+                material = tile_type_material[tile_type]
+                shape = tile_type_shape[tile_type]
               end
             end
 
-            if current_material ~= material_letter then --material and shape must be done seperate
-              if material_letter ~= " " then --if not default append
-                material_output = material_output..material_count..material_letter
+            if material ~= current_material_letter then --material and shape must be done seperate
+              if current_material_letter ~= " " then --if not default append
+                material_output = material_output..material_count..current_material_letter
               end
-              material_letter = current_material
+              current_material_letter = current_material
               material_count = 1
             else
               material_count = material_count + 1
             end
 
-            if current_shape ~= shape_letter then
-              if shape_letter ~= " " then
-                shape_output = shape_output..shape_count..shape_letter
+            if shape ~= current_shape_letter then
+              if current_shape_letter ~= " " then
+                shape_output = shape_output..shape_count..current_shape_letter
               end
-              shape_letter = current_shape
+              current_shape_letter = shape
               shape_count = 1
             else
               shape_count = shape_count + 1
@@ -511,8 +518,8 @@ end
         end
       end
     end
-    material_output = material_output..material_count..material_letter --append the last letter and count to proper string
-    shape_output = shape_output..shape_count..shape_letter
+    material_output = material_output..material_count..current_material_letter --append the last letter and count to proper string
+    shape_output = shape_output..shape_count..current_shape_letter
     writeLayer(material_output, shape_output) --write current output then reset both outputs and all counts and letters
   end
 
