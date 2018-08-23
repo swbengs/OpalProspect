@@ -26,6 +26,9 @@ SOFTWARE.
 opal
 =================
 First version of script to pull data from DFHack
+
+Huge shout out to Milo Christiansen and his script at https://github.com/DFHack/dfhack/blob/master/library/lua/tile-material.lua
+It was used to speed up development greatly!
 ]]
 
 TileTypeMaterialTable = 
@@ -440,17 +443,28 @@ io.output(opal_prospect_file)
 writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for opal prospect
 
 --setup caches
+--per embark tile caches
 for embark_y = embark_y_count - 1, 0, -1 do
   for embark_x = 0, embark_x_count - 1, 1 do
-    biome_cache_table[embark_x + embark_y * embark_x_count] = df.world_geo_biome.find(dfhack.maps.getRegionBiome(dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)).geo_index)
+    local biome = df.world_geo_biome.find(dfhack.maps.getRegionBiome(dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)).geo_index)
+    local index = embark_x_count * embark_x + embark_y
+    layer_letter_cache[index] = {}
+    local cache = layer_letter_cache[index]
+    for key, layer in ipairs(biome.layers) do
+      cache[key] = addMaterial(0, layer.mat_index)
+    end
   end
 end
+
+--printall(layer_letter_cache)
+--printall(layer_letter_cache[0])
+--printall(NaturalMaterialsTable)
 
 --end setup caches
 
   for z = 160, world_z - 1, 1 do --start at 0 and go until world_z - 1. changes here are just for testing such as starting at higher height
     --set defaults
-    local material_count = 0
+    local wall_material_count = 0
     local shape_count = 0
     local current_wall_material_letter = " "
     local current_shape_letter = " "
@@ -483,7 +497,7 @@ end
                 if TileTypeMaterialTable[tile_attributes.material] == 1 then --get layer material
                   local biome = biome_cache_table[math.floor(x_block / 3) + math.floor(y_block / 3)]
                   local layer_material = biome.layers[designations.geolayer_index].mat_index
-                  material = addMaterial(0, material)
+                  layer_material = addMaterial(0, layer_material)
                   tile_type_material[tile_type] = layer_material
                 else
                   tile_type_material[tile_type] = TileTypeMaterialTable[tile_attributes.material]
