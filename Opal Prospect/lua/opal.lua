@@ -372,7 +372,40 @@ CharacterTable =
   ["W"] = "X",
   ["X"] = "Y",
   ["Y"] = "Z",
-  ["Z"] = nil
+  --special characters
+  ["Z"] = "!",
+  ["!"] = "\"",
+  ["\""] = "#",
+  ["#"] = "$",
+  ["$"] = "%",
+  ["%"] = "&",
+  ["&"] = "\'",
+  ["\'"] = "(",
+  ["("] = ")",
+  [")"] = "*",
+  ["*"] = "+",
+  ["+"] = ",",
+  [","] = "-",
+  ["-"] = ".",
+  ["."] = "/",
+  ["/"] = ":",
+  [":"] = ";",
+  [";"] = "<",
+  ["<"] = "=",
+  ["="] = ">",
+  [">"] = "?",
+  ["?"] = "@",
+  ["@"] = "[",
+  ["["] = "\\",
+  ["\\"] = "]",
+  ["]"] = "^",
+  ["^"] = "_",
+  ["_"] = "`",
+  ["`"] = "{",
+  ["{"] = "|",
+  ["|"] = "}",
+  ["}"] = "~",
+  ["~"] = nil
 }
 
 NaturalMaterialsTable = 
@@ -456,7 +489,8 @@ local embark_x_count = world_x / 48
 local embark_y_count = world_y / 48
 
 --caches
-local block_cache_table = {} --hold a line of blocks to save looking them up multiple times
+local block_cache = {} --hold a line of blocks to save looking them up multiple times
+local vein_cache = {} -- same as block cache but this holds the veins for the current blocks and their material letter
 local layer_letter_cache = {} --hold all embark biome's layer letters. These already have their material known and added to the proper table. give the geolayer_index and it gives the letter
 local lava_stone_letter_cache = {} --holds each embark biome's lava letter. give lava_stone to get the letter
 local tile_type_shape_cache = {} --tile type value to shape letter
@@ -501,7 +535,7 @@ end
 
 --end setup caches
 
-  for z = 160, world_z - 1, 1 do --start at 0 and go until world_z - 1. changes here are just for testing such as starting at higher height
+  for z = 0, world_z - 1, 1 do --start at 0 and go until world_z - 1. changes here are just for testing such as starting at higher height
     --set defaults
     local wall_material_count = 0
     local shape_count = 0
@@ -513,14 +547,22 @@ end
     for y_block = block_y_count - 1, 0, -1 do
       local embark_y = math.floor(y_block / 3)
       for index = 0, block_x_count - 1, 1 do
-        block_cache_table[index] = dfhack.maps.getBlock(index, y_block, z)
+        block_cache[index] = dfhack.maps.getBlock(index, y_block, z)
+        --vein_cache[index] = {}
+
+        for key, event in ipairs(block_cache[index].block_events) do
+          if getmetatable(event) == "block_square_event_mineralst" then
+            --table.insert(vein_cache[index], addMaterial(0, event.inorganic_mat))
+            addMaterial(0, event.inorganic_mat)
+          end
+        end
       end
       for y = 15, 0, -1 do
         for x_block = 0, block_x_count - 1, 1 do
           local embark_x = math.floor(x_block / 3)
           for x = 0, 15, 1 do
             --check if hidden. if not get the shape and update tiletype to shape cache. then lookup material based on tiletype
-            local designations = block_cache_table[x_block].designation[x][y]
+            local designations = block_cache[x_block].designation[x][y]
             local wall_material
             local shape
             --set defaults for a hidden block which is WALL and HIDDEN
