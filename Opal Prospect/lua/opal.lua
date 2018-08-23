@@ -38,7 +38,7 @@ TileTypeMaterialTable =
   [df.tiletype_material.STONE] = 1,
   [df.tiletype_material.FEATURE] = "a",
   [df.tiletype_material.LAVA_STONE] = 2,
-  [df.tiletype_material.MINERAL] = "D",
+  [df.tiletype_material.MINERAL] = 3,
   [df.tiletype_material.FROZEN_LIQUID] = "a",
   [df.tiletype_material.CONSTRUCTION] = 1,
   [df.tiletype_material.GRASS_LIGHT] = 1,
@@ -347,7 +347,32 @@ CharacterTable =
   ["x"] = "y",
   ["y"] = "z",
   ["z"] = "A",
-  ["A"] = "B"
+  ["A"] = "B",
+  ["B"] = "C",
+  ["C"] = "D",
+  ["D"] = "E",
+  ["E"] = "F",
+  ["F"] = "G",
+  ["G"] = "H",
+  ["H"] = "I",
+  ["I"] = "J",
+  ["J"] = "K",
+  ["K"] = "L",
+  ["L"] = "M",
+  ["M"] = "N",
+  ["N"] = "O",
+  ["O"] = "P",
+  ["P"] = "Q",
+  ["Q"] = "R",
+  ["R"] = "S",
+  ["S"] = "T",
+  ["T"] = "U",
+  ["U"] = "V",
+  ["V"] = "W",
+  ["W"] = "X",
+  ["X"] = "Y",
+  ["Y"] = "Z",
+  ["Z"] = nil
 }
 
 NaturalMaterialsTable = 
@@ -507,11 +532,16 @@ end
               if shape == "a" then
                 wall_material = "a"
               elseif shape == "f" then
-                wall_material = "a" --set wall to this, later on when there is a wall and floor material we will deal with the floor material
+                --wall_material = "a" --set wall to this, later on when there is a wall and floor material we will deal with the floor material
+                wall_material = layer_letter_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index] --temp to see actual floor material
               elseif shape == "w" then
                 wall_material = TileTypeMaterialTable[wall_material] --wall material has the enum so put that into the material table to see what to do
                 if wall_material == 1 then --layer material
                   wall_material = layer_letter_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index]
+                elseif wall_material == 2 then --lava stone
+                  wall_material = "a" --temp
+                elseif wall_material == 3 then --vein
+                  wall_material = "D" --temp
                 end
               else
                 error("unknown shape letter")
