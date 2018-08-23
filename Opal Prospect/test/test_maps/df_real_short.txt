@@ -54,7 +54,7 @@ natural_materials
 i schist
 h granite
 g diorite
-f hornblende
+f gabbro
 e silty_clay_loam
 d white_sand
 c clay

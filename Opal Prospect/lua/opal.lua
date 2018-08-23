@@ -203,7 +203,7 @@ InorganicMaterialNumberToString =
   [171] = "chalk",
   [172] = "granite",
   [173] = "diorite",
-  [174] = "hornblende",
+  [174] = "gabbro",
   [175] = "rhyolite",
   [176] = "basalt",
   [177] = "andesite",
@@ -459,6 +459,9 @@ end
 --printall(layer_letter_cache)
 --printall(layer_letter_cache[0])
 --printall(NaturalMaterialsTable)
+--for key, value in ipairs(layer_letter_cache) do
+  --printall(layer_letter_cache[key])
+--end
 
 --end setup caches
 
