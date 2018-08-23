@@ -474,15 +474,26 @@ for embark_y = embark_y_count - 1, 0, -1 do
     local biome = df.world_geo_biome.find(dfhack.maps.getRegionBiome(dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)).geo_index)
     local index = embark_x + embark_y * embark_x_count
     layer_letter_cache[index] = {}
-    local cache = layer_letter_cache[index]
+    local cache = layer_letter_cache[index] --layers
     for key, layer in ipairs(biome.layers) do
       cache[key] = addMaterial(0, layer.mat_index)
     end
+
+    local regions = df.global.world.world_data.region_details
+    local region_x, region_y = dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)
+    for key, region in ipairs(regions) do
+        if region.pos.x == region_x and region.pos.y == region_y then
+            lava_stone_letter_cache[index] = addMaterial(0, region.lava_stone)
+            break
+        end
+    end
+    
   end
 end
 
 --printall(layer_letter_cache)
 --printall(layer_letter_cache[0])
+--printall(lava_stone_letter_cache)
 --printall(NaturalMaterialsTable)
 --for key, value in ipairs(layer_letter_cache) do
   --printall(layer_letter_cache[key])
@@ -539,7 +550,7 @@ end
                 if wall_material == 1 then --layer material
                   wall_material = layer_letter_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index]
                 elseif wall_material == 2 then --lava stone
-                  wall_material = "a" --temp
+                  wall_material = lava_stone_letter_cache[embark_x + embark_y * embark_x_count]
                 elseif wall_material == 3 then --vein
                   wall_material = "D" --temp
                 end
@@ -595,6 +606,7 @@ opal_prospect_file.close()
 --print("count: "..count)
 --print("inorganic table")
 --printall(InorganicMaterialNumberToString)
+printall(NaturalMaterialsTable)
 
 end
 
