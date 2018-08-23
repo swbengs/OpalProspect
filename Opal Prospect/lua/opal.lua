@@ -392,30 +392,19 @@ local function addMaterial(type_index, material_index)
   end
 end
 
---all writes will need to made into actual file writes and not just print to console
 local function writeHeader(version, width, height, length)
-  --print(version)
-  --print(width.." "..height.." "..length)
   io.write(version.." "..width.." "..height.." "..length.."\n\n")
 end
 
 local function writeMaterialTable()
-  --print("natural_materials")
   io.write("natural_materials\n")
   for key, value in pairs(NaturalMaterialsTable) do
-    --print(key.." "..value)
     io.write(key.." "..value.."\n")
   end
-  --print("natural_materials_end")
   io.write("natural_materials_end\n")
 end
 
 local function writeShapeTable()
-  --print("natural_types")
-  --print("a air")
-  --print("w block")
-  --print("f floor")
-  --print("natural_types_end")
   io.write("natural_types\n")
   io.write("a air\n")
   io.write("w block\n")
@@ -424,50 +413,34 @@ local function writeShapeTable()
 end
 
 local function writeLayer(material, shape)
-  --print(material)
-  --print(shape)
   io.write(material.."\n")
   io.write(shape.."\n")
 end
 
 local function main()
---printall(TileTypeMaterialTable)
---printall(TileTypeShapeTable)
-
 local world_x, world_y, world_z
 world_x, world_y, world_z = dfhack.maps.getTileSize()
 print("world size x: "..world_x.." y: "..world_y.." z: "..world_z)
 
 local block_x_count = world_x / 16 --blocks are 16x16x1 pieces of the map. Each embark tile is 3x3 of these
 local block_y_count = world_y / 16
-print("block_x_count: "..block_x_count)
-print("block_y_count: "..block_y_count)
 local embark_x_count = world_x / 48
 local embark_y_count = world_y / 48
-print("embark_x_count: "..embark_x_count)
-print("embark_y_count: "..embark_y_count)
 
 local block_cache_table = {} --hold a line of blocks to save looking them up multiple times
 local biome_cache_table = {} --hold all embark biomes
 local tile_type_material = {} --same as shape but for material
 local tile_type_shape = {} --tile type value to shape letter. tile type numbers are duplicated since both tables have one
 
-local count = 0
-local version = "v0.2"
 opal_prospect_file = io.open("opal.txt", "w")
 io.output(opal_prospect_file)
-writeHeader(version, world_x, world_z, world_y) --z and y need to be swapped for opal prospect
+writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for opal prospect
 
 for embark_y = embark_y_count - 1, 0, -1 do
   for embark_x = 0, embark_x_count - 1, 1 do
     biome_cache_table[embark_x + embark_y * embark_x_count] = df.world_geo_biome.find(dfhack.maps.getRegionBiome(dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)).geo_index)
   end
 end
-
---for key, value in pairs(biome_cache_table) do
---  print(key)
---  print(value)
---end
 
   for z = 160, world_z - 1, 1 do --start at 0 and go until world_z - 1. changes here are just for testing such as starting at higher height
     --set defaults
@@ -558,8 +531,8 @@ opal_prospect_file.close()
 --print("tile_type_shape count: "..tile_type_shape_count)
 --print("")
 --print("count: "..count)
-print("inorganic table")
-printall(InorganicMaterialNumberToString)
+--print("inorganic table")
+--printall(InorganicMaterialNumberToString)
 
 end
 
