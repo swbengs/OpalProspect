@@ -447,7 +447,7 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
 for embark_y = embark_y_count - 1, 0, -1 do
   for embark_x = 0, embark_x_count - 1, 1 do
     local biome = df.world_geo_biome.find(dfhack.maps.getRegionBiome(dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)).geo_index)
-    local index = embark_x_count * embark_x + embark_y
+    local index = embark_x + embark_y * embark_x_count
     layer_letter_cache[index] = {}
     local cache = layer_letter_cache[index]
     for key, layer in ipairs(biome.layers) do
@@ -472,11 +472,13 @@ end
     local shape_output = ""
 
     for y_block = block_y_count - 1, 0, -1 do
+      local embark_y = math.floor(y_block / 3)
       for index = 0, block_x_count - 1, 1 do
         block_cache_table[index] = dfhack.maps.getBlock(index, y_block, z)
       end
       for y = 15, 0, -1 do
         for x_block = 0, block_x_count - 1, 1 do
+          local embark_x = math.floor(x_block / 3)
           for x = 0, 15, 1 do
             --check if hidden. if not get the shape and update tiletype to shape cache. then lookup material based on tiletype
             local designations = block_cache_table[x_block].designation[x][y]
@@ -484,35 +486,41 @@ end
             local shape
             --set defaults for a hidden block which is WALL and HIDDEN
             if designations.hidden then
-              material = "a"
+              wall_material = "a"
               shape = "w"
             else
               local tile_type = dfhack.maps.getTileType(x + 16 * x_block, y + 16 * y_block, z)
-              material = tile_type_material[tile_type]
-              shape =  tile_type_shape[tile_type]
-              if shape == nil then --if shape is missing then material is also
+              wall_material = tile_type_material_cache[tile_type]
+              shape =  tile_type_shape_cache[tile_type]
+
+              if shape == nil then --update tile type caches
                 local tile_attributes = df.tiletype.attrs[tile_type]
-                tile_type_shape[tile_type] = TileTypeShapeTable[tile_attributes.shape]
+                tile_type_shape_cache[tile_type] = TileTypeShapeTable[tile_attributes.shape]
+                tile_type_material_cache[tile_type] = tile_attributes.material
+                wall_material = tile_type_material_cache[tile_type]
+                shape =  tile_type_shape_cache[tile_type]
+              end
 
-                if TileTypeMaterialTable[tile_attributes.material] == 1 then --get layer material
-                  local biome = biome_cache_table[math.floor(x_block / 3) + math.floor(y_block / 3)]
-                  local layer_material = biome.layers[designations.geolayer_index].mat_index
-                  layer_material = addMaterial(0, layer_material)
-                  tile_type_material[tile_type] = layer_material
-                else
-                  tile_type_material[tile_type] = TileTypeMaterialTable[tile_attributes.material]
+              if shape == "a" then
+                wall_material = "a"
+              elseif shape == "f" then
+                wall_material = "a" --set wall to this, later on when there is a wall and floor material we will deal with the floor material
+              elseif shape == "w" then
+                wall_material = TileTypeMaterialTable[wall_material] --wall material has the enum so put that into the material table to see what to do
+                if wall_material == 1 then --layer material
+                  wall_material = layer_letter_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index]
                 end
-
-                material = tile_type_material[tile_type]
-                shape = tile_type_shape[tile_type]
+              else
+                error("unknown shape letter")
               end
             end
 
-            if material ~= current_material_letter then --material and shape must be done seperate
-              if current_material_letter ~= " " then --if not default append
-                material_output = material_output..material_count..current_material_letter
+            --check if any of the letters have changed and deal with it
+            if wall_material ~= current_wall_material_letter then --material and shape must be done seperate
+              if current_wall_material_letter ~= " " then --if not default append
+                wall_material_output = wall_material_output..material_count..current_wall_material_letter
               end
-              current_material_letter = current_material
+              current_wall_material_letter = wall_material
               material_count = 1
             else
               material_count = material_count + 1
@@ -532,9 +540,9 @@ end
         end
       end
     end
-    material_output = material_output..material_count..current_material_letter --append the last letter and count to proper string
+    wall_material_output = wall_material_output..material_count..current_wall_material_letter --append the last letter and count to proper string
     shape_output = shape_output..shape_count..current_shape_letter
-    writeLayer(material_output, shape_output) --write current output then reset both outputs and all counts and letters
+    writeLayer(wall_material_output, shape_output) --write current output then reset both outputs and all counts and letters
   end
 
 writeMaterialTable()
