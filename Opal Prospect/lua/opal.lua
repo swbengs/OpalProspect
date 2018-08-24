@@ -411,7 +411,6 @@ CharacterTable =
 NaturalMaterialsTable = 
 {
   ["a"] = "hidden", --defaults and test values
-  ["D"] = "tetrahedrite",
   ["E"] = "aluminum"
 }
 
@@ -451,6 +450,45 @@ local function addMaterial(type_index, material_index)
     table[next_material_letter] = name
     return next_material_letter
   end
+end
+
+local function veinValue(flags)
+  if flags.cluster then
+    return 1
+  elseif flags.vein then
+    return 2
+  elseif flags.cluster_small then
+    return 3
+  elseif flags.cluster_one then
+    return 4
+  else
+    error("unknown vein flag")
+  end
+end
+
+local function getVeinMaterialLetter(vein_cache, x, y) --vein cache table with all veins for this map block, full x and y value x_block * 16 + x and y_block * 16 + y
+  local tile_vein
+  local vein_value = 0
+  local saved_key
+
+  for key, vein in ipairs(vein_cache.veins) do
+    if dfhack.maps.getTileAssignment(vein.tile_bitmask, x, y) then
+      local temp = veinValue(vein.flags)
+      if temp >= vein_value then
+        vein_value = temp
+        tile_vein = vein
+        saved_key = key
+      end
+    end
+  end
+
+  local result = vein_cache.letters[saved_key]
+  if result == nil then
+    result = addMaterial(0, tile_vein.inorganic_mat)
+    vein_cache.letters[saved_key] = result
+  end
+
+  return result
 end
 
 local function writeHeader(version, width, height, length)
@@ -515,13 +553,12 @@ for embark_y = embark_y_count - 1, 0, -1 do
 
     local regions = df.global.world.world_data.region_details
     local region_x, region_y = dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)
-    for key, region in ipairs(regions) do
+    for _, region in ipairs(regions) do
         if region.pos.x == region_x and region.pos.y == region_y then
             lava_stone_letter_cache[index] = addMaterial(0, region.lava_stone)
             break
         end
     end
-    
   end
 end
 
@@ -548,12 +585,12 @@ end
       local embark_y = math.floor(y_block / 3)
       for index = 0, block_x_count - 1, 1 do
         block_cache[index] = dfhack.maps.getBlock(index, y_block, z)
-        --vein_cache[index] = {}
+        vein_cache[index] = { ["veins"] = {}, ["letters"] = {} } --each map block two tables. one table of the vein events and one table of the letter for each. don't populate the letters unless they are accessed
+        --so vein 1(the start) would have a vein_cache[same x_block location].letters[1]. if this is nil it has not been accessed or added yet. vein 2 vein_cache[same x_block location].letters[2]
 
-        for key, event in ipairs(block_cache[index].block_events) do
+        for _, event in ipairs(block_cache[index].block_events) do
           if getmetatable(event) == "block_square_event_mineralst" then
-            --table.insert(vein_cache[index], addMaterial(0, event.inorganic_mat))
-            addMaterial(0, event.inorganic_mat)
+            table.insert(vein_cache[index].veins, event)
           end
         end
       end
@@ -594,7 +631,7 @@ end
                 elseif wall_material == 2 then --lava stone
                   wall_material = lava_stone_letter_cache[embark_x + embark_y * embark_x_count]
                 elseif wall_material == 3 then --vein
-                  wall_material = "D" --temp
+                  wall_material = getVeinMaterialLetter(vein_cache[x_block], x + 16 * x_block, y + 16 * y_block)
                 end
               else
                 error("unknown shape letter")
