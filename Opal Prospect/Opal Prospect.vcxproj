@@ -227,6 +227,7 @@
     <ClCompile Include="Shapes\VertexBox.cpp" />
     <ClCompile Include="Shapes\VertexRectangle.cpp" />
     <ClCompile Include="Shapes\VertexTriangle.cpp" />
+    <ClCompile Include="Shapes\VoxelGrid.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicLog.hpp" />
@@ -306,6 +307,7 @@
     <ClInclude Include="Shapes\VertexBox.hpp" />
     <ClInclude Include="Shapes\VertexRectangle.hpp" />
     <ClInclude Include="Shapes\VertexTriangle.hpp" />
+    <ClInclude Include="Shapes\VoxelGrid.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\controls.md" />
