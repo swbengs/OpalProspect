@@ -52,10 +52,10 @@ TileTypeMaterialTable =
   [df.tiletype_material.ASHES] = "a",
   [df.tiletype_material.MAGMA] = "a",
   [df.tiletype_material.DRIFTWOOD] = 1,
-  [df.tiletype_material.POOL] = "E",
-  [df.tiletype_material.BROOK] = "E",
-  [df.tiletype_material.RIVER] = "E",
-  [df.tiletype_material.ROOT] = "E",
+  [df.tiletype_material.POOL] = "a",
+  [df.tiletype_material.BROOK] = "a",
+  [df.tiletype_material.RIVER] = "a",
+  [df.tiletype_material.ROOT] = "b",
   [df.tiletype_material.TREE] = 1,
   [df.tiletype_material.MUSHROOM] = 1,
   [df.tiletype_material.UNDERWORLD_GATE] = "a"
@@ -411,7 +411,7 @@ CharacterTable =
 NaturalMaterialsTable = 
 {
   ["a"] = "hidden", --defaults and test values
-  ["E"] = "aluminum"
+  ["b"] = "root"
 }
 
 next_material_letter = "a"

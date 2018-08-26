@@ -732,8 +732,8 @@ void tests()
 int main(void)
 {
     MainLoop loop;
-    //loop.startLoop();
-    tests();
+    loop.startLoop();
+    //tests();
 
     exit(EXIT_SUCCESS);
 }

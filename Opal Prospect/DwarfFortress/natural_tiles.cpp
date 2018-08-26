@@ -524,6 +524,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
     case DF_TALC:
         return "talc";
         //stone end
+    case DF_RAW_ROOT:
+        return "root";
     case DF_HIDDEN:
         return "hidden";
     default:
@@ -1021,6 +1023,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
     case DF_TALC:
         return "talc.png";
         //stone end
+    case DF_RAW_ROOT:
+        return "root.png";
     case DF_HIDDEN:
         return "hidden.png";
     default:
@@ -1049,6 +1053,10 @@ DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
     else if(e >= DF_ALABASTER && e <= DF_TALC)
     {
         return DF_NATURAL_STONE;
+    }
+    else if (e == DF_NATURAL_ROOT)
+    {
+        return DF_NATURAL_ROOT;
     }
     else //actual hidden and if somehow someone passes in the count enum
     {

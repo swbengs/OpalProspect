@@ -37,6 +37,7 @@ Description: Enums, strings, and filenames for all natural tiles. This means soi
 enum DF_Material_Type
 {
     DF_NATURAL_HIDDEN,
+    DF_NATURAL_ROOT,
     DF_NATURAL_GEM,
     DF_NATURAL_LIQUID,
     DF_NATURAL_ORE,
@@ -296,6 +297,7 @@ enum DF_Natural_Tile_Material
     DF_SYLVITE,
     DF_TALC,
     //stone end
+    DF_RAW_ROOT,
     DF_HIDDEN,
     DF_NATURAL_TILE_COUNT //never add below this one only above it
 };

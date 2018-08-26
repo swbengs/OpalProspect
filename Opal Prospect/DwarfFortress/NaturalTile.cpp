@@ -76,21 +76,25 @@ std::string NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material e)
         stream << "Textures" << os_seperator << "gems" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
         return stream.str();
     case DF_NATURAL_LIQUID:
-        stream << "Textures" << os_seperator << "liquids" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));;
+        stream << "Textures" << os_seperator << "liquids" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
         return stream.str();
     case DF_NATURAL_ORE:
-        stream << "Textures" << os_seperator << "ores" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));;
+        stream << "Textures" << os_seperator << "ores" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
         return stream.str();
     case DF_NATURAL_SOIL:
-        stream << "Textures" << os_seperator << "soils" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));;
+        stream << "Textures" << os_seperator << "soils" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
         return stream.str();
     case DF_NATURAL_STONE:
-        stream << "Textures" << os_seperator << "stones" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));;
+        stream << "Textures" << os_seperator << "stones" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
         return stream.str();
     case DF_NATURAL_HIDDEN:
-        stream << "Textures" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));;
+        stream << "Textures" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
+        return stream.str();
+    case DF_NATURAL_ROOT:
+        stream << "Textures" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
         return stream.str();
     default:
-        return "";
+        stream << "Textures" << os_seperator << "bad.png";
+        return stream.str();
     }
 }
