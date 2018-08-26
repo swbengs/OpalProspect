@@ -560,7 +560,7 @@ void natural_terrain_test()
     const unsigned int height = 3;
     const unsigned int length = 3;
     test.setGridDimensions(width, height, length);
-    test.create(DF_DRAW_RAMP_EAST, DF_DRAW_FLOOR, DF_ADAMANTINE);
+    test.create(DF_DRAW_RAMP_EAST, DF_DRAW_FLOOR, DF_RAW_ADAMANTINE);
     //test.create();
 
     test.setLayerDrawType(1, DF_DRAW_BLOCK);
@@ -584,7 +584,7 @@ void natural_terrain_build_test()
     const unsigned int height = 3;
     const unsigned int length = 3;
     test.setGridDimensions(width, height, length);
-    test.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_ADAMANTINE);
+    test.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_RAW_ADAMANTINE);
     //test.create();
 
     //test.setLayerDrawType(1, DF_DRAW_AIR);

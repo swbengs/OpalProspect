@@ -39,6 +39,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
     switch (e)
     {
         //gem start
+    case DF_ALMANDINE:
+        return "almandine";
     case DF_ALEXANDRITE:
         return "alexandrite";
     case DF_AMBER_OPAL:
@@ -107,8 +109,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "crystal_glass";
     case DF_CRYSTAL_OPAL:
         return "crystal_opal";
-    case DF_DEMATOID:
-        return "dematoid";
+    case DF_DEMANTOID:
+        return "demantoid";
     case DF_DENDRITIC_AGATE:
         return "dendritic_agate";
     case DF_EMERALD:
@@ -169,6 +171,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "milk_opal";
     case DF_MILK_QUARTZ:
         return "milk_quartz";
+    case DF_MOONSTONE:
+        return "moonstone";
     case DF_MORGANITE:
         return "morganite";
     case DF_MORION:
@@ -177,6 +181,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "moss_agate";
     case DF_MOSS_OPAL:
         return "moss_opal";
+    case DF_ONYX:
+        return "onyx";
     case DF_ONYX_OPAL:
         return "onyx_opal";
     case DF_PERIDOT:
@@ -213,8 +219,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "red_diamond";
     case DF_RED_FLASH_OPAL:
         return "red_flash_opal";
-    case DF_RED_GRSSULAR:
-        return "red_grssular";
+    case DF_RED_GROSSULAR:
+        return "red_grossular";
     case DF_RED_PYROPE:
         return "red_pyrope";
     case DF_RED_SPINEL:
@@ -303,22 +309,22 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
             //liquid end
 
         //ore start
-    case DF_ADAMANTINE:
-        return "adamantine";
-    case DF_ALUMINUM:
-        return "aluminum";
+    case DF_RAW_ADAMANTINE:
+        return "raw_adamantine";
+    case DF_NATIVE_ALUMINUM:
+        return "native_aluminum";
     case DF_BISMUTHINITE:
         return "bismuthinite";
     case DF_CASSITERITE:
         return "cassiterite";
-    case  DF_COPPER:
-        return "copper";
+    case  DF_NATIVE_COPPER:
+        return "native_copper";
     case  DF_GALENA:
         return "galena";
     case  DF_GARNIERITE:
         return "garnierite";
-    case  DF_GOLD:
-        return "gold";
+    case  DF_NATIVE_GOLD:
+        return "native_gold";
     case  DF_HEMATITE:
         return "hematite";
     case  DF_HORN_SILVER:
@@ -329,10 +335,10 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "magnetite";
     case  DF_MALACHITE:
         return "malachite";
-    case  DF_PLATINUM:
-        return "platinum";
-    case  DF_SILVER:
-        return "silver";
+    case  DF_NATIVE_PLATINUM:
+        return "native_platinum";
+    case  DF_NATIVE_SILVER:
+        return "native_silver";
     case  DF_SPHALERITE:
         return "sphalerite";
     case  DF_TETRAHEDRITE:
@@ -449,8 +455,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "lignite";
     case DF_LIMESTONE:
         return "limestone";
-    case DF_LLMENITE:
-        return "llmenite";
+    case DF_ILMENITE:
+        return "ilmenite";
     case DF_MARBLE:
         return "marble";
     case DF_MARCASITE:
@@ -507,6 +513,8 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "shale";
     case DF_SILTSTONE:
         return "siltstone";
+    case DF_SLADE:
+        return "slade";
     case DF_SLATE:
         return "slate";
     case DF_STIBNITE:
@@ -528,6 +536,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
     switch (e)
     {
         //gem start
+    case DF_ALMANDINE:
+        return "almandine.png";
     case DF_ALEXANDRITE:
         return "alexandrite.png";
     case DF_AMBER_OPAL:
@@ -596,8 +606,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "crystal_glass.png";
     case DF_CRYSTAL_OPAL:
         return "crystal_opal.png";
-    case DF_DEMATOID:
-        return "dematoid.png";
+    case DF_DEMANTOID:
+        return "demantoid.png";
     case DF_DENDRITIC_AGATE:
         return "dendritic_agate.png";
     case DF_EMERALD:
@@ -658,6 +668,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "milk_opal.png";
     case DF_MILK_QUARTZ:
         return "milk_quartz.png";
+    case DF_MOONSTONE:
+        return "moonstone.png";
     case DF_MORGANITE:
         return "morganite.png";
     case DF_MORION:
@@ -666,6 +678,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "moss_agate.png";
     case DF_MOSS_OPAL:
         return "moss_opal.png";
+    case DF_ONYX:
+        return "onyx.png";
     case DF_ONYX_OPAL:
         return "onyx_opal.png";
     case DF_PERIDOT:
@@ -702,8 +716,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "red_diamond.png";
     case DF_RED_FLASH_OPAL:
         return "red_flash_opal.png";
-    case DF_RED_GRSSULAR:
-        return "red_grssular.png";
+    case DF_RED_GROSSULAR:
+        return "red_grossular.png";
     case DF_RED_PYROPE:
         return "red_pyrope.png";
     case DF_RED_SPINEL:
@@ -792,22 +806,22 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         //liquid end
 
         //ore start
-    case DF_ADAMANTINE:
-        return "adamantine.png";
-    case DF_ALUMINUM:
-        return "aluminum.png";
+    case DF_RAW_ADAMANTINE:
+        return "raw_adamantine.png";
+    case DF_NATIVE_ALUMINUM:
+        return "native_aluminum.png";
     case DF_BISMUTHINITE:
         return "bismuthinite.png";
     case DF_CASSITERITE:
         return "cassiterite.png";
-    case  DF_COPPER:
-        return "copper.png";
+    case  DF_NATIVE_COPPER:
+        return "native_copper.png";
     case  DF_GALENA:
         return "galena.png";
     case  DF_GARNIERITE:
         return "garnierite.png";
-    case  DF_GOLD:
-        return "gold.png";
+    case  DF_NATIVE_GOLD:
+        return "native_gold.png";
     case  DF_HEMATITE:
         return "hematite.png";
     case  DF_HORN_SILVER:
@@ -818,10 +832,10 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "magnetite.png";
     case  DF_MALACHITE:
         return "malachite.png";
-    case  DF_PLATINUM:
-        return "platinum.png";
-    case  DF_SILVER:
-        return "silver.png";
+    case  DF_NATIVE_PLATINUM:
+        return "native_platinum.png";
+    case  DF_NATIVE_SILVER:
+        return "native_silver.png";
     case  DF_SPHALERITE:
         return "sphalerite.png";
     case  DF_TETRAHEDRITE:
@@ -938,8 +952,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "lignite.png";
     case DF_LIMESTONE:
         return "limestone.png";
-    case DF_LLMENITE:
-        return "llmenite.png";
+    case DF_ILMENITE:
+        return "ilmenite.png";
     case DF_MARBLE:
         return "marble.png";
     case DF_MARCASITE:
@@ -996,6 +1010,8 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "shale.png";
     case DF_SILTSTONE:
         return "siltstone.png";
+    case DF_SLADE:
+        return "slade.png";
     case DF_SLATE:
         return "slate.png";
     case DF_STIBNITE:
@@ -1014,7 +1030,7 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
 
 DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
 {
-    if (e >= DF_ALEXANDRITE && e <= DF_YELLOW_ZIRCON)
+    if (e >= DF_ALMANDINE && e <= DF_YELLOW_ZIRCON)
     {
         return DF_NATURAL_GEM;
     }
@@ -1022,7 +1038,7 @@ DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
     {
         return DF_NATURAL_LIQUID;
     }
-    else if (e >= DF_ADAMANTINE && e <= DF_TETRAHEDRITE)
+    else if (e >= DF_RAW_ADAMANTINE && e <= DF_TETRAHEDRITE)
     {
         return DF_NATURAL_ORE;
     }
@@ -1030,13 +1046,13 @@ DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
     {
         return DF_NATURAL_SOIL;
     }
-    else if (e == DF_HIDDEN)
-    {
-        return DF_NATURAL_HIDDEN;
-    }
-    else //stone
+    else if(e >= DF_ALABASTER && e <= DF_TALC)
     {
         return DF_NATURAL_STONE;
+    }
+    else //actual hidden and if somehow someone passes in the count enum
+    {
+        return DF_NATURAL_HIDDEN;
     }
 }
 

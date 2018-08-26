@@ -104,10 +104,12 @@ void MainLoop::startLoop()
 
     std::cout << "\n";
 
-    const int target_fps = 60;
-    camera.setPosition(glm::vec3(0.0f, 0.0f, -10.0f));
+    const unsigned int target_fps = 60;
+    const unsigned int fps_print_skip = 15;
+    camera.setPosition(glm::vec3(0.0f, 185.0f, -10.0f));
 
-    int frames = target_fps;
+    unsigned int frames = target_fps;
+    unsigned int skips = 0;
     std::chrono::high_resolution_clock::time_point original_start = std::chrono::high_resolution_clock::now();
     std::chrono::high_resolution_clock::time_point start = original_start;
 
@@ -115,16 +117,20 @@ void MainLoop::startLoop()
     {
         if (frames == target_fps)
         {
+            skips++;
             std::chrono::duration<double> seconds = std::chrono::high_resolution_clock::now() - start;
-            std::cout << "seconds: " << seconds.count() << "\n";
-            std::cout << "fps: " << (static_cast<double>(frames) / seconds.count()) << "\n";
+            if (skips == fps_print_skip)
+            {
+                std::cout << "seconds: " << seconds.count() << "\n";
+                std::cout << "fps: " << (static_cast<double>(frames) / seconds.count()) << "\n";
+                skips = 0;
+            }
 
             frames = 0;
             start = std::chrono::high_resolution_clock::now();
         }
 
         draw_engine.draw(camera);
-        //draw_engine.draw(camera, "junk", &glm::vec3(0.0f, 0.0f, 3.0f), nullptr, nullptr);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

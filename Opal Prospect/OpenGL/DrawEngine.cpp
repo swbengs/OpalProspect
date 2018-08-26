@@ -535,29 +535,32 @@ void DrawEngine::draw(const Camera &camera)
     
     //end one time sets
 
+    /*
     glm::vec3 first = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 second = glm::vec3(3.0f, 0.0f, 0.0f);
     glm::vec3 third = glm::vec3(0.0f, 3.0f, 0.0f);
     glm::vec3 fourth = glm::vec3(3.0f, 3.0f, 0.0f);
     glm::vec3 fifth = glm::vec3(0.0f, 0.0f, -2.0f);
     glm::vec3 sixth = glm::vec3(6.0f, 3.0f, 0.0f);
-    glm::vec3 terrain_position = glm::vec3(15.0f, 0.0f, 0.0f);
     glm::vec3 test = glm::vec3(-1.0f, -1.0f, -1.0f);
+    */
 
-    draw("test.obj", camera, &first, nullptr, nullptr);
+    //draw("test.obj", camera, &first, nullptr, nullptr);
     //draw(models.getModelPOD(1), camera, &first, nullptr, nullptr);
-    draw(models.getModelPOD(2), camera, &second, nullptr, nullptr);
-    draw(models.getModelPOD(3), camera, &third, nullptr, nullptr);
-    draw(models.getModelPOD(4), camera, &fourth, nullptr, nullptr);
+    //draw(models.getModelPOD(2), camera, &second, nullptr, nullptr);
+    //draw(models.getModelPOD(3), camera, &third, nullptr, nullptr);
+    //draw(models.getModelPOD(4), camera, &fourth, nullptr, nullptr);
     //draw(models.getModelPOD(5), camera, &fifth, nullptr, nullptr);
-    draw("pyramid", camera, &fifth, nullptr, nullptr);
-    draw(models.getModelPOD(6), camera, &sixth, nullptr, nullptr);
+   // draw("pyramid", camera, &fifth, nullptr, nullptr);
+   // draw(models.getModelPOD(6), camera, &sixth, nullptr, nullptr);
     //draw("error", camera, &first, nullptr, nullptr);
 
     //draw("gabbro block", camera, &test, nullptr, nullptr);
     //draw("gabbro floor", camera, &test, nullptr, nullptr);
+    glm::vec3 terrain_position = glm::vec3(15.0f, 0.0f, 0.0f);
     draw("terrain", camera, &terrain_position, nullptr, nullptr);
 
+    /*
     //draw grid
     Point3D start(6.0f, 6.0f, 6.0f);
     CenterBox grid_box;
@@ -576,6 +579,7 @@ void DrawEngine::draw(const Camera &camera)
         grid_pos = glm::vec3(grid_box.getX() + start.x, grid_box.getY() + start.y, grid_box.getZ() + start.z);
         draw(models.getModelPOD(6), camera, &grid_pos, nullptr, nullptr);
     }
+    */
 
     /* older code. soon can be removed entirely
     draw("test.obj", camera, &first, nullptr, nullptr);
@@ -813,7 +817,7 @@ void DrawEngine::setupObjects()
     //arrayTextureTest();
 
     loadTextures();
-    properDrawTest();
+    //properDrawTest();
     loadModels();
     loadTerrain();
 }
@@ -888,7 +892,7 @@ void DrawEngine::loadTerrain()
     //terrain_test stuff here
 
     //terrain_3x3x3_test(terrain_test);
-    terrain_16x16x16_test(terrain_test);
+    //terrain_16x16x16_test(terrain_test);
     //terrain_48x48x48_test(terrain_test);
     //terrain_48x300x48_test(terrain_test);
     //terrain_test and not after here
@@ -897,9 +901,9 @@ void DrawEngine::loadTerrain()
     terrain.loadFromFile(filename, models, terrain_model);
     addInterleavedModel(terrain_model);
 
-    //std::cout << "terrain face count: " << terrain_model.getFaceCount() << "\n";
+    std::cout << "terrain face count: " << terrain_model.getFaceCount() << "\n";
     //std::cout << "face total size: " << terrain_model.getTotalSize() / terrain_model.getFaceCount() << "\n";
-    //std::cout << "terrain model total size: " << terrain_model.getTotalSize() << "\n";
+    std::cout << "terrain model total size: " << terrain_model.getTotalSize() << "\n";
 
     //model_pod result = models.getModelPOD(models.getModelReference("terrain"));
     std::cout << "after terrain load\n";
@@ -947,7 +951,7 @@ void DrawEngine::terrain_16x16x16_test(NaturalTerrain& natural_terrain)
     next = Grid3DYOffset::getIndexRight(next, width, height, length);
 
     natural_terrain.setIndexDrawTypeN(first, 4, DF_DRAW_AIR, DF_DRAW_FLOOR, &Grid3DYOffset::getIndexRight);
-    natural_terrain.setIndexMaterialN(first, 4, DF_DEMATOID, DF_GARNIERITE, &Grid3DYOffset::getIndexRight);
+    natural_terrain.setIndexMaterialN(first, 4, DF_DEMANTOID, DF_GARNIERITE, &Grid3DYOffset::getIndexRight);
 
     next = Grid3DYOffset::getIndexUp(next, width, height, length);
 

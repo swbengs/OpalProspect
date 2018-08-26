@@ -34,8 +34,6 @@ SOFTWARE.
 Description: Enums, strings, and filenames for all natural tiles. This means soil, rough stone, liquid, ore, and gems. No HFS or grass/organic material
 */
 
-static const int DF_NATURAL_TILE_COUNT = 233;
-
 enum DF_Material_Type
 {
     DF_NATURAL_HIDDEN,
@@ -49,6 +47,7 @@ enum DF_Material_Type
 enum DF_Natural_Tile_Material
 {
     //gem start
+    DF_ALMANDINE,
     DF_ALEXANDRITE,
     DF_AMBER_OPAL,
     DF_AMETHYST,
@@ -83,7 +82,7 @@ enum DF_Natural_Tile_Material
     DF_CLEAR_ZIRCON,
     DF_CRYSTAL_GLASS,
     DF_CRYSTAL_OPAL,
-    DF_DEMATOID,
+    DF_DEMANTOID,
     DF_DENDRITIC_AGATE,
     DF_EMERALD,
     DF_FAINT_YELLOW_DIAMOND,
@@ -114,10 +113,12 @@ enum DF_Natural_Tile_Material
     DF_MELANITE,
     DF_MILK_OPAL,
     DF_MILK_QUARTZ,
+    DF_MOONSTONE,
     DF_MORGANITE,
     DF_MORION,
     DF_MOSS_AGATE,
     DF_MOSS_OPAL,
+    DF_ONYX,
     DF_ONYX_OPAL,
     DF_PERIDOT,
     DF_PICTURE_JASPER,
@@ -136,7 +137,7 @@ enum DF_Natural_Tile_Material
     DF_RED_BERYL,
     DF_RED_DIAMOND,
     DF_RED_FLASH_OPAL,
-    DF_RED_GRSSULAR,
+    DF_RED_GROSSULAR,
     DF_RED_PYROPE,
     DF_RED_SPINEL,
     DF_RED_TOURMALINE,
@@ -184,21 +185,21 @@ enum DF_Natural_Tile_Material
     //liquid end
 
     //ore start
-    DF_ADAMANTINE,
-    DF_ALUMINUM,
+    DF_RAW_ADAMANTINE,
+    DF_NATIVE_ALUMINUM,
     DF_BISMUTHINITE,
     DF_CASSITERITE,
-    DF_COPPER,
+    DF_NATIVE_COPPER,
     DF_GALENA,
     DF_GARNIERITE,
-    DF_GOLD,
+    DF_NATIVE_GOLD,
     DF_HEMATITE,
     DF_HORN_SILVER,
     DF_LIMONITE,
     DF_MAGNETITE,
     DF_MALACHITE,
-    DF_PLATINUM,
-    DF_SILVER,
+    DF_NATIVE_PLATINUM,
+    DF_NATIVE_SILVER,
     DF_SPHALERITE,
     DF_TETRAHEDRITE,
     //ore end
@@ -260,7 +261,7 @@ enum DF_Natural_Tile_Material
     DF_KIMBERLITE,
     DF_LIGNITE,
     DF_LIMESTONE,
-    DF_LLMENITE,
+    DF_ILMENITE,
     DF_MARBLE,
     DF_MARCASITE,
     DF_MICA,
@@ -289,12 +290,14 @@ enum DF_Natural_Tile_Material
     DF_SERPENTINE,
     DF_SHALE,
     DF_SILTSTONE,
+    DF_SLADE,
     DF_SLATE,
     DF_STIBNITE,
     DF_SYLVITE,
     DF_TALC,
     //stone end
-    DF_HIDDEN
+    DF_HIDDEN,
+    DF_NATURAL_TILE_COUNT //never add below this one only above it
 };
 
 std::string DFNaturalTileString(DF_Natural_Tile_Material e);
