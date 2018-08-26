@@ -100,7 +100,7 @@ void Image::setSolidColor(unsigned char red, unsigned char green, unsigned char 
 
     size_t total_size = getWidth() * getHeight() * color_components;
     const size_t total_width = static_cast<size_t>(getWidth() * color_components);
-    std::cout << "total_size: " << total_size << "\n";
+    //std::cout << "total_size: " << total_size << "\n";
 
     image_data.reserve(total_size);
 
