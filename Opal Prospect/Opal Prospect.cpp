@@ -25,6 +25,7 @@
 #include "OpenGL\ArrayTexture.hpp"
 #include "DwarfFortress\natural_tiles.hpp"
 #include "DwarfFortress\NaturalTerrainModelBuilder.hpp"
+#include "Shapes\VoxelGrid.hpp"
 
 /*
 MIT License
@@ -675,6 +676,34 @@ void parse_test()
     }
 }
 
+void voxel_grid_test()
+{
+    Grid3DYOffset base_grid;
+    VoxelGrid voxel_grid;
+
+    unsigned int grid_width = 3;
+    unsigned int grid_height = 3;
+    unsigned int grid_length = 3;
+    float offset = 1.0f;
+    float stride = 2.0f;
+    float box_width = 1.0f;
+    float box_height = 1.0f;
+    float box_length = 1.0f;
+
+    base_grid.setGridWidthLengthHeight(grid_width, grid_height, grid_length);
+    base_grid.setYOffset(offset);
+    base_grid.setYStride(stride);
+    base_grid.setBoxWidthLengthHeight(box_width, box_height, box_length);
+    base_grid.create();
+
+    voxel_grid.setBoxWidthLengthHeight(box_width, box_height, box_length);
+    voxel_grid.setGridWidthLengthHeight(grid_width, grid_height, grid_length);
+    voxel_grid.setYOffset(offset);
+    voxel_grid.setYStride(stride);
+
+    std::cout << "Done\n";
+}
+
 void tests()
 {
     //texture_array_test();
@@ -696,14 +725,15 @@ void tests()
     //natural_terrain_build_test();
     //log_test();
     //get_digits_test();
-    parse_test();
+    //parse_test();
+    voxel_grid_test();
 }
 
 int main(void)
 {
     MainLoop loop;
-    loop.startLoop();
-    //tests();
+    //loop.startLoop();
+    tests();
 
     exit(EXIT_SUCCESS);
 }
