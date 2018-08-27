@@ -516,7 +516,7 @@ local function writeLayer(material, shape)
   io.write(shape.."\n")
 end
 
-local function main()
+local function main(filename)
 local world_x, world_y, world_z
 world_x, world_y, world_z = dfhack.maps.getTileSize()
 print("world size x: "..world_x.." y: "..world_y.." z: "..world_z)
@@ -535,7 +535,12 @@ local tile_type_shape_cache = {} --tile type value to shape letter
 local tile_type_material_cache = {} --tile type value to material enum. These are contained in TileTypeMaterialTable
 --end caches
 
-opal_prospect_file = io.open("opal.txt", "w")
+if filename == nil then
+  filename = "opal.txt"
+end
+
+print("saving to file named: "..filename)
+opal_prospect_file = io.open(filename, "w")
 io.output(opal_prospect_file)
 writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for opal prospect
 
@@ -690,6 +695,6 @@ printall(NaturalMaterialsTable)
 end
 
 args = {...}
-printall(args)
+--printall(args) --script name is ignored. starting at 1 you see what you typed after the script name
 
-main()
+main(args[1])
