@@ -77,7 +77,7 @@ public:
     void addTexture(const ArrayTextureAtlas& texture);
     void draw(const Camera &camera);
 
-    void setup();
+    void setup(std::string terrain_filename);
     void cleanup();
 
     //gets
@@ -132,10 +132,10 @@ private:
     void setupOpenGLContext(); //set the context up and required opengl settings
     void setupOpenGLObjects(); //set up the VBO's, VAO's, and anything else needed for drawing
     void setupOpenGLUniforms(); //get the location of all uniforms
-    void setupObjects(); //set up things to draw. testing purposes etc
+    void setupObjects(std::string terrain_filename); //set up things to draw. testing purposes etc
     void loadTextures();
     void loadModels();
-    void loadTerrain();
+    void loadTerrain(std::string filename);
 
     void resize(); //called when window is resized
     void calculateOrtho();

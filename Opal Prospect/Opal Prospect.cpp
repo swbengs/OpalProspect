@@ -729,10 +729,21 @@ void tests()
     voxel_grid_test();
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
     MainLoop loop;
-    loop.startLoop();
+    std::string terrain_filename;
+
+    if (argc > 1)
+    {
+        terrain_filename = argv[1];
+    }
+    else
+    {
+        terrain_filename = "";
+    }
+
+    loop.startLoop(terrain_filename);
     //tests();
 
     exit(EXIT_SUCCESS);

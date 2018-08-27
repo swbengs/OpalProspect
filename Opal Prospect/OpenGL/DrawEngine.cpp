@@ -617,12 +617,12 @@ void DrawEngine::draw(const Camera &camera)
     OGLHelpers::getOpenGLError("post frame draw", true);
 }
 
-void DrawEngine::setup()
+void DrawEngine::setup(std::string terrain_filename)
 {
     setupOpenGLContext();
     setupOpenGLObjects();
     setupOpenGLUniforms();
-    setupObjects();
+    setupObjects(terrain_filename);
 }
 
 void DrawEngine::cleanup()
@@ -809,7 +809,7 @@ void DrawEngine::setupOpenGLUniforms()
     OGLHelpers::getOpenGLError("post setup uniforms", true);
 }
 
-void DrawEngine::setupObjects()
+void DrawEngine::setupObjects(std::string terrain_filename)
 {
     //arrayTextureAtlasTest();
     //bufferControlTest();
@@ -819,7 +819,7 @@ void DrawEngine::setupObjects()
     loadTextures();
     //properDrawTest();
     loadModels();
-    loadTerrain();
+    loadTerrain(terrain_filename);
 }
 
 void DrawEngine::loadTextures()
@@ -875,19 +875,19 @@ void DrawEngine::loadModels()
     }
 }
 
-void DrawEngine::loadTerrain()
+void DrawEngine::loadTerrain(std::string filename)
 {
     ModelIndex terrain_model;
     NaturalTerrain terrain_test;
     terrain_model.setTextureName("terrain.png");
     terrain_model.setModelName("terrain");
-    std::string filename;
+    //std::string filename;
     //filename = "Test\\test_maps\\5x5x5_simple.txt";
     //filename = "Test\\test_maps\\5x5x5.txt";
     //filename = "Test\\test_maps\\16x16x16.txt";
     //filename = "Test\\test_maps\\16x16x16_simple.txt";
     //filename = "Test\\test_maps\\df_real.txt";
-    filename = "Test\\test_maps\\df_real_short.txt";
+    //filename = "Test\\test_maps\\df_real_short.txt";
 
     //terrain_test stuff here
 

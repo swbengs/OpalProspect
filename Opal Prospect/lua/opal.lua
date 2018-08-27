@@ -689,4 +689,7 @@ printall(NaturalMaterialsTable)
 
 end
 
+args = {...}
+printall(args)
+
 main()

@@ -47,11 +47,17 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 //public
-void MainLoop::startLoop()
+void MainLoop::startLoop(std::string terrain_filename)
 {
     const int screen_width = 640;
     const int screen_height = 480;
-    const char* name = "Opal Prospect v0.1.1";
+    const char* name = "Opal Prospect v0.1.5";
+
+    if (terrain_filename.compare("") == 0)
+    {
+        std::cout << "Please enter a terrain filename to load\n";
+        std::cin >> terrain_filename;
+    }
 
     GLFWwindow* window;
 
@@ -100,7 +106,7 @@ void MainLoop::startLoop()
 
     draw_engine.setScreenWidth(screen_width);
     draw_engine.setScreenHeight(screen_height);
-    draw_engine.setup();
+    draw_engine.setup(terrain_filename);
 
     std::cout << "\n";
 
