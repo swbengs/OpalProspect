@@ -138,6 +138,7 @@ private:
     void loadTerrain(std::string filename);
 
     void resize(); //called when window is resized
+    void resizeContext();
     void calculateOrtho();
     void calculatePersp();
 

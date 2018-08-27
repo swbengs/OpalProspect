@@ -1132,6 +1132,7 @@ void DrawEngine::terrain_48x300x48_test(NaturalTerrain & natural_terrain)
 
 void DrawEngine::resize()
 {
+    glViewport(0, 0, getScreenWidth(), getScreenHeight());
     calculateOrtho();
     calculatePersp();
 }
@@ -1149,5 +1150,6 @@ void DrawEngine::calculateOrtho()
 
 void DrawEngine::calculatePersp()
 {
-    persp = glm::perspectiveLH(glm::radians(60.0f), 4.0f / 3.0f, Z_NEAR, Z_FAR);
+    const float aspect = static_cast<float>(getScreenWidth()) / static_cast<float>(getScreenHeight());
+    persp = glm::perspectiveLH(glm::radians(60.0f), aspect, Z_NEAR, Z_FAR);
 }

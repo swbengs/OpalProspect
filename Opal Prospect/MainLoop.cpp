@@ -46,6 +46,14 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     loop_pointer->keyCallback(window, key, scancode, action, mods);
 }
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    void* user_pointer = glfwGetWindowUserPointer(window);
+    MainLoop* loop_pointer = static_cast<MainLoop*>(user_pointer);
+
+    loop_pointer->framebufferResize(width, height);
+}
+
 //public
 void MainLoop::startLoop(std::string terrain_filename)
 {
@@ -56,7 +64,7 @@ void MainLoop::startLoop(std::string terrain_filename)
     if (terrain_filename.compare("") == 0)
     {
         std::cout << "Please enter a terrain filename to load\n";
-        std::cin >> terrain_filename;
+        std::getline(std::cin, terrain_filename);
     }
 
     GLFWwindow* window;
@@ -85,6 +93,7 @@ void MainLoop::startLoop(std::string terrain_filename)
     glfwSwapInterval(1);
 
     glfwSetKeyCallback(window, key_callback);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     //set user pointer so we can later call ourselves again in helper functions
     glfwSetWindowUserPointer(window, this);
@@ -221,10 +230,8 @@ void MainLoop::keyCallback(GLFWwindow* window, int key, int scancode, int action
     }
 }
 
-
-//gets
-
-//sets
-
-//private
+void MainLoop::framebufferResize(int width, int height)
+{
+    draw_engine.setScreenWidthHeight(width, height);
+}
 

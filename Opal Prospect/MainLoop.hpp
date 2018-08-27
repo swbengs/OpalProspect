@@ -41,6 +41,7 @@ class MainLoop
 public:
     void startLoop(std::string terrain_filename);
     void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    void framebufferResize(int width, int height);
 
 private:
     DrawEngine draw_engine;
