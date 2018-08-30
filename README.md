@@ -20,10 +20,11 @@ Go here to get the 2015 runtime install.
 
 Currently it is designed to be built in Microsoft Visual Studio 2015. I want to add support for CMake later so it can easily be built on other platforms.
 
-# Thank you to DFHack, GLEW, GLFW, GLM, LibPNG, and ZLib for their open source code. Without you and your teams, none of this would be possible!
+# Thank you to DFHack, GLEW, GLFW, GLM, LibPNG, and ZLib for their open source code. Without you and your teams, none of this would be possible! Also big thanks to Tarn Adams and his brother for making Dwarf Fortress!
 
 Lib name | Lib version | Website | License
 -------- | ----------- | ------- | -------
+Dwarf fortress | 43.05 r1 | http://www.bay12games.com/dwarves/ | Read DF install readme.txt
 DFHack | 43.05 r1 | https://github.com/DFHack/dfhack | Zlib
 GLEW | 1.13.0 | https://github.com/nigels-com/glew | https://github.com/nigels-com/glew#copyright-and-licensing
 GLFW | 3.1.2 | http://www.glfw.org/ | Zlib/libpng
