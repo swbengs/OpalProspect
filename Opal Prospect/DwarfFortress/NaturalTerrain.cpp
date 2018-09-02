@@ -47,8 +47,6 @@ NaturalTerrain::NaturalTerrain()
 
 void NaturalTerrain::create()
 {
-    block_grid.create();
-    floor_grid.create();
     const size_t count = block_grid.getGridCount();
     blocks.resize(count);
     const NaturalTile floor(DF_DRAW_FLOOR, DF_ALEXANDRITE);
@@ -57,13 +55,17 @@ void NaturalTerrain::create()
 
 void NaturalTerrain::create(DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type, DF_Natural_Tile_Material material)
 {
-    block_grid.create();
-    floor_grid.create();
     const size_t count = block_grid.getGridCount();
     const NaturalTile block(block_draw_type, material);
     const NaturalTile floor(floor_draw_type, material);
     blocks.resize(count, block);
     floors.resize(count, floor);
+}
+
+void NaturalTerrain::freeData()
+{
+    blocks = std::vector<NaturalTile>();
+    floors = std::vector<NaturalTile>();
 }
 
 NaturalTile NaturalTerrain::getBlock(unsigned int index) const
@@ -74,7 +76,7 @@ NaturalTile NaturalTerrain::getBlock(unsigned int index) const
 
 Point3D NaturalTerrain::getBlockPosition(unsigned int index) const
 {
-    return block_grid.getBox(index).getXYZ();
+    return block_grid.getPosition(index);
 }
 
 NaturalTile NaturalTerrain::getFloor(unsigned int index) const
@@ -85,7 +87,7 @@ NaturalTile NaturalTerrain::getFloor(unsigned int index) const
 
 Point3D NaturalTerrain::getFloorPosition(unsigned int index) const
 {
-    return floor_grid.getBox(index).getXYZ();
+    return floor_grid.getPosition(index);
 }
 
 const std::vector<NaturalTile>& NaturalTerrain::getBlocks() const
@@ -106,6 +108,36 @@ Point3DUInt NaturalTerrain::getGridDimensions() const
 size_t NaturalTerrain::getCount() const
 {
     return block_grid.getGridCount();
+}
+
+unsigned int NaturalTerrain::getIndexDown(unsigned int index)
+{
+    return block_grid.getIndexDown(index);
+}
+
+unsigned int NaturalTerrain::getIndexUp(unsigned int index)
+{
+    return block_grid.getIndexUp(index);
+}
+
+unsigned int NaturalTerrain::getIndexLeft(unsigned int index)
+{
+    return block_grid.getIndexLeft(index);
+}
+
+unsigned int NaturalTerrain::getIndexRight(unsigned int index)
+{
+    return block_grid.getIndexRight(index);
+}
+
+unsigned int NaturalTerrain::getIndexFront(unsigned int index)
+{
+    return block_grid.getIndexFront(index);
+}
+
+unsigned int NaturalTerrain::getIndexBack(unsigned int index)
+{
+    return block_grid.getIndexBack(index);
 }
 
 void NaturalTerrain::setGridDimensions(unsigned int width, unsigned int height, unsigned int length)
@@ -141,13 +173,12 @@ void NaturalTerrain::setIndexDrawTypeN(unsigned int index, unsigned int count, D
 
 void NaturalTerrain::setIndexDrawTypeAround(unsigned int index, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw)
 {
-    Point3DUInt xyz = getGridDimensions();
-    const unsigned int up = Grid3DYOffset::getIndexUp(index, xyz.x, xyz.y, xyz.z);
-    const unsigned int down = Grid3DYOffset::getIndexDown(index, xyz.x, xyz.y, xyz.z);
-    const unsigned int left = Grid3DYOffset::getIndexLeft(index, xyz.x, xyz.y, xyz.z);
-    const unsigned int right = Grid3DYOffset::getIndexRight(index, xyz.x, xyz.y, xyz.z);
-    const unsigned int back = Grid3DYOffset::getIndexBack(index, xyz.x, xyz.y, xyz.z);
-    const unsigned int front = Grid3DYOffset::getIndexFront(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int up = block_grid.getIndexUp(index);
+    const unsigned int down = block_grid.getIndexDown(index);
+    const unsigned int left = block_grid.getIndexLeft(index);
+    const unsigned int right = block_grid.getIndexRight(index);
+    const unsigned int back = block_grid.getIndexBack(index);
+    const unsigned int front = block_grid.getIndexFront(index);
 
     if (index != up)
     {
@@ -246,13 +277,12 @@ void NaturalTerrain::setIndexMaterialN(unsigned int index, unsigned int count, D
 
 void NaturalTerrain::setIndexMaterialAround(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material)
 {
-    Point3DUInt xyz = getGridDimensions();
-    const unsigned int up = Grid3DYOffset::getIndexUp(index, xyz.x, xyz.y, xyz.z);
-    const unsigned int down = Grid3DYOffset::getIndexDown(index, xyz.x, xyz.y, xyz.z);
-    const unsigned int left = Grid3DYOffset::getIndexLeft(index, xyz.x, xyz.y, xyz.z);
-    const unsigned int right = Grid3DYOffset::getIndexRight(index, xyz.x, xyz.y, xyz.z);
-    const unsigned int back = Grid3DYOffset::getIndexBack(index, xyz.x, xyz.y, xyz.z);
-    const unsigned int front = Grid3DYOffset::getIndexFront(index, xyz.x, xyz.y, xyz.z);
+    const unsigned int up = block_grid.getIndexUp(index);
+    const unsigned int down = block_grid.getIndexDown(index);
+    const unsigned int left = block_grid.getIndexLeft(index);
+    const unsigned int right = block_grid.getIndexRight(index);
+    const unsigned int back = block_grid.getIndexBack(index);
+    const unsigned int front = block_grid.getIndexFront(index);
 
     if (index != up)
     {

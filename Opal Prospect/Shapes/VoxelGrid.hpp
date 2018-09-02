@@ -40,22 +40,22 @@ class VoxelGrid
 {
 public:
 
-    bool isBottomSide(unsigned int index);
-    bool isTopSide(unsigned int index);
-    bool isLeftSide(unsigned int index);
-    bool isRightSide(unsigned int index);
-    bool isFrontSide(unsigned int index);
-    bool isBackSide(unsigned int index);
+    bool isBottomSide(unsigned int index) const;
+    bool isTopSide(unsigned int index) const;
+    bool isLeftSide(unsigned int index) const;
+    bool isRightSide(unsigned int index) const;
+    bool isFrontSide(unsigned int index) const;
+    bool isBackSide(unsigned int index) const;
 
-    unsigned int getIndexDown(unsigned int index);
-    unsigned int getIndexUp(unsigned int index);
-    unsigned int getIndexLeft(unsigned int index);
-    unsigned int getIndexRight(unsigned int index);
-    unsigned int getIndexFront(unsigned int index);
-    unsigned int getIndexBack(unsigned int index);
+    unsigned int getIndexDown(unsigned int index) const;
+    unsigned int getIndexUp(unsigned int index) const;
+    unsigned int getIndexLeft(unsigned int index) const;
+    unsigned int getIndexRight(unsigned int index) const;
+    unsigned int getIndexFront(unsigned int index) const;
+    unsigned int getIndexBack(unsigned int index) const;
 
     //gets
-    Point3D getPosition(unsigned int index);
+    Point3D getPosition(unsigned int index) const;
 
     unsigned int getGridCount() const;
     unsigned int getGridWidth() const;

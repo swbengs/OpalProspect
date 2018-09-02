@@ -681,6 +681,8 @@ void voxel_grid_test()
     Grid3DYOffset base_grid;
     VoxelGrid voxel_grid;
 
+    unsigned int test_index = 26;
+
     unsigned int grid_width = 3;
     unsigned int grid_height = 3;
     unsigned int grid_length = 3;
@@ -700,6 +702,66 @@ void voxel_grid_test()
     voxel_grid.setGridWidthLengthHeight(grid_width, grid_height, grid_length);
     voxel_grid.setYOffset(offset);
     voxel_grid.setYStride(stride);
+
+    CenterBox box = base_grid.getBox(test_index);
+    Point3D point = voxel_grid.getPosition(test_index);
+
+    std::cout << "box x y z:  " << box.getX() << "  " << box.getY() << "  " << box.getZ() << "\n";
+    std::cout << "point x y z:  " << point.x << "  " << point.y << "  " << point.z << "\n";
+
+    if (box.getX() == point.x && box.getY() == point.y && box.getZ() == point.z)
+    {
+        std::cout << "test index: " << test_index << " passed\n";
+    }
+    else
+    {
+        std::cout << "test index: " << test_index << " failed\n";
+    }
+
+    std::cout << "Done\n";
+}
+
+void voxel_grid_test(unsigned int width, unsigned int height, unsigned int length, float offset, float stride)
+{
+    Grid3DYOffset base_grid;
+    VoxelGrid voxel_grid;
+
+    unsigned int grid_width = width;
+    unsigned int grid_height = height;
+    unsigned int grid_length = length;
+    float box_width = 1.0f;
+    float box_height = 1.0f;
+    float box_length = 1.0f;
+
+    base_grid.setGridWidthLengthHeight(grid_width, grid_height, grid_length);
+    base_grid.setYOffset(offset);
+    base_grid.setYStride(stride);
+    base_grid.setBoxWidthLengthHeight(box_width, box_height, box_length);
+    base_grid.create();
+
+    voxel_grid.setBoxWidthLengthHeight(box_width, box_height, box_length);
+    voxel_grid.setGridWidthLengthHeight(grid_width, grid_height, grid_length);
+    voxel_grid.setYOffset(offset);
+    voxel_grid.setYStride(stride);
+
+    for (size_t i = 0; i < base_grid.getGridCount(); i++)
+    {
+        CenterBox box = base_grid.getBox(i);
+        Point3D point = voxel_grid.getPosition(i);
+
+        if (box.getX() == point.x && box.getY() == point.y && box.getZ() == point.z)
+        {
+            std::cout << "test index: " << i << " passed\n";
+        }
+        else
+        {
+            std::cout << "test index: " << i << " failed\n";
+            std::cout << "box x y z:  " << box.getX() << "  " << box.getY() << "  " << box.getZ() << "\n";
+            std::cout << "point x y z:  " << point.x << "  " << point.y << "  " << point.z << "\n";
+        }
+    }
+
+    
 
     std::cout << "Done\n";
 }
@@ -726,7 +788,7 @@ void tests()
     //log_test();
     //get_digits_test();
     //parse_test();
-    voxel_grid_test();
+    voxel_grid_test(5,4,9, 1.0f, 0.2f);
 }
 
 int main(int argc, char* argv[])
@@ -743,8 +805,8 @@ int main(int argc, char* argv[])
         terrain_filename = "";
     }
 
-    //loop.startLoop(terrain_filename);
-    tests();
+    loop.startLoop(terrain_filename);
+    //tests();
 
     exit(EXIT_SUCCESS);
 }

@@ -177,7 +177,7 @@ int InterleavedBufferController::findSuitableBuffer(size_t vertex_size, size_t i
     return -1; //-1 is a non usable index
 }
 
-void InterleavedBufferController::bufferModel(int index, ModelIndex & model)
+void InterleavedBufferController::bufferModel(int index, ModelIndex& model)
 {
     InterleavedVAO3D& vao = vaos[index];
     vao.bindVAO();

@@ -74,6 +74,7 @@ public:
 
     void addModel(ModelIndex& model);
     void addInterleavedModel(ModelIndex& model);
+    void addInterleavedModel(ModelIndex& model, bool free_model_data);
     void addTexture(const ArrayTextureAtlas& texture);
     void draw(const Camera &camera);
 

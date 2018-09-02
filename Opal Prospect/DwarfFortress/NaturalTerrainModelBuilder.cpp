@@ -44,6 +44,9 @@ void NaturalTerrainModelBuilder::loadFromFile(std::string filename, const ModelC
     {
 
     }
+
+    terrain.freeData();
+    freeData();
 }
 
 void NaturalTerrainModelBuilder::loadFromMemory(const NaturalTerrain& memory, const ModelController& model_controller, ModelIndex& terrain_model)
@@ -123,6 +126,12 @@ bool NaturalTerrainModelBuilder::shouldDraw(const natural_tile_draw_info& info, 
     {
         return false;
     }
+}
+
+void NaturalTerrainModelBuilder::freeData()
+{
+    blocks = std::vector<natural_tile_draw_info>();
+    floors = std::vector<natural_tile_draw_info>();
 }
 
 void NaturalTerrainModelBuilder::addBoxFace(NormalFace face, const Point3D& offset, ModelIndex& terrain_model) const
@@ -300,13 +309,11 @@ void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bo
     unsigned int index = info.tile_index;
     if (is_floor)
     {
-        Point3DUInt xyz = terrain.getGridDimensions();
-        //const unsigned int up = Grid3DYOffset::getIndexUp(index, xyz.x, xyz.y, xyz.z);
-        const unsigned int down = Grid3DYOffset::getIndexDown(index, xyz.x, xyz.y, xyz.z);
-        const unsigned int left = Grid3DYOffset::getIndexLeft(index, xyz.x, xyz.y, xyz.z);
-        const unsigned int right = Grid3DYOffset::getIndexRight(index, xyz.x, xyz.y, xyz.z);
-        const unsigned int back = Grid3DYOffset::getIndexBack(index, xyz.x, xyz.y, xyz.z);
-        const unsigned int front = Grid3DYOffset::getIndexFront(index, xyz.x, xyz.y, xyz.z);
+        const unsigned int down = terrain.getIndexDown(index);
+        const unsigned int left = terrain.getIndexLeft(index);
+        const unsigned int right = terrain.getIndexRight(index);
+        const unsigned int back = terrain.getIndexBack(index);
+        const unsigned int front = terrain.getIndexFront(index);
 
         checkVerticalTile(info.top, index, index, true, false); //a floors up is always the block at its index, aka the one that sits on top of it
         checkVerticalTile(info.bottom, index, down, true, true);
@@ -317,13 +324,11 @@ void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bo
     }
     else //is a block
     {
-        Point3DUInt xyz = terrain.getGridDimensions();
-        const unsigned int up = Grid3DYOffset::getIndexUp(index, xyz.x, xyz.y, xyz.z);
-        //const unsigned int down = Grid3DYOffset::getIndexDown(index, xyz.x, xyz.y, xyz.z);
-        const unsigned int left = Grid3DYOffset::getIndexLeft(index, xyz.x, xyz.y, xyz.z);
-        const unsigned int right = Grid3DYOffset::getIndexRight(index, xyz.x, xyz.y, xyz.z);
-        const unsigned int back = Grid3DYOffset::getIndexBack(index, xyz.x, xyz.y, xyz.z);
-        const unsigned int front = Grid3DYOffset::getIndexFront(index, xyz.x, xyz.y, xyz.z);
+        const unsigned int up = terrain.getIndexUp(index);
+        const unsigned int left = terrain.getIndexLeft(index);
+        const unsigned int right = terrain.getIndexRight(index);
+        const unsigned int back = terrain.getIndexBack(index);
+        const unsigned int front = terrain.getIndexFront(index);
 
         checkVerticalTile(info.top, index, up, false, false);
         checkVerticalTile(info.bottom, index, index, false, true); //down for a block is always the floor at its index

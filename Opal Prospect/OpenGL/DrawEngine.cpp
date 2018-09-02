@@ -442,6 +442,11 @@ Method to properly add a model interleaved and update all important references i
 */
 void DrawEngine::addInterleavedModel(ModelIndex& model)
 {
+    addInterleavedModel(model, false);
+}
+
+void DrawEngine::addInterleavedModel(ModelIndex& model, bool free_model_data)
+{
     size_t current;
     models.addModel(std::move(model));
     current = models.getCount();
@@ -451,6 +456,10 @@ void DrawEngine::addInterleavedModel(ModelIndex& model)
     pod.texture_reference = main_textures.getTextureReference(pod.texture_name);
     pod.index_offset_bytes = interleaved_buffers.getIndexByteOffset(pod.model_name);
     pod.vao_reference = interleaved_buffers.getModelVAOReference(pod.model_name);
+    if (free_model_data)
+    {
+        models.modifyModel(current).freeData();
+    }
 }
 
 void DrawEngine::addTexture(const ArrayTextureAtlas& texture)
@@ -903,7 +912,7 @@ void DrawEngine::loadTerrain(std::string filename)
     std::cout << "terrain face count: " << terrain_model.getFaceCount() << "\n";
     //std::cout << "face total size: " << terrain_model.getTotalSize() / terrain_model.getFaceCount() << "\n";
     std::cout << "terrain model total size: " << terrain_model.getTotalSize() << "\n";
-    addInterleavedModel(terrain_model);
+    addInterleavedModel(terrain_model, true);
 
     std::cout << "after terrain load\n";
 }

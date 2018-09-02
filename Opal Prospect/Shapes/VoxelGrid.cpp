@@ -30,9 +30,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-Point3D VoxelGrid::getPosition(unsigned int index)
+Point3D VoxelGrid::getPosition(unsigned int index) const
 {
-    return Point3D();
+    //x, y, z in terms of the grid
+    const unsigned int x = index % getGridWidth();
+    const unsigned int y = (index / (getGridWidth() * getGridLength())) % getGridHeight();
+    const unsigned int z = (index / getGridWidth()) % getGridLength();
+
+    //add the 0.5 times w/h/l since we want the grid[0] bottom left vertex to be at origin. The entire grid is in quadrant 1.
+    return Point3D(x * getBoxWidth() + 0.5f * getBoxWidth(), 
+        y * getBoxHeight() + y * getYStride() + getYOffset() + 0.5f * getBoxHeight(), 
+        z * getBoxLength() + 0.5f * getBoxLength());
 }
 
 unsigned int VoxelGrid::getGridCount() const
@@ -132,7 +140,7 @@ void VoxelGrid::setYStride(float stride)
     y_stride = stride;
 }
 
-bool VoxelGrid::isBottomSide(unsigned int index)
+bool VoxelGrid::isBottomSide(unsigned int index) const
 {
     if (grid_height == 1)
     {
@@ -153,7 +161,7 @@ bool VoxelGrid::isBottomSide(unsigned int index)
     }
 }
 
-bool VoxelGrid::isTopSide(unsigned int index)
+bool VoxelGrid::isTopSide(unsigned int index) const
 {
     if (grid_height == 1)
     {
@@ -174,7 +182,7 @@ bool VoxelGrid::isTopSide(unsigned int index)
     }
 }
 
-bool VoxelGrid::isLeftSide(unsigned int index)
+bool VoxelGrid::isLeftSide(unsigned int index) const
 {
     if (grid_width == 1)
     {
@@ -193,7 +201,7 @@ bool VoxelGrid::isLeftSide(unsigned int index)
     }
 }
 
-bool VoxelGrid::isRightSide(unsigned int index)
+bool VoxelGrid::isRightSide(unsigned int index) const
 {
     if (grid_width == 1)
     {
@@ -212,7 +220,7 @@ bool VoxelGrid::isRightSide(unsigned int index)
     }
 }
 
-bool VoxelGrid::isFrontSide(unsigned int index)
+bool VoxelGrid::isFrontSide(unsigned int index) const
 {
     //if on +z side
     if (grid_length == 1)
@@ -232,7 +240,7 @@ bool VoxelGrid::isFrontSide(unsigned int index)
     }
 }
 
-bool VoxelGrid::isBackSide(unsigned int index)
+bool VoxelGrid::isBackSide(unsigned int index) const
 {
     //if -z side is showing
     if (grid_length == 1)
@@ -252,7 +260,7 @@ bool VoxelGrid::isBackSide(unsigned int index)
     }
 }
 
-unsigned int VoxelGrid::getIndexDown(unsigned int index)
+unsigned int VoxelGrid::getIndexDown(unsigned int index) const
 {
     assert(index < grid_width * grid_height * grid_length);
 
@@ -266,7 +274,7 @@ unsigned int VoxelGrid::getIndexDown(unsigned int index)
     }
 }
 
-unsigned int VoxelGrid::getIndexUp(unsigned int index)
+unsigned int VoxelGrid::getIndexUp(unsigned int index) const
 {
     assert(index < grid_width * grid_height * grid_length);
 
@@ -280,7 +288,7 @@ unsigned int VoxelGrid::getIndexUp(unsigned int index)
     }
 }
 
-unsigned int VoxelGrid::getIndexLeft(unsigned int index)
+unsigned int VoxelGrid::getIndexLeft(unsigned int index) const
 {
     assert(index < grid_width * grid_height * grid_length);
 
@@ -294,7 +302,7 @@ unsigned int VoxelGrid::getIndexLeft(unsigned int index)
     }
 }
 
-unsigned int VoxelGrid::getIndexRight(unsigned int index)
+unsigned int VoxelGrid::getIndexRight(unsigned int index) const
 {
     assert(index < grid_width * grid_height * grid_length);
 
@@ -308,7 +316,7 @@ unsigned int VoxelGrid::getIndexRight(unsigned int index)
     }
 }
 
-unsigned int VoxelGrid::getIndexFront(unsigned int index)
+unsigned int VoxelGrid::getIndexFront(unsigned int index) const
 {
     assert(index < grid_width * grid_height * grid_length);
 
@@ -322,7 +330,7 @@ unsigned int VoxelGrid::getIndexFront(unsigned int index)
     }
 }
 
-unsigned int VoxelGrid::getIndexBack(unsigned int index)
+unsigned int VoxelGrid::getIndexBack(unsigned int index) const
 {
     assert(index < grid_width * grid_height * grid_length);
 

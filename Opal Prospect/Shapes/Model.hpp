@@ -45,6 +45,8 @@ public:
     void fillTriangleNormal(size_t index, std::vector<float>& data) const;
     void fillInterleavedTriangle(size_t index, std::vector<float>& data) const;
 
+    virtual void freeData();
+
     //gets
     std::string getModelName() const;
     std::string getTextureName() const;
