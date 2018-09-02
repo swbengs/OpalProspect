@@ -133,16 +133,18 @@ void MainLoop::startLoop(std::string terrain_filename)
         if (frames == target_fps)
         {
             skips++;
-            std::chrono::duration<double> seconds = std::chrono::high_resolution_clock::now() - start;
             if (skips == fps_print_skip)
             {
+                std::chrono::duration<double> seconds = std::chrono::high_resolution_clock::now() - start;
+                frames *= skips;
+
                 std::cout << "seconds: " << seconds.count() << "\n";
                 std::cout << "fps: " << (static_cast<double>(frames) / seconds.count()) << "\n";
+                
                 skips = 0;
+                start = std::chrono::high_resolution_clock::now();
             }
-
             frames = 0;
-            start = std::chrono::high_resolution_clock::now();
         }
 
         draw_engine.draw(camera);
