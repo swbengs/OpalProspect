@@ -5,6 +5,7 @@
 #include <array>
 #include <chrono>
 #include <fstream>
+#include <WinBase.h>
 
 #include "MainLoop.hpp"
 #include "BasicLog.hpp"
@@ -795,6 +796,18 @@ int main(int argc, char* argv[])
 {
     MainLoop loop;
     std::string terrain_filename;
+
+    /*
+    Need to get exe CWD but this will change how things must be done. C++11 has no cross platform way of doing this. Also means that Debug and Release
+    folders must be kept up to date with the main directory. The exe in those folders will grab from their folders as well. So any change to a DLL, png, 
+    .vert/.frag and so on need to be moved there.
+
+    If opal is run from a .cmd file and so on, it instead gets the CWD of where said batch/command/script file is and not where opal prospect.exe is.
+    Need to figure out where to place this cwd so everytime a filename is generated it can grab it. ALL file loading must use this or they will break depending
+    on where opal is run from.
+
+    Thinking all file loading should use FilePath and it can have a static CWD that contains the exe path
+    */
 
     if (argc > 1)
     {

@@ -73,3 +73,8 @@ void FilePath::setFullPath(std::string path)
 
     filename = path.substr(filename_start);
 }
+
+void FilePath::setRelativePath(std::string path)
+{
+
+}

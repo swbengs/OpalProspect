@@ -42,7 +42,8 @@ public:
     std::string getFilename() const;
     std::string getPath() const;
     //sets
-    void setFullPath(std::string path);
+    void setFullPath(std::string path); //set the full path. Must be a full path and not relative
+    void setRelativePath(std::string path); //uses CWD(current working directory) of the .exe file in front of the path/file you give
 
     static char getOSSeperator();
 
