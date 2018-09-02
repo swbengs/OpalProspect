@@ -39,8 +39,9 @@ Description: Class that does the main loop. Has callbacks as C functions to inte
 class MainLoop
 {
 public:
-    void startLoop();
+    void startLoop(std::string terrain_filename);
     void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+    void framebufferResize(int width, int height);
 
 private:
     DrawEngine draw_engine;

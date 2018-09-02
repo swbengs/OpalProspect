@@ -5,7 +5,7 @@
 
 //other includes
 #include "NaturalTile.hpp"
-#include "..\Shapes\Grid3DYOffset.hpp"
+#include "..\Shapes\VoxelGrid.hpp"
 
 /*
 MIT License
@@ -44,6 +44,8 @@ public:
     void create();
     void create(DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type, DF_Natural_Tile_Material material);
 
+    void freeData();
+
     //gets
     NaturalTile getBlock(unsigned int index) const;
     Point3D getBlockPosition(unsigned int index) const;
@@ -53,6 +55,13 @@ public:
     const std::vector<NaturalTile>& getFloors() const;
     Point3DUInt getGridDimensions() const;
     size_t getCount() const;
+
+    unsigned int getIndexDown(unsigned int index);
+    unsigned int getIndexUp(unsigned int index);
+    unsigned int getIndexLeft(unsigned int index);
+    unsigned int getIndexRight(unsigned int index);
+    unsigned int getIndexFront(unsigned int index);
+    unsigned int getIndexBack(unsigned int index);
 
     //sets
     void setGridDimensions(unsigned int width, unsigned int height, unsigned int length);
@@ -76,8 +85,8 @@ public:
     void setLayerMaterial(unsigned int layer, DF_Natural_Tile_Material material);
 
 private:
-    Grid3DYOffset block_grid;
-    Grid3DYOffset floor_grid;
+    VoxelGrid block_grid;
+    VoxelGrid floor_grid;
     std::vector<NaturalTile> blocks;
     std::vector<NaturalTile> floors;
 };

@@ -50,6 +50,8 @@ public:
     //index 6 ints 2 triangles 3 index each
     //normal 4 floats * 4 points
 
+    virtual void freeData();
+
     //index refers to a given faces array position. vector is modified
     void fillTriangleIndex(size_t index, std::vector<unsigned int>& vector) const;
     void fillFaceVertex(size_t index, std::vector<float>& vector) const;

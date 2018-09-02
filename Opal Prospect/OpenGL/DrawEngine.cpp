@@ -427,7 +427,7 @@ Method to properly add a model and update all important references it needs to b
 void DrawEngine::addModel(ModelIndex& model)
 {
     size_t current;
-    models.addModel(model);
+    models.addModel(std::move(model));
     current = models.getCount();
     buffers.addModel(models.modifyModel(current));
     //texture name, model name, and index count are already entered
@@ -442,8 +442,13 @@ Method to properly add a model interleaved and update all important references i
 */
 void DrawEngine::addInterleavedModel(ModelIndex& model)
 {
+    addInterleavedModel(model, false);
+}
+
+void DrawEngine::addInterleavedModel(ModelIndex& model, bool free_model_data)
+{
     size_t current;
-    models.addModel(model);
+    models.addModel(std::move(model));
     current = models.getCount();
     interleaved_buffers.addModel(models.modifyModel(current));
     //texture name, model name, and index count are already entered
@@ -451,6 +456,10 @@ void DrawEngine::addInterleavedModel(ModelIndex& model)
     pod.texture_reference = main_textures.getTextureReference(pod.texture_name);
     pod.index_offset_bytes = interleaved_buffers.getIndexByteOffset(pod.model_name);
     pod.vao_reference = interleaved_buffers.getModelVAOReference(pod.model_name);
+    if (free_model_data)
+    {
+        models.modifyModel(current).freeData();
+    }
 }
 
 void DrawEngine::addTexture(const ArrayTextureAtlas& texture)
@@ -617,12 +626,12 @@ void DrawEngine::draw(const Camera &camera)
     OGLHelpers::getOpenGLError("post frame draw", true);
 }
 
-void DrawEngine::setup()
+void DrawEngine::setup(std::string terrain_filename)
 {
     setupOpenGLContext();
     setupOpenGLObjects();
     setupOpenGLUniforms();
-    setupObjects();
+    setupObjects(terrain_filename);
 }
 
 void DrawEngine::cleanup()
@@ -809,7 +818,7 @@ void DrawEngine::setupOpenGLUniforms()
     OGLHelpers::getOpenGLError("post setup uniforms", true);
 }
 
-void DrawEngine::setupObjects()
+void DrawEngine::setupObjects(std::string terrain_filename)
 {
     //arrayTextureAtlasTest();
     //bufferControlTest();
@@ -819,7 +828,7 @@ void DrawEngine::setupObjects()
     loadTextures();
     //properDrawTest();
     loadModels();
-    loadTerrain();
+    loadTerrain(terrain_filename);
 }
 
 void DrawEngine::loadTextures()
@@ -829,11 +838,11 @@ void DrawEngine::loadTextures()
     files.reserve(DF_NATURAL_TILE_COUNT + 1);
 
     stream << "Textures" << FilePath::getOSSeperator() << "bad.png";
-    files.push_back(stream.str());
+    files.push_back(std::move(stream.str()));
 
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
-        files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i)));
+        files.push_back(std::move(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i))));
     }
 
     array_texture.setTextureName("terrain.png");
@@ -875,19 +884,19 @@ void DrawEngine::loadModels()
     }
 }
 
-void DrawEngine::loadTerrain()
+void DrawEngine::loadTerrain(std::string filename)
 {
     ModelIndex terrain_model;
     NaturalTerrain terrain_test;
     terrain_model.setTextureName("terrain.png");
     terrain_model.setModelName("terrain");
-    std::string filename;
+    //std::string filename;
     //filename = "Test\\test_maps\\5x5x5_simple.txt";
     //filename = "Test\\test_maps\\5x5x5.txt";
     //filename = "Test\\test_maps\\16x16x16.txt";
     //filename = "Test\\test_maps\\16x16x16_simple.txt";
     //filename = "Test\\test_maps\\df_real.txt";
-    filename = "Test\\test_maps\\df_real_short.txt";
+    //filename = "Test\\test_maps\\df_real_short.txt";
 
     //terrain_test stuff here
 
@@ -899,13 +908,12 @@ void DrawEngine::loadTerrain()
 
     //terrain.loadFromMemory(terrain_test, models, terrain_model);
     terrain.loadFromFile(filename, models, terrain_model);
-    addInterleavedModel(terrain_model);
 
     std::cout << "terrain face count: " << terrain_model.getFaceCount() << "\n";
     //std::cout << "face total size: " << terrain_model.getTotalSize() / terrain_model.getFaceCount() << "\n";
     std::cout << "terrain model total size: " << terrain_model.getTotalSize() << "\n";
+    addInterleavedModel(terrain_model, true);
 
-    //model_pod result = models.getModelPOD(models.getModelReference("terrain"));
     std::cout << "after terrain load\n";
 }
 
@@ -1132,6 +1140,7 @@ void DrawEngine::terrain_48x300x48_test(NaturalTerrain & natural_terrain)
 
 void DrawEngine::resize()
 {
+    glViewport(0, 0, getScreenWidth(), getScreenHeight());
     calculateOrtho();
     calculatePersp();
 }
@@ -1149,5 +1158,6 @@ void DrawEngine::calculateOrtho()
 
 void DrawEngine::calculatePersp()
 {
-    persp = glm::perspectiveLH(glm::radians(60.0f), 4.0f / 3.0f, Z_NEAR, Z_FAR);
+    const float aspect = static_cast<float>(getScreenWidth()) / static_cast<float>(getScreenHeight());
+    persp = glm::perspectiveLH(glm::radians(60.0f), aspect, Z_NEAR, Z_FAR);
 }

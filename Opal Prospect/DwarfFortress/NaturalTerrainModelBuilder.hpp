@@ -67,6 +67,8 @@ private:
     bool isSolid(DF_Draw_Tile_Type type) const; //check if the type is solid
     bool shouldDraw(const natural_tile_draw_info& info, bool is_floor) const; //final check to see if we should add this tile to be drawn
 
+    void freeData();
+
     //methods to build the model
     void addBoxFace(NormalFace face, const Point3D& offset, ModelIndex& terrain_model) const; //add offset to all vertex and then add the model
     void addBoxFaces(unsigned int current_index, unsigned int tile_position_index, const ModelIndex& box_model, ModelIndex& terrain_model, bool is_floor) const; //checks if proper bool is set and adds the face with the proper offset

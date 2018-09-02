@@ -112,6 +112,11 @@ void Model::fillInterleavedTriangle(size_t index, std::vector<float>& data) cons
     xyzw.fillArray4D(data);
 }
 
+void Model::freeData()
+{
+    triangles = std::vector<NormalTriangle>();
+}
+
 //gets
 std::string Model::getModelName() const
 {

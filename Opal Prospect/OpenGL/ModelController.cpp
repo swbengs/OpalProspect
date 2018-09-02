@@ -30,7 +30,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-void ModelController::addModel(const ModelIndex &model)
+void ModelController::addModel(ModelIndex&& model)
 {
     //fill in what we can get right now
     model_pod pod;
@@ -43,9 +43,9 @@ void ModelController::addModel(const ModelIndex &model)
     pod.model_name = model.getModelName();
     pod.texture_name = model.getTextureName();
     pod.index_count = model.getActualPointCount();
+    references[model.getModelName()] = static_cast<unsigned int>(pods.size() + 1); //cast just in case it's on a 64 bit system
     models.push_back(model);
-    pods.push_back(pod);
-    references[model.getModelName()] = static_cast<unsigned int>(pods.size()); //cast just in case it's on a 64 bit system
+    pods.push_back(std::move(pod));
 }
 
 size_t ModelController::getCount() const

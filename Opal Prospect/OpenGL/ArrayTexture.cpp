@@ -63,7 +63,7 @@ void ArrayTexture::loadImages(std::vector<std::string> file_paths)
         temp.setFilePath(file_paths[i]);
         //temp.loadImage();
         temp.loadImageFallback(file_paths[i], fallback);
-        images.push_back(temp);
+        images.push_back(std::move(temp));
     }
 
     //std::cout << "second loop\n";

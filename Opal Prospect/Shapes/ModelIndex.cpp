@@ -102,6 +102,12 @@ void ModelIndex::fillInterleaved(std::vector<float>& vector) const
     }
 }
 
+void ModelIndex::freeData()
+{
+    Model::freeData();
+    faces = std::vector<NormalFace>(); //ensure it's assigned either an empty or very small vector
+}
+
 void ModelIndex::fillTriangleIndex(size_t index, std::vector<unsigned int>& vector) const
 {
     unsigned int offset = getIndexOffset();
