@@ -40,6 +40,20 @@ class VoxelGrid
 {
 public:
 
+    bool isBottomSide(unsigned int index);
+    bool isTopSide(unsigned int index);
+    bool isLeftSide(unsigned int index);
+    bool isRightSide(unsigned int index);
+    bool isFrontSide(unsigned int index);
+    bool isBackSide(unsigned int index);
+
+    unsigned int getIndexDown(unsigned int index);
+    unsigned int getIndexUp(unsigned int index);
+    unsigned int getIndexLeft(unsigned int index);
+    unsigned int getIndexRight(unsigned int index);
+    unsigned int getIndexFront(unsigned int index);
+    unsigned int getIndexBack(unsigned int index);
+
     //gets
     Point3D getPosition(unsigned int index);
 
@@ -54,6 +68,7 @@ public:
     float getYOffset() const;
     float getYStride() const;
 
+    //sets
     void setGridWidth(unsigned int width);
     void setGridHeight(unsigned int height);
     void setGridLength(unsigned int length);

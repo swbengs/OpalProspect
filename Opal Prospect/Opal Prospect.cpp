@@ -743,7 +743,7 @@ int main(int argc, char* argv[])
         terrain_filename = "";
     }
 
-    loop.startLoop(terrain_filename);
+    //loop.startLoop(terrain_filename);
     tests();
 
     exit(EXIT_SUCCESS);

@@ -334,7 +334,6 @@ unsigned int Grid3DYOffset::getIndexLeft(unsigned int index, unsigned int width,
     {
         return index - 1;
     }
-
 }
 
 unsigned int Grid3DYOffset::getIndexRight(unsigned int index, unsigned int width, unsigned int height, unsigned int length)

@@ -132,4 +132,206 @@ void VoxelGrid::setYStride(float stride)
     y_stride = stride;
 }
 
+bool VoxelGrid::isBottomSide(unsigned int index)
+{
+    if (grid_height == 1)
+    {
+        return true;
+    }
 
+    unsigned int layer_size = grid_width * grid_length;
+
+    assert(index < grid_width * grid_height * grid_length);
+
+    if (index < layer_size)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool VoxelGrid::isTopSide(unsigned int index)
+{
+    if (grid_height == 1)
+    {
+        return true;
+    }
+
+    unsigned int layer_size = grid_width * grid_length;
+
+    assert(index < grid_width * grid_height * grid_length);
+
+    if (index >= layer_size * (grid_height - 1))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool VoxelGrid::isLeftSide(unsigned int index)
+{
+    if (grid_width == 1)
+    {
+        return true;
+    }
+
+    assert(index < grid_width * grid_height * grid_length);
+
+    if (index % grid_width == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool VoxelGrid::isRightSide(unsigned int index)
+{
+    if (grid_width == 1)
+    {
+        return true;
+    }
+
+    assert(index < grid_width * grid_height * grid_length);
+
+    if (index % grid_width == grid_width - 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool VoxelGrid::isFrontSide(unsigned int index)
+{
+    //if on +z side
+    if (grid_length == 1)
+    {
+        return true;
+    }
+
+    assert(index < grid_width * grid_height * grid_length);
+
+    if ((index / grid_width) % grid_length == grid_length - 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool VoxelGrid::isBackSide(unsigned int index)
+{
+    //if -z side is showing
+    if (grid_length == 1)
+    {
+        return true;
+    }
+
+    assert(index < grid_width * grid_height * grid_length);
+
+    if ((index / grid_width) % grid_length == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+unsigned int VoxelGrid::getIndexDown(unsigned int index)
+{
+    assert(index < grid_width * grid_height * grid_length);
+
+    if (isBottomSide(index))
+    {
+        return index;
+    }
+    else
+    {
+        return index - grid_width * grid_length;
+    }
+}
+
+unsigned int VoxelGrid::getIndexUp(unsigned int index)
+{
+    assert(index < grid_width * grid_height * grid_length);
+
+    if (isTopSide(index))
+    {
+        return index;
+    }
+    else
+    {
+        return index + grid_width * grid_length;
+    }
+}
+
+unsigned int VoxelGrid::getIndexLeft(unsigned int index)
+{
+    assert(index < grid_width * grid_height * grid_length);
+
+    if (isLeftSide(index))
+    {
+        return index;
+    }
+    else
+    {
+        return index - 1;
+    }
+}
+
+unsigned int VoxelGrid::getIndexRight(unsigned int index)
+{
+    assert(index < grid_width * grid_height * grid_length);
+
+    if (isRightSide(index))
+    {
+        return index;
+    }
+    else
+    {
+        return index + 1;
+    }
+}
+
+unsigned int VoxelGrid::getIndexFront(unsigned int index)
+{
+    assert(index < grid_width * grid_height * grid_length);
+
+    if (isFrontSide(index))
+    {
+        return index;
+    }
+    else
+    {
+        return index + grid_width;
+    }
+}
+
+unsigned int VoxelGrid::getIndexBack(unsigned int index)
+{
+    assert(index < grid_width * grid_height * grid_length);
+
+    if (isBackSide(index))
+    {
+        return index;
+    }
+    else
+    {
+        return index - grid_width;
+    }
+}
