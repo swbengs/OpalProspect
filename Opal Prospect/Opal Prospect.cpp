@@ -5,6 +5,7 @@
 #include <array>
 #include <chrono>
 #include <fstream>
+#include <Windows.h>
 #include <WinBase.h>
 
 #include "MainLoop.hpp"
@@ -809,6 +810,21 @@ int main(int argc, char* argv[])
     Thinking all file loading should use FilePath and it can have a static CWD that contains the exe path
     */
 
+#if defined(WIN32) || defined(_WIN32)
+    wchar_t buffer[MAX_PATH];
+    GetModuleFileName(NULL, buffer, MAX_PATH);
+    std::wstring temp_w = buffer;
+    FilePath temp_path;
+    temp_path.setFullPath(std::string(temp_w.begin(), temp_w.end())); //horrible way of doing this but should work for english chars for now
+    FilePath::setCWD(temp_path.getPathOnly());
+#endif
+
+    std::cout << "exe cwd: " << FilePath::getCWD() << "\n";
+    //FilePath test;
+    //test.setRelativePath("test.txt");
+    //std::cout << "test path: " << test.getPath() << "\n";
+    //std::cout << "test filename: " << test.getFilename() << "\n";
+
     if (argc > 1)
     {
         terrain_filename = argv[1];
@@ -818,7 +834,7 @@ int main(int argc, char* argv[])
         terrain_filename = "";
     }
 
-    loop.startLoop(terrain_filename);
+    //loop.startLoop(terrain_filename);
     //tests();
 
     exit(EXIT_SUCCESS);
