@@ -127,6 +127,7 @@ bool NaturalTerrainModelBuilder::shouldDraw(const natural_tile_draw_info& info, 
 
 void NaturalTerrainModelBuilder::addBoxFace(NormalFace face, const Point3D& offset, ModelIndex& terrain_model) const
 {
+    //face is not pass by reference because we need to modify it
     Point3D bottom_left, bottom_right, top_left, top_right;
     bottom_left = face.getBottomLeftVertex();
     bottom_right = face.getBottomRightVertex();
@@ -140,7 +141,7 @@ void NaturalTerrainModelBuilder::addBoxFace(NormalFace face, const Point3D& offs
 
     face.setVertex(bottom_left, bottom_right, top_left, top_right);
 
-    terrain_model.addFace(face);
+    terrain_model.addFace(std::move(face));
 }
 
 void NaturalTerrainModelBuilder::addBoxFaces(unsigned int current_index, unsigned int tile_position_index, const ModelIndex& box_model, ModelIndex& terrain_model, bool is_floor) const

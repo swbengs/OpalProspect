@@ -41,7 +41,7 @@ Description: This class is used to store all models and how they are accessed. A
 class ModelController
 {
 public:
-    void addModel(const ModelIndex &model);
+    void addModel(ModelIndex&& model);
 
     size_t getCount() const;
     const ModelIndex& getModel(unsigned int reference) const; //for reading only

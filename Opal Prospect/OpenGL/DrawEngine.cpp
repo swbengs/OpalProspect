@@ -427,7 +427,7 @@ Method to properly add a model and update all important references it needs to b
 void DrawEngine::addModel(ModelIndex& model)
 {
     size_t current;
-    models.addModel(model);
+    models.addModel(std::move(model));
     current = models.getCount();
     buffers.addModel(models.modifyModel(current));
     //texture name, model name, and index count are already entered
@@ -443,7 +443,7 @@ Method to properly add a model interleaved and update all important references i
 void DrawEngine::addInterleavedModel(ModelIndex& model)
 {
     size_t current;
-    models.addModel(model);
+    models.addModel(std::move(model));
     current = models.getCount();
     interleaved_buffers.addModel(models.modifyModel(current));
     //texture name, model name, and index count are already entered
@@ -829,11 +829,11 @@ void DrawEngine::loadTextures()
     files.reserve(DF_NATURAL_TILE_COUNT + 1);
 
     stream << "Textures" << FilePath::getOSSeperator() << "bad.png";
-    files.push_back(stream.str());
+    files.push_back(std::move(stream.str()));
 
     for (size_t i = 0; i < DF_NATURAL_TILE_COUNT; i++)
     {
-        files.push_back(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i)));
+        files.push_back(std::move(NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material(i))));
     }
 
     array_texture.setTextureName("terrain.png");
@@ -899,13 +899,12 @@ void DrawEngine::loadTerrain(std::string filename)
 
     //terrain.loadFromMemory(terrain_test, models, terrain_model);
     terrain.loadFromFile(filename, models, terrain_model);
-    addInterleavedModel(terrain_model);
 
     std::cout << "terrain face count: " << terrain_model.getFaceCount() << "\n";
     //std::cout << "face total size: " << terrain_model.getTotalSize() / terrain_model.getFaceCount() << "\n";
     std::cout << "terrain model total size: " << terrain_model.getTotalSize() << "\n";
+    addInterleavedModel(terrain_model);
 
-    //model_pod result = models.getModelPOD(models.getModelReference("terrain"));
     std::cout << "after terrain load\n";
 }
 

@@ -744,7 +744,7 @@ int main(int argc, char* argv[])
     }
 
     loop.startLoop(terrain_filename);
-    //tests();
+    tests();
 
     exit(EXIT_SUCCESS);
 }

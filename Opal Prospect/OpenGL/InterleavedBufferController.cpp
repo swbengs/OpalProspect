@@ -41,7 +41,7 @@ InterleavedBufferController::InterleavedBufferController()
     //std::cout << "max vertex: " << MAXIMUM_VERTEX_BUFFER_SIZE << " max index: " << MAXIMUM_INDEX_BUFFER_SIZE << "\n";
 }
 
-unsigned int InterleavedBufferController::addModel(ModelIndex & model)
+unsigned int InterleavedBufferController::addModel(ModelIndex& model)
 {
     if (getModelVAOReference(model.getModelName()) == 0) //not found
     {
