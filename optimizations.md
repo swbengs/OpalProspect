@@ -7,7 +7,7 @@ Many of these will end up mixing but I'll try to keep them relative to what is a
 ### Run Length Encoding(Already in use)
 Greatly save hard drive space when writing out the terrain data from DFHack. aaabbbbccccab can turn into 3a4b4c1a1b . The longer the run, the more space is saved.
 
-### Voxel Grid(Soon to be done)
+### Voxel Grid(Already in use)
 Have a grid class that does not save any data except the width, height, and length of the grid. Any position needed should just be calculated off a 1D index. Could save well over 500MB on a 48x300x48 4x4 embark. That is how large 3 floats per block and per floor add up to. O.o
 
 ## OpenGL related
