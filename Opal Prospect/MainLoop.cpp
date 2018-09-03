@@ -65,6 +65,7 @@ void MainLoop::startLoop(std::string terrain_filename)
     {
         std::cout << "Please enter a terrain filename to load\n";
         std::getline(std::cin, terrain_filename);
+        std::cout << "Loading " << terrain_filename << "\n\n";
     }
 
     GLFWwindow* window;

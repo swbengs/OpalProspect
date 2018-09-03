@@ -3,6 +3,7 @@
 
 //std lib includes
 #include <iostream>
+#include <sstream>
 
 //other includes
 
@@ -30,6 +31,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+std::string FilePath::exe_cwd = ".";
 const char os_seperator = 
 #if defined(WIN32) || defined(_WIN32)
 '\\';
@@ -49,6 +51,13 @@ std::string FilePath::getFilename() const
 
 std::string FilePath::getPath() const
 {
+    std::stringstream stream;
+    stream << full_path << filename;
+    return stream.str();
+}
+
+std::string FilePath::getPathOnly() const
+{
     return full_path;
 }
 
@@ -57,19 +66,39 @@ char FilePath::getOSSeperator()
     return os_seperator;
 }
 
+std::string FilePath::getCWD()
+{
+    return exe_cwd;
+}
+
+void FilePath::setCWD(std::string cwd)
+{
+    exe_cwd = cwd;
+}
+
 void FilePath::setFullPath(std::string path)
 {
-    full_path = path;
     size_t filename_start = 0;
 
-    for (size_t i = path.size() - 1; i > 0; i--)
+    if (path.size() > 0)
     {
-        if (path.at(i) == os_seperator)
+        for (size_t i = path.size() - 1; i > 0; i--)
         {
-            filename_start = i + 1; //we just found serpator at i, so add 1 to get the start
-            break; //exit loop
+            if (path.at(i) == os_seperator)
+            {
+                filename_start = i + 1; //we just found serpator at i, so add 1 to get the start
+                break; //exit loop
+            }
         }
     }
 
+    full_path = path.substr(0, filename_start);
     filename = path.substr(filename_start);
+}
+
+void FilePath::setRelativePath(std::string path)
+{
+    std::stringstream stream;
+    stream << FilePath::getCWD() << path; //exe's cwd already contains the os_seperator
+    setFullPath(stream.str());
 }

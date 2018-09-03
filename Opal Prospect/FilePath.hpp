@@ -40,14 +40,20 @@ public:
 
     //gets
     std::string getFilename() const;
-    std::string getPath() const;
+    std::string getPath() const; //path and file
+    std::string getPathOnly() const; //just path
     //sets
-    void setFullPath(std::string path);
+    void setFullPath(std::string path); //set the full path. Should be a full path and not relative. Only use with user given input such as terrain file.
+    //don't use full path for things like texture files, settings files, and so on. Use relative path
+    void setRelativePath(std::string path); //uses CWD(current working directory) of the .exe file in front of the path/file you give
 
     static char getOSSeperator();
+    static std::string getCWD();
+    static void setCWD(std::string cwd);
 
 private:
     std::string full_path;
     std::string filename;
+    static std::string exe_cwd;
 };
 

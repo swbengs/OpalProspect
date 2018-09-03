@@ -330,11 +330,11 @@
     <Text Include="..\code format.md" />
     <Text Include="..\design.md" />
     <Text Include="..\run.md" />
-    <Text Include="Textures\dev stuff\gems.txt" />
-    <Text Include="Textures\dev stuff\liquids.txt" />
-    <Text Include="Textures\dev stuff\ores.txt" />
-    <Text Include="Textures\dev stuff\soils.txt" />
-    <Text Include="Textures\dev stuff\stones.txt" />
+    <Text Include="test\dev stuff\gems.txt" />
+    <Text Include="test\dev stuff\liquids.txt" />
+    <Text Include="test\dev stuff\ores.txt" />
+    <Text Include="test\dev stuff\soils.txt" />
+    <Text Include="test\dev stuff\stones.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

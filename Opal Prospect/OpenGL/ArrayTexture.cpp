@@ -54,15 +54,15 @@ void ArrayTexture::loadImages(std::vector<std::string> file_paths)
 {
     int good_width = 0;
     int good_height = 0;
-    std::stringstream stream;
-    stream << "Textures" << FilePath::getOSSeperator() << "bad.png";
-    std::string fallback = stream.str();
+    std::stringstream bad_stream;
+    bad_stream << FilePath::getCWD() << "Textures" << FilePath::getOSSeperator() << "bad.png";
+    std::string fallback = bad_stream.str();
     for (size_t i = 0; i < file_paths.size(); i++)
     {
         Image temp;
         temp.setFilePath(file_paths[i]);
         //temp.loadImage();
-        temp.loadImageFallback(file_paths[i], fallback);
+        temp.loadImageFallback(temp.getPath(), fallback); //get the path we created and not the given file path
         images.push_back(std::move(temp));
     }
 

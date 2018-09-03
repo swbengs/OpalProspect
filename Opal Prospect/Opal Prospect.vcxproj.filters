@@ -523,19 +523,19 @@
     <Text Include="..\run.md">
       <Filter>Text Files</Filter>
     </Text>
-    <Text Include="Textures\dev stuff\gems.txt">
+    <Text Include="test\dev stuff\gems.txt">
       <Filter>Text Files\Texture texts</Filter>
     </Text>
-    <Text Include="Textures\dev stuff\liquids.txt">
+    <Text Include="test\dev stuff\liquids.txt">
       <Filter>Text Files\Texture texts</Filter>
     </Text>
-    <Text Include="Textures\dev stuff\ores.txt">
+    <Text Include="test\dev stuff\ores.txt">
       <Filter>Text Files\Texture texts</Filter>
     </Text>
-    <Text Include="Textures\dev stuff\soils.txt">
+    <Text Include="test\dev stuff\soils.txt">
       <Filter>Text Files\Texture texts</Filter>
     </Text>
-    <Text Include="Textures\dev stuff\stones.txt">
+    <Text Include="test\dev stuff\stones.txt">
       <Filter>Text Files\Texture texts</Filter>
     </Text>
   </ItemGroup>

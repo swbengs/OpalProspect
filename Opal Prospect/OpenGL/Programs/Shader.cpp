@@ -9,6 +9,7 @@
 #include "Shader.hpp"
 #include "glew.h"
 #include "..\..\BasicLog.hpp"
+#include "..\..\FilePath.hpp"
 
 /*
 MIT License
@@ -61,8 +62,10 @@ void Shader::compile() const
 
 void Shader::loadShader(std::string filename)
 {
-    //loadShaderFromFileCStyle(filename);
-    loadShaderFromFileCPPStyle(filename);
+    std::stringstream stream;
+    stream << FilePath::getCWD() << filename;
+    //loadShaderFromFileCStyle(stream.str());
+    loadShaderFromFileCPPStyle(stream.str());
 
     const char* cstring = data.c_str();
     glShaderSource(getID(), 1, &cstring, NULL);

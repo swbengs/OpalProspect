@@ -5,6 +5,10 @@
 #include <array>
 #include <chrono>
 #include <fstream>
+#if defined(WIN32) || defined(_WIN32)
+#include <Windows.h>
+#include <WinBase.h>
+#endif
 
 #include "MainLoop.hpp"
 #include "BasicLog.hpp"
@@ -795,6 +799,34 @@ int main(int argc, char* argv[])
 {
     MainLoop loop;
     std::string terrain_filename;
+
+    /*
+    Need to get exe CWD but this will change how things must be done. C++11 has no cross platform way of doing this. Also means that Debug and Release
+    folders must be kept up to date with the main directory. The exe in those folders will grab from their folders as well. So any change to a DLL, png, 
+    .vert/.frag and so on need to be moved there.
+
+    If opal is run from a .cmd file and so on, it instead gets the CWD of where said batch/command/script file is and not where opal prospect.exe is.
+    Need to figure out where to place this cwd so everytime a filename is generated it can grab it. ALL file loading must use this or they will break depending
+    on where opal is run from.
+
+    Thinking all file loading should use FilePath and it can have a static CWD that contains the exe path
+    */
+
+#if defined(WIN32) || defined(_WIN32)
+    wchar_t buffer[MAX_PATH];
+    GetModuleFileName(NULL, buffer, MAX_PATH);
+    std::wstring temp_w = buffer;
+    FilePath temp_path;
+    temp_path.setFullPath(std::string(temp_w.begin(), temp_w.end())); //horrible way of doing this but should work for english chars for now
+    FilePath::setCWD(temp_path.getPathOnly());
+    //std::cout << "path: " << temp_path.getPath() << "\n";
+#endif
+
+    std::cout << "exe cwd: " << FilePath::getCWD() << "\n\n";
+    //FilePath test;
+    //test.setRelativePath("test.txt");
+    //std::cout << "test path: " << test.getPath() << "\n";
+    //std::cout << "test filename: " << test.getFilename() << "\n";
 
     if (argc > 1)
     {
