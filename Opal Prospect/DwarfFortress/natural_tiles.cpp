@@ -685,7 +685,7 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
     case DF_ONYX_OPAL:
         return "onyx_opal.png";
     case DF_PERIDOT:
-        return "perido.pngt";
+        return "peridot.png";
     case DF_PICTURE_JASPER:
         return "picture_jasper.png";
     case DF_PINEAPPLE_OPAL:
