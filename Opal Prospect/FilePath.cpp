@@ -99,6 +99,6 @@ void FilePath::setFullPath(std::string path)
 void FilePath::setRelativePath(std::string path)
 {
     std::stringstream stream;
-    stream << FilePath::getCWD() << os_seperator << path;
+    stream << FilePath::getCWD() << path; //exe's cwd already contains the os_seperator
     setFullPath(stream.str());
 }

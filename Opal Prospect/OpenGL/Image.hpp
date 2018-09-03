@@ -48,6 +48,7 @@ public:
     size_t getSize() const; //size of the image vector
     std::string getFilename() const;
     const std::vector<unsigned char>& getImageData() const;
+    std::string getPath() const;
 
     //sets
     void setFilePath(std::string path); //sets the full filepath and the filename is extracted from this

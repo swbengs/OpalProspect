@@ -819,9 +819,10 @@ int main(int argc, char* argv[])
     FilePath temp_path;
     temp_path.setFullPath(std::string(temp_w.begin(), temp_w.end())); //horrible way of doing this but should work for english chars for now
     FilePath::setCWD(temp_path.getPathOnly());
+    //std::cout << "path: " << temp_path.getPath() << "\n";
 #endif
 
-    std::cout << "exe cwd: " << FilePath::getCWD() << "\n";
+    std::cout << "exe cwd: " << FilePath::getCWD() << "\n\n";
     //FilePath test;
     //test.setRelativePath("test.txt");
     //std::cout << "test path: " << test.getPath() << "\n";
@@ -836,7 +837,7 @@ int main(int argc, char* argv[])
         terrain_filename = "";
     }
 
-    //loop.startLoop(terrain_filename);
+    loop.startLoop(terrain_filename);
     //tests();
 
     exit(EXIT_SUCCESS);

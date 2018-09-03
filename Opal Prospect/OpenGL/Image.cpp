@@ -85,9 +85,14 @@ const std::vector<unsigned char>& Image::getImageData() const
     return image_data;
 }
 
+std::string Image::getPath() const
+{
+    return file_path.getPath();
+}
+
 void Image::setFilePath(std::string path)
 {
-    file_path.setFullPath(path);
+    file_path.setRelativePath(path);
 }
 
 void Image::setSolidColor(unsigned char red, unsigned char green, unsigned char blue, int width, int height)
