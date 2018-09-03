@@ -51,12 +51,14 @@ std::string FilePath::getFilename() const
 
 std::string FilePath::getPath() const
 {
-    return full_path;
+    std::stringstream stream;
+    stream << full_path << filename;
+    return stream.str();
 }
 
 std::string FilePath::getPathOnly() const
 {
-    return std::string();
+    return full_path;
 }
 
 char FilePath::getOSSeperator()
@@ -76,7 +78,6 @@ void FilePath::setCWD(std::string cwd)
 
 void FilePath::setFullPath(std::string path)
 {
-    full_path = path;
     size_t filename_start = 0;
 
     if (path.size() > 0)
@@ -91,6 +92,7 @@ void FilePath::setFullPath(std::string path)
         }
     }
 
+    full_path = path.substr(0, filename_start);
     filename = path.substr(filename_start);
 }
 

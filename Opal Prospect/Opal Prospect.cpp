@@ -5,8 +5,10 @@
 #include <array>
 #include <chrono>
 #include <fstream>
+#if defined(WIN32) || defined(_WIN32)
 #include <Windows.h>
 #include <WinBase.h>
+#endif
 
 #include "MainLoop.hpp"
 #include "BasicLog.hpp"
