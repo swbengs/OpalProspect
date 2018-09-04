@@ -550,6 +550,12 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
 
 --setup caches
 --per embark tile caches
+--change to be biome caches instead. Add as we find them. region.geo_index is the same as the biome.index so use this as a unique id
+--so have a table of [region x][region y] that contains the geolayer index, filled in as you find nils
+--another table of each biome of this index, so geolayer_index of 10 means there is a biome with an index of 10. each biome has a lava stone, and a table of layers which can be turned into letters
+--z shouldnt matter so run getTileBiomeRgn for each x and y at z of 0, and make the list of biomes from this. Then for each lava/layer needed later run just getTileBiomeRgn to see what biome index we need to pull from. can fill this in before
+--the first run but make sure we can add more biomes later if a x,y,z returns one not found. getRegionBiome(regionx, regiony).geo_index has the unique id
+--Reason for the change is that what biome each tile points to does not change on the 16x16x1 range. Can go 10 tiles to the right and then switch which biome they contain. causes nils when the biomes contain different number of layers
 for embark_y = 0, embark_y_count - 1, 1 do
   for embark_x = 0, embark_x_count - 1, 1 do
     local biome = df.world_geo_biome.find(dfhack.maps.getRegionBiome(dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)).geo_index)
