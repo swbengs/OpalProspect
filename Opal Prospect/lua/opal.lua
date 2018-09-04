@@ -33,15 +33,15 @@ It was used to speed up development greatly!
 
 TileTypeMaterialTable = 
 {
-  [df.tiletype_material.AIR] = "a",
-  [df.tiletype_material.SOIL] = 1,
-  [df.tiletype_material.STONE] = 1,
-  [df.tiletype_material.FEATURE] = "a",
+  [df.tiletype_material.AIR] = "a", --0
+  [df.tiletype_material.SOIL] = 1, --1
+  [df.tiletype_material.STONE] = 1, --2
+  [df.tiletype_material.FEATURE] = "a", --3
   [df.tiletype_material.LAVA_STONE] = 2,
   [df.tiletype_material.MINERAL] = 3,
   [df.tiletype_material.FROZEN_LIQUID] = "a",
   [df.tiletype_material.CONSTRUCTION] = 1,
-  [df.tiletype_material.GRASS_LIGHT] = 1,
+  [df.tiletype_material.GRASS_LIGHT] = 1, --8
   [df.tiletype_material.GRASS_DARK] = 1,
   [df.tiletype_material.GRASS_DRY] = 1,
   [df.tiletype_material.GRASS_DEAD] = 1,
@@ -50,7 +50,7 @@ TileTypeMaterialTable =
   [df.tiletype_material.CAMPFIRE] = 1,
   [df.tiletype_material.FIRE] = "a",
   [df.tiletype_material.ASHES] = "a",
-  [df.tiletype_material.MAGMA] = "a",
+  [df.tiletype_material.MAGMA] = "a", --17
   [df.tiletype_material.DRIFTWOOD] = 1,
   [df.tiletype_material.POOL] = "a",
   [df.tiletype_material.BROOK] = "a",
@@ -298,11 +298,11 @@ InorganicMaterialNumberToString =
 
 TileTypeShapeTable = 
 {
-  [df.tiletype_shape.EMPTY] = "a",
+  [df.tiletype_shape.EMPTY] = "a", --0
   [df.tiletype_shape.FLOOR] = "f",
   [df.tiletype_shape.BOULDER] = "f",
   [df.tiletype_shape.PEBBLES] = "f",
-  [df.tiletype_shape.WALL] = "w",
+  [df.tiletype_shape.WALL] = "w", --4
   [df.tiletype_shape.FORTIFICATION] = "w",
   [df.tiletype_shape.STAIR_UP] = "a",
   [df.tiletype_shape.STAIR_DOWN ] = "a",
@@ -520,6 +520,7 @@ local function writeLayer(material, shape)
 end
 
 local function main(filename)
+--printall(TileTypeMaterialTable)
 local world_x, world_y, world_z
 world_x, world_y, world_z = dfhack.maps.getTileSize()
 print("world size x: "..world_x.." y: "..world_y.." z: "..world_z)
@@ -549,10 +550,11 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
 
 --setup caches
 --per embark tile caches
-for embark_y = embark_y_count - 1, 0, -1 do
+for embark_y = 0, embark_y_count - 1, 1 do
   for embark_x = 0, embark_x_count - 1, 1 do
     local biome = df.world_geo_biome.find(dfhack.maps.getRegionBiome(dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)).geo_index)
     local index = embark_x + embark_y * embark_x_count
+    print(index)
     layer_letter_cache[index] = {}
     local cache = layer_letter_cache[index] --layers
     for key, layer in ipairs(biome.layers) do
@@ -571,7 +573,7 @@ for embark_y = embark_y_count - 1, 0, -1 do
 end
 
 --printall(layer_letter_cache)
---printall(layer_letter_cache[0])
+--printall(layer_letter_cache[9])
 --printall(lava_stone_letter_cache)
 --printall(NaturalMaterialsTable)
 --for key, value in ipairs(layer_letter_cache) do
@@ -615,7 +617,8 @@ end
               wall_material = "a"
               shape = "w"
             else
-              local tile_type = dfhack.maps.getTileType(x + 16 * x_block, y + 16 * y_block, z)
+              local tile_type = dfhack.maps.getTileType(16 * x_block + x, 16 * y_block + y, z)
+              --print("tiletype "..tile_type.." at "..16 * x_block + x..", "..16 * y_block + y..", "..z)
               wall_material = tile_type_material_cache[tile_type]
               shape =  tile_type_shape_cache[tile_type]
 
@@ -625,24 +628,59 @@ end
                 tile_type_material_cache[tile_type] = tile_attributes.material
                 wall_material = tile_type_material_cache[tile_type]
                 shape =  tile_type_shape_cache[tile_type]
+                if wall_material == nil then
+                  error("Bug at update tile cache. wall material nil at x, y, z "..x_block * 16 + x..", "..y_block * 16 + y..", "..z)
+                end
+                if shape == nil then
+                  error("Bug at update tile cache. shape nil at x, y, z "..x_block * 16 + x..", "..y_block * 16 + y..", "..z)
+                end
               end
+
+              --print(wall_material) --material type
 
               if shape == "a" then
                 wall_material = "a"
               elseif shape == "f" then
                 --wall_material = "a" --set wall to this, later on when there is a wall and floor material we will deal with the floor material
-                wall_material = layer_letter_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index] --temp to see actual floor material
-              elseif shape == "w" then
                 wall_material = TileTypeMaterialTable[wall_material] --wall material has the enum so put that into the material table to see what to do
                 if wall_material == 1 then --layer material
                   wall_material = layer_letter_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index]
                 elseif wall_material == 2 then --lava stone
                   wall_material = lava_stone_letter_cache[embark_x + embark_y * embark_x_count]
+                end
+
+                if wall_material == nil then
+                  error("Bug. shape f wall material nil at x, y, z "..x_block * 16 + x..", "..y_block * 16 + y..", "..z)
+                end
+              elseif shape == "w" then
+                --print(wall_material)
+                wall_material = TileTypeMaterialTable[wall_material] --wall material has the enum so put that into the material table to see what to do
+                if wall_material == 1 then --layer material
+                  wall_material = layer_letter_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index]
+                  if(wall_material == nil) then
+                    --printall(designations)
+                    print("layer letter cache index "..embark_x + embark_y * embark_x_count)
+                    --printall(layer_letter_cache[9])
+                    for key, value in pairs(layer_letter_cache) do
+                      print("key: "..key)
+                      printall(value)
+                    end
+                  end
+                elseif wall_material == 2 then --lava stone
+                  wall_material = lava_stone_letter_cache[embark_x + embark_y * embark_x_count]
                 elseif wall_material == 3 then --vein
                   wall_material = getVeinMaterialLetter(vein_cache[x_block], x + 16 * x_block, y + 16 * y_block)
                 end
+                --can't use else above because if it's not one of those it must have a pre defined material
+
+                if wall_material == nil then
+                  printall(tile_type_material_cache)
+                  printall(tile_type_shape_cache)
+                  print("embark x and y: "..embark_x.." "..embark_y)
+                  error("Bug. shape w wall material nil at x, y, z "..x_block * 16 + x..", "..y_block * 16 + y..", "..z)
+                end
               else
-                error("unknown shape letter")
+                error("Bug. unknown shape letter")
               end
             end
 
