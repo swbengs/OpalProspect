@@ -447,6 +447,9 @@ local function addMaterial(type_index, material_index)
     return letter
   else --make new key and add this material name to the table
     next_material_letter = CharacterTable[next_material_letter]
+    if next_material_letter == nil then
+      error("Next letter table returned nil. Bug or too many natural tile types")
+    end
     table[next_material_letter] = name
     return next_material_letter
   end
