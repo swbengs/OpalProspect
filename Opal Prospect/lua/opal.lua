@@ -410,8 +410,8 @@ CharacterTable =
 
 NaturalMaterialsTable = 
 {
-  ["a"] = "hidden", --defaults and test values
-  ["b"] = "root"
+  ["aa"] = "hidden", --defaults and test values
+  ["ab"] = "root"
 }
 
 --next_material_letter = "a"
@@ -456,6 +456,18 @@ local function addMaterial(type_index, material_index)
     end
     table[next_material_letter] = name
     return next_material_letter
+  end
+end
+
+--assumes that table is the top level cache
+local function addBiomeLayers(table, biome)
+  local index = biome.index
+  local cache = table[index]
+  if cache == nil then
+    cache = {}
+    for key, layer in ipairs(table) do
+      cache[key] = addMaterial(0, layer.mat_index)
+    end
   end
 end
 
@@ -550,8 +562,9 @@ local embark_y_count = world_y / 48
 --caches
 local block_cache = {} --hold a line of blocks to save looking them up multiple times
 local vein_cache = {} -- same as block cache but this holds the veins for the current blocks and their material letter
-local layer_letter_cache = {} --hold all embark biome's layer letters. These already have their material known and added to the proper table. give the geolayer_index and it gives the letter
-local lava_stone_letter_cache = {} --holds each embark biome's lava letter. give lava_stone to get the letter
+local biome_xy_cache = {} --holds the region x and region y values we find. they are used to find region biome and the index to the actual biome. saves this index so we can look up in layer_cache
+local biome_layer_cache = {} --hold all embark biome's layer letters. These already have their material known and added to the proper table. give the geolayer_index and it gives the letter
+local lava_stone_cache = {} --holds each embark biome's lava letter. give lava_stone to get the letter
 local tile_type_shape_cache = {} --tile type value to shape letter
 local tile_type_material_cache = {} --tile type value to material enum. These are contained in TileTypeMaterialTable
 --end caches
@@ -579,8 +592,8 @@ for embark_y = 0, embark_y_count - 1, 1 do
     local biome = df.world_geo_biome.find(dfhack.maps.getRegionBiome(dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)).geo_index)
     local index = embark_x + embark_y * embark_x_count
     print(index)
-    layer_letter_cache[index] = {}
-    local cache = layer_letter_cache[index] --layers
+    biome_layer_cache[index] = {}
+    local cache = biome_layer_cache[index] --layers
     for key, layer in ipairs(biome.layers) do
       cache[key] = addMaterial(0, layer.mat_index)
     end
@@ -589,7 +602,7 @@ for embark_y = 0, embark_y_count - 1, 1 do
     local region_x, region_y = dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)
     for _, region in ipairs(regions) do
         if region.pos.x == region_x and region.pos.y == region_y then
-            lava_stone_letter_cache[index] = addMaterial(0, region.lava_stone)
+            lava_stone_cache[index] = addMaterial(0, region.lava_stone)
             break
         end
     end
@@ -597,12 +610,12 @@ for embark_y = 0, embark_y_count - 1, 1 do
 end
 --]]
 
---printall(layer_letter_cache)
---printall(layer_letter_cache[9])
---printall(lava_stone_letter_cache)
+--printall(biome_layer_cache)
+--printall(biome_layer_cache[9])
+--printall(lava_stone_cache)
 --printall(NaturalMaterialsTable)
---for key, value in ipairs(layer_letter_cache) do
-  --printall(layer_letter_cache[key])
+--for key, value in ipairs(biome_layer_cache) do
+  --printall(biome_layer_cache[key])
 --end
 
 --end setup caches
@@ -637,23 +650,24 @@ end
             local designations = block_cache[x_block].designation[x][y]
             local wall_material
             local shape
+            local tile_material_enum --holds number or letter if it's predefined
             --set defaults for a hidden block which is WALL and HIDDEN
             if designations.hidden then
-              wall_material = "a"
+              wall_material = "aa"
               shape = "w"
             else
               local tile_type = dfhack.maps.getTileType(16 * x_block + x, 16 * y_block + y, z)
               --print("tiletype "..tile_type.." at "..16 * x_block + x..", "..16 * y_block + y..", "..z)
-              wall_material = tile_type_material_cache[tile_type]
+              tile_material_enum = tile_type_material_cache[tile_type]
               shape =  tile_type_shape_cache[tile_type]
 
               if shape == nil then --update tile type caches
                 local tile_attributes = df.tiletype.attrs[tile_type]
                 tile_type_shape_cache[tile_type] = TileTypeShapeTable[tile_attributes.shape]
                 tile_type_material_cache[tile_type] = tile_attributes.material
-                wall_material = tile_type_material_cache[tile_type]
+                tile_material_enum = tile_type_material_cache[tile_type]
                 shape =  tile_type_shape_cache[tile_type]
-                if wall_material == nil then
+                if tile_material_enum == nil then
                   error("Bug at update tile cache. wall material nil at x, y, z "..x_block * 16 + x..", "..y_block * 16 + y..", "..z)
                 end
                 if shape == nil then
@@ -661,17 +675,16 @@ end
                 end
               end
 
-              --print(wall_material) --material type
-
               if shape == "a" then
-                wall_material = "a"
+                wall_material = "aa"
               elseif shape == "f" then
-                --wall_material = "a" --set wall to this, later on when there is a wall and floor material we will deal with the floor material
-                wall_material = TileTypeMaterialTable[wall_material] --wall material has the enum so put that into the material table to see what to do
+                --wall_material = "aa" --set wall to this, later on when there is a wall and floor material we will deal with the floor material
+                wall_material = TileTypeMaterialTable[tile_material_enum] --wall material has the enum so put that into the material table to see what to do
                 if wall_material == 1 then --layer material
-                  wall_material = layer_letter_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index]
+                  wall_material = biome_layer_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index]
                 elseif wall_material == 2 then --lava stone
-                  wall_material = lava_stone_letter_cache[embark_x + embark_y * embark_x_count]
+                  wall_material = lava_stone_cache[embark_x + embark_y * embark_x_count]
+                --floor can't be a vein material naturally so don't need to check for that
                 end
 
                 if wall_material == nil then
@@ -679,20 +692,19 @@ end
                 end
               elseif shape == "w" then
                 --print(wall_material)
-                wall_material = TileTypeMaterialTable[wall_material] --wall material has the enum so put that into the material table to see what to do
+                wall_material = TileTypeMaterialTable[tile_material_enum] --wall material has the enum so put that into the material table to see what to do
                 if wall_material == 1 then --layer material
-                  wall_material = layer_letter_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index]
+                  wall_material = biome_layer_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index]
                   if(wall_material == nil) then
                     --printall(designations)
                     print("layer letter cache index "..embark_x + embark_y * embark_x_count)
-                    --printall(layer_letter_cache[9])
-                    for key, value in pairs(layer_letter_cache) do
+                    for key, value in pairs(biome_layer_cache) do
                       print("key: "..key)
                       printall(value)
                     end
                   end
                 elseif wall_material == 2 then --lava stone
-                  wall_material = lava_stone_letter_cache[embark_x + embark_y * embark_x_count]
+                  wall_material = lava_stone_cache[embark_x + embark_y * embark_x_count]
                 elseif wall_material == 3 then --vein
                   wall_material = getVeinMaterialLetter(vein_cache[x_block], x + 16 * x_block, y + 16 * y_block)
                 end
