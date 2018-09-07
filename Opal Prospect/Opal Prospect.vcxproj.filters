@@ -582,5 +582,8 @@
     <None Include="..\map_ideas.md">
       <Filter>Text Files</Filter>
     </None>
+    <None Include="lua\testcache.lua">
+      <Filter>Lua</Filter>
+    </None>
   </ItemGroup>
 </Project>
