@@ -1,4 +1,93 @@
 
+CharacterTable = 
+{
+  ["a"] = "b", --give it the current letter and it will return the next one
+  ["b"] = "c",
+  ["c"] = "d",
+  ["d"] = "e",
+  ["e"] = "f",
+  ["f"] = "g",
+  ["g"] = "h",
+  ["h"] = "i",
+  ["i"] = "j",
+  ["j"] = "k",
+  ["k"] = "l",
+  ["l"] = "m",
+  ["m"] = "n",
+  ["n"] = "o",
+  ["o"] = "p",
+  ["p"] = "q",
+  ["q"] = "r",
+  ["r"] = "s",
+  ["s"] = "t",
+  ["t"] = "u",
+  ["u"] = "v",
+  ["v"] = "w",
+  ["w"] = "x",
+  ["x"] = "y",
+  ["y"] = "z",
+  ["z"] = "A",
+  ["A"] = "B",
+  ["B"] = "C",
+  ["C"] = "D",
+  ["D"] = "E",
+  ["E"] = "F",
+  ["F"] = "G",
+  ["G"] = "H",
+  ["H"] = "I",
+  ["I"] = "J",
+  ["J"] = "K",
+  ["K"] = "L",
+  ["L"] = "M",
+  ["M"] = "N",
+  ["N"] = "O",
+  ["O"] = "P",
+  ["P"] = "Q",
+  ["Q"] = "R",
+  ["R"] = "S",
+  ["S"] = "T",
+  ["T"] = "U",
+  ["U"] = "V",
+  ["V"] = "W",
+  ["W"] = "X",
+  ["X"] = "Y",
+  ["Y"] = "Z",
+  ["Z"] = "!",
+  --special characters
+  ["!"] = "\"",
+  ["\""] = "#",
+  ["#"] = "$",
+  ["$"] = "%",
+  ["%"] = "&",
+  ["&"] = "\'",
+  ["\'"] = "(",
+  ["("] = ")",
+  [")"] = "*",
+  ["*"] = "+",
+  ["+"] = ",",
+  [","] = "-",
+  ["-"] = ".",
+  ["."] = "/",
+  ["/"] = ":",
+  [":"] = ";",
+  [";"] = "<",
+  ["<"] = "=",
+  ["="] = ">",
+  [">"] = "?",
+  ["?"] = "@",
+  ["@"] = "[",
+  ["["] = "\\",
+  ["\\"] = "]",
+  ["]"] = "^",
+  ["^"] = "_",
+  ["_"] = "`",
+  ["`"] = "{",
+  ["{"] = "|",
+  ["|"] = "}",
+  ["}"] = "~",
+  ["~"] = nil
+}
+
 InorganicMaterialNumberToString = 
 {
   [34] = "onyx",
@@ -253,7 +342,8 @@ local function getNextSequence()
     char_a = CharacterTable[char_a]
     char_b = "a"
   end
-  return next_material_sequence
+
+  return char_a..char_b
 end
 
 local function materialLocation(table, material)
@@ -288,8 +378,8 @@ local function addMaterial(type_index, material_index)
     if next_material_sequence == nil then
       error("Next letter table returned nil. Bug or too many natural tile types")
     end
-    table[next_material_sequence ] = name
-    return next_material_sequence 
+    table[next_material_sequence] = name
+    return next_material_sequence
   end
 end
 
@@ -298,8 +388,9 @@ local function addBiomeLayers(layer_cache, biome)
   local index = biome.index
   local cache = layer_cache[index]
   if cache == nil then
-    cache = {}
-    for key, layer in ipairs(layer_cache) do
+    layer_cache[index] = {}
+    cache = layer_cache[index]
+    for key, layer in ipairs(biome.layers) do
       cache[key] = addMaterial(0, layer.mat_index)
     end
   end
@@ -323,23 +414,52 @@ local function getBiomeIndex(xy_cache, region_x, region_y)
     return nil
   else 
     return xy_cache[region_x][region_y]
+  end
 end
 
-local function cacheSetup(xy_cache, layer_cache, lavastone_cache, world_x, world_y)
-  for y = 0, world_y - 1, 1 do
-    for x = 0, world_x, 1, 1 do
-      local region_x, region_y = dfhack.maps.getTileBiomeRgn(x, y, 0)
-      local biome_index = getBiomeIndex(xy_cache, region_x, region_y)
-      --see if we already have this index. if not add it with the biome index
-      if biome_index == nil then
-        biome_index = dfhack.maps.getRegionBiome(region_x, region_y).geo_index
-        addRegionXY(xy_cache, region_x, region_y, biome_index)
-      end
-      --check if we have this biome already
-      local biome = layer_cache[biome_index]
-      if biome == nil then
-        biome = df.world_geo_biome.find(biome_index)
-        addBiomeLayers(layer_cache, biome)
+local function cacheSetup(xy_cache, layer_cache, lavastone_cache, world_x, world_y, world_z)
+  for z = 0, world_z - 1, 1 do
+    for y = 0, world_y - 1, 1 do
+      for x = 0, world_x - 1, 1 do
+        local region_x, region_y = dfhack.maps.getTileBiomeRgn(x, y, z)
+        if region_x == nil then
+          --error("Layer :"..z.." returned nil for region_x")
+          return --appears that at or around the added air spot it just gives nils for the region coords. So just return
+        elseif region_y == nil then
+          --error("Layer :"..z.." returned nil for region_y")
+          return
+        end
+        local biome_index = getBiomeIndex(xy_cache, region_x, region_y)
+        local regions
+        --see if we already have this index. if not add it with the biome index
+        if biome_index == nil then
+          biome_index = dfhack.maps.getRegionBiome(region_x, region_y).geo_index
+          addRegionXY(xy_cache, region_x, region_y, biome_index)
+        end
+
+        --check if we have this biome already
+        local biome = layer_cache[biome_index]
+        if biome == nil then
+          biome = df.world_geo_biome.find(biome_index)
+          addBiomeLayers(layer_cache, biome)
+        else --sanity check to see if z changes what biome this points to. Grab this blocks biome index anyways and make sure it matches
+          local test_biome_index = dfhack.maps.getRegionBiome(region_x, region_y).geo_index
+          local test_biome = df.world_geo_biome.find(biome_index)
+          if test_biome.index ~= biome_index then
+            error("Biome indexs do not match for region x,y: "..region_x..", "..region_y)
+          end
+        end
+
+        local lava_stone = lavastone_cache[biome_index]
+        if lava_stone == nil then
+          regions = df.global.world.world_data.region_details
+          for _, region in ipairs(regions) do
+            if region.pos.x == region_x and region.pos.y == region_y then
+              lavastone_cache[biome_index] = addMaterial(0, region.lava_stone)
+              break
+            end
+          end
+        end
       end
     end
   end
@@ -348,17 +468,29 @@ end
 local function printXYCache(cache)
   for region_x, y_table in pairs(cache) do
     for region_y, biome_index in pairs(y_table) do
-      print("region x, y: "..region_x..", "..region_y.."biome index: "..biome_index)
+      print("region x, y: "..region_x..", "..region_y.." | biome index: "..biome_index)
     end
   end
 end
 
 local function printLayerCache(cache)
   for biome_index, layers in pairs(cache) do
-    print("biome #: "..biome)
+    print("biome #: "..biome_index)
     for layer_index, material_sequence in pairs(layers) do
-      print("material_sequence: "..material_sequence)
+      print("layer_index: "..layer_index.." | layer material_sequence: "..material_sequence)
     end
+  end
+end
+
+local function printLavastoneCache(cache)
+  for biome_index, material_sequence in pairs(cache) do
+    print("biome #: "..biome_index.." | lavastone material_sequence: "..material_sequence)
+  end
+end
+
+local function printMaterialsTable()
+  for sequence, name in pairs(NaturalMaterialsTable) do
+    print("material sequence: "..sequence.." | material name: "..name)
   end
 end
 
@@ -371,9 +503,18 @@ local biome_xy_cache = {}
 local biome_layer_cache = {}
 local biome_lavastone_cache = {}
 
-cacheSetup(biome_xy_cache, biome_layer_cache, biome_lavastone_cache, world_x, world_y)
+cacheSetup(biome_xy_cache, biome_layer_cache, biome_lavastone_cache, world_x, world_y, world_z)
+--cacheSetup(biome_xy_cache, biome_layer_cache, biome_lavastone_cache, world_x, world_y, 1)
 
+printXYCache(biome_xy_cache)
+print("")
 printLayerCache(biome_layer_cache)
+print("")
+printLavastoneCache(biome_lavastone_cache)
+print("")
+printMaterialsTable()
+print("")
+
 
 end
 
