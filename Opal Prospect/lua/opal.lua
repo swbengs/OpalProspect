@@ -728,10 +728,6 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
                   wall_material = biome_lava_stone_cache[biome_index]
                 --floor can't be a vein material naturally so don't need to check for that
                 end
-
-                if wall_material == nil then
-                  error("Bug. shape f wall material nil at x, y, z "..x_block * 16 + x..", "..y_block * 16 + y..", "..z)
-                end
               elseif shape == "w" then
                 --print(wall_material)
                 wall_material = TileTypeMaterialTable[tile_material_enum] --wall material has the enum so put that into the material table to see what to do
@@ -743,12 +739,6 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
                   wall_material = getVeinMaterialLetter(vein_cache[x_block], x + 16 * x_block, y + 16 * y_block)
                 end
                 --can't use else above because if it's not one of those it must have a pre defined material
-
-                if wall_material == nil then
-                  printall(tile_type_material_cache)
-                  printall(tile_type_shape_cache)
-                  error("Bug. shape w wall material nil at x, y, z "..x_block * 16 + x..", "..y_block * 16 + y..", "..z)
-                end
               else
                 error("Bug. unknown shape letter")
               end
@@ -757,12 +747,12 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
             --check if any of the letters have changed and deal with it
             if wall_material ~= current_wall_material_letter then --material and shape must be done seperate
               if current_wall_material_letter ~= " " then --if not default append
-                wall_material_output = wall_material_output..material_count..current_wall_material_letter
+                wall_material_output = wall_material_output..wall_material_count..current_wall_material_letter
               end
               current_wall_material_letter = wall_material
-              material_count = 1
+              wall_material_count = 1
             else
-              material_count = material_count + 1
+              wall_material_count = wall_material_count + 1
             end
 
             if shape ~= current_shape_letter then
@@ -779,7 +769,7 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
         end
       end
     end
-    wall_material_output = wall_material_output..material_count..current_wall_material_letter --append the last letter and count to proper string
+    wall_material_output = wall_material_output..wall_material_count..current_wall_material_letter --append the last letter and count to proper string
     shape_output = shape_output..shape_count..current_shape_letter
     writeLayer(wall_material_output, shape_output) --write current output then reset both outputs and all counts and letters
   end

@@ -223,6 +223,8 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
             stream << a << b;
             i++; //since we read two chars instead of just one, we must increment i an extra time
 
+            //std::cout << "num: " << number_long << "\n";
+
             if (number == 0)
             {
                 BasicLog::getInstance().writeError("rle number is 0. Should be at least 1\n");
@@ -233,6 +235,9 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
 
             if (count > layer_size)
             {
+                std::stringstream stream;
+                stream << "count: " << count  << " number: " << number << " layer size " << layer_size << "\n";
+                BasicLog::getInstance().writeError(stream.str());
                 BasicLog::getInstance().writeError("total count from rle exceeds layer size in material\n");
                 return false;
             }
