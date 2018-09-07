@@ -33,32 +33,32 @@ It was used to speed up development greatly!
 
 TileTypeMaterialTable = 
 {
-  [df.tiletype_material.AIR] = "a", --0
+  [df.tiletype_material.AIR] = "aa", --0
   [df.tiletype_material.SOIL] = 1, --1
   [df.tiletype_material.STONE] = 1, --2
-  [df.tiletype_material.FEATURE] = "a", --3
+  [df.tiletype_material.FEATURE] = "aa", --3
   [df.tiletype_material.LAVA_STONE] = 2,
   [df.tiletype_material.MINERAL] = 3,
-  [df.tiletype_material.FROZEN_LIQUID] = "a",
+  [df.tiletype_material.FROZEN_LIQUID] = "aa",
   [df.tiletype_material.CONSTRUCTION] = 1,
   [df.tiletype_material.GRASS_LIGHT] = 1, --8
   [df.tiletype_material.GRASS_DARK] = 1,
   [df.tiletype_material.GRASS_DRY] = 1,
   [df.tiletype_material.GRASS_DEAD] = 1,
   [df.tiletype_material.PLANT] = 1,
-  [df.tiletype_material.HFS] = "a",
+  [df.tiletype_material.HFS] = "aa",
   [df.tiletype_material.CAMPFIRE] = 1,
-  [df.tiletype_material.FIRE] = "a",
-  [df.tiletype_material.ASHES] = "a",
-  [df.tiletype_material.MAGMA] = "a", --17
+  [df.tiletype_material.FIRE] = "aa",
+  [df.tiletype_material.ASHES] = "aa",
+  [df.tiletype_material.MAGMA] = "aa", --17
   [df.tiletype_material.DRIFTWOOD] = 1,
-  [df.tiletype_material.POOL] = "a",
-  [df.tiletype_material.BROOK] = "a",
-  [df.tiletype_material.RIVER] = "a",
-  [df.tiletype_material.ROOT] = "b",
+  [df.tiletype_material.POOL] = "aa",
+  [df.tiletype_material.BROOK] = "aa",
+  [df.tiletype_material.RIVER] = "aa",
+  [df.tiletype_material.ROOT] = "ab",
   [df.tiletype_material.TREE] = 1,
   [df.tiletype_material.MUSHROOM] = 1,
-  [df.tiletype_material.UNDERWORLD_GATE] = "a"
+  [df.tiletype_material.UNDERWORLD_GATE] = "aa"
 }
 
 InorganicMaterialNumberToString = 

@@ -79,8 +79,8 @@ bool NaturalTerrainFileLoader::readFile(std::string filename, NaturalTerrain& te
             file >> material;
             file >> type;
 
-            run_length_natural_material.push_back(material);
-            run_length_natural_type.push_back(type);
+            run_length_natural_material.push_back(std::move(material));
+            run_length_natural_type.push_back(std::move(type));
         }
 
         terrain.setGridDimensions(world_width, world_height, world_length);
@@ -103,9 +103,9 @@ bool NaturalTerrainFileLoader::readFile(std::string filename, NaturalTerrain& te
             file >> table_input;
             if (table_input.compare("natural_materials_end") != 0 && !file.eof())
             {
-                unsigned char c = table_input[0];
+                std::string s = table_input;
                 file >> table_input;
-                material_table[c] = reverse_material_table[table_input];
+                material_table[s] = reverse_material_table[table_input];
             }
             else
             {
@@ -175,6 +175,10 @@ bool NaturalTerrainFileLoader::parseRunLengthStrings()
             std::stringstream stream;
             stream << "issue parsing at layer number: " << i << "\n";
             BasicLog::getInstance().writeError(stream.str());
+            BasicLog::getInstance().writeLog("Material\n");
+            BasicLog::getInstance().writeLog(run_length_natural_material[i]);
+            BasicLog::getInstance().writeLog("\nShape\n");
+            BasicLog::getInstance().writeLog(run_length_natural_type[i]);
             return false;
         }
     }
@@ -185,7 +189,7 @@ bool NaturalTerrainFileLoader::parseRunLengthStrings()
 bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer_size, unsigned int max_digits)
 {
     std::string single;
-    single.resize(max_digits + 1); //need extra space for single character
+    single.resize(max_digits + 2); //need extra space for single character
 
     const std::string& material_rle = run_length_natural_material[layer];
     const std::string& type_rle = run_length_natural_type[layer];
@@ -205,14 +209,19 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
                 return false;
             }
         }
-        else //add single character, the non number one and seperate the number and character
+        else //add two characters, the non number one and seperate the number and character
         {
+            std::stringstream stream;
             single[single_index] = material_rle[i];
+            single[single_index + 1] = material_rle[i + 1]; //grab two chars and add to our string
             single_index = 0;
             char* end;
             unsigned long number_long = strtoul(single.data(), &end, 10);
             unsigned int number = static_cast<unsigned int>(number_long);
-            unsigned char c = *end;
+            char a = *end; //first
+            char b = end[1]; //second
+            stream << a << b;
+            i++; //since we read two chars instead of just one, we must increment i an extra time
 
             if (number == 0)
             {
@@ -224,15 +233,15 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
 
             if (count > layer_size)
             {
-                BasicLog::getInstance().writeError("total count from rle exceeds layer size\n");
+                BasicLog::getInstance().writeError("total count from rle exceeds layer size in material\n");
                 return false;
             }
 
-            run_length_pair pair;
-            pair.letter = c;
+            run_length_pair_string pair;
+            pair.sequence = stream.str();
             pair.number = number;
 
-            material_pairs.push_back(pair);
+            material_pairs.push_back(std::move(pair));
 
             //reset single
             for (size_t n = 0; n < single.size(); n++)
@@ -275,7 +284,7 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
 
             if (count > layer_size)
             {
-                BasicLog::getInstance().writeError("total count from rle exceeds layer size\n");
+                BasicLog::getInstance().writeError("total count from rle exceeds layer size in shape\n");
                 return false;
             }
 
@@ -283,7 +292,7 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
             pair.letter = c;
             pair.number = number;
 
-            type_pairs.push_back(pair);
+            type_pairs.push_back(std::move(pair));
 
             //reset single
             for (size_t n = 0; n < single.size(); n++)
@@ -304,12 +313,12 @@ void NaturalTerrainFileLoader::createTerrain(NaturalTerrain& terrain)
     unsigned int current_index = 0; //current of total world size
     for (size_t i = 0; i < material_pairs.size(); i++)
     {
-        const unsigned char c = material_pairs[i].letter;
+        std::string s = material_pairs[i].sequence;
         const unsigned int number = material_pairs[i].number;
 
         for (unsigned int n = 0; n < number; n++)
         {
-            terrain.setIndexMaterial(current_index, material_table[c]);
+            terrain.setIndexMaterial(current_index, material_table[s]);
             current_index++;
         }
     }

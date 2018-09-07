@@ -503,11 +503,11 @@
     <ClInclude Include="BasicLog.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DwarfFortress\NaturalTerrainFileLoader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Shapes\VoxelGrid.hpp">
       <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="DwarfFortress\NaturalTerrainFileLoader.hpp">
+      <Filter>DwarfFortress</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
