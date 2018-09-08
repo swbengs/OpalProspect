@@ -611,7 +611,7 @@ print("saving to file named: "..filename)
 opal_prospect_file = io.open(filename, "w")
 io.output(opal_prospect_file)
 --debug stuff
-world_z = 22
+--world_z = 22
 --end debug stuff
 writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for opal prospect
 
@@ -628,7 +628,7 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
 
 --end setup caches
 
-  for z = 21, world_z - 1, 1 do --start at 0 and go until world_z - 1. changes here are just for testing such as starting at higher height
+  for z = 0, world_z - 1, 1 do --start at 0 and go until world_z - 1. changes here are just for testing such as starting at higher height
     --set defaults
     local wall_material_count = 0
     local shape_count = 0
@@ -692,7 +692,8 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
                   wall_material = biome_layer_cache[biome_index][designations.geolayer_index]
                 elseif wall_material == 2 then --lava stone
                   wall_material = biome_lava_stone_cache[biome_index]
-                --floor can't be a vein material naturally so don't need to check for that
+                elseif wall_material == 3 then --vein
+                  wall_material = getVeinMaterial(vein_cache[x_block], x + 16 * x_block, y + 16 * y_block) --floors CAN be natural vein materials
                 end
               elseif shape == "w" then
                 --print(wall_material)
@@ -714,6 +715,7 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
             if wall_material ~= current_wall_material then --material and shape must be done seperate
               if current_wall_material ~= " " then --if not default append
                 wall_material_output = wall_material_output..wall_material_count..current_wall_material
+                --print(wall_material_count..current_wall_material)
                 tile_count = tile_count + wall_material_count
               end
               current_wall_material = wall_material
