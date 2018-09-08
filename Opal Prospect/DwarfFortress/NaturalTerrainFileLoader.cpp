@@ -218,7 +218,7 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
             char* end;
             unsigned long number_long = strtoul(single.data(), &end, 10);
             unsigned int number = static_cast<unsigned int>(number_long);
-            char a = *end; //first
+            char a = end[0]; //first
             char b = end[1]; //second
             stream << a << b;
             i++; //since we read two chars instead of just one, we must increment i an extra time
@@ -235,10 +235,11 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
 
             if (count > layer_size)
             {
-                std::stringstream stream;
-                stream << "count: " << count  << " number: " << number << " layer size " << layer_size << "\n";
-                BasicLog::getInstance().writeError(stream.str());
+                std::stringstream error_stream;
+                error_stream << "count: " << count  << " | number: " << number << " | layer size: " << layer_size << " | layer: " << layer << "\n";
+                BasicLog::getInstance().writeError(error_stream.str());
                 BasicLog::getInstance().writeError("total count from rle exceeds layer size in material\n");
+                checkLayerString(layer);
                 return false;
             }
 
@@ -254,6 +255,15 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
                 single[n] = '\0';
             }
         }
+    }
+
+    if (count != layer_size)
+    {
+        std::stringstream error_stream;
+        error_stream << "count: " << count << " layer size " << layer_size << "\n";
+        BasicLog::getInstance().writeError(error_stream.str());
+        BasicLog::getInstance().writeError("total count from material is not equal to layer size\n");
+        return false;
     }
 
     count = 0;
@@ -385,5 +395,20 @@ void NaturalTerrainFileLoader::createTerrain(NaturalTerrain& terrain)
     }
 
     assert(current_index == world_size);
+}
+
+void NaturalTerrainFileLoader::checkLayerString(unsigned int layer) const
+{
+    std::cout << "running tests\n";
+    std::string rle = run_length_natural_material[layer];
+    for (size_t i = 0; i < rle.size(); i++)
+    {
+        if (rle[i] <= static_cast<unsigned char>(32) || rle[i] == static_cast<unsigned char>(127) || rle[i] >= static_cast<unsigned char>(128)) //space and controls or del
+        {
+            std::stringstream error_stream;
+            error_stream << "bad char found at: " << i << "\n";
+            BasicLog::getInstance().writeError(error_stream.str());
+        }
+    }
 }
 

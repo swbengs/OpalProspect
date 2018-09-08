@@ -372,40 +372,7 @@ CharacterTable =
   ["W"] = "X",
   ["X"] = "Y",
   ["Y"] = "Z",
-  ["Z"] = "!",
-  --special characters
-  ["!"] = "\"",
-  ["\""] = "#",
-  ["#"] = "$",
-  ["$"] = "%",
-  ["%"] = "&",
-  ["&"] = "\'",
-  ["\'"] = "(",
-  ["("] = ")",
-  [")"] = "*",
-  ["*"] = "+",
-  ["+"] = ",",
-  [","] = "-",
-  ["-"] = ".",
-  ["."] = "/",
-  ["/"] = ":",
-  [":"] = ";",
-  [";"] = "<",
-  ["<"] = "=",
-  ["="] = ">",
-  [">"] = "?",
-  ["?"] = "@",
-  ["@"] = "[",
-  ["["] = "\\",
-  ["\\"] = "]",
-  ["]"] = "^",
-  ["^"] = "_",
-  ["_"] = "`",
-  ["`"] = "{",
-  ["{"] = "|",
-  ["|"] = "}",
-  ["}"] = "~",
-  ["~"] = nil
+  ["Z"] = nil
 }
 
 NaturalMaterialsTable = 
@@ -418,7 +385,7 @@ NaturalMaterialsTable =
 --next_material_letter to next_material_sequence
 --a_ are reserved for predefined materials like hidden
 --aka aa, ab, az and so on
-next_material_sequence = "a~"
+next_material_sequence = "aZ"
 opal_prospect_file = 0
 layer_write_count = 0
 --end globals
@@ -643,6 +610,9 @@ end
 print("saving to file named: "..filename)
 opal_prospect_file = io.open(filename, "w")
 io.output(opal_prospect_file)
+--debug stuff
+world_z = 8
+--end debug stuff
 writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for opal prospect
 
 --setup caches

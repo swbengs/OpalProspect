@@ -1,0 +1,3 @@
+count: 36983 number: 131 layer size 36864
+total count from rle exceeds layer size in material
+issue parsing at layer number: 21

@@ -67,5 +67,8 @@ private:
     bool parseRunLengthStrings();
     bool parseLayer(unsigned int layer, unsigned int layer_size, unsigned int max_digits); //parse layer and add the pairs to the correct vector
     void createTerrain(NaturalTerrain& terrain);
+
+    //debugging stuff
+    void checkLayerString(unsigned int layer) const;
 };
 

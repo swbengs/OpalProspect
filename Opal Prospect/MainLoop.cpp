@@ -122,7 +122,7 @@ void MainLoop::startLoop(std::string terrain_filename)
 
     const unsigned int target_fps = 60;
     const unsigned int fps_print_skip = 15;
-    camera.setPosition(glm::vec3(0.0f, 185.0f, -10.0f));
+    camera.setPosition(glm::vec3(0.0f, 0.0f, -10.0f));
 
     unsigned int frames = target_fps;
     unsigned int skips = 0;

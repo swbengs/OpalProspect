@@ -1,24 +1,24 @@
 v0.2 5 5 5
 
-5aa5aa5aa5aa5aa
+5a%5bb5c\5bb5a%
 5b5b5b5b5b
 
-5bb5bb5cc5bb1aa4cc
+5bb5bb5c\5bb1a%4c\
 5b5b5a5b1b4c
 
-25aa
+25a%
 25a
 
-5cc5cc5cc5cc5cc
+5c\5c\5c\5c\5c\
 5b5b5b5b5c
 
 5bb5bb5bb5bb5bb
 5b5b5b5b5b
 
 natural_materials
-aa tetrahedrite
+a% tetrahedrite
 bb white_sand
-cc gabbro
+c\ gabbro
 natural_materials_end
 
 natural_types

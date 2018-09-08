@@ -566,7 +566,7 @@ void DrawEngine::draw(const Camera &camera)
 
     //draw("gabbro block", camera, &test, nullptr, nullptr);
     //draw("gabbro floor", camera, &test, nullptr, nullptr);
-    glm::vec3 terrain_position = glm::vec3(15.0f, 0.0f, 0.0f);
+    glm::vec3 terrain_position = glm::vec3(0.0f, 0.0f, 0.0f);
     draw("terrain", camera, &terrain_position, nullptr, nullptr);
 
     /*
