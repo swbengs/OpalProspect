@@ -1,19 +1,7 @@
-v0.2 5 5 5
+v0.2 1000 1 1
 
-25aa
-25b
-
-25bb
-25b
-
-25aa
-25a
-
-25cc
-25b
-
-25bb
-25b
+1000bb
+1000b
 
 natural_materials
 aa tetrahedrite

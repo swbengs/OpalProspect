@@ -611,7 +611,7 @@ print("saving to file named: "..filename)
 opal_prospect_file = io.open(filename, "w")
 io.output(opal_prospect_file)
 --debug stuff
-world_z = 8
+world_z = 22
 --end debug stuff
 writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for opal prospect
 
@@ -625,21 +625,15 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
 --Reason for the change is that what biome each tile points to does not change on the 16x16x1 range. Can go 10 tiles to the right and then switch which biome they contain. causes nils when the biomes contain different number of layers
   cacheSetup(biome_xy_cache, biome_layer_cache, biome_lava_stone_cache, world_x, world_y)
   local tile_count = 0
---printall(biome_layer_cache)
---printall(biome_layer_cache[9])
---printall(NaturalMaterialsTable)
---for key, value in ipairs(biome_layer_cache) do
-  --printall(biome_layer_cache[key])
---end
 
 --end setup caches
 
-  for z = 0, world_z - 1, 1 do --start at 0 and go until world_z - 1. changes here are just for testing such as starting at higher height
+  for z = 21, world_z - 1, 1 do --start at 0 and go until world_z - 1. changes here are just for testing such as starting at higher height
     --set defaults
     local wall_material_count = 0
     local shape_count = 0
     local current_wall_material = " "
-    local current_shape_letter = " "
+    local current_shape = " "
     local wall_material_output = ""
     local shape_output = ""
 
@@ -720,6 +714,7 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
             if wall_material ~= current_wall_material then --material and shape must be done seperate
               if current_wall_material ~= " " then --if not default append
                 wall_material_output = wall_material_output..wall_material_count..current_wall_material
+                tile_count = tile_count + wall_material_count
               end
               current_wall_material = wall_material
               wall_material_count = 1
@@ -727,22 +722,23 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
               wall_material_count = wall_material_count + 1
             end
 
-            if shape ~= current_shape_letter then
-              if current_shape_letter ~= " " then
-                shape_output = shape_output..shape_count..current_shape_letter
+            if shape ~= current_shape then
+              if current_shape ~= " " then
+                shape_output = shape_output..shape_count..current_shape
               end
-              current_shape_letter = shape
+              current_shape = shape
               shape_count = 1
             else
               shape_count = shape_count + 1
             end
-            tile_count = tile_count + 1
+            --tile_count = tile_count + 1
           end
         end
       end
     end
     wall_material_output = wall_material_output..wall_material_count..current_wall_material --append the last letter and count to proper string
-    shape_output = shape_output..shape_count..current_shape_letter
+    tile_count = tile_count + wall_material_count
+    shape_output = shape_output..shape_count..current_shape
     writeLayer(wall_material_output, shape_output) --write current output then reset both outputs and all counts and letters
   end
 

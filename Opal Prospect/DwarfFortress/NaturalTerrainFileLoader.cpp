@@ -162,7 +162,7 @@ bool NaturalTerrainFileLoader::parseRunLengthStrings()
     {
         max_digits++;
         layer_size_double /= 10.0;
-    } while (layer_size_double > 1.0);
+    } while (layer_size_double >= 1.0);
 
     for (unsigned int i = 0; i < world_height; i++)
     {
@@ -211,7 +211,8 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
         }
         else //add two characters, the non number one and seperate the number and character
         {
-            std::stringstream stream;
+            std::string s;
+            s.resize(2);
             single[single_index] = material_rle[i];
             single[single_index + 1] = material_rle[i + 1]; //grab two chars and add to our string
             single_index = 0;
@@ -220,7 +221,8 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
             unsigned int number = static_cast<unsigned int>(number_long);
             char a = end[0]; //first
             char b = end[1]; //second
-            stream << a << b;
+            s[0] = a;
+            s[1] = b;
             i++; //since we read two chars instead of just one, we must increment i an extra time
 
             //std::cout << "num: " << number_long << "\n";
@@ -244,7 +246,7 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
             }
 
             run_length_pair_string pair;
-            pair.sequence = stream.str();
+            pair.sequence = s;
             pair.number = number;
 
             material_pairs.push_back(std::move(pair));
@@ -403,7 +405,7 @@ void NaturalTerrainFileLoader::checkLayerString(unsigned int layer) const
     std::string rle = run_length_natural_material[layer];
     for (size_t i = 0; i < rle.size(); i++)
     {
-        if (rle[i] <= static_cast<unsigned char>(32) || rle[i] == static_cast<unsigned char>(127) || rle[i] >= static_cast<unsigned char>(128)) //space and controls or del
+        if (rle[i] <= static_cast<unsigned char>(32) || rle[i] >= static_cast<unsigned char>(127)) //space and controls or del or anything in extended ascii range
         {
             std::stringstream error_stream;
             error_stream << "bad char found at: " << i << "\n";

@@ -1,19 +1,10 @@
-v0.2 5 5 5
+v0.2 3 2 3
 
-25aa
-25b
+1aa1bb1cc1aa1bb1cc1aa1bb1cc
+1a2b3c3b
 
-25bb
-25b
-
-25aa
-25a
-
-25cc
-25b
-
-25bb
-25b
+1aa1bb1cc1aa1bb1cc1aa1bb1cc
+1a2b3c3b
 
 natural_materials
 aa tetrahedrite
