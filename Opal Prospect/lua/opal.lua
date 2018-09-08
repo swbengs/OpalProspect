@@ -420,6 +420,7 @@ NaturalMaterialsTable =
 --aka aa, ab, az and so on
 next_material_sequence = "a~"
 opal_prospect_file = 0
+layer_write_count = 0
 --end globals
 
 local function materialLocation(table, material)
@@ -498,7 +499,7 @@ local function veinValue(flags)
   end
 end
 
-local function getVeinMaterialLetter(vein_cache, x, y) --vein cache table with all veins for this map block, full x and y value x_block * 16 + x and y_block * 16 + y
+local function getVeinMaterial(vein_cache, x, y) --vein cache table with all veins for this map block, full x and y value x_block * 16 + x and y_block * 16 + y
   local tile_vein
   local vein_value = 0
   local saved_key
@@ -546,6 +547,7 @@ end
 local function writeLayer(material, shape)
   io.write(material.."\n")
   io.write(shape.."\n")
+  layer_write_count = layer_write_count + 1
 end
 
 --assumes that table is the top level cache
@@ -652,7 +654,7 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
 --the first run but make sure we can add more biomes later if a x,y,z returns one not found. getRegionBiome(regionx, regiony).geo_index has the unique id
 --Reason for the change is that what biome each tile points to does not change on the 16x16x1 range. Can go 10 tiles to the right and then switch which biome they contain. causes nils when the biomes contain different number of layers
   cacheSetup(biome_xy_cache, biome_layer_cache, biome_lava_stone_cache, world_x, world_y)
-
+  local tile_count = 0
 --printall(biome_layer_cache)
 --printall(biome_layer_cache[9])
 --printall(NaturalMaterialsTable)
@@ -666,7 +668,7 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
     --set defaults
     local wall_material_count = 0
     local shape_count = 0
-    local current_wall_material_letter = " "
+    local current_wall_material = " "
     local current_shape_letter = " "
     local wall_material_output = ""
     local shape_output = ""
@@ -736,7 +738,7 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
                 elseif wall_material == 2 then --lava stone
                   wall_material = biome_lava_stone_cache[biome_index]
                 elseif wall_material == 3 then --vein
-                  wall_material = getVeinMaterialLetter(vein_cache[x_block], x + 16 * x_block, y + 16 * y_block)
+                  wall_material = getVeinMaterial(vein_cache[x_block], x + 16 * x_block, y + 16 * y_block)
                 end
                 --can't use else above because if it's not one of those it must have a pre defined material
               else
@@ -745,11 +747,11 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
             end
 
             --check if any of the letters have changed and deal with it
-            if wall_material ~= current_wall_material_letter then --material and shape must be done seperate
-              if current_wall_material_letter ~= " " then --if not default append
-                wall_material_output = wall_material_output..wall_material_count..current_wall_material_letter
+            if wall_material ~= current_wall_material then --material and shape must be done seperate
+              if current_wall_material ~= " " then --if not default append
+                wall_material_output = wall_material_output..wall_material_count..current_wall_material
               end
-              current_wall_material_letter = wall_material
+              current_wall_material = wall_material
               wall_material_count = 1
             else
               wall_material_count = wall_material_count + 1
@@ -764,12 +766,12 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
             else
               shape_count = shape_count + 1
             end
-
+            tile_count = tile_count + 1
           end
         end
       end
     end
-    wall_material_output = wall_material_output..wall_material_count..current_wall_material_letter --append the last letter and count to proper string
+    wall_material_output = wall_material_output..wall_material_count..current_wall_material --append the last letter and count to proper string
     shape_output = shape_output..shape_count..current_shape_letter
     writeLayer(wall_material_output, shape_output) --write current output then reset both outputs and all counts and letters
   end
@@ -792,6 +794,8 @@ opal_prospect_file.close()
 --print("inorganic table")
 --printall(InorganicMaterialNumberToString)
 printall(NaturalMaterialsTable)
+print("tile count: "..tile_count)
+print("layer write count: "..layer_write_count)
 
 end
 
