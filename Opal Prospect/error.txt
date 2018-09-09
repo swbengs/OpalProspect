@@ -1,2 +1,0 @@
-number exceeds maximum digit allowance for a single layer
-issue parsing at layer number: 0

@@ -1,4 +1,0 @@
-Material
-1000bb
-Shape
-1000b
