@@ -528,6 +528,18 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
         return "root";
     case DF_HIDDEN:
         return "hidden";
+    case DF_LIGHT_GRASS:
+        return "light_grass";
+    case DF_DARK_GRASS:
+        return "dark_grass";
+    case DF_DRY_GRASS:
+        return "dry_grass";
+    case DF_DEAD_GRASS:
+        return "dead_grass";
+    case DF_TRUNK:
+        return "trunk";
+    case DF_ICE:
+        return "ice";
     default:
         return "bad DF_Natural_Tile enum ";
     }
@@ -1027,6 +1039,18 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
         return "root.png";
     case DF_HIDDEN:
         return "hidden.png";
+    case DF_LIGHT_GRASS:
+        return "light_grass.png";
+    case DF_DARK_GRASS:
+        return "dark_grass.png";
+    case DF_DRY_GRASS:
+        return "dry_grass.png";
+    case DF_DEAD_GRASS:
+        return "dead_grass.png";
+    case DF_TRUNK:
+        return "trunk.png";
+    case DF_ICE:
+        return "ice.png";
     default:
         return "bad DF_Natural_Tile enum ";
     }
@@ -1057,6 +1081,18 @@ DF_Material_Type DFNaturalType(DF_Natural_Tile_Material e)
     else if (e == DF_NATURAL_ROOT)
     {
         return DF_NATURAL_ROOT;
+    }
+    else if (e == DF_ICE)
+    {
+        return DF_NATURAL_ICE;
+    }
+    else if (e == DF_LIGHT_GRASS || e == DF_DARK_GRASS || e == DF_DRY_GRASS || e == DF_DEAD_GRASS)
+    {
+        return DF_NATURAL_GRASS;
+    }
+    else if (e == DF_TRUNK)
+    {
+        return DF_NATURAL_TRUNK;
     }
     else //actual hidden and if somehow someone passes in the count enum
     {

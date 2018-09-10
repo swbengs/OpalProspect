@@ -38,7 +38,7 @@ SOFTWARE.
 */
 
 const float DrawEngine::Z_NEAR = 0.1f;
-const float DrawEngine::Z_FAR = 100.0f;
+const float DrawEngine::Z_FAR = 272.0f; //sqrt(192^2 + 192^2) ~= 271 or so
 
 void DrawEngine::properDrawTest()
 {

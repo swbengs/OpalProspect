@@ -39,7 +39,7 @@ TileTypeMaterialTable =
   [df.tiletype_material.FEATURE] = "aa", --3
   [df.tiletype_material.LAVA_STONE] = 2,
   [df.tiletype_material.MINERAL] = 3,
-  [df.tiletype_material.FROZEN_LIQUID] = "aa",
+  [df.tiletype_material.FROZEN_LIQUID] = "ac",
   [df.tiletype_material.CONSTRUCTION] = 1,
   [df.tiletype_material.GRASS_LIGHT] = "ag", --8
   [df.tiletype_material.GRASS_DARK] = "ah",
@@ -378,12 +378,13 @@ CharacterTable =
 NaturalMaterialsTable = 
 {
   ["aa"] = "hidden", --defaults and test values
-  ["ag"] = "grass_light",
-  ["ah"] = "grass_dark",
-  ["ai"] = "grass_dry",
-  ["aj"] = "grass_dead",
+  ["ac"] = "ice",
+  ["ag"] = "light_grass",
+  ["ah"] = "dark_grass",
+  ["ai"] = "dry_grass",
+  ["aj"] = "dead_grass",
   ["ar"] = "root",
-  ["at"] = "tree"
+  ["at"] = "trunk"
 }
 
 --next_material_letter = "a"
@@ -706,7 +707,9 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
                 elseif wall_material == 3 then --vein
                   wall_material = getVeinMaterial(vein_cache[x_block], x_block * 16 + x, y_block * 16 + y) --floors CAN be natural vein materials
                   if wall_material == nil then
-                    error("floor tile vein is nil at :"..x + 16 * x_block..", "..y + 16 * y_block..", "..z)
+                    print("floor tile vein is nil at :"..x_block * 16 + x..", "..y_block * 16 + y..", "..z)
+                    --switch to layer
+                    wall_material = biome_layer_cache[biome_index][designations.geolayer_index]
                   end
                 end
               elseif shape == "w" then
