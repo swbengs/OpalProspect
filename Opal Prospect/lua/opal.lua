@@ -41,10 +41,10 @@ TileTypeMaterialTable =
   [df.tiletype_material.MINERAL] = 3,
   [df.tiletype_material.FROZEN_LIQUID] = "aa",
   [df.tiletype_material.CONSTRUCTION] = 1,
-  [df.tiletype_material.GRASS_LIGHT] = 1, --8
-  [df.tiletype_material.GRASS_DARK] = 1,
-  [df.tiletype_material.GRASS_DRY] = 1,
-  [df.tiletype_material.GRASS_DEAD] = 1,
+  [df.tiletype_material.GRASS_LIGHT] = "ag", --8
+  [df.tiletype_material.GRASS_DARK] = "ah",
+  [df.tiletype_material.GRASS_DRY] = "ai",
+  [df.tiletype_material.GRASS_DEAD] = "aj",
   [df.tiletype_material.PLANT] = 1,
   [df.tiletype_material.HFS] = "aa",
   [df.tiletype_material.CAMPFIRE] = 1,
@@ -55,8 +55,8 @@ TileTypeMaterialTable =
   [df.tiletype_material.POOL] = "aa",
   [df.tiletype_material.BROOK] = "aa",
   [df.tiletype_material.RIVER] = "aa",
-  [df.tiletype_material.ROOT] = "ab",
-  [df.tiletype_material.TREE] = 1,
+  [df.tiletype_material.ROOT] = "ar",
+  [df.tiletype_material.TREE] = "at",
   [df.tiletype_material.MUSHROOM] = 1,
   [df.tiletype_material.UNDERWORLD_GATE] = "aa"
 }
@@ -378,7 +378,12 @@ CharacterTable =
 NaturalMaterialsTable = 
 {
   ["aa"] = "hidden", --defaults and test values
-  ["ab"] = "root"
+  ["ag"] = "grass_light",
+  ["ah"] = "grass_dark",
+  ["ai"] = "grass_dry",
+  ["aj"] = "grass_dead",
+  ["ar"] = "root",
+  ["at"] = "tree"
 }
 
 --next_material_letter = "a"
@@ -480,6 +485,11 @@ local function getVeinMaterial(vein_cache, x, y) --vein cache table with all vei
         saved_key = key
       end
     end
+  end
+
+  if tile_vein == nil then
+    --error("Tile vein is nil at :"..x..", "..y)
+    return nil
   end
 
   local result = vein_cache.letters[saved_key]
@@ -640,6 +650,7 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
     for y_block = block_y_count - 1, 0, -1 do
       for index = 0, block_x_count - 1, 1 do
         block_cache[index] = dfhack.maps.getBlock(index, y_block, z)
+        --block_cache[index] = dfhack.maps.ensureTileBlock(index, y_block, z)
         vein_cache[index] = { ["veins"] = {}, ["letters"] = {} } --each map block two tables. one table of the vein events and one table of the letter for each. don't populate the letters unless they are accessed
         --so vein 1(the start) would have a vein_cache[same x_block location].letters[1]. if this is nil it has not been accessed or added yet. vein 2 vein_cache[same x_block location].letters[2]
 
@@ -662,8 +673,8 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
               wall_material = "aa"
               shape = "w"
             else
-              local tile_type = dfhack.maps.getTileType(16 * x_block + x, 16 * y_block + y, z)
-              local region_x, region_y = dfhack.maps.getTileBiomeRgn(16 * x_block + x, 16 * y_block + y, 0)
+              local tile_type = dfhack.maps.getTileType(x_block * 16 + x, y_block * 16 + y, z)
+              local region_x, region_y = dfhack.maps.getTileBiomeRgn(x_block * 16 + x, y_block * 16 + y, 0)
               local biome_index = biome_xy_cache[region_x][region_y]
               --print("tiletype "..tile_type.." at "..16 * x_block + x..", "..16 * y_block + y..", "..z)
               tile_material_enum = tile_type_material_cache[tile_type]
@@ -693,7 +704,10 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
                 elseif wall_material == 2 then --lava stone
                   wall_material = biome_lava_stone_cache[biome_index]
                 elseif wall_material == 3 then --vein
-                  wall_material = getVeinMaterial(vein_cache[x_block], x + 16 * x_block, y + 16 * y_block) --floors CAN be natural vein materials
+                  wall_material = getVeinMaterial(vein_cache[x_block], x_block * 16 + x, y_block * 16 + y) --floors CAN be natural vein materials
+                  if wall_material == nil then
+                    error("floor tile vein is nil at :"..x + 16 * x_block..", "..y + 16 * y_block..", "..z)
+                  end
                 end
               elseif shape == "w" then
                 --print(wall_material)
@@ -703,7 +717,10 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
                 elseif wall_material == 2 then --lava stone
                   wall_material = biome_lava_stone_cache[biome_index]
                 elseif wall_material == 3 then --vein
-                  wall_material = getVeinMaterial(vein_cache[x_block], x + 16 * x_block, y + 16 * y_block)
+                  wall_material = getVeinMaterial(vein_cache[x_block], x_block * 16 + x, y_block * 16 + y)
+                  if wall_material == nil then
+                    error("wall tile vein is nil at :"..x + 16 * x_block..", "..y + 16 * y_block..", "..z)
+                  end
                 end
                 --can't use else above because if it's not one of those it must have a pre defined material
               else
@@ -716,7 +733,7 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
               if current_wall_material ~= " " then --if not default append
                 wall_material_output = wall_material_output..wall_material_count..current_wall_material
                 --print(wall_material_count..current_wall_material)
-                tile_count = tile_count + wall_material_count
+                --tile_count = tile_count + wall_material_count
               end
               current_wall_material = wall_material
               wall_material_count = 1
@@ -739,7 +756,7 @@ writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for 
       end
     end
     wall_material_output = wall_material_output..wall_material_count..current_wall_material --append the last letter and count to proper string
-    tile_count = tile_count + wall_material_count
+    --tile_count = tile_count + wall_material_count
     shape_output = shape_output..shape_count..current_shape
     writeLayer(wall_material_output, shape_output) --write current output then reset both outputs and all counts and letters
   end
@@ -762,7 +779,7 @@ opal_prospect_file.close()
 --print("inorganic table")
 --printall(InorganicMaterialNumberToString)
 printall(NaturalMaterialsTable)
-print("tile count: "..tile_count)
+--print("tile count: "..tile_count)
 print("layer write count: "..layer_write_count)
 
 end
