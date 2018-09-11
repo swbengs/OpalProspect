@@ -59,7 +59,7 @@ void MainLoop::startLoop(std::string terrain_filename)
 {
     const int screen_width = 640;
     const int screen_height = 480;
-    const char* name = "Opal Prospect v0.1.5";
+    const char* name = "Opal Prospect v0.15";
 
     if (terrain_filename.compare("") == 0)
     {

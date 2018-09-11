@@ -624,7 +624,7 @@ io.output(opal_prospect_file)
 --debug stuff
 --world_z = 22
 --end debug stuff
-writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for opal prospect
+writeHeader("v0.15", world_x, world_z, world_y) --z and y need to be swapped for opal prospect
 
 --setup caches
 --per embark tile caches
