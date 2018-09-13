@@ -116,13 +116,20 @@ void MainLoop::startLoop(std::string terrain_filename)
 
     draw_engine.setScreenWidth(screen_width);
     draw_engine.setScreenHeight(screen_height);
-    draw_engine.setup(terrain_filename);
+    draw_engine.setup();
+    loadTerrain(terrain_filename);
+
+    Point3DUInt world_xyz = terrain.getWorldDimensions();
+    const float x_start = DF_BLOCK_WIDTH * 0.5f * world_xyz.x;
+    const float y_start = (DF_BLOCK_HEIGHT + DF_FLOOR_HEIGHT) * world_xyz.y;
+    const float z_start = -5.0f;
 
     std::cout << "\n";
 
     const unsigned int target_fps = 60;
     const unsigned int fps_print_skip = 15;
-    camera.setPosition(glm::vec3(0.0f, 0.0f, -10.0f));
+    //camera.setPosition(glm::vec3(0.0f, 0.0f, -10.0f));
+    camera.setPosition(glm::vec3(x_start, y_start, z_start));
 
     unsigned int frames = target_fps;
     unsigned int skips = 0;
@@ -236,5 +243,38 @@ void MainLoop::keyCallback(GLFWwindow* window, int key, int scancode, int action
 void MainLoop::framebufferResize(int width, int height)
 {
     draw_engine.setScreenWidthHeight(width, height);
+}
+
+void MainLoop::loadTerrain(std::string filename)
+{
+    ModelIndex terrain_model;
+    //NaturalTerrain terrain_test;
+    terrain_model.setTextureName("terrain.png");
+    terrain_model.setModelName("terrain");
+    //std::string filename;
+    //filename = "Test\\test_maps\\5x5x5_simple.txt";
+    //filename = "Test\\test_maps\\5x5x5.txt";
+    //filename = "Test\\test_maps\\16x16x16.txt";
+    //filename = "Test\\test_maps\\16x16x16_simple.txt";
+    //filename = "Test\\test_maps\\df_real.txt";
+    //filename = "Test\\test_maps\\df_real_short.txt";
+
+    //terrain_test stuff here
+
+    //terrain_3x3x3_test(terrain_test);
+    //terrain_16x16x16_test(terrain_test);
+    //terrain_48x48x48_test(terrain_test);
+    //terrain_48x300x48_test(terrain_test);
+    //terrain_test and not after here
+
+    //terrain.loadFromMemory(terrain_test, models, terrain_model);
+    terrain.loadFromFile(filename, draw_engine.getModelController(), terrain_model);
+
+    std::cout << "terrain face count: " << terrain_model.getFaceCount() << "\n";
+    //std::cout << "face total size: " << terrain_model.getTotalSize() / terrain_model.getFaceCount() << "\n";
+    std::cout << "terrain model total size: " << terrain_model.getTotalSize() << "\n";
+    draw_engine.addInterleavedModel(terrain_model, true);
+
+    std::cout << "after terrain load\n";
 }
 
