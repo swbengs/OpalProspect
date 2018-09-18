@@ -31,7 +31,7 @@ Huge shout out to Milo Christiansen and his script at https://github.com/DFHack/
 It was used to speed up development greatly!
 ]]
 
-TileTypeMaterialTable = 
+OPAL_TileTypeMaterialTable = 
 {
   [df.tiletype_material.AIR] = "aa", --0
   [df.tiletype_material.SOIL] = 1, --1
@@ -61,7 +61,7 @@ TileTypeMaterialTable =
   [df.tiletype_material.UNDERWORLD_GATE] = "aa"
 }
 
-InorganicMaterialNumberToString = 
+OPAL_InorganicMaterialNumberToString = 
 {
   [34] = "onyx",
   [35] = "morion",
@@ -296,7 +296,7 @@ InorganicMaterialNumberToString =
   [264] = "fire_clay"
 }
 
-TileTypeShapeTable = 
+OPAL_TileTypeShapeTable = 
 {
   [df.tiletype_shape.EMPTY] = "a", --0
   [df.tiletype_shape.FLOOR] = "f",
@@ -319,7 +319,7 @@ TileTypeShapeTable =
   [df.tiletype_shape.ENDLESS_PIT] = "a"
 }
 
-CharacterTable = 
+OPAL_CharacterTable = 
 {
   ["a"] = "b", --give it the current letter and it will return the next one
   ["b"] = "c",
@@ -375,7 +375,7 @@ CharacterTable =
   ["Z"] = nil
 }
 
-NaturalMaterialsTable = 
+OPAL_NaturalMaterialsTable = 
 {
   ["aa"] = "hidden", --defaults and test values
   ["ac"] = "ice",
@@ -391,9 +391,9 @@ NaturalMaterialsTable =
 --next_material_letter to next_material_sequence
 --a_ are reserved for predefined materials like hidden
 --aka aa, ab, az and so on
-next_material_sequence = "aZ"
-opal_prospect_file = 0
-layer_write_count = 0
+OPAL_next_material_sequence = "aZ"
+OPAL_file = 0
+OPAL_layer_write_count = 0
 --end globals
 
 local function materialLocation(table, material)
@@ -408,11 +408,11 @@ end
 
 --get the next two char string for a material
 local function getNextSequence()
-  local char_a = string.sub(next_material_sequence, 1, 1)
-  local char_b = string.sub(next_material_sequence, 2, 2)
-  char_b = CharacterTable[char_b]
+  local char_a = string.sub(OPAL_next_material_sequence, 1, 1)
+  local char_b = string.sub(OPAL_next_material_sequence, 2, 2)
+  char_b = OPAL_CharacterTable[char_b]
   if char_b == nil then
-    char_a = CharacterTable[char_a]
+    char_a = OPAL_CharacterTable[char_a]
     char_b = "a"
   end
 
@@ -423,12 +423,12 @@ local function addMaterial(type_index, material_index)
   local name
   local table
   if type_index == 0 then
-    name = InorganicMaterialNumberToString[material_index]
+    name = OPAL_InorganicMaterialNumberToString[material_index]
     if name == nil then
       print(dfhack.matinfo.decode(type_index, material_index))
       error("unknown inorganic material index")
     end
-    table = NaturalMaterialsTable
+    table = OPAL_NaturalMaterialsTable
   else
     error("unknown type index")
   end
@@ -437,12 +437,12 @@ local function addMaterial(type_index, material_index)
   if sequence ~= nil then --we already have this material in the table so return the key
     return sequence
   else --make new key and add this material name to the table
-    next_material_sequence = getNextSequence()
-    if next_material_sequence == nil then
+    OPAL_next_material_sequence = getNextSequence()
+    if OPAL_next_material_sequence == nil then
       error("Next letter table returned nil. Bug or too many natural tile types")
     end
-    table[next_material_sequence] = name
-    return next_material_sequence
+    table[OPAL_next_material_sequence] = name
+    return OPAL_next_material_sequence
   end
 end
 
@@ -508,7 +508,7 @@ end
 
 local function writeMaterialTable()
   io.write("natural_materials\n")
-  for key, value in pairs(NaturalMaterialsTable) do
+  for key, value in pairs(OPAL_NaturalMaterialsTable) do
     io.write(key.." "..value.."\n")
   end
   io.write("natural_materials_end\n")
@@ -525,7 +525,7 @@ end
 local function writeLayer(material, shape)
   io.write(material.."\n")
   io.write(shape.."\n")
-  layer_write_count = layer_write_count + 1
+  OPAL_layer_write_count = OPAL_layer_write_count + 1
 end
 
 --assumes that table is the top level cache
@@ -596,7 +596,7 @@ local function cacheSetup(xy_cache, layer_cache, lavastone_cache, world_x, world
 end
 
 local function main(filename)
---printall(TileTypeMaterialTable)
+--printall(OPAL_TileTypeMaterialTable)
 local world_x, world_y, world_z
 world_x, world_y, world_z = dfhack.maps.getTileSize()
 print("world size x: "..world_x.." y: "..world_y.." z: "..world_z)
@@ -611,7 +611,7 @@ local biome_xy_cache = {} --holds the region x and region y values we find. they
 local biome_layer_cache = {} --hold all embark biome's layer letters. These already have their material known and added to the proper table. give the geolayer_index and it gives the letter
 local biome_lava_stone_cache = {} --holds each embark biome's lava letter. give lava_stone to get the letter
 local tile_type_shape_cache = {} --tile type value to shape letter
-local tile_type_material_cache = {} --tile type value to material enum. These are contained in TileTypeMaterialTable
+local tile_type_material_cache = {} --tile type value to material enum. These are contained in OPAL_TileTypeMaterialTable
 --end caches
 
 if filename == nil then
@@ -619,8 +619,8 @@ if filename == nil then
 end
 
 print("saving to file named: "..filename)
-opal_prospect_file = io.open(filename, "w")
-io.output(opal_prospect_file)
+OPAL_file = io.open(filename, "w")
+io.output(OPAL_file)
 --debug stuff
 --world_z = 22
 --end debug stuff
@@ -683,7 +683,7 @@ writeHeader("v0.15", world_x, world_z, world_y) --z and y need to be swapped for
 
               if shape == nil then --update tile type caches
                 local tile_attributes = df.tiletype.attrs[tile_type]
-                tile_type_shape_cache[tile_type] = TileTypeShapeTable[tile_attributes.shape]
+                tile_type_shape_cache[tile_type] = OPAL_TileTypeShapeTable[tile_attributes.shape]
                 tile_type_material_cache[tile_type] = tile_attributes.material
                 tile_material_enum = tile_type_material_cache[tile_type]
                 shape =  tile_type_shape_cache[tile_type]
@@ -699,7 +699,7 @@ writeHeader("v0.15", world_x, world_z, world_y) --z and y need to be swapped for
                 wall_material = "aa"
               elseif shape == "f" then
                 --wall_material = "aa" --set wall to this, later on when there is a wall and floor material we will deal with the floor material
-                wall_material = TileTypeMaterialTable[tile_material_enum] --wall material has the enum so put that into the material table to see what to do
+                wall_material = OPAL_TileTypeMaterialTable[tile_material_enum] --wall material has the enum so put that into the material table to see what to do
                 if wall_material == 1 then --layer material
                   wall_material = biome_layer_cache[biome_index][designations.geolayer_index]
                 elseif wall_material == 2 then --lava stone
@@ -714,7 +714,7 @@ writeHeader("v0.15", world_x, world_z, world_y) --z and y need to be swapped for
                 end
               elseif shape == "w" then
                 --print(wall_material)
-                wall_material = TileTypeMaterialTable[tile_material_enum] --wall material has the enum so put that into the material table to see what to do
+                wall_material = OPAL_TileTypeMaterialTable[tile_material_enum] --wall material has the enum so put that into the material table to see what to do
                 if wall_material == 1 then --layer material
                   wall_material = biome_layer_cache[biome_index][designations.geolayer_index]
                 elseif wall_material == 2 then --lava stone
@@ -766,7 +766,7 @@ writeHeader("v0.15", world_x, world_z, world_y) --z and y need to be swapped for
 
 writeMaterialTable()
 writeShapeTable()
-opal_prospect_file.close()
+OPAL_file.close()
 
 --local tile_type_shape_count = 0
 --for _ in pairs(tile_type_shape) do
@@ -780,10 +780,10 @@ opal_prospect_file.close()
 --print("")
 --print("count: "..count)
 --print("inorganic table")
---printall(InorganicMaterialNumberToString)
-printall(NaturalMaterialsTable)
+--printall(OPAL_InorganicMaterialNumberToString)
+printall(OPAL_NaturalMaterialsTable)
 --print("tile count: "..tile_count)
-print("layer write count: "..layer_write_count)
+print("layer write count: "..OPAL_layer_write_count)
 
 end
 
