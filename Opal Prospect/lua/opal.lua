@@ -33,6 +33,7 @@ It was used to speed up development greatly!
 
 OPAL_TileTypeMaterialTable = 
 {
+  [df.tiletype_material.NONE] = "aa", -- neg 1
   [df.tiletype_material.AIR] = "aa", --0
   [df.tiletype_material.SOIL] = 1, --1
   [df.tiletype_material.STONE] = 1, --2
@@ -298,6 +299,7 @@ OPAL_InorganicMaterialNumberToString =
 
 OPAL_TileTypeShapeTable = 
 {
+  [df.tiletype_shape.NONE] = "a", --0
   [df.tiletype_shape.EMPTY] = "a", --0
   [df.tiletype_shape.FLOOR] = "f",
   [df.tiletype_shape.BOULDER] = "f",
@@ -550,6 +552,7 @@ local function addRegionXY(xy_cache, region_x, region_y, new_biome_index)
   local biome_index = xy_cache[region_x][region_y]
   if biome_index == nil then
     xy_cache[region_x][region_y] = new_biome_index
+    print("added new regions at x,y: "..region_x..","..region_y)
   end
 end
 
@@ -562,34 +565,34 @@ local function getBiomeIndex(xy_cache, region_x, region_y)
   end
 end
 
-local function cacheSetup(xy_cache, layer_cache, lavastone_cache, world_x, world_y)
-  for y = 0, world_y - 1, 1 do
-    for x = 0, world_x - 1, 1 do
-      local region_x, region_y = dfhack.maps.getTileBiomeRgn(x, y, 0)
-      local biome_index = getBiomeIndex(xy_cache, region_x, region_y)
-      local regions
-      --see if we already have this index. if not add it with the biome index
-      if biome_index == nil then
-        biome_index = dfhack.maps.getRegionBiome(region_x, region_y).geo_index
-        addRegionXY(xy_cache, region_x, region_y, biome_index)
-      end
+--safe way of grabbing the designations
+local function getDesignations(block_cache, x_block, x, y)
+  if block_cache[x_block] == nil then
+    return nil
+  else
+  return block_cache[x_block].designation[x][y]
+  end
+end
 
-      --check if we have this biome already
-      local biome = layer_cache[biome_index]
-      if biome == nil then
-        biome = df.world_geo_biome.find(biome_index)
-        addBiomeLayers(layer_cache, biome)
-      end
+--add layers and lavastone for this biome index, and if new biome add region x and y
+local function addBiome(xy_cache, layer_cache, lavastone_cache, region_x, region_y)
+  local biome_index = dfhack.maps.getRegionBiome(region_x, region_y).geo_index
+  addRegionXY(xy_cache, region_x, region_y, biome_index)
 
-      local lava_stone = lavastone_cache[biome_index]
-      if lava_stone == nil then
-        regions = df.global.world.world_data.region_details
-        for _, region in ipairs(regions) do
-          if region.pos.x == region_x and region.pos.y == region_y then
-            lavastone_cache[biome_index] = addMaterial(0, region.lava_stone)
-            break
-          end
-        end
+  --same as above and below. if this cache returns a nil then add the layers/lavastone
+  local biome = layer_cache[biome_index]
+  if biome == nil then
+    biome = df.world_geo_biome.find(biome_index)
+    addBiomeLayers(layer_cache, biome)
+  end
+
+  local lava_stone = lavastone_cache[biome_index]
+  if lava_stone == nil then
+    local regions = df.global.world.world_data.region_details
+    for _, region in ipairs(regions) do
+      if region.pos.x == region_x and region.pos.y == region_y then
+        lavastone_cache[biome_index] = addMaterial(0, region.lava_stone)
+        break
       end
     end
   end
@@ -634,7 +637,6 @@ writeHeader("v0.15", world_x, world_z, world_y) --z and y need to be swapped for
 --z shouldnt matter so run getTileBiomeRgn for each x and y at z of 0, and make the list of biomes from this. Then for each lava/layer needed later run just getTileBiomeRgn to see what biome index we need to pull from. can fill this in before
 --the first run but make sure we can add more biomes later if a x,y,z returns one not found. getRegionBiome(regionx, regiony).geo_index has the unique id
 --Reason for the change is that what biome each tile points to does not change on the 16x16x1 range. Can go 10 tiles to the right and then switch which biome they contain. causes nils when the biomes contain different number of layers
-  cacheSetup(biome_xy_cache, biome_layer_cache, biome_lava_stone_cache, world_x, world_y)
   local tile_count = 0
 
 --end setup caches
@@ -651,6 +653,10 @@ writeHeader("v0.15", world_x, world_z, world_y) --z and y need to be swapped for
     for y_block = block_y_count - 1, 0, -1 do
       for index = 0, block_x_count - 1, 1 do
         block_cache[index] = dfhack.maps.getBlock(index, y_block, z)
+         if block_cache[index] == nil then --found void map block
+          break
+        end
+
         --block_cache[index] = dfhack.maps.ensureTileBlock(index, y_block, z)
         vein_cache[index] = { ["veins"] = {}, ["letters"] = {} } --each map block two tables. one table of the vein events and one table of the letter for each. don't populate the letters unless they are accessed
         --so vein 1(the start) would have a vein_cache[same x_block location].letters[1]. if this is nil it has not been accessed or added yet. vein 2 vein_cache[same x_block location].letters[2]
@@ -665,19 +671,34 @@ writeHeader("v0.15", world_x, world_z, world_y) --z and y need to be swapped for
         for x_block = 0, block_x_count - 1, 1 do
           for x = 0, 15, 1 do
             --check if hidden. if not get the shape and update tiletype to shape cache. then lookup material based on tiletype
-            local designations = block_cache[x_block].designation[x][y]
+            --if block_cache returns nil then it is an empty block of all void
+            local designations = getDesignations(block_cache, x_block, x, y) --if nil assume void tiles
             local wall_material
             local shape
             local tile_material_enum --holds number or letter if it's predefined
-            --set defaults for a hidden block which is WALL and HIDDEN
-            if designations.hidden then
+
+            --change to checking for NONE shape/material first, then hidden, then the rest
+            if designations == nil then
+              wall_material = "aa"
+              shape = "w"
+            elseif designations.hidden then
+              --set defaults for a hidden block which is WALL and HIDDEN
               wall_material = "aa"
               shape = "w"
             else
-              local tile_type = dfhack.maps.getTileType(x_block * 16 + x, y_block * 16 + y, z)
-              local region_x, region_y = dfhack.maps.getTileBiomeRgn(x_block * 16 + x, y_block * 16 + y, 0)
-              local biome_index = biome_xy_cache[region_x][region_y]
-              --print("tiletype "..tile_type.." at "..16 * x_block + x..", "..16 * y_block + y..", "..z)
+              local full_x = x_block * 16 + x
+              local full_y = y_block * 16 + y
+              local tile_type = dfhack.maps.getTileType(full_x, full_y, z)
+              local region_x, region_y = dfhack.maps.getTileBiomeRgn(full_x, full_y, z)
+              local biome_index = getBiomeIndex(biome_xy_cache, region_x, region_y)
+              if biome_index == nil then --new biome
+                if region_x ~= nil and region_y ~= nil then
+                  addBiome(biome_xy_cache, biome_layer_cache, biome_lava_stone_cache, region_x, region_y)
+                  biome_index = getBiomeIndex(biome_xy_cache, region_x, region_y)
+                  print("added biome with index: "..biome_index)
+                end
+              end
+
               tile_material_enum = tile_type_material_cache[tile_type]
               shape =  tile_type_shape_cache[tile_type]
 
@@ -688,10 +709,10 @@ writeHeader("v0.15", world_x, world_z, world_y) --z and y need to be swapped for
                 tile_material_enum = tile_type_material_cache[tile_type]
                 shape =  tile_type_shape_cache[tile_type]
                 if tile_material_enum == nil then
-                  error("Bug at update tile cache. wall material nil at x, y, z "..x_block * 16 + x..", "..y_block * 16 + y..", "..z)
+                  error("Bug at update tile cache. wall material nil at x, y, z "..full_x..", "..full_y..", "..z)
                 end
                 if shape == nil then
-                  error("Bug at update tile cache. shape nil at x, y, z "..x_block * 16 + x..", "..y_block * 16 + y..", "..z)
+                  error("Bug at update tile cache. shape nil at x, y, z "..full_x..", "..full_y..", "..z)
                 end
               end
 
@@ -705,25 +726,21 @@ writeHeader("v0.15", world_x, world_z, world_y) --z and y need to be swapped for
                 elseif wall_material == 2 then --lava stone
                   wall_material = biome_lava_stone_cache[biome_index]
                 elseif wall_material == 3 then --vein
-                  wall_material = getVeinMaterial(vein_cache[x_block], x_block * 16 + x, y_block * 16 + y) --floors CAN be natural vein materials
+                  wall_material = getVeinMaterial(vein_cache[x_block], full_x, full_y) --floors CAN be natural vein materials
                   if wall_material == nil then
-                    print("floor tile vein is nil at :"..x_block * 16 + x..", "..y_block * 16 + y..", "..z)
+                    print("floor tile vein is nil at :"..full_x..", "..full_y..", "..z)
                     --switch to layer
                     wall_material = biome_layer_cache[biome_index][designations.geolayer_index]
                   end
                 end
               elseif shape == "w" then
-                --print(wall_material)
                 wall_material = OPAL_TileTypeMaterialTable[tile_material_enum] --wall material has the enum so put that into the material table to see what to do
                 if wall_material == 1 then --layer material
                   wall_material = biome_layer_cache[biome_index][designations.geolayer_index]
                 elseif wall_material == 2 then --lava stone
                   wall_material = biome_lava_stone_cache[biome_index]
                 elseif wall_material == 3 then --vein
-                  wall_material = getVeinMaterial(vein_cache[x_block], x_block * 16 + x, y_block * 16 + y)
-                  if wall_material == nil then
-                    error("wall tile vein is nil at :"..x + 16 * x_block..", "..y + 16 * y_block..", "..z)
-                  end
+                  wall_material = getVeinMaterial(vein_cache[x_block], full_x, full_y)
                 end
                 --can't use else above because if it's not one of those it must have a pre defined material
               else
