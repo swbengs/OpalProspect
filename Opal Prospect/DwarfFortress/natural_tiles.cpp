@@ -54,7 +54,7 @@ std::string DFNaturalTileString(DF_Natural_Tile_Material e)
     case DF_BANDED_AGATE:
         return "banded_agate";
     case DF_BANDIRE_OPAL:
-        return "bandire_opal";
+        return "bandfire_opal";
     case DF_BLACK_DIAMOND:
         return "black_diamond";
     case DF_BLACK_OPAL:
@@ -565,7 +565,7 @@ std::string DFNaturalTileFilename(DF_Natural_Tile_Material e)
     case DF_BANDED_AGATE:
         return "banded_agate.png";
     case DF_BANDIRE_OPAL:
-        return "bandire_opal.png";
+        return "bandfire_opal.png";
     case DF_BLACK_DIAMOND:
         return "black_diamond.png";
     case DF_BLACK_OPAL:
