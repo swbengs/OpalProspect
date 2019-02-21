@@ -1,9 +1,11 @@
 # OpalProspect
-Public repository for Opal Prospect, a 3D viewer for Dwarf Fortress.
+Public repository for Opal Prospect, a 3D visualizer for Dwarf Fortress.
 
 This project is to allow you to save fortress info from a LUA script, and then keep that forever. It will allow you to save it at 
 embark, anytime during your play session, and whenever you feel the fortress is done. You will be able to see how the fort grew.
-Currently I am still working on the draw engine, and no support is yet available to grab information from DFHack.
+Currently I am still working on the draw engine and next release(0.2) will be able to grab information from DFHack.
+
+![Image of version 0.15](https://github.com/swbengs/OpalProspect/blob/master/opal_0_15.png)
 
 https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads
 Go here to get the 2015 runtime install.
