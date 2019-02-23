@@ -322,6 +322,7 @@
     <None Include="arrayTextureBasicLight.frag" />
     <None Include="arrayTextureBasicLight.vert" />
     <None Include="lua\opal.lua" />
+    <None Include="lua\testcache.lua" />
     <None Include="Texture2D.frag" />
     <None Include="Texture2D.vert" />
   </ItemGroup>

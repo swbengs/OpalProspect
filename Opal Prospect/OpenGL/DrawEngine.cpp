@@ -38,7 +38,7 @@ SOFTWARE.
 */
 
 const float DrawEngine::Z_NEAR = 0.1f;
-const float DrawEngine::Z_FAR = 100.0f;
+const float DrawEngine::Z_FAR = 272.0f; //sqrt(192^2 + 192^2) ~= 271 or so
 
 void DrawEngine::properDrawTest()
 {
@@ -566,7 +566,7 @@ void DrawEngine::draw(const Camera &camera)
 
     //draw("gabbro block", camera, &test, nullptr, nullptr);
     //draw("gabbro floor", camera, &test, nullptr, nullptr);
-    glm::vec3 terrain_position = glm::vec3(15.0f, 0.0f, 0.0f);
+    glm::vec3 terrain_position = glm::vec3(0.0f, 0.0f, 0.0f);
     draw("terrain", camera, &terrain_position, nullptr, nullptr);
 
     /*
@@ -626,12 +626,12 @@ void DrawEngine::draw(const Camera &camera)
     OGLHelpers::getOpenGLError("post frame draw", true);
 }
 
-void DrawEngine::setup(std::string terrain_filename)
+void DrawEngine::setup()
 {
     setupOpenGLContext();
     setupOpenGLObjects();
     setupOpenGLUniforms();
-    setupObjects(terrain_filename);
+    setupObjects();
 }
 
 void DrawEngine::cleanup()
@@ -646,6 +646,11 @@ void DrawEngine::cleanup()
     buffers.destroyBuffers();
     interleaved_buffers.destroyBuffers();
     OGLHelpers::getOpenGLError("post cleanup", false);
+}
+
+const ModelController& DrawEngine::getModelController() const
+{
+    return models;
 }
 
 //gets
@@ -818,7 +823,7 @@ void DrawEngine::setupOpenGLUniforms()
     OGLHelpers::getOpenGLError("post setup uniforms", true);
 }
 
-void DrawEngine::setupObjects(std::string terrain_filename)
+void DrawEngine::setupObjects()
 {
     //arrayTextureAtlasTest();
     //bufferControlTest();
@@ -828,7 +833,6 @@ void DrawEngine::setupObjects(std::string terrain_filename)
     loadTextures();
     //properDrawTest();
     loadModels();
-    loadTerrain(terrain_filename);
 }
 
 void DrawEngine::loadTextures()
@@ -882,39 +886,6 @@ void DrawEngine::loadModels()
         model.setTextureName(texture_name);
         addInterleavedModel(model);
     }
-}
-
-void DrawEngine::loadTerrain(std::string filename)
-{
-    ModelIndex terrain_model;
-    NaturalTerrain terrain_test;
-    terrain_model.setTextureName("terrain.png");
-    terrain_model.setModelName("terrain");
-    //std::string filename;
-    //filename = "Test\\test_maps\\5x5x5_simple.txt";
-    //filename = "Test\\test_maps\\5x5x5.txt";
-    //filename = "Test\\test_maps\\16x16x16.txt";
-    //filename = "Test\\test_maps\\16x16x16_simple.txt";
-    //filename = "Test\\test_maps\\df_real.txt";
-    //filename = "Test\\test_maps\\df_real_short.txt";
-
-    //terrain_test stuff here
-
-    //terrain_3x3x3_test(terrain_test);
-    //terrain_16x16x16_test(terrain_test);
-    //terrain_48x48x48_test(terrain_test);
-    //terrain_48x300x48_test(terrain_test);
-    //terrain_test and not after here
-
-    //terrain.loadFromMemory(terrain_test, models, terrain_model);
-    terrain.loadFromFile(filename, models, terrain_model);
-
-    std::cout << "terrain face count: " << terrain_model.getFaceCount() << "\n";
-    //std::cout << "face total size: " << terrain_model.getTotalSize() / terrain_model.getFaceCount() << "\n";
-    std::cout << "terrain model total size: " << terrain_model.getTotalSize() << "\n";
-    addInterleavedModel(terrain_model, true);
-
-    std::cout << "after terrain load\n";
 }
 
 void DrawEngine::terrain_3x3x3_test(NaturalTerrain& natural_terrain)

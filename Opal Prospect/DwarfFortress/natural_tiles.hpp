@@ -42,7 +42,10 @@ enum DF_Material_Type
     DF_NATURAL_LIQUID,
     DF_NATURAL_ORE,
     DF_NATURAL_SOIL,
-    DF_NATURAL_STONE
+    DF_NATURAL_STONE,
+    DF_NATURAL_GRASS,
+    DF_NATURAL_TRUNK,
+    DF_NATURAL_ICE
 };
 
 enum DF_Natural_Tile_Material
@@ -299,6 +302,12 @@ enum DF_Natural_Tile_Material
     //stone end
     DF_RAW_ROOT,
     DF_HIDDEN,
+    DF_LIGHT_GRASS,
+    DF_DARK_GRASS,
+    DF_DRY_GRASS,
+    DF_DEAD_GRASS,
+    DF_TRUNK,
+    DF_ICE,
     DF_NATURAL_TILE_COUNT //never add below this one only above it
 };
 

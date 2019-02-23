@@ -3,6 +3,7 @@ File to write down anything related to the dwarf fortress map. From how to split
 ## Hidden flag and floors above an open space
 An issue has been found where the floor above a tunnel has the hidden texture even though you should know the floor layer material. How to fix this is not easy. Either I need to store all floors as a seperate RLE string, or make an exception table.
 I prefer the extra RLE. This also requires changes to the loading code and how to write out in the Lua script.
+As of 0.15 both the floor and tile are saved. Need to insert check to terrain loader that will allow the floor to be drawn if the tile below it is mined out.
 
 ## Texture space and grass/fungus
 Currently 233 texture slots are used of 256. There is way more than 20 types of grass and underground fungus. So they will eat up the remaining spots and then some. So my idea is to take soils out of the terrain texture and make one with

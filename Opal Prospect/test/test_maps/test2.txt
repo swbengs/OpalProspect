@@ -1,0 +1,17 @@
+v0.2 1000 1 1
+
+1000bb
+1000b
+
+natural_materials
+aa tetrahedrite
+bb white_sand
+cc gabbro
+natural_materials_end
+
+natural_types
+a air
+b block
+c floor
+natural_types_end
+

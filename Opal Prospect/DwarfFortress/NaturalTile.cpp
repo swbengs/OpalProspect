@@ -93,6 +93,15 @@ std::string NaturalTile::DFMaterialFullPath(DF_Natural_Tile_Material e)
     case DF_NATURAL_ROOT:
         stream << "Textures" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
         return stream.str();
+    case DF_NATURAL_TRUNK:
+        stream << "Textures" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
+        return stream.str();
+    case DF_NATURAL_GRASS:
+        stream << "Textures" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
+        return stream.str();
+    case DF_NATURAL_ICE:
+        stream << "Textures" << os_seperator << DFNaturalTileFilename(DF_Natural_Tile_Material(e));
+        return stream.str();
     default:
         stream << "Textures" << os_seperator << "bad.png";
         return stream.str();

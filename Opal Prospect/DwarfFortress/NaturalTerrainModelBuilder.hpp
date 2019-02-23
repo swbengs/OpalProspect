@@ -43,6 +43,8 @@ public:
     void loadFromMemory(const NaturalTerrain& memory, const ModelController& model_controller, ModelIndex& terrain_model); //reads from the given natural terrain and model controller to add faces to the given model for the terrain
     void debugLoadFromMemory(const NaturalTerrain& memory); //good for testing and debugging
 
+    Point3DUInt getWorldDimensions() const;
+
 private:
     struct natural_tile_draw_info //struct for what needs to be added to the model, as in what is drawn. 
     {

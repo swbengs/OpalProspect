@@ -31,37 +31,38 @@ Huge shout out to Milo Christiansen and his script at https://github.com/DFHack/
 It was used to speed up development greatly!
 ]]
 
-TileTypeMaterialTable = 
+OPAL_TileTypeMaterialTable = 
 {
-  [df.tiletype_material.AIR] = "a",
-  [df.tiletype_material.SOIL] = 1,
-  [df.tiletype_material.STONE] = 1,
-  [df.tiletype_material.FEATURE] = "a",
+  [df.tiletype_material.NONE] = "aa", -- neg 1
+  [df.tiletype_material.AIR] = "aa", --0
+  [df.tiletype_material.SOIL] = 1, --1
+  [df.tiletype_material.STONE] = 1, --2
+  [df.tiletype_material.FEATURE] = "aa", --3
   [df.tiletype_material.LAVA_STONE] = 2,
   [df.tiletype_material.MINERAL] = 3,
-  [df.tiletype_material.FROZEN_LIQUID] = "a",
+  [df.tiletype_material.FROZEN_LIQUID] = "ac",
   [df.tiletype_material.CONSTRUCTION] = 1,
-  [df.tiletype_material.GRASS_LIGHT] = 1,
-  [df.tiletype_material.GRASS_DARK] = 1,
-  [df.tiletype_material.GRASS_DRY] = 1,
-  [df.tiletype_material.GRASS_DEAD] = 1,
+  [df.tiletype_material.GRASS_LIGHT] = "ag", --8
+  [df.tiletype_material.GRASS_DARK] = "ah",
+  [df.tiletype_material.GRASS_DRY] = "ai",
+  [df.tiletype_material.GRASS_DEAD] = "aj",
   [df.tiletype_material.PLANT] = 1,
-  [df.tiletype_material.HFS] = "a",
+  [df.tiletype_material.HFS] = "aa",
   [df.tiletype_material.CAMPFIRE] = 1,
-  [df.tiletype_material.FIRE] = "a",
-  [df.tiletype_material.ASHES] = "a",
-  [df.tiletype_material.MAGMA] = "a",
+  [df.tiletype_material.FIRE] = "aa",
+  [df.tiletype_material.ASHES] = "aa",
+  [df.tiletype_material.MAGMA] = "aa", --17
   [df.tiletype_material.DRIFTWOOD] = 1,
-  [df.tiletype_material.POOL] = "a",
-  [df.tiletype_material.BROOK] = "a",
-  [df.tiletype_material.RIVER] = "a",
-  [df.tiletype_material.ROOT] = "b",
-  [df.tiletype_material.TREE] = 1,
+  [df.tiletype_material.POOL] = "aa",
+  [df.tiletype_material.BROOK] = "aa",
+  [df.tiletype_material.RIVER] = "aa",
+  [df.tiletype_material.ROOT] = "ar",
+  [df.tiletype_material.TREE] = "at",
   [df.tiletype_material.MUSHROOM] = 1,
-  [df.tiletype_material.UNDERWORLD_GATE] = "a"
+  [df.tiletype_material.UNDERWORLD_GATE] = "aa"
 }
 
-InorganicMaterialNumberToString = 
+OPAL_InorganicMaterialNumberToString = 
 {
   [34] = "onyx",
   [35] = "morion",
@@ -131,7 +132,7 @@ InorganicMaterialNumberToString =
   [99] = "green_zircon",
   [100] = "green_jade",
   [101] = "heliodor",
-  [102] = "perido",
+  [102] = "peridot",
   [103] = "red_zircon",
   [104] = "red_tourmaline",
   [105] = "red_pyrope",
@@ -296,13 +297,14 @@ InorganicMaterialNumberToString =
   [264] = "fire_clay"
 }
 
-TileTypeShapeTable = 
+OPAL_TileTypeShapeTable = 
 {
-  [df.tiletype_shape.EMPTY] = "a",
+  [df.tiletype_shape.NONE] = "a", --0
+  [df.tiletype_shape.EMPTY] = "a", --0
   [df.tiletype_shape.FLOOR] = "f",
   [df.tiletype_shape.BOULDER] = "f",
   [df.tiletype_shape.PEBBLES] = "f",
-  [df.tiletype_shape.WALL] = "w",
+  [df.tiletype_shape.WALL] = "w", --4
   [df.tiletype_shape.FORTIFICATION] = "w",
   [df.tiletype_shape.STAIR_UP] = "a",
   [df.tiletype_shape.STAIR_DOWN ] = "a",
@@ -319,7 +321,7 @@ TileTypeShapeTable =
   [df.tiletype_shape.ENDLESS_PIT] = "a"
 }
 
-CharacterTable = 
+OPAL_CharacterTable = 
 {
   ["a"] = "b", --give it the current letter and it will return the next one
   ["b"] = "c",
@@ -372,50 +374,28 @@ CharacterTable =
   ["W"] = "X",
   ["X"] = "Y",
   ["Y"] = "Z",
-  --special characters
-  ["Z"] = "!",
-  ["!"] = "\"",
-  ["\""] = "#",
-  ["#"] = "$",
-  ["$"] = "%",
-  ["%"] = "&",
-  ["&"] = "\'",
-  ["\'"] = "(",
-  ["("] = ")",
-  [")"] = "*",
-  ["*"] = "+",
-  ["+"] = ",",
-  [","] = "-",
-  ["-"] = ".",
-  ["."] = "/",
-  ["/"] = ":",
-  [":"] = ";",
-  [";"] = "<",
-  ["<"] = "=",
-  ["="] = ">",
-  [">"] = "?",
-  ["?"] = "@",
-  ["@"] = "[",
-  ["["] = "\\",
-  ["\\"] = "]",
-  ["]"] = "^",
-  ["^"] = "_",
-  ["_"] = "`",
-  ["`"] = "{",
-  ["{"] = "|",
-  ["|"] = "}",
-  ["}"] = "~",
-  ["~"] = nil
+  ["Z"] = nil
 }
 
-NaturalMaterialsTable = 
+OPAL_NaturalMaterialsTable = 
 {
-  ["a"] = "hidden", --defaults and test values
-  ["b"] = "root"
+  ["aa"] = "hidden", --defaults and test values
+  ["ac"] = "ice",
+  ["ag"] = "light_grass",
+  ["ah"] = "dark_grass",
+  ["ai"] = "dry_grass",
+  ["aj"] = "dead_grass",
+  ["ar"] = "root",
+  ["at"] = "trunk"
 }
 
-next_material_letter = "a"
-opal_prospect_file = 0
+--next_material_letter = "a"
+--next_material_letter to next_material_sequence
+--a_ are reserved for predefined materials like hidden
+--aka aa, ab, az and so on
+OPAL_next_material_sequence = "aZ"
+OPAL_file = 0
+OPAL_layer_write_count = 0
 --end globals
 
 local function materialLocation(table, material)
@@ -428,27 +408,55 @@ local function materialLocation(table, material)
   return nil --failed to find material
 end
 
+--get the next two char string for a material
+local function getNextSequence()
+  local char_a = string.sub(OPAL_next_material_sequence, 1, 1)
+  local char_b = string.sub(OPAL_next_material_sequence, 2, 2)
+  char_b = OPAL_CharacterTable[char_b]
+  if char_b == nil then
+    char_a = OPAL_CharacterTable[char_a]
+    char_b = "a"
+  end
+
+  return char_a..char_b
+end
+
 local function addMaterial(type_index, material_index)
   local name
   local table
   if type_index == 0 then
-    name = InorganicMaterialNumberToString[material_index]
+    name = OPAL_InorganicMaterialNumberToString[material_index]
     if name == nil then
       print(dfhack.matinfo.decode(type_index, material_index))
       error("unknown inorganic material index")
     end
-    table = NaturalMaterialsTable
+    table = OPAL_NaturalMaterialsTable
   else
     error("unknown type index")
   end
 
-  local letter = materialLocation(table, name)
-  if letter ~= nil then --we already have this material in the table so return the key
-    return letter
+  local sequence = materialLocation(table, name)
+  if sequence ~= nil then --we already have this material in the table so return the key
+    return sequence
   else --make new key and add this material name to the table
-    next_material_letter = CharacterTable[next_material_letter]
-    table[next_material_letter] = name
-    return next_material_letter
+    OPAL_next_material_sequence = getNextSequence()
+    if OPAL_next_material_sequence == nil then
+      error("Next letter table returned nil. Bug or too many natural tile types")
+    end
+    table[OPAL_next_material_sequence] = name
+    return OPAL_next_material_sequence
+  end
+end
+
+--assumes that table is the top level cache
+local function addBiomeLayers(table, biome)
+  local index = biome.index
+  local cache = table[index]
+  if cache == nil then
+    cache = {}
+    for key, layer in ipairs(table) do
+      cache[key] = addMaterial(0, layer.mat_index)
+    end
   end
 end
 
@@ -466,7 +474,7 @@ local function veinValue(flags)
   end
 end
 
-local function getVeinMaterialLetter(vein_cache, x, y) --vein cache table with all veins for this map block, full x and y value x_block * 16 + x and y_block * 16 + y
+local function getVeinMaterial(vein_cache, x, y) --vein cache table with all veins for this map block, full x and y value x_block * 16 + x and y_block * 16 + y
   local tile_vein
   local vein_value = 0
   local saved_key
@@ -480,6 +488,11 @@ local function getVeinMaterialLetter(vein_cache, x, y) --vein cache table with a
         saved_key = key
       end
     end
+  end
+
+  if tile_vein == nil then
+    --error("Tile vein is nil at :"..x..", "..y)
+    return nil
   end
 
   local result = vein_cache.letters[saved_key]
@@ -497,7 +510,7 @@ end
 
 local function writeMaterialTable()
   io.write("natural_materials\n")
-  for key, value in pairs(NaturalMaterialsTable) do
+  for key, value in pairs(OPAL_NaturalMaterialsTable) do
     io.write(key.." "..value.."\n")
   end
   io.write("natural_materials_end\n")
@@ -514,25 +527,94 @@ end
 local function writeLayer(material, shape)
   io.write(material.."\n")
   io.write(shape.."\n")
+  OPAL_layer_write_count = OPAL_layer_write_count + 1
+end
+
+--assumes that table is the top level cache
+local function addBiomeLayers(layer_cache, biome)
+  local index = biome.index
+  local cache = layer_cache[index]
+  if cache == nil then
+    layer_cache[index] = {}
+    cache = layer_cache[index]
+    for key, layer in ipairs(biome.layers) do
+      cache[key] = addMaterial(0, layer.mat_index)
+    end
+  end
+end
+
+local function addRegionXY(xy_cache, region_x, region_y, new_biome_index)
+  local table = xy_cache[region_x]
+  if table == nil then
+    xy_cache[region_x] = {}
+  end
+
+  local biome_index = xy_cache[region_x][region_y]
+  if biome_index == nil then
+    xy_cache[region_x][region_y] = new_biome_index
+    print("added new regions at x,y: "..region_x..","..region_y)
+  end
+end
+
+--without first check may get nil error. must check first table to see if nil and then can try the next layer
+local function getBiomeIndex(xy_cache, region_x, region_y)
+  if xy_cache[region_x] == nil then 
+    return nil
+  else 
+    return xy_cache[region_x][region_y]
+  end
+end
+
+--safe way of grabbing the designations
+local function getDesignations(block_cache, x_block, x, y)
+  if block_cache[x_block] == nil then
+    return nil
+  else
+  return block_cache[x_block].designation[x][y]
+  end
+end
+
+--add layers and lavastone for this biome index, and if new biome add region x and y
+local function addBiome(xy_cache, layer_cache, lavastone_cache, region_x, region_y)
+  local biome_index = dfhack.maps.getRegionBiome(region_x, region_y).geo_index
+  addRegionXY(xy_cache, region_x, region_y, biome_index)
+
+  --same as above and below. if this cache returns a nil then add the layers/lavastone
+  local biome = layer_cache[biome_index]
+  if biome == nil then
+    biome = df.world_geo_biome.find(biome_index)
+    addBiomeLayers(layer_cache, biome)
+  end
+
+  local lava_stone = lavastone_cache[biome_index]
+  if lava_stone == nil then
+    local regions = df.global.world.world_data.region_details
+    for _, region in ipairs(regions) do
+      if region.pos.x == region_x and region.pos.y == region_y then
+        lavastone_cache[biome_index] = addMaterial(0, region.lava_stone)
+        break
+      end
+    end
+  end
 end
 
 local function main(filename)
+--printall(OPAL_TileTypeMaterialTable)
 local world_x, world_y, world_z
 world_x, world_y, world_z = dfhack.maps.getTileSize()
 print("world size x: "..world_x.." y: "..world_y.." z: "..world_z)
 
 local block_x_count = world_x / 16 --blocks are 16x16x1 pieces of the map. Each embark tile is 3x3 of these
 local block_y_count = world_y / 16
-local embark_x_count = world_x / 48
-local embark_y_count = world_y / 48
 
 --caches
 local block_cache = {} --hold a line of blocks to save looking them up multiple times
 local vein_cache = {} -- same as block cache but this holds the veins for the current blocks and their material letter
-local layer_letter_cache = {} --hold all embark biome's layer letters. These already have their material known and added to the proper table. give the geolayer_index and it gives the letter
-local lava_stone_letter_cache = {} --holds each embark biome's lava letter. give lava_stone to get the letter
+local biome_xy_cache = {} --holds the region x and region y values we find. they are used to find region biome and the index to the actual biome. saves this index so we can look up in layer_cache
+local biome_layer_cache = {} --hold all embark biome's layer letters. These already have their material known and added to the proper table. give the geolayer_index and it gives the letter
+local biome_lava_stone_cache = {} --holds each embark biome's lava letter. give lava_stone to get the letter
 local tile_type_shape_cache = {} --tile type value to shape letter
-local tile_type_material_cache = {} --tile type value to material enum. These are contained in TileTypeMaterialTable
+local tile_type_material_cache = {} --tile type value to material enum. These are contained in OPAL_TileTypeMaterialTable
 --end caches
 
 if filename == nil then
@@ -540,40 +622,22 @@ if filename == nil then
 end
 
 print("saving to file named: "..filename)
-opal_prospect_file = io.open(filename, "w")
-io.output(opal_prospect_file)
-writeHeader("v0.2", world_x, world_z, world_y) --z and y need to be swapped for opal prospect
+OPAL_file = io.open(filename, "w")
+io.output(OPAL_file)
+--debug stuff
+--world_z = 22
+--end debug stuff
+writeHeader("v0.15", world_x, world_z, world_y) --z and y need to be swapped for opal prospect
 
 --setup caches
 --per embark tile caches
-for embark_y = embark_y_count - 1, 0, -1 do
-  for embark_x = 0, embark_x_count - 1, 1 do
-    local biome = df.world_geo_biome.find(dfhack.maps.getRegionBiome(dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)).geo_index)
-    local index = embark_x + embark_y * embark_x_count
-    layer_letter_cache[index] = {}
-    local cache = layer_letter_cache[index] --layers
-    for key, layer in ipairs(biome.layers) do
-      cache[key] = addMaterial(0, layer.mat_index)
-    end
-
-    local regions = df.global.world.world_data.region_details
-    local region_x, region_y = dfhack.maps.getTileBiomeRgn(48 * embark_x, 48 * embark_y, 0)
-    for _, region in ipairs(regions) do
-        if region.pos.x == region_x and region.pos.y == region_y then
-            lava_stone_letter_cache[index] = addMaterial(0, region.lava_stone)
-            break
-        end
-    end
-  end
-end
-
---printall(layer_letter_cache)
---printall(layer_letter_cache[0])
---printall(lava_stone_letter_cache)
---printall(NaturalMaterialsTable)
---for key, value in ipairs(layer_letter_cache) do
-  --printall(layer_letter_cache[key])
---end
+--change to be biome caches instead. Add as we find them. region.geo_index is the same as the biome.index so use this as a unique id
+--so have a table of [region x][region y] that contains the geolayer index, filled in as you find nils
+--another table of each biome of this index, so geolayer_index of 10 means there is a biome with an index of 10. each biome has a lava stone, and a table of layers which can be turned into letters
+--z shouldnt matter so run getTileBiomeRgn for each x and y at z of 0, and make the list of biomes from this. Then for each lava/layer needed later run just getTileBiomeRgn to see what biome index we need to pull from. can fill this in before
+--the first run but make sure we can add more biomes later if a x,y,z returns one not found. getRegionBiome(regionx, regiony).geo_index has the unique id
+--Reason for the change is that what biome each tile points to does not change on the 16x16x1 range. Can go 10 tiles to the right and then switch which biome they contain. causes nils when the biomes contain different number of layers
+  local tile_count = 0
 
 --end setup caches
 
@@ -581,15 +645,19 @@ end
     --set defaults
     local wall_material_count = 0
     local shape_count = 0
-    local current_wall_material_letter = " "
-    local current_shape_letter = " "
+    local current_wall_material = " "
+    local current_shape = " "
     local wall_material_output = ""
     local shape_output = ""
 
     for y_block = block_y_count - 1, 0, -1 do
-      local embark_y = math.floor(y_block / 3)
       for index = 0, block_x_count - 1, 1 do
         block_cache[index] = dfhack.maps.getBlock(index, y_block, z)
+         if block_cache[index] == nil then --found void map block
+          break
+        end
+
+        --block_cache[index] = dfhack.maps.ensureTileBlock(index, y_block, z)
         vein_cache[index] = { ["veins"] = {}, ["letters"] = {} } --each map block two tables. one table of the vein events and one table of the letter for each. don't populate the letters unless they are accessed
         --so vein 1(the start) would have a vein_cache[same x_block location].letters[1]. if this is nil it has not been accessed or added yet. vein 2 vein_cache[same x_block location].letters[2]
 
@@ -601,81 +669,121 @@ end
       end
       for y = 15, 0, -1 do
         for x_block = 0, block_x_count - 1, 1 do
-          local embark_x = math.floor(x_block / 3)
           for x = 0, 15, 1 do
             --check if hidden. if not get the shape and update tiletype to shape cache. then lookup material based on tiletype
-            local designations = block_cache[x_block].designation[x][y]
+            --if block_cache returns nil then it is an empty block of all void
+            local designations = getDesignations(block_cache, x_block, x, y) --if nil assume void tiles
             local wall_material
             local shape
-            --set defaults for a hidden block which is WALL and HIDDEN
-            if designations.hidden then
-              wall_material = "a"
+            local tile_material_enum --holds number or letter if it's predefined
+
+            --change to checking for NONE shape/material first, then hidden, then the rest
+            if designations == nil then
+              wall_material = "aa"
+              shape = "w"
+            elseif designations.hidden then
+              --set defaults for a hidden block which is WALL and HIDDEN
+              wall_material = "aa"
               shape = "w"
             else
-              local tile_type = dfhack.maps.getTileType(x + 16 * x_block, y + 16 * y_block, z)
-              wall_material = tile_type_material_cache[tile_type]
+              local full_x = x_block * 16 + x
+              local full_y = y_block * 16 + y
+              local tile_type = dfhack.maps.getTileType(full_x, full_y, z)
+              local region_x, region_y = dfhack.maps.getTileBiomeRgn(full_x, full_y, z)
+              local biome_index = getBiomeIndex(biome_xy_cache, region_x, region_y)
+              if biome_index == nil then --new biome
+                if region_x ~= nil and region_y ~= nil then
+                  addBiome(biome_xy_cache, biome_layer_cache, biome_lava_stone_cache, region_x, region_y)
+                  biome_index = getBiomeIndex(biome_xy_cache, region_x, region_y)
+                  print("added biome with index: "..biome_index)
+                end
+              end
+
+              tile_material_enum = tile_type_material_cache[tile_type]
               shape =  tile_type_shape_cache[tile_type]
 
               if shape == nil then --update tile type caches
                 local tile_attributes = df.tiletype.attrs[tile_type]
-                tile_type_shape_cache[tile_type] = TileTypeShapeTable[tile_attributes.shape]
+                tile_type_shape_cache[tile_type] = OPAL_TileTypeShapeTable[tile_attributes.shape]
                 tile_type_material_cache[tile_type] = tile_attributes.material
-                wall_material = tile_type_material_cache[tile_type]
+                tile_material_enum = tile_type_material_cache[tile_type]
                 shape =  tile_type_shape_cache[tile_type]
+                if tile_material_enum == nil then
+                  error("Bug at update tile cache. wall material nil at x, y, z "..full_x..", "..full_y..", "..z)
+                end
+                if shape == nil then
+                  error("Bug at update tile cache. shape nil at x, y, z "..full_x..", "..full_y..", "..z)
+                end
               end
 
               if shape == "a" then
-                wall_material = "a"
+                wall_material = "aa"
               elseif shape == "f" then
-                --wall_material = "a" --set wall to this, later on when there is a wall and floor material we will deal with the floor material
-                wall_material = layer_letter_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index] --temp to see actual floor material
-              elseif shape == "w" then
-                wall_material = TileTypeMaterialTable[wall_material] --wall material has the enum so put that into the material table to see what to do
+                --wall_material = "aa" --set wall to this, later on when there is a wall and floor material we will deal with the floor material
+                wall_material = OPAL_TileTypeMaterialTable[tile_material_enum] --wall material has the enum so put that into the material table to see what to do
                 if wall_material == 1 then --layer material
-                  wall_material = layer_letter_cache[embark_x + embark_y * embark_x_count][designations.geolayer_index]
+                  wall_material = biome_layer_cache[biome_index][designations.geolayer_index]
                 elseif wall_material == 2 then --lava stone
-                  wall_material = lava_stone_letter_cache[embark_x + embark_y * embark_x_count]
+                  wall_material = biome_lava_stone_cache[biome_index]
                 elseif wall_material == 3 then --vein
-                  wall_material = getVeinMaterialLetter(vein_cache[x_block], x + 16 * x_block, y + 16 * y_block)
+                  wall_material = getVeinMaterial(vein_cache[x_block], full_x, full_y) --floors CAN be natural vein materials
+                  if wall_material == nil then
+                    print("floor tile vein is nil at :"..full_x..", "..full_y..", "..z)
+                    --switch to layer
+                    wall_material = biome_layer_cache[biome_index][designations.geolayer_index]
+                  end
                 end
+              elseif shape == "w" then
+                wall_material = OPAL_TileTypeMaterialTable[tile_material_enum] --wall material has the enum so put that into the material table to see what to do
+                if wall_material == 1 then --layer material
+                  wall_material = biome_layer_cache[biome_index][designations.geolayer_index]
+                elseif wall_material == 2 then --lava stone
+                  wall_material = biome_lava_stone_cache[biome_index]
+                elseif wall_material == 3 then --vein
+                  wall_material = getVeinMaterial(vein_cache[x_block], full_x, full_y)
+                end
+                --can't use else above because if it's not one of those it must have a pre defined material
               else
-                error("unknown shape letter")
+                error("Bug. unknown shape letter")
               end
             end
 
             --check if any of the letters have changed and deal with it
-            if wall_material ~= current_wall_material_letter then --material and shape must be done seperate
-              if current_wall_material_letter ~= " " then --if not default append
-                wall_material_output = wall_material_output..material_count..current_wall_material_letter
+            if wall_material ~= current_wall_material then --material and shape must be done seperate
+              if current_wall_material ~= " " then --if not default append
+                wall_material_output = wall_material_output..wall_material_count..current_wall_material
+                --print(wall_material_count..current_wall_material)
+                --tile_count = tile_count + wall_material_count
               end
-              current_wall_material_letter = wall_material
-              material_count = 1
+              current_wall_material = wall_material
+              wall_material_count = 1
             else
-              material_count = material_count + 1
+              wall_material_count = wall_material_count + 1
             end
 
-            if shape ~= current_shape_letter then
-              if current_shape_letter ~= " " then
-                shape_output = shape_output..shape_count..current_shape_letter
+            if shape ~= current_shape then
+              if current_shape ~= " " then
+                shape_output = shape_output..shape_count..current_shape
               end
-              current_shape_letter = shape
+              current_shape = shape
               shape_count = 1
             else
               shape_count = shape_count + 1
             end
-
+            --tile_count = tile_count + 1
           end
         end
       end
     end
-    wall_material_output = wall_material_output..material_count..current_wall_material_letter --append the last letter and count to proper string
-    shape_output = shape_output..shape_count..current_shape_letter
+    wall_material_output = wall_material_output..wall_material_count..current_wall_material --append the last letter and count to proper string
+    --tile_count = tile_count + wall_material_count
+    shape_output = shape_output..shape_count..current_shape
     writeLayer(wall_material_output, shape_output) --write current output then reset both outputs and all counts and letters
   end
 
 writeMaterialTable()
 writeShapeTable()
-opal_prospect_file.close()
+OPAL_file.close()
 
 --local tile_type_shape_count = 0
 --for _ in pairs(tile_type_shape) do
@@ -689,8 +797,10 @@ opal_prospect_file.close()
 --print("")
 --print("count: "..count)
 --print("inorganic table")
---printall(InorganicMaterialNumberToString)
-printall(NaturalMaterialsTable)
+--printall(OPAL_InorganicMaterialNumberToString)
+printall(OPAL_NaturalMaterialsTable)
+--print("tile count: "..tile_count)
+print("layer write count: "..OPAL_layer_write_count)
 
 end
 

@@ -1,24 +1,24 @@
 v0.2 5 5 5
 
+25aa
+25b
+
+25bb
+25b
+
+25aa
 25a
+
+25cc
 25b
 
-25b
-25b
-
-25a
-25a
-
-25c
-25b
-
-25b
+25bb
 25b
 
 natural_materials
-a tetrahedrite
-b white_sand
-c gabbro
+aa tetrahedrite
+bb white_sand
+cc gabbro
 natural_materials_end
 
 natural_types

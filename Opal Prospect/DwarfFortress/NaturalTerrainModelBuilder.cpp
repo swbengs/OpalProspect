@@ -64,6 +64,11 @@ void NaturalTerrainModelBuilder::debugLoadFromMemory(const NaturalTerrain& memor
     checkingLoop();
 }
 
+Point3DUInt NaturalTerrainModelBuilder::getWorldDimensions() const
+{
+    return terrain.getGridDimensions();
+}
+
 //private
 void NaturalTerrainModelBuilder::addBlock(natural_tile_draw_info block)
 {
