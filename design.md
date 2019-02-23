@@ -1,7 +1,7 @@
 This document is an overview of what's been done and what still needs to be done. Try to keep this about general topics and not specifics.
 This is to help give an idea what needs to be done and what is currently being worked on. Further below I go into specifics about what is being done and why.
 
-## Updated: 8/30/2018
+## Updated: 2/22/2019
 
 # Critical issues(try and do this first)
 1. Code cleanup and license adding. Much of the code is fairly old and should be updated to include the license and the some basic description of what it does.
@@ -17,18 +17,21 @@ All headers should have license info now. Need to check that they all have a des
 1. OpenGL 3.3 is the version I am building for. Allows more modern shader programming without requiring too new of a card. 4.5 support may be added at a later date when more important features are done(no promises though).
 2. Array Textures 16x16 pixel textures currently. Anyone is free to add their own higher quality textures.
 3. Indexed models aka gl draw elements
-4. Basic shadow maps
-5. Simple models for workstations and other built structures.
+4. Basic shadow maps(not currently implemented)
+5. Simple models for workstations and other built structures.not currently implemented)
 6. Interleaved and non interleaved VBO.
+7. Automated model and texture control. Fallback texture is used in case any file can not be found. Failure to find bad.png means something went horribly wrong.
+8. Simple lighting.
 
 # Dwarf Fortress stuff
 1. LUA script to extract map info(not started)
-2. Way of reading in file created by LUA script into visualizer(not started)
-3. Textures for all terrain types(started but only barely) See the screenshots included and the 8x12 pixel copies from DF. Re draw as 16x16 pixel textures. Actual realistic textures or your own style are more than welcome! I am not an artist.
+2. Way of reading in file created by LUA script into visualizer(started and ready for 0.2 release if no more major bugs are found)
+3. Textures for all terrain types(started and almost complete) See the screenshots included and the 8x12 pixel copies from DF. Re draw as 16x16 pixel textures. Actual realistic textures or your own style are more than welcome! I am not an artist.
 
 # Current WIP(s)
-1. Face merging and voxel grid
-2. Getting all or most of the textures ready
+1. Getting all of the textures ready
+2. v0.2 release. More testing and all soil, gem, liquid, hfs, and ore textures. No construction materials though. Only naturally occuring. Don't forget to add sample map files so others can see it in action without doing all the work to generate their own.
+3. Face merging after 0.2 release
 
 # Specifics
 ## Finishing model drawing automation
