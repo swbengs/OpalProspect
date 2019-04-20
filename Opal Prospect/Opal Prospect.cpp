@@ -815,9 +815,33 @@ int main(int argc, char* argv[])
 #if defined(WIN32) || defined(_WIN32)
     wchar_t buffer[MAX_PATH];
     GetModuleFileName(NULL, buffer, MAX_PATH);
-    std::wstring temp_w = buffer;
     FilePath temp_path;
-    temp_path.setFullPath(std::string(temp_w.begin(), temp_w.end())); //horrible way of doing this but should work for english chars for now
+    char c_buffer[MAX_PATH * 2]; //wchar is 16 bit so double the max path size
+
+    size_t count = 0;
+    size_t result = wcstombs_s(&count, c_buffer, buffer, sizeof(c_buffer));
+    if (result != 0)
+    {
+        std::cout << "Error occured while converting CWD\n";
+        if (result == EINVAL)
+        {
+            std::cout << "null was passed in\n";
+        }
+        else if (result == ERANGE)
+        {
+            std::cout << "too large to fit in given char[]\n";
+        }
+        else if (result == EILSEQ)
+        {
+            std::cout << "couldn't convert a character\n";
+        }
+        else if (result == STRUNCATE)
+        {
+            std::cout << "was truncated\n";
+        }
+    }
+    //std::cout << c_buffer << "\n";
+    temp_path.setFullPath(std::string(c_buffer)); //make temp string and pass it in
     FilePath::setCWD(temp_path.getPathOnly());
     //std::cout << "path: " << temp_path.getPath() << "\n";
 #endif
