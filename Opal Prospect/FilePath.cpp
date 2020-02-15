@@ -78,8 +78,9 @@ void FilePath::setCWD(std::string cwd)
 
 void FilePath::setFullPath(std::string path)
 {
-    size_t filename_start = 0;
+    size_t filename_start = path.find_last_of(os_seperator) + 1;
 
+    /*
     if (path.size() > 0)
     {
         for (size_t i = path.size() - 1; i > 0; i--)
@@ -91,6 +92,8 @@ void FilePath::setFullPath(std::string path)
             }
         }
     }
+    */
+
 
     full_path = path.substr(0, filename_start);
     filename = path.substr(filename_start);
