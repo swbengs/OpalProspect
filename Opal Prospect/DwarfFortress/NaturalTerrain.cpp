@@ -37,8 +37,7 @@ NaturalTerrain::NaturalTerrain()
 {
     //setup the boxes within the grids. Don't create or set the # of them yet
     tile_grid.setBoxWidthLengthHeight(DF_BLOCK_WIDTH, DF_BLOCK_HEIGHT, DF_BLOCK_LENGTH);
-    tile_grid.setYOffset(DF_FLOOR_HEIGHT);
-    tile_grid.setYStride(DF_FLOOR_HEIGHT);
+    tile_grid.setFloorHeight(DF_FLOOR_HEIGHT);
 }
 
 void NaturalTerrain::create()
@@ -67,13 +66,12 @@ NaturalTile NaturalTerrain::getTile(unsigned int index) const
 
 Point3D NaturalTerrain::getBlockPosition(unsigned int index) const
 {
-    return tile_grid.getPosition(index);
+    return tile_grid.getBlockPosition(index);
 }
 
 Point3D NaturalTerrain::getFloorPosition(unsigned int index) const
 {
-    // TODO: Get the position with offset so floor is placed correctly
-    return tile_grid.getPosition(index);
+    return tile_grid.getFloorPosition(index);
 }
 
 const std::vector<NaturalTile>& NaturalTerrain::getTiles() const

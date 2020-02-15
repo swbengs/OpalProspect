@@ -356,46 +356,29 @@ void NaturalTerrainFileLoader::createTerrain(NaturalTerrain& terrain)
         for (unsigned int n = 0; n < number; n++)
         {
             const DF_Draw_Tile_Type draw = type_table[c];
-            DF_Draw_Tile_Type block_draw;
+            DF_Draw_Tile_Type tile_draw;
 
+            // Add any shape that is an exception to what it's defined as such as ramps
             switch (draw)
             {
-            case DF_DRAW_AIR:
-                block_draw = draw;
-                floor_draw = draw;
-                break;
-            case DF_DRAW_BLOCK:
-                block_draw = draw;
-                floor_draw = DF_DRAW_FLOOR;
-                break;
-            case DF_DRAW_FLOOR:
-                block_draw = DF_DRAW_AIR;
-                floor_draw = DF_DRAW_FLOOR;
-                break;
             case DF_DRAW_LIQUID:
-                block_draw = DF_DRAW_AIR;
-                floor_draw = DF_DRAW_AIR;
+                tile_draw = DF_DRAW_AIR;
             case DF_DRAW_RAMP_EAST:
-                block_draw = DF_DRAW_AIR;
-                floor_draw = DF_DRAW_FLOOR;
+                tile_draw = DF_DRAW_FLOOR;
                 break;
             case DF_DRAW_RAMP_NORTH:
-                block_draw = DF_DRAW_AIR;
-                floor_draw = DF_DRAW_FLOOR;
+                tile_draw = DF_DRAW_FLOOR;
                 break;
             case DF_DRAW_RAMP_SOUTH:
-                block_draw = DF_DRAW_AIR;
-                floor_draw = DF_DRAW_FLOOR;
+                tile_draw = DF_DRAW_FLOOR;
                 break;
             case DF_DRAW_RAMP_WEST:
-                block_draw = DF_DRAW_AIR;
-                floor_draw = DF_DRAW_FLOOR;
+                tile_draw = DF_DRAW_FLOOR;
                 break;
             default:
-                block_draw = draw;
-                floor_draw = draw;
+                tile_draw = draw;
             }
-            terrain.setIndexDrawType(current_index, block_draw);
+            terrain.setIndexDrawType(current_index, tile_draw);
             current_index++;
         }
     }

@@ -273,6 +273,9 @@
     <ClCompile Include="Shapes\VoxelGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shapes\DFVoxelGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\DrawEngine.hpp">
@@ -508,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="DwarfFortress\NaturalTerrainFileLoader.hpp">
       <Filter>DwarfFortress</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\DFVoxelGrid.hpp">
+      <Filter>Shapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

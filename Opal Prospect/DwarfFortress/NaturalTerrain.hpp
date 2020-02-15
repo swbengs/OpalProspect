@@ -5,7 +5,8 @@
 
 //other includes
 #include "NaturalTile.hpp"
-#include "..\Shapes\VoxelGrid.hpp"
+#include "../Shapes/DFVoxelGrid.hpp"
+#include "../Shapes/Point3DUInt.hpp"
 
 /*
 MIT License
@@ -80,7 +81,7 @@ public:
     void setLayerMaterial(unsigned int layer, DF_Natural_Tile_Material material);
 
 private:
-    VoxelGrid tile_grid;
+    DFVoxelGrid tile_grid;
     std::vector<NaturalTile> tiles;
 };
 
