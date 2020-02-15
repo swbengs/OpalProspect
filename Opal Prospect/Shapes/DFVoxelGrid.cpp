@@ -45,10 +45,10 @@ Point3D DFVoxelGrid::getBlockPosition(unsigned int index) const
 
 Point3D DFVoxelGrid::getFloorPosition(unsigned int index) const
 {
-    // Get block position and offset the y value by half the floor height downwords(negative y)
+    // Get block position and offset the y downwards(negative y)
     Point3D temp = getBlockPosition(index);
-    temp.y -= getFloorHeight() * 0.5f;
-    return getBlockPosition(index);
+    temp.y -= getBoxHeight() * 0.5f - getFloorHeight() * 0.5f;
+    return temp;
 }
 
 unsigned int DFVoxelGrid::getGridCount() const

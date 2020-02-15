@@ -197,6 +197,7 @@ void NaturalTerrainModelBuilder::buildModel(const ModelController& model_control
     for (size_t i = 0; i < tiles.size(); i++)
     {
         const unsigned int tile_index = tiles[i].tile_index;
+        bool is_floor = false;
         NaturalTile tile = terrain.getTile(tile_index);
         std::string name;
 
@@ -207,6 +208,7 @@ void NaturalTerrainModelBuilder::buildModel(const ModelController& model_control
             break;
         case DF_DRAW_FLOOR:
             name = DFNaturalTileString(tile.getTileMaterial()).append(" floor");
+            is_floor = true;
             break;
         case DF_DRAW_LIQUID:
             break;
@@ -214,7 +216,7 @@ void NaturalTerrainModelBuilder::buildModel(const ModelController& model_control
         }
 
         const ModelIndex& model = model_controller.getModel(model_controller.getModelReference(name)); //TODO add assert to modelcontroller so we make sure it's always a proper reference
-        addBoxFaces(i, tile_index, model, terrain_model, (tile.getDrawType() == DF_DRAW_FLOOR));
+        addBoxFaces(i, tile_index, model, terrain_model, is_floor);
     }
 }
 

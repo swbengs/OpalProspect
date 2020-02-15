@@ -41,6 +41,6 @@ const float DF_BLOCK_HEIGHT = 1.0f;
 const float DF_BLOCK_LENGTH = 1.0f;
 
 const float DF_FLOOR_WIDTH = 1.0f;
-const float DF_FLOOR_HEIGHT = 0.2f;
+const float DF_FLOOR_HEIGHT = 0.05f;
 const float DF_FLOOR_LENGTH = 1.0f;
 
