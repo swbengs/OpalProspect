@@ -126,11 +126,6 @@ void NaturalTerrain::setGridDimensions(unsigned int width, unsigned int height, 
 
 void NaturalTerrain::setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type)
 {
-    setIndexDrawType(index, draw_type);
-}
-
-void NaturalTerrain::setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type)
-{
     assert(index < tile_grid.getGridCount());
     tiles[index].setDrawType(draw_type);
 }

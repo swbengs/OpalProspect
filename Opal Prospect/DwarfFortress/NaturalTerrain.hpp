@@ -66,7 +66,6 @@ public:
     void setGridDimensions(unsigned int width, unsigned int height, unsigned int length);
 
     void setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type); //useful for testing, not as much for the release version
-    void setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type);
     void setIndexDrawTypeN(unsigned int index, unsigned int count, DF_Draw_Tile_Type draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
     void setIndexDrawTypeAround(unsigned int index, DF_Draw_Tile_Type draw);
     void setIndexDrawTypeAroundN(unsigned int index, unsigned int count, DF_Draw_Tile_Type draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));

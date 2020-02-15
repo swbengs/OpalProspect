@@ -558,29 +558,6 @@ void offset_grid_extreme_test()
     std::cout << "extreme grid test done\n";
 }
 
-void natural_terrain_test()
-{
-    NaturalTerrain test;
-    const unsigned int width = 3;
-    const unsigned int height = 3;
-    const unsigned int length = 3;
-    test.setGridDimensions(width, height, length);
-    test.create(DF_DRAW_RAMP_EAST, DF_DRAW_FLOOR, DF_RAW_ADAMANTINE);
-    //test.create();
-
-    test.setLayerDrawType(1, DF_DRAW_BLOCK);
-    test.setLayerMaterial(1, DF_GABBRO);
-    test.setIndexDrawType(18, DF_DRAW_LIQUID);
-    test.setIndexMaterial(18, DF_MAGMA_MATERIAL);
-
-    NaturalTile tile = test.getBlock(26);
-    tile = test.getFloor(26);
-    test.getBlock(0);
-    tile = test.getFloor(0);
-
-    std::cout << "natural terrain test done\n";
-}
-
 void natural_terrain_build_test()
 {
     NaturalTerrain test;
@@ -589,7 +566,7 @@ void natural_terrain_build_test()
     const unsigned int height = 3;
     const unsigned int length = 3;
     test.setGridDimensions(width, height, length);
-    test.create(DF_DRAW_BLOCK, DF_DRAW_FLOOR, DF_RAW_ADAMANTINE);
+    test.create(DF_DRAW_BLOCK, DF_RAW_ADAMANTINE);
     //test.create();
 
     //test.setLayerDrawType(1, DF_DRAW_AIR);

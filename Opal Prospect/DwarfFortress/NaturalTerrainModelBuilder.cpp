@@ -83,7 +83,7 @@ void NaturalTerrainModelBuilder::create(Point3DUInt dimensions)
 
 bool NaturalTerrainModelBuilder::isSolid(DF_Draw_Tile_Type type) const
 {
-    if (type == DF_DRAW_BLOCK || type == DF_DRAW_FLOOR)
+    if (type == DF_DRAW_BLOCK)
     {
         return true;
     }
@@ -214,18 +214,16 @@ void NaturalTerrainModelBuilder::buildModel(const ModelController& model_control
         }
 
         const ModelIndex& model = model_controller.getModel(model_controller.getModelReference(name)); //TODO add assert to modelcontroller so we make sure it's always a proper reference
-        addBoxFaces(i, tile_index, model, terrain_model, false);
+        addBoxFaces(i, tile_index, model, terrain_model, (tile.getDrawType() == DF_DRAW_FLOOR));
     }
 }
 
 void NaturalTerrainModelBuilder::checkingLoop()
 {
-    /*
-    Single pass that does both floors and blocks at the same time
-    */
     for (size_t index = 0; index < terrain.getCount(); index++)
     {
         natural_tile_draw_info tile;
+        tile.shape = terrain.getTile(index).getDrawType();
 
         tile.tile_index = index;
         checkNeighbors(tile, (tile.shape == DF_DRAW_FLOOR)); //fills in our bools based on the tiles around this one
@@ -248,25 +246,25 @@ void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bo
 
     if (is_floor)
     {
-        info.top = true; // A floor means that there is air above it in the same grid spot so the top of the floor is always visible
-        checkVerticalTile(info.bottom, index, down);
-        checkHorizontalTile(info.left, index, left);
-        checkHorizontalTile(info.right, index, right);
-        checkHorizontalTile(info.front, index, back); //reversed on purpose. The model's front face points to the camera, but is the back face for the grid
-        checkHorizontalTile(info.back, index, front); //reversed on purpose
+        checkVerticalTile(info.top, index, up, true, true);
+        checkVerticalTile(info.bottom, index, down, true, false);
+        checkHorizontalTile(info.left, index, left, info.shape);
+        checkHorizontalTile(info.right, index, right, info.shape);
+        checkHorizontalTile(info.front, index, back, info.shape); //reversed on purpose. The model's front face points to the camera, but is the back face for the grid
+        checkHorizontalTile(info.back, index, front, info.shape); //reversed on purpose
     }
     else //is a block
     {
-        checkVerticalTile(info.top, index, up);
-        checkVerticalTile(info.bottom, index, down);
-        checkHorizontalTile(info.left, index, left);
-        checkHorizontalTile(info.right, index, right);
-        checkHorizontalTile(info.front, index, back); //reversed on purpose. Read comment from floor above
-        checkHorizontalTile(info.back, index, front); //reversed on purpose
+        checkVerticalTile(info.top, index, up, false, true);
+        checkVerticalTile(info.bottom, index, down, false, false);
+        checkHorizontalTile(info.left, index, left, info.shape);
+        checkHorizontalTile(info.right, index, right, info.shape);
+        checkHorizontalTile(info.front, index, back, info.shape); //reversed on purpose. Read comment from floor above
+        checkHorizontalTile(info.back, index, front, info.shape); //reversed on purpose
     }
 }
 
-void NaturalTerrainModelBuilder::checkHorizontalTile(bool& side, unsigned int start_index, unsigned int check_index)
+void NaturalTerrainModelBuilder::checkHorizontalTile(bool& side, unsigned int start_index, unsigned int check_index, DF_Draw_Tile_Type current_shape)
 {
     NaturalTile tile;
 
@@ -274,11 +272,11 @@ void NaturalTerrainModelBuilder::checkHorizontalTile(bool& side, unsigned int st
     {
         side = true;
     }
-    else //check if solid and get proper tile to check
+    else //check if solid and get proper tile to check. Also check if they are the same shape. Two floors touching means that side doesn't get drawn
     {
         tile = terrain.getTile(check_index);
 
-        if (isSolid(tile.getDrawType()))
+        if (isSolid(tile.getDrawType()) || current_shape == tile.getDrawType())
         {
             side = false;
         }
@@ -289,24 +287,49 @@ void NaturalTerrainModelBuilder::checkHorizontalTile(bool& side, unsigned int st
     }
 }
 
-void NaturalTerrainModelBuilder::checkVerticalTile(bool& side, unsigned int start_index, unsigned int check_index)
+void NaturalTerrainModelBuilder::checkVerticalTile(bool& side, unsigned int start_index, unsigned int check_index, bool is_floor, bool checking_up)
 {
     NaturalTile tile;
-
-    tile = terrain.getTile(check_index);
 
     // This happens if this face is on the side of the grid so it's always visible
     if (start_index == check_index)
     {
         side = true;
     }
-    else if (isSolid(tile.getDrawType()))
+    else if (is_floor)
     {
-        side = false;
+        if (checking_up)
+        {
+            side = true; // For a floor it always has empty space in its own space
+        }
+        else
+        {
+            tile = terrain.getTile(check_index);
+            if (isSolid(tile.getDrawType()))
+            {
+                side = false;
+            }
+            else
+            {
+                side = true;
+            }
+        }
     }
-    else
+    else // Block
     {
-        side = true;
+        tile = terrain.getTile(check_index);
+        if (checking_up && tile.getDrawType() == DF_DRAW_FLOOR)
+        {
+            side = false; // If checking up and the tile above is a floor our top isn't visible
+        }
+        else if (isSolid(tile.getDrawType())) // Otherwise it is visible unless another block is there
+        {
+            side = false;
+        }
+        else
+        {
+            side = true;
+        }
     }
 }
 
