@@ -194,8 +194,8 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
     const std::string& material_rle = run_length_natural_material[layer];
     const std::string& type_rle = run_length_natural_type[layer];
 
+    // Material parsing
     unsigned int count = 0;
-
     unsigned int single_index = 0;
     for (size_t i = 0; i < material_rle.size(); i++)
     {
@@ -209,7 +209,7 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
                 return false;
             }
         }
-        else //add two characters, the non number one and seperate the number and character
+        else //add two characters(material is aa through ZZ), the non number one and seperate the number and character
         {
             std::string s;
             s.resize(2);
@@ -259,6 +259,7 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
         }
     }
 
+    // Sanity check. If we didn't read exactly layer_size times, something is off. Layer is too small or too large compared to what we were told.
     if (count != layer_size)
     {
         std::stringstream error_stream;
@@ -268,6 +269,7 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
         return false;
     }
 
+    // Type/Shape parsing
     count = 0;
     single_index = 0;
     for (size_t i = 0; i < type_rle.size(); i++)
@@ -282,7 +284,7 @@ bool NaturalTerrainFileLoader::parseLayer(unsigned int layer, unsigned int layer
                 return false;
             }
         }
-        else //add single character, the non number one and seperate the number and character
+        else //add single character(type is only a single char), the non number one and seperate the number and character
         {
             single[single_index] = type_rle[i];
             single_index = 0;
@@ -327,6 +329,7 @@ void NaturalTerrainFileLoader::createTerrain(NaturalTerrain& terrain)
     terrain.create();
     const unsigned int world_size = world_width * world_height * world_length;
 
+    // Set each material in the terrain data
     unsigned int current_index = 0; //current of total world size
     for (size_t i = 0; i < material_pairs.size(); i++)
     {
@@ -340,8 +343,10 @@ void NaturalTerrainFileLoader::createTerrain(NaturalTerrain& terrain)
         }
     }
 
+    // Sanity check
     assert(current_index == world_size);
 
+    // Assign shape to terrain data
     current_index = 0; //current of total world size
     for (size_t i = 0; i < type_pairs.size(); i++)
     {
@@ -352,7 +357,6 @@ void NaturalTerrainFileLoader::createTerrain(NaturalTerrain& terrain)
         {
             const DF_Draw_Tile_Type draw = type_table[c];
             DF_Draw_Tile_Type block_draw;
-            DF_Draw_Tile_Type floor_draw;
 
             switch (draw)
             {
@@ -391,7 +395,7 @@ void NaturalTerrainFileLoader::createTerrain(NaturalTerrain& terrain)
                 block_draw = draw;
                 floor_draw = draw;
             }
-            terrain.setIndexDrawType(current_index, block_draw, floor_draw);
+            terrain.setIndexDrawType(current_index, block_draw);
             current_index++;
         }
     }

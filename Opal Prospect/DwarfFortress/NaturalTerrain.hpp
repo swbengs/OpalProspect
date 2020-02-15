@@ -42,17 +42,15 @@ public:
     NaturalTerrain();
 
     void create();
-    void create(DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type, DF_Natural_Tile_Material material);
+    void create(DF_Draw_Tile_Type draw_type, DF_Natural_Tile_Material material);
 
     void freeData();
 
     //gets
-    NaturalTile getBlock(unsigned int index) const;
+    NaturalTile getTile(unsigned int index) const;
     Point3D getBlockPosition(unsigned int index) const;
-    NaturalTile getFloor(unsigned int index) const;
     Point3D getFloorPosition(unsigned int index) const;
-    const std::vector<NaturalTile>& getBlocks() const;
-    const std::vector<NaturalTile>& getFloors() const;
+    const std::vector<NaturalTile>& getTiles() const;
     Point3DUInt getGridDimensions() const;
     size_t getCount() const;
 
@@ -67,27 +65,22 @@ public:
     void setGridDimensions(unsigned int width, unsigned int height, unsigned int length);
 
     void setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type); //useful for testing, not as much for the release version
-    void setIndexDrawType(unsigned int index, DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type);
-    void setIndexDrawTypeN(unsigned int index, unsigned int count, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
-    void setIndexDrawTypeAround(unsigned int index, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw);
-    void setIndexDrawTypeAroundN(unsigned int index, unsigned int count, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
-    void setIndexDrawTypeAroundToEdge(unsigned int index, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
+    void setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type);
+    void setIndexDrawTypeN(unsigned int index, unsigned int count, DF_Draw_Tile_Type draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
+    void setIndexDrawTypeAround(unsigned int index, DF_Draw_Tile_Type draw);
+    void setIndexDrawTypeAroundN(unsigned int index, unsigned int count, DF_Draw_Tile_Type draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
+    void setIndexDrawTypeAroundToEdge(unsigned int index, DF_Draw_Tile_Type draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
     void setIndexMaterial(unsigned int index, DF_Natural_Tile_Material material);
-    void setIndexMaterial(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material);
-    void setIndexMaterialN(unsigned int index, unsigned int count, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
-    void setIndexMaterialAround(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material);
-    void setIndexMaterialAroundN(unsigned int index, unsigned int count, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
-    void setIndexMaterialAroundToEdge(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
+    void setIndexMaterialN(unsigned int index, unsigned int count, DF_Natural_Tile_Material material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
+    void setIndexMaterialAround(unsigned int index, DF_Natural_Tile_Material material);
+    void setIndexMaterialAroundN(unsigned int index, unsigned int count, DF_Natural_Tile_Material material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
+    void setIndexMaterialAroundToEdge(unsigned int index, DF_Natural_Tile_Material material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int));
     void setLayerBlockMaterial(unsigned int layer, DF_Natural_Tile_Material material);
-    void setLayerFloorMaterial(unsigned int layer, DF_Natural_Tile_Material material);
     void setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type draw_type); //useful for debug and that is all
-    void setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type);
     void setLayerMaterial(unsigned int layer, DF_Natural_Tile_Material material);
 
 private:
-    VoxelGrid block_grid;
-    VoxelGrid floor_grid;
-    std::vector<NaturalTile> blocks;
-    std::vector<NaturalTile> floors;
+    VoxelGrid tile_grid;
+    std::vector<NaturalTile> tiles;
 };
 

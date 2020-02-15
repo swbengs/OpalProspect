@@ -36,213 +36,186 @@ SOFTWARE.
 NaturalTerrain::NaturalTerrain()
 {
     //setup the boxes within the grids. Don't create or set the # of them yet
-    block_grid.setBoxWidthLengthHeight(DF_BLOCK_WIDTH, DF_BLOCK_HEIGHT, DF_BLOCK_LENGTH);
-    block_grid.setYOffset(DF_FLOOR_HEIGHT);
-    block_grid.setYStride(DF_FLOOR_HEIGHT);
-
-    floor_grid.setBoxWidthLengthHeight(DF_FLOOR_WIDTH, DF_FLOOR_HEIGHT, DF_FLOOR_LENGTH);
-    floor_grid.setYOffset(0.0f);
-    floor_grid.setYStride(DF_BLOCK_HEIGHT);
+    tile_grid.setBoxWidthLengthHeight(DF_BLOCK_WIDTH, DF_BLOCK_HEIGHT, DF_BLOCK_LENGTH);
+    tile_grid.setYOffset(DF_FLOOR_HEIGHT);
+    tile_grid.setYStride(DF_FLOOR_HEIGHT);
 }
 
 void NaturalTerrain::create()
 {
-    const size_t count = block_grid.getGridCount();
-    blocks.resize(count);
-    const NaturalTile floor(DF_DRAW_FLOOR, DF_ALEXANDRITE);
-    floors.resize(count, floor);
+    const size_t count = tile_grid.getGridCount();
+    tiles.resize(count);
 }
 
-void NaturalTerrain::create(DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type, DF_Natural_Tile_Material material)
+void NaturalTerrain::create(DF_Draw_Tile_Type draw_type, DF_Natural_Tile_Material material)
 {
-    const size_t count = block_grid.getGridCount();
-    const NaturalTile block(block_draw_type, material);
-    const NaturalTile floor(floor_draw_type, material);
-    blocks.resize(count, block);
-    floors.resize(count, floor);
+    const size_t count = tile_grid.getGridCount();
+    const NaturalTile block(draw_type, material);
+    tiles.resize(count, block);
 }
 
 void NaturalTerrain::freeData()
 {
-    blocks = std::vector<NaturalTile>();
-    floors = std::vector<NaturalTile>();
+    tiles = std::vector<NaturalTile>();
 }
 
-NaturalTile NaturalTerrain::getBlock(unsigned int index) const
+NaturalTile NaturalTerrain::getTile(unsigned int index) const
 {
-    assert(index < block_grid.getGridCount());
-    return blocks[index];
+    assert(index < tile_grid.getGridCount());
+    return tiles[index];
 }
 
 Point3D NaturalTerrain::getBlockPosition(unsigned int index) const
 {
-    return block_grid.getPosition(index);
-}
-
-NaturalTile NaturalTerrain::getFloor(unsigned int index) const
-{
-    assert(index < floor_grid.getGridCount());
-    return floors[index];
+    return tile_grid.getPosition(index);
 }
 
 Point3D NaturalTerrain::getFloorPosition(unsigned int index) const
 {
-    return floor_grid.getPosition(index);
+    // TODO: Get the position with offset so floor is placed correctly
+    return tile_grid.getPosition(index);
 }
 
-const std::vector<NaturalTile>& NaturalTerrain::getBlocks() const
+const std::vector<NaturalTile>& NaturalTerrain::getTiles() const
 {
-    return blocks;
-}
-
-const std::vector<NaturalTile>& NaturalTerrain::getFloors() const
-{
-    return floors;
+    return tiles;
 }
 
 Point3DUInt NaturalTerrain::getGridDimensions() const
 {
-    return Point3DUInt(block_grid.getGridWidth(), block_grid.getGridHeight(), block_grid.getGridLength());
+    return Point3DUInt(tile_grid.getGridWidth(), tile_grid.getGridHeight(), tile_grid.getGridLength());
 }
 
 size_t NaturalTerrain::getCount() const
 {
-    return block_grid.getGridCount();
+    return tile_grid.getGridCount();
 }
 
 unsigned int NaturalTerrain::getIndexDown(unsigned int index)
 {
-    return block_grid.getIndexDown(index);
+    return tile_grid.getIndexDown(index);
 }
 
 unsigned int NaturalTerrain::getIndexUp(unsigned int index)
 {
-    return block_grid.getIndexUp(index);
+    return tile_grid.getIndexUp(index);
 }
 
 unsigned int NaturalTerrain::getIndexLeft(unsigned int index)
 {
-    return block_grid.getIndexLeft(index);
+    return tile_grid.getIndexLeft(index);
 }
 
 unsigned int NaturalTerrain::getIndexRight(unsigned int index)
 {
-    return block_grid.getIndexRight(index);
+    return tile_grid.getIndexRight(index);
 }
 
 unsigned int NaturalTerrain::getIndexFront(unsigned int index)
 {
-    return block_grid.getIndexFront(index);
+    return tile_grid.getIndexFront(index);
 }
 
 unsigned int NaturalTerrain::getIndexBack(unsigned int index)
 {
-    return block_grid.getIndexBack(index);
+    return tile_grid.getIndexBack(index);
 }
 
 void NaturalTerrain::setGridDimensions(unsigned int width, unsigned int height, unsigned int length)
 {
-    block_grid.setGridWidthLengthHeight(width, height, length);
-    floor_grid.setGridWidthLengthHeight(width, height, length);
+    tile_grid.setGridWidthLengthHeight(width, height, length);
 }
 
 void NaturalTerrain::setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type)
 {
-    setIndexDrawType(index, draw_type, draw_type);
+    setIndexDrawType(index, draw_type);
 }
 
-void NaturalTerrain::setIndexDrawType(unsigned int index, DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type)
+void NaturalTerrain::setIndexDrawType(unsigned int index, DF_Draw_Tile_Type draw_type)
 {
-    assert(index < block_grid.getGridCount());
-    blocks[index].setDrawType(block_draw_type);
-    floors[index].setDrawType(floor_draw_type);
+    assert(index < tile_grid.getGridCount());
+    tiles[index].setDrawType(draw_type);
 }
 
-void NaturalTerrain::setIndexDrawTypeN(unsigned int index, unsigned int count, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int))
+void NaturalTerrain::setIndexDrawTypeN(unsigned int index, unsigned int count, DF_Draw_Tile_Type draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int))
 {
     Point3DUInt xyz = getGridDimensions();
-    setIndexDrawType(index, block_draw, floor_draw);
+    setIndexDrawType(index, draw);
     unsigned int current_index = index;
 
     for (unsigned int i = 0; i < count; i++)
     {
         current_index = function(current_index, xyz.x, xyz.y, xyz.z);
-        setIndexDrawType(current_index, block_draw, floor_draw);
+        setIndexDrawType(current_index, draw);
     }
 }
 
-void NaturalTerrain::setIndexDrawTypeAround(unsigned int index, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw)
+void NaturalTerrain::setIndexDrawTypeAround(unsigned int index, DF_Draw_Tile_Type draw)
 {
-    const unsigned int up = block_grid.getIndexUp(index);
-    const unsigned int down = block_grid.getIndexDown(index);
-    const unsigned int left = block_grid.getIndexLeft(index);
-    const unsigned int right = block_grid.getIndexRight(index);
-    const unsigned int back = block_grid.getIndexBack(index);
-    const unsigned int front = block_grid.getIndexFront(index);
+    const unsigned int up = tile_grid.getIndexUp(index);
+    const unsigned int down = tile_grid.getIndexDown(index);
+    const unsigned int left = tile_grid.getIndexLeft(index);
+    const unsigned int right = tile_grid.getIndexRight(index);
+    const unsigned int back = tile_grid.getIndexBack(index);
+    const unsigned int front = tile_grid.getIndexFront(index);
 
     if (index != up)
     {
-        blocks[up].setDrawType(block_draw);
-        floors[up].setDrawType(floor_draw);
+        tiles[up].setDrawType(draw);
     }
 
     if (index != down)
     {
-        blocks[down].setDrawType(block_draw);
-        floors[down].setDrawType(floor_draw);
+        tiles[down].setDrawType(draw);
     }
 
     if (index != left)
     {
-        blocks[left].setDrawType(block_draw);
-        floors[left].setDrawType(floor_draw);
+        tiles[left].setDrawType(draw);
     }
 
     if (index != right)
     {
-        blocks[right].setDrawType(block_draw);
-        floors[right].setDrawType(floor_draw);
+        tiles[right].setDrawType(draw);
     }
 
     if (index != back)
     {
-        blocks[back].setDrawType(block_draw);
-        floors[back].setDrawType(floor_draw);
+        tiles[back].setDrawType(draw);
     }
 
     if (index != front)
     {
-        blocks[front].setDrawType(block_draw);
-        floors[front].setDrawType(floor_draw);
+        tiles[front].setDrawType(draw);
     }
 }
 
-void NaturalTerrain::setIndexDrawTypeAroundN(unsigned int index, unsigned int count, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int))
+void NaturalTerrain::setIndexDrawTypeAroundN(unsigned int index, unsigned int count, DF_Draw_Tile_Type draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int))
 {
     Point3DUInt xyz = getGridDimensions();
-    setIndexDrawTypeAround(index, block_draw, floor_draw);
+    setIndexDrawTypeAround(index, draw);
     unsigned int current_index = index;
 
     for (unsigned int i = 0; i < count; i++)
     {
         current_index = function(current_index, xyz.x, xyz.y, xyz.z);
-        setIndexDrawTypeAround(current_index, block_draw, floor_draw);
+        setIndexDrawTypeAround(current_index, draw);
     }
 }
 
-void NaturalTerrain::setIndexDrawTypeAroundToEdge(unsigned int index, DF_Draw_Tile_Type block_draw, DF_Draw_Tile_Type floor_draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int))
+void NaturalTerrain::setIndexDrawTypeAroundToEdge(unsigned int index, DF_Draw_Tile_Type draw, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int))
 {
     Point3DUInt xyz = getGridDimensions();
     unsigned int current_index = index;
     unsigned int previous_index;
 
-    setIndexDrawTypeAround(current_index, block_draw, floor_draw);
+    setIndexDrawTypeAround(current_index, draw);
     previous_index = current_index;
     current_index = function(current_index, xyz.x, xyz.y, xyz.z);
 
     while (current_index != previous_index)
     {
-        setIndexDrawTypeAround(current_index, block_draw, floor_draw);
+        setIndexDrawTypeAround(current_index, draw);
         previous_index = current_index;
         current_index = function(current_index, xyz.x, xyz.y, xyz.z);
     }
@@ -250,103 +223,89 @@ void NaturalTerrain::setIndexDrawTypeAroundToEdge(unsigned int index, DF_Draw_Ti
 
 void NaturalTerrain::setIndexMaterial(unsigned int index, DF_Natural_Tile_Material material)
 {
-    assert(index < block_grid.getGridCount());
-    blocks[index].setTileMaterial(material);
-    floors[index].setTileMaterial(material);
+    assert(index < tile_grid.getGridCount());
+    tiles[index].setTileMaterial(material);
 }
 
-void NaturalTerrain::setIndexMaterial(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material)
-{
-    assert(index < block_grid.getGridCount());
-    blocks[index].setTileMaterial(block_material);
-    floors[index].setTileMaterial(floor_material);
-}
-
-void NaturalTerrain::setIndexMaterialN(unsigned int index, unsigned int count, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int))
+void NaturalTerrain::setIndexMaterialN(unsigned int index, unsigned int count, DF_Natural_Tile_Material material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int))
 {
     Point3DUInt xyz = getGridDimensions();
-    setIndexMaterial(index, block_material, floor_material);
+    setIndexMaterial(index, material);
     unsigned int current_index = index;
 
     for (unsigned int i = 0; i < count; i++)
     {
         current_index = function(current_index, xyz.x, xyz.y, xyz.z);
-        setIndexMaterial(current_index, block_material, floor_material);
+        setIndexMaterial(current_index, material);
     }
 }
 
-void NaturalTerrain::setIndexMaterialAround(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material)
+void NaturalTerrain::setIndexMaterialAround(unsigned int index, DF_Natural_Tile_Material material)
 {
-    const unsigned int up = block_grid.getIndexUp(index);
-    const unsigned int down = block_grid.getIndexDown(index);
-    const unsigned int left = block_grid.getIndexLeft(index);
-    const unsigned int right = block_grid.getIndexRight(index);
-    const unsigned int back = block_grid.getIndexBack(index);
-    const unsigned int front = block_grid.getIndexFront(index);
+    const unsigned int up = tile_grid.getIndexUp(index);
+    const unsigned int down = tile_grid.getIndexDown(index);
+    const unsigned int left = tile_grid.getIndexLeft(index);
+    const unsigned int right = tile_grid.getIndexRight(index);
+    const unsigned int back = tile_grid.getIndexBack(index);
+    const unsigned int front = tile_grid.getIndexFront(index);
 
     if (index != up)
     {
-        blocks[up].setTileMaterial(block_material);
-        floors[up].setTileMaterial(floor_material);
+        tiles[up].setTileMaterial(material);
     }
 
     if (index != down)
     {
-        blocks[down].setTileMaterial(block_material);
-        floors[down].setTileMaterial(floor_material);
+        tiles[down].setTileMaterial(material);
     }
 
     if (index != left)
     {
-        blocks[left].setTileMaterial(block_material);
-        floors[left].setTileMaterial(floor_material);
+        tiles[left].setTileMaterial(material);
     }
 
     if (index != right)
     {
-        blocks[right].setTileMaterial(block_material);
-        floors[right].setTileMaterial(floor_material);
+        tiles[right].setTileMaterial(material);
     }
 
     if (index != back)
     {
-        blocks[back].setTileMaterial(block_material);
-        floors[back].setTileMaterial(floor_material);
+        tiles[back].setTileMaterial(material);
     }
 
     if (index != front)
     {
-        blocks[front].setTileMaterial(block_material);
-        floors[front].setTileMaterial(floor_material);
+        tiles[front].setTileMaterial(material);
     }
 }
 
-void NaturalTerrain::setIndexMaterialAroundN(unsigned int index, unsigned int count, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material, unsigned int (*function)(unsigned int, unsigned int, unsigned int, unsigned int))
+void NaturalTerrain::setIndexMaterialAroundN(unsigned int index, unsigned int count, DF_Natural_Tile_Material material, unsigned int (*function)(unsigned int, unsigned int, unsigned int, unsigned int))
 {
     Point3DUInt xyz = getGridDimensions();
-    setIndexMaterialAround(index, block_material, floor_material);
+    setIndexMaterialAround(index, material);
     unsigned int current_index = index;
 
     for (unsigned int i = 0; i < count; i++)
     {
         current_index = function(current_index, xyz.x, xyz.y, xyz.z);
-        setIndexMaterialAround(current_index, block_material, floor_material);
+        setIndexMaterialAround(current_index, material);
     }
 }
 
-void NaturalTerrain::setIndexMaterialAroundToEdge(unsigned int index, DF_Natural_Tile_Material block_material, DF_Natural_Tile_Material floor_material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int))
+void NaturalTerrain::setIndexMaterialAroundToEdge(unsigned int index, DF_Natural_Tile_Material material, unsigned int(*function)(unsigned int, unsigned int, unsigned int, unsigned int))
 {
     Point3DUInt xyz = getGridDimensions();
     unsigned int current_index = index;
     unsigned int previous_index;
 
-    setIndexMaterialAround(current_index, block_material, floor_material);
+    setIndexMaterialAround(current_index, material);
     previous_index = current_index;
     current_index = function(current_index, xyz.x, xyz.y, xyz.z);
 
     while (current_index != previous_index)
     {
-        setIndexMaterialAround(current_index, block_material, floor_material);
+        setIndexMaterialAround(current_index, material);
         previous_index = current_index;
         current_index = function(current_index, xyz.x, xyz.y, xyz.z);
     }
@@ -354,59 +313,34 @@ void NaturalTerrain::setIndexMaterialAroundToEdge(unsigned int index, DF_Natural
 
 void NaturalTerrain::setLayerBlockMaterial(unsigned int layer, DF_Natural_Tile_Material material)
 {
-    assert(layer < block_grid.getGridHeight());
-    unsigned int layer_size = block_grid.getGridWidth() * block_grid.getGridLength();
+    assert(layer < tile_grid.getGridHeight());
+    unsigned int layer_size = tile_grid.getGridWidth() * tile_grid.getGridLength();
     unsigned int start = layer_size*layer;
     for (unsigned int i = layer_size*layer; i < start + layer_size; i++)
     {
-        blocks[i].setTileMaterial(material);
-    }
-}
-
-void NaturalTerrain::setLayerFloorMaterial(unsigned int layer, DF_Natural_Tile_Material material)
-{
-    assert(layer < block_grid.getGridHeight());
-    unsigned int layer_size = block_grid.getGridWidth() * block_grid.getGridLength();
-    unsigned int start = layer_size*layer;
-    for (unsigned int i = layer_size*layer; i < start + layer_size; i++)
-    {
-        floors[i].setTileMaterial(material);
+        tiles[i].setTileMaterial(material);
     }
 }
 
 void NaturalTerrain::setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type draw_type)
 {
-    assert(layer < block_grid.getGridHeight());
-    unsigned int layer_size = block_grid.getGridWidth() * block_grid.getGridLength();
+    assert(layer < tile_grid.getGridHeight());
+    unsigned int layer_size = tile_grid.getGridWidth() * tile_grid.getGridLength();
     unsigned int start = layer_size*layer;
     for (unsigned int i = layer_size*layer; i < start + layer_size; i++)
     {
-        blocks[i].setDrawType(draw_type);
-        floors[i].setDrawType(draw_type);
-    }
-}
-
-void NaturalTerrain::setLayerDrawType(unsigned int layer, DF_Draw_Tile_Type block_draw_type, DF_Draw_Tile_Type floor_draw_type)
-{
-    assert(layer < block_grid.getGridHeight());
-    unsigned int layer_size = block_grid.getGridWidth() * block_grid.getGridLength();
-    unsigned int start = layer_size*layer;
-    for (unsigned int i = layer_size*layer; i < start + layer_size; i++)
-    {
-        blocks[i].setDrawType(block_draw_type);
-        floors[i].setDrawType(floor_draw_type);
+        tiles[i].setDrawType(draw_type);
     }
 }
 
 void NaturalTerrain::setLayerMaterial(unsigned int layer, DF_Natural_Tile_Material material)
 {
-    assert(layer < block_grid.getGridHeight());
-    unsigned int layer_size = block_grid.getGridWidth() * block_grid.getGridLength();
+    assert(layer < tile_grid.getGridHeight());
+    unsigned int layer_size = tile_grid.getGridWidth() * tile_grid.getGridLength();
     unsigned int start = layer_size*layer;
     for (unsigned int i = layer_size*layer; i < start + layer_size; i++)
     {
-        blocks[i].setTileMaterial(material);
-        floors[i].setTileMaterial(material);
+        tiles[i].setTileMaterial(material);
     }
 }
 
