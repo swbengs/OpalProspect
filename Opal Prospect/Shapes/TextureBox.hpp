@@ -61,6 +61,6 @@ private:
     unsigned int text_num_top;
     unsigned int text_num_bottom;
 
-    void fillUVPoints(Point3D& bottom_left, Point3D& bottom_right, Point3D& top_left, Point3D& top_right) const;
+    void fillUVPoints(Point3D& bottom_left, Point3D& bottom_right, Point3D& top_left, Point3D& top_right, float u_scaler, float v_scaler) const;
     void TextureBox::fillUVTextureNumber(Point3D& bottom_left, Point3D& bottom_right, Point3D& top_left, Point3D& top_right, unsigned int texture_number) const;
 };

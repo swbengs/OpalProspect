@@ -32,24 +32,25 @@ TextureBox::TextureBox()
 void TextureBox::fillTextureFace(TextureFace& front_face, TextureFace& back_face, TextureFace& left_face, TextureFace& right_face, TextureFace& top_face, TextureFace& bottom_face) const
 {
     Point3D bottom_left, bottom_right, top_left, top_right;
+    float x_scaler = getWidth();
+    float y_scaler = getHeight();
+    float z_scaler = getLength();
 
-    fillUVPoints(bottom_left, bottom_right, top_left, top_right);
-
+    fillUVPoints(bottom_left, bottom_right, top_left, top_right, x_scaler, y_scaler); // Front and back are based on width and height
     fillUVTextureNumber(bottom_left, bottom_right, top_left, top_right, getFrontTextureNumber());
     front_face.setUV(bottom_left, bottom_right, top_left, top_right);
-
     fillUVTextureNumber(bottom_left, bottom_right, top_left, top_right, getBackTextureNumber());
     back_face.setUV(bottom_left, bottom_right, top_left, top_right);
 
+    fillUVPoints(bottom_left, bottom_right, top_left, top_right, z_scaler, y_scaler); // Left and right are length and height
     fillUVTextureNumber(bottom_left, bottom_right, top_left, top_right, getLeftTextureNumber());
     left_face.setUV(bottom_left, bottom_right, top_left, top_right);
-
     fillUVTextureNumber(bottom_left, bottom_right, top_left, top_right, getRightTextureNumber());
     right_face.setUV(bottom_left, bottom_right, top_left, top_right);
 
+    fillUVPoints(bottom_left, bottom_right, top_left, top_right, x_scaler, z_scaler); // Top and Bottom are width and length
     fillUVTextureNumber(bottom_left, bottom_right, top_left, top_right, getTopTextureNumber());
     top_face.setUV(bottom_left, bottom_right, top_left, top_right);
-
     fillUVTextureNumber(bottom_left, bottom_right, top_left, top_right, getBottomTextureNumber());
     bottom_face.setUV(bottom_left, bottom_right, top_left, top_right);
 }
@@ -127,7 +128,7 @@ void TextureBox::setBottomTextureNumber(unsigned int texture)
 }
 
 //private
-void TextureBox::fillUVPoints(Point3D& bottom_left, Point3D& bottom_right, Point3D& top_left, Point3D& top_right) const
+void TextureBox::fillUVPoints(Point3D& bottom_left, Point3D& bottom_right, Point3D& top_left, Point3D& top_right, float u_scaler, float v_scaler) const
 {
     //TODO: Make it be based on width, length, and height of the face. 0 will stay 0 but the 1s can be longer to allow repeating and combining faces
     const float min = 0.0f;
@@ -135,12 +136,12 @@ void TextureBox::fillUVPoints(Point3D& bottom_left, Point3D& bottom_right, Point
 
     bottom_left.x = min;
     bottom_left.y = min;
-    bottom_right.x = max;
+    bottom_right.x = max * u_scaler;
     bottom_right.y = min;
     top_left.x = min;
-    top_left.y = max;
-    top_right.x = max;
-    top_right.y = max;
+    top_left.y = max * v_scaler;
+    top_right.x = max * u_scaler;
+    top_right.y = max * v_scaler;
 }
 
 void TextureBox::fillUVTextureNumber(Point3D& bottom_left, Point3D& bottom_right, Point3D& top_left, Point3D& top_right, unsigned int texture_number) const
