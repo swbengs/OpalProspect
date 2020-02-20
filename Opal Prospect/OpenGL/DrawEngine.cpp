@@ -774,6 +774,10 @@ void DrawEngine::setupOpenGLContext()
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     //glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
     //glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+
+    // TODO: Make old schoo color filling fragment shader that takes in default color so lines are easier to see. Also will disable lighting so that'll help
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Wireframe(any shading still occurs such as lighting and texturing) makes for fun results :)
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Standard
 }
 
 void DrawEngine::setupOpenGLObjects()

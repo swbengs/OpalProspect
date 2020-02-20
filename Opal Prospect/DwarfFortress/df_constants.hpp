@@ -36,11 +36,11 @@ const unsigned int DF_EMBARK_WIDTH = 48; //per 1 embark region. so 4x4 embark wo
 const unsigned int DF_EMBARK_LENGTH = 48;
 //height varies depending on the local terrain features
 
-const float DF_BLOCK_WIDTH = 1.5f;
-const float DF_BLOCK_HEIGHT = 1.5f;
-const float DF_BLOCK_LENGTH = 1.5f;
+const float DF_BLOCK_WIDTH = 1.0f;
+const float DF_BLOCK_HEIGHT = 1.0f;
+const float DF_BLOCK_LENGTH = 1.0f;
 
-const float DF_FLOOR_WIDTH = 1.5f;
+const float DF_FLOOR_WIDTH = 1.0f;
 const float DF_FLOOR_HEIGHT = 0.05f;
-const float DF_FLOOR_LENGTH = 1.5f;
+const float DF_FLOOR_LENGTH = 1.0f;
 
