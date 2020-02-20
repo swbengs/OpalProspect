@@ -33,11 +33,12 @@ SOFTWARE.
 
 void NaturalTerrainModelBuilder::loadFromFile(std::string filename, const ModelController& model_controller, ModelIndex& terrain_model)
 {
+    // TODO: Add a variable to pick which mode to use(merge, no merge, greedy merge, and so on)
     NaturalTerrainFileLoader loader;
     if (loader.loadWorld(filename, terrain))
     {
         std::cout << "world load success\n";
-        checkingLoop();
+        checkingLoopNaive();
         buildModelNaive(model_controller, terrain_model);
     }
     else
@@ -53,7 +54,7 @@ void NaturalTerrainModelBuilder::loadFromMemory(const NaturalTerrain& memory, co
 {
     terrain = memory;
     create(terrain.getGridDimensions());
-    checkingLoop();
+    checkingLoopNaive();
     buildModelNaive(model_controller, terrain_model);
 }
 
@@ -61,7 +62,7 @@ void NaturalTerrainModelBuilder::debugLoadFromMemory(const NaturalTerrain& memor
 {
     terrain = memory;
     create(terrain.getGridDimensions());
-    checkingLoop();
+    checkingLoopNaive();
 }
 
 Point3DUInt NaturalTerrainModelBuilder::getWorldDimensions() const
@@ -221,7 +222,7 @@ void NaturalTerrainModelBuilder::buildModelNaive(const ModelController& model_co
     }
 }
 
-void NaturalTerrainModelBuilder::checkingLoop()
+void NaturalTerrainModelBuilder::checkingLoopNaive()
 {
     for (size_t index = 0; index < terrain.getCount(); index++)
     {

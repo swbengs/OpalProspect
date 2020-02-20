@@ -60,6 +60,7 @@ private:
     };
 
     std::vector<natural_tile_draw_info> tiles; //only blocks that have at least one side to be drawn are added here
+    std::vector<int> merged_tiles; // TODO: design and replace with actual struct instead of int
     NaturalTerrain terrain;
 
     void addTile(natural_tile_draw_info tile);
@@ -74,7 +75,7 @@ private:
     void addBoxFace(NormalFace face, const Point3D& offset, ModelIndex& terrain_model) const; //add offset to all vertex and then add the model
     void addBoxFaces(unsigned int current_index, unsigned int tile_position_index, const ModelIndex& box_model, ModelIndex& terrain_model, bool is_floor) const; //checks if proper bool is set and adds the face with the proper offset
     void buildModelNaive(const ModelController& model_controller, ModelIndex& terrain_model); //takes the natural tile draw info and uses that to access the models data directly along with the coordinates to place and rotate the face(s) correctly. And those faces are added to the model
-    void checkingLoop(); //method that contains the main loop to check all terrain for what should be drawn
+    void checkingLoopNaive(); //method that contains the main loop to check all terrain for what should be drawn
     void checkNeighbors(natural_tile_draw_info& tile, bool is_floor); //takes index of current block and will handle cases for all neighbors. Modifies given tile info pod
     void checkHorizontalTile(bool& side, unsigned int start_index, unsigned int check_index, DF_Draw_Tile_Type current_shape); //check given tile side in vs the index passed in. Sets the boolean. Only checks x and z axis
     void checkVerticalTile(bool& side, unsigned int start_index, unsigned int check_index, bool is_floor, bool checking_up); //same as above but checks y axis
