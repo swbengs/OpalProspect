@@ -804,20 +804,22 @@ void DrawEngine::setupOpenGLUniforms()
     std::cout << "uniform_sun_light_color_id: " << uniform_sun_light_color_id << "\n";
     std::cout << "uniform_sun_light_direction_id: " << uniform_sun_light_direction_id << "\n";
 
-    glm::vec4 light_direction;
+    glm::vec4 light_direction; // Position of a simulated sun
     light_direction.x = -100.0f;
     light_direction.y = 90.0f;
     light_direction.z = 10.0f;
     light_direction.w = 0.0f;
-    light_direction = glm::normalize(light_direction);
-    glUniform4f(uniform_sun_light_direction_id, light_direction.x, light_direction.y, light_direction.z, light_direction.w);
+    light_direction = glm::normalize(light_direction); // Convert from position to normal vector
+    glUniform4f(uniform_sun_light_direction_id, light_direction.x, light_direction.y, light_direction.z, light_direction.w); // Pop it into uniform used by shaders
     OGLHelpers::getOpenGLError("setup uniforms post sun light direction", true);
 
+    // Color of the light. Uses 0 to 1 scaling. 1 is like the old style value of 255
     const float light_r = 1.0f;
     const float light_g = 1.0f;
     const float light_b = 1.0f;
     glUniform3f(uniform_sun_light_color_id, light_r, light_g, light_b);
 
+    // Minimum amount of light any triangle can have.
     const float ambient_r = 0.3f * light_r;
     const float ambient_g = 0.3f * light_g;
     const float ambient_b = 0.3f * light_b;

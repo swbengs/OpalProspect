@@ -38,7 +38,7 @@ void NaturalTerrainModelBuilder::loadFromFile(std::string filename, const ModelC
     {
         std::cout << "world load success\n";
         checkingLoop();
-        buildModel(model_controller, terrain_model);
+        buildModelNaive(model_controller, terrain_model);
     }
     else
     {
@@ -54,7 +54,7 @@ void NaturalTerrainModelBuilder::loadFromMemory(const NaturalTerrain& memory, co
     terrain = memory;
     create(terrain.getGridDimensions());
     checkingLoop();
-    buildModel(model_controller, terrain_model);
+    buildModelNaive(model_controller, terrain_model);
 }
 
 void NaturalTerrainModelBuilder::debugLoadFromMemory(const NaturalTerrain& memory)
@@ -192,7 +192,8 @@ void NaturalTerrainModelBuilder::addBoxFaces(unsigned int current_index, unsigne
     }
 }
 
-void NaturalTerrainModelBuilder::buildModel(const ModelController& model_controller, ModelIndex& terrain_model)
+// Build the model by passing over all visible tiles and making a face per tile(horribly innefficient but easy to do)
+void NaturalTerrainModelBuilder::buildModelNaive(const ModelController& model_controller, ModelIndex& terrain_model)
 {
     for (size_t i = 0; i < tiles.size(); i++)
     {

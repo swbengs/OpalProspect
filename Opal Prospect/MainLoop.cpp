@@ -90,8 +90,8 @@ void MainLoop::startLoop(std::string terrain_filename)
         exit(EXIT_FAILURE);
     }
     glfwMakeContextCurrent(window);
-    //glfwSwapInterval(0);
-    glfwSwapInterval(1);
+    //glfwSwapInterval(0); // VSync off
+    glfwSwapInterval(1); // VSync on
 
     glfwSetKeyCallback(window, key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
