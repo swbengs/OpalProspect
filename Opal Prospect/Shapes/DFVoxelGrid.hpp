@@ -38,6 +38,7 @@ Description: Class to store dwarf fortress style voxel grid
 class DFVoxelGrid
 {
 public:
+    // True if index is on the the method side
     bool isBottomSide(unsigned int index) const;
     bool isTopSide(unsigned int index) const;
     bool isLeftSide(unsigned int index) const;
@@ -45,6 +46,7 @@ public:
     bool isFrontSide(unsigned int index) const;
     bool isBackSide(unsigned int index) const;
 
+    // Returns new index if it's possible to move in that direction. Else it returns the same index you gave it
     unsigned int getIndexDown(unsigned int index) const;
     unsigned int getIndexUp(unsigned int index) const;
     unsigned int getIndexLeft(unsigned int index) const;
@@ -56,7 +58,7 @@ public:
     Point3D getBlockPosition(unsigned int index) const;
     Point3D getFloorPosition(unsigned int index) const;
 
-    unsigned int getGridCount() const;
+    unsigned int getGridCount() const; // Total count of all tiles
     unsigned int getGridWidth() const;
     unsigned int getGridHeight() const;
     unsigned int getGridLength() const;

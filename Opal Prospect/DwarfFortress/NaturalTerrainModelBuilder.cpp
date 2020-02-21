@@ -238,6 +238,20 @@ void NaturalTerrainModelBuilder::checkingLoopNaive()
     }
 }
 
+void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
+{
+    // Do one side per loop
+
+    // Front
+
+
+    // Back
+
+    // Left
+
+    // Right
+}
+
 void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bool is_floor)
 {
     unsigned int index = info.tile_index;

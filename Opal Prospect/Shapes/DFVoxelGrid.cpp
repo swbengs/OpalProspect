@@ -258,6 +258,8 @@ bool DFVoxelGrid::isBackSide(unsigned int index) const
     }
 }
 
+// GetIndexDirection return the same index you gave it if it can't move in the direction. If you are at the front side and try to move forwards again you get the same index
+// Otherwise the new index is returned
 unsigned int DFVoxelGrid::getIndexDown(unsigned int index) const
 {
     assert(index < grid_width * grid_height * grid_length);
