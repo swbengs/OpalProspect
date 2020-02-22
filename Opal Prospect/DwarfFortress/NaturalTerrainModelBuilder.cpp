@@ -375,102 +375,8 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
     unsigned int starting_index;
     std::vector<unsigned int> indexes;
     unsigned int merged_count; // Counter for number of tiles merged
-
-    //unsigned int next_index;
     unsigned int current_index;
-    //unsigned int start_index; // Last visible index to be merged with
-
-    /*
-    // Outer layer only for now
-    // For each layer start at relative bottom left and move right until the end, then move up a row and repeat
-    for (unsigned int y = 0; y < dimensions.y; y++)
-    {
-        current_index = y * dimensions.x * dimensions.z;
-        merged_count = 0;
-        start_index = 0;
-
-        for (unsigned int x = 0; x < dimensions.x; x++)
-        {
-            bool visible;
-            checkHorizontalTile(visible, current_index, terrain.getIndexBack(current_index), terrain.getTile(current_index).getDrawType());
-            if (visible) // Compare to previous visible
-            {
-                NaturalTile current_tile = terrain.getTile(current_index);
-
-                if (merged_count == 0) // First visible on this row
-                {
-                    start_index = current_index;
-                    merged_count = 1;
-                }
-                else // Compare to start index. If material or shape are different save the old one
-                {
-                    NaturalTile start_tile = terrain.getTile(start_index);
-
-                    if (current_tile.getDrawType() == start_tile.getDrawType() && current_tile.getTileMaterial() == start_tile.getTileMaterial()) // Are equal
-                    {
-                        merged_count++; // Just increment merge count
-                    }
-                    else // Not so add old sequence and start new one
-                    {
-                        natural_merge_tile_draw_info info;
-                        info.width = merged_count;
-                        info.height = 1;
-                        info.length = 1;
-                        info.shape = start_tile.getDrawType();
-                        info.side = DF_FRONT_SIDE;
-                        info.tile_index = start_index;
-
-                        merged_tiles.push_back(info);
-
-                        // New
-                        start_index = current_index;
-                        merged_count = 1;
-                    }
-                }
-            }
-            else // Not visible so if prior start index has a value end the sequence for it
-            {
-                if (merged_count > 0)
-                {
-                    NaturalTile start_tile = terrain.getTile(start_index);
-                    natural_merge_tile_draw_info info;
-                    info.width = merged_count;
-                    info.height = 1;
-                    info.length = 1;
-                    info.shape = start_tile.getDrawType();
-                    info.side = DF_FRONT_SIDE;
-                    info.tile_index = start_index;
-
-                    merged_tiles.push_back(info);
-
-                    // New
-                    start_index = current_index;
-                    merged_count = 1;
-                }
-            }
-
-            // Setup next increment
-            next_index = terrain.getIndexRight(current_index);
-            current_index++;
-        }
-
-        // Add last sequence to be drawn at end of loop unless there were no visible tiles
-        if (merged_count > 0)
-        {
-            NaturalTile start_tile = terrain.getTile(start_index);
-            natural_merge_tile_draw_info info;
-            info.width = merged_count;
-            info.height = 1;
-            info.length = 1;
-            info.shape = start_tile.getDrawType();
-            info.side = DF_FRONT_SIDE;
-            info.tile_index = start_index;
-
-            merged_tiles.push_back(info);
-        }
-    }
-    */
-
+    
     // Loop to fill in all indexes to a vector
     // Front
     indexes.resize(dimensions.x * dimensions.y); // Can reuse the vector for each pair of faces aka front and back, left and right, top and bottom, because they are the exact same size
@@ -553,6 +459,47 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
         starting_index = terrain.getIndexUp(starting_index);
     }
     mergeLoopSimple(indexes, DF_RIGHT_SIDE, dimensions.z, dimensions.y);
+
+    // Top
+    indexes.resize(dimensions.x * dimensions.z);
+    starting_index = dimensions.x * dimensions.z * (dimensions.y - 1);
+
+    for (unsigned int y = 0; y < dimensions.z; y++)
+    {
+        current_index = starting_index;
+        for (unsigned int x = 0; x < dimensions.x; x++)
+        {
+            // Write current index to proper indexes spot
+            indexes[x + y * dimensions.z] = current_index;
+
+            // Get next index
+            current_index = terrain.getIndexRight(current_index);
+        }
+
+        // Get next starting index vertically
+        starting_index = terrain.getIndexFront(starting_index);
+    }
+    mergeLoopSimple(indexes, DF_TOP_SIDE, dimensions.x, dimensions.z);
+
+    // Bottom
+    starting_index = dimensions.x - 1;
+
+    for (unsigned int y = 0; y < dimensions.z; y++)
+    {
+        current_index = starting_index;
+        for (unsigned int x = 0; x < dimensions.x; x++)
+        {
+            // Write current index to proper indexes spot
+            indexes[x + y * dimensions.z] = current_index;
+
+            // Get next index
+            current_index = terrain.getIndexLeft(current_index);
+        }
+
+        // Get next starting index vertically
+        starting_index = terrain.getIndexFront(starting_index);
+    }
+    mergeLoopSimple(indexes, DF_BOTTOM_SIDE, dimensions.x, dimensions.z);
 }
 
 void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bool is_floor)
@@ -681,10 +628,10 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
                 checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexRight(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
                 break;
             case DF_TOP_SIDE:
-                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexUp(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                checkVerticalTile(visible, indexes[x + index_offset], terrain.getIndexUp(indexes[x + index_offset]), (terrain.getTile(indexes[x + index_offset]).getDrawType() == DF_DRAW_FLOOR), true);
                 break;
             case DF_BOTTOM_SIDE:
-                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexDown(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                checkVerticalTile(visible, indexes[x + index_offset], terrain.getIndexDown(indexes[x + index_offset]), (terrain.getTile(indexes[x + index_offset]).getDrawType() == DF_DRAW_FLOOR), false);
                 break;
             case DF_FRONT_SIDE:
                 checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexBack(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
@@ -739,12 +686,12 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
                     switch (side)
                     {
                     case DF_BOTTOM_SIDE:
-                        info.width = merged_count;
+                        info.width = -merged_count;
                         info.height = 1;
                         info.length = 1;
                         break;
                     case DF_TOP_SIDE:
-                        info.width = -merged_count;
+                        info.width = merged_count;
                         info.height = 1;
                         info.length = 1;
                         break;
@@ -794,12 +741,12 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
                 switch (side)
                 {
                 case DF_BOTTOM_SIDE:
-                    info.width = merged_count;
+                    info.width = -merged_count;
                     info.height = 1;
                     info.length = 1;
                     break;
                 case DF_TOP_SIDE:
-                    info.width = -merged_count;
+                    info.width = merged_count;
                     info.height = 1;
                     info.length = 1;
                     break;
