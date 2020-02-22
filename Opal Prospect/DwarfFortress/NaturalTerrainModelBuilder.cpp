@@ -241,11 +241,16 @@ void NaturalTerrainModelBuilder::checkingLoopNaive()
 void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
 {
     // Do one side per loop
+    Point3DUInt dimensions = terrain.getGridDimensions();
 
     // Front
 
-
     // Back
+    // TODO: Prototype(make into method)
+    // Outer layer only for now
+    // For each layer start at relative bottom left and move right until the end, then move up a row and repeat
+    unsigned int index = 0;
+
 
     // Left
 

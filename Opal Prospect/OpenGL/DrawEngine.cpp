@@ -416,6 +416,7 @@ void DrawEngine::bufferControlTest()
 
 DrawEngine::DrawEngine()
 {
+    wireframe_on = false;
     screen_width = 1;
     screen_height = 1;
     resize();
@@ -685,6 +686,20 @@ void DrawEngine::setScreenWidthHeight(int width, int height)
     resize();
 }
 
+void DrawEngine::swapDrawingMode()
+{
+    wireframe_on = !wireframe_on; // Lazy mode change it :)
+
+    if (wireframe_on)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Wireframe(any shading still occurs such as lighting and texturing) makes for fun results :)
+    }
+    else
+    {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Standard
+    }
+}
+
 //private
 void DrawEngine::draw(std::string model_name, const Camera &camera, const glm::vec3 *position, const glm::vec3 *rotate, const glm::vec3 *scale)
 {
@@ -776,7 +791,6 @@ void DrawEngine::setupOpenGLContext()
     //glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 
     // TODO: Make old schoo color filling fragment shader that takes in default color so lines are easier to see. Also will disable lighting so that'll help
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Wireframe(any shading still occurs such as lighting and texturing) makes for fun results :)
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // Standard
 }
 

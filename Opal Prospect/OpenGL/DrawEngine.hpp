@@ -91,8 +91,10 @@ public:
     void setScreenWidth(int width);
     void setScreenHeight(int height);
     void setScreenWidthHeight(int width, int height);
+    void swapDrawingMode();
 
 private:
+    bool wireframe_on;
     const static float Z_NEAR;
     const static float Z_FAR;
     BufferController buffers;

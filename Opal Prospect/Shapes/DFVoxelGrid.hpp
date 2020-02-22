@@ -31,7 +31,8 @@ SOFTWARE.
 */
 
 /*
-Description: Class to store dwarf fortress style voxel grid
+Description: Class to store dwarf fortress style voxel grid. Stored in quadrant 1, pos X, Y, and Zs. Starts at the bottom left for index zero and moves to the right. Once a single x and z layer is done
+it moves up one y level and repeats. Final index is the top back right
 */
 
 

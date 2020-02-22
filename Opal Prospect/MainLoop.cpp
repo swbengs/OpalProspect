@@ -177,8 +177,8 @@ void MainLoop::startLoop(std::string terrain_filename)
 
 void MainLoop::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    float rot_rate = glm::radians(5.0f);
-    float move_rate = 1.0f;
+    float rot_rate = glm::radians(5.0f); // amount of degrees to turn per frame rotating
+    float move_rate = 1.0f; // Distance to move per frame moved
 
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
@@ -237,6 +237,11 @@ void MainLoop::keyCallback(GLFWwindow* window, int key, int scancode, int action
     {
         camera.outputCameraMatrix();
         camera.outputVectors();
+    }
+
+    if (key == GLFW_KEY_M && (action == GLFW_PRESS))
+    {
+        draw_engine.swapDrawingMode();
     }
 }
 
