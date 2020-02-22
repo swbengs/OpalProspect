@@ -152,19 +152,60 @@ void NaturalTerrainModelBuilder::addBoxMergeFace(natural_merge_tile_draw_info in
     {
         position = terrain.getFloorPosition(info.tile_index);
 
-        // Offset position even more
-        position.x += DF_FLOOR_WIDTH * 0.5f * (info.width - 1);
-        position.x += DF_FLOOR_HEIGHT * 0.5f * (info.height - 1);
-        position.z += DF_FLOOR_LENGTH * 0.5f * (info.length - 1);
+        // Offset position even more. Also account for negative width height or lengths so it properly gets placed
+        if (info.width < 0)
+        {
+            position.x += DF_FLOOR_WIDTH * 0.5f * (info.width + 1);
+        }
+        else
+        {
+            position.x += DF_FLOOR_WIDTH * 0.5f * (info.width - 1);
+        }
+        if (info.height < 0)
+        {
+            position.y += DF_FLOOR_HEIGHT * 0.5f * (info.height + 1);
+        }
+        else
+        {
+            position.y += DF_FLOOR_HEIGHT * 0.5f * (info.height - 1);
+        }
+        if (info.length < 0)
+        {
+            position.z += DF_FLOOR_LENGTH * 0.5f * (info.length + 1);
+        }
+        else
+        {
+            position.z += DF_FLOOR_LENGTH * 0.5f * (info.length - 1);
+        }
     }
     else //block
     {
         position = terrain.getBlockPosition(info.tile_index);
 
-        // Offset position even more
-        position.x += DF_BLOCK_WIDTH * 0.5f * (info.width - 1);
-        position.x += DF_BLOCK_HEIGHT * 0.5f * (info.height - 1);
-        position.z += DF_BLOCK_LENGTH * 0.5f * (info.length - 1);
+        if (info.width < 0)
+        {
+            position.x += DF_BLOCK_WIDTH * 0.5f * (info.width + 1);
+        }
+        else
+        {
+            position.x += DF_BLOCK_WIDTH * 0.5f * (info.width - 1);
+        }
+        if (info.height < 0)
+        {
+            position.y += DF_BLOCK_HEIGHT * 0.5f * (info.height + 1);
+        }
+        else
+        {
+            position.y += DF_BLOCK_HEIGHT * 0.5f * (info.height - 1);
+        }
+        if (info.length < 0)
+        {
+            position.z += DF_BLOCK_LENGTH * 0.5f * (info.length + 1);
+        }
+        else
+        {
+            position.z += DF_BLOCK_LENGTH * 0.5f * (info.length - 1);
+        }
     }
 
     switch (info.side)
@@ -331,12 +372,15 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
 {
     // Do one side per loop
     Point3DUInt dimensions = terrain.getGridDimensions();
-    unsigned int next_index;
-    unsigned int current_index;
-    unsigned int start_index; // Last visible index to be merged with
-    unsigned int merged_count; // Counter for number of tiles merged
+    unsigned int starting_index;
     std::vector<unsigned int> indexes;
+    unsigned int merged_count; // Counter for number of tiles merged
 
+    //unsigned int next_index;
+    unsigned int current_index;
+    //unsigned int start_index; // Last visible index to be merged with
+
+    /*
     // Outer layer only for now
     // For each layer start at relative bottom left and move right until the end, then move up a row and repeat
     for (unsigned int y = 0; y < dimensions.y; y++)
@@ -425,11 +469,32 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
             merged_tiles.push_back(info);
         }
     }
+    */
 
     // Loop to fill in all indexes to a vector
+    // Front
+    indexes.resize(dimensions.x * dimensions.y); // Can reuse the vector for each pair of faces aka front and back, left and right, top and bottom, because they are the exact same size
+    starting_index = 0;
+
+    for (unsigned int y = 0; y < dimensions.y; y++)
+    {
+        current_index = starting_index;
+        for (unsigned int x = 0; x < dimensions.x; x++)
+        {
+            // Write current index to proper indexes spot
+            indexes[x + y * dimensions.x] = current_index;
+
+            // Get next index
+            current_index = terrain.getIndexRight(current_index);
+        }
+
+        // Get next starting index vertically
+        starting_index = terrain.getIndexUp(starting_index);
+    }
+    mergeLoopSimple(indexes, DF_FRONT_SIDE, dimensions.x, dimensions.y);
+
     // Back
-    indexes.resize(dimensions.x * dimensions.y);
-    unsigned int starting_index = dimensions.x * dimensions.z - 1;
+    starting_index = dimensions.x * dimensions.z - 1;
 
     for (unsigned int y = 0; y < dimensions.y; y++)
     {
