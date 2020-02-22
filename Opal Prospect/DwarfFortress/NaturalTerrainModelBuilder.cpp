@@ -152,42 +152,49 @@ void NaturalTerrainModelBuilder::addBoxMergeFace(natural_merge_tile_draw_info in
         position = terrain.getFloorPosition(info.tile_index);
 
         // Offset position even more
-        position.x += DF_FLOOR_WIDTH * 0.5f * info.width;
-        position.x += DF_FLOOR_HEIGHT * 0.5f * info.height;
-        position.z += DF_FLOOR_LENGTH * 0.5f * info.length;
+        position.x += DF_FLOOR_WIDTH * 0.5f * (info.width - 1);
+        position.x += DF_FLOOR_HEIGHT * 0.5f * (info.height - 1);
+        position.z += DF_FLOOR_LENGTH * 0.5f * (info.length - 1);
     }
     else //block
     {
         position = terrain.getBlockPosition(info.tile_index);
 
         // Offset position even more
-        position.x += DF_BLOCK_WIDTH * 0.5f * info.width;
-        position.x += DF_BLOCK_HEIGHT * 0.5f * info.height;
-        position.z += DF_BLOCK_LENGTH * 0.5f * info.length;
+        position.x += DF_BLOCK_WIDTH * 0.5f * (info.width - 1);
+        position.x += DF_BLOCK_HEIGHT * 0.5f * (info.height - 1);
+        position.z += DF_BLOCK_LENGTH * 0.5f * (info.length - 1);
     }
 
     switch (info.side)
     {
     case DF_FRONT_SIDE:
         face = box_model.getFace(0);
+        face.scaleUV(info.width, info.height);
         break;
     case DF_BACK_SIDE:
         face = box_model.getFace(1);
+        face.scaleUV(info.width, info.height);
         break;
     case DF_LEFT_SIDE:
         face = box_model.getFace(2);
+        face.scaleUV(info.length, info.height);
         break;
     case DF_RIGHT_SIDE:
         face = box_model.getFace(3);
+        face.scaleUV(info.length, info.height);
         break;
     case DF_TOP_SIDE:
         face = box_model.getFace(4);
+        face.scaleUV(info.width, info.length);
         break;
     case DF_BOTTOM_SIDE:
         face = box_model.getFace(5);
+        face.scaleUV(info.width, info.length);
         break;
     }
 
+    face.scaleVertex(info.width, info.height, info.length);
     addBoxFace(face, position, terrain_model);
 }
 
@@ -299,6 +306,7 @@ void NaturalTerrainModelBuilder::buildModelMergeSimple(const ModelController& mo
         }
 
         const ModelIndex& model = model_controller.getModel(model_controller.getModelReference(name));
+        addBoxMergeFace(merged_tiles[i], model, terrain_model);
     }
 }
 
@@ -327,9 +335,6 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
     unsigned int start_index; // Last visible index to be merged with
     unsigned int merged_count; // Counter for number of tiles merged
 
-    // Front
-
-    // Back
     // Outer layer only for now
     // For each layer start at relative bottom left and move right until the end, then move up a row and repeat
     for (unsigned int y = 0; y < dimensions.y; y++)
@@ -363,10 +368,10 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
                     {
                         natural_merge_tile_draw_info info;
                         info.width = merged_count;
-                        info.height = 0;
-                        info.length = 0;
+                        info.height = 1;
+                        info.length = 1;
                         info.shape = start_tile.getDrawType();
-                        info.side = DF_BACK_SIDE;
+                        info.side = DF_FRONT_SIDE;
                         info.tile_index = start_index;
 
                         merged_tiles.push_back(info);
@@ -384,10 +389,10 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
                     NaturalTile start_tile = terrain.getTile(start_index);
                     natural_merge_tile_draw_info info;
                     info.width = merged_count;
-                    info.height = 0;
-                    info.length = 0;
+                    info.height = 1;
+                    info.length = 1;
                     info.shape = start_tile.getDrawType();
-                    info.side = DF_BACK_SIDE;
+                    info.side = DF_FRONT_SIDE;
                     info.tile_index = start_index;
 
                     merged_tiles.push_back(info);
@@ -402,12 +407,22 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
             next_index = terrain.getIndexRight(current_index);
             current_index++;
         }
+
+        // Add last sequence to be drawn at end of loop unless there were no visible tiles
+        if (merged_count > 0)
+        {
+            NaturalTile start_tile = terrain.getTile(start_index);
+            natural_merge_tile_draw_info info;
+            info.width = merged_count;
+            info.height = 1;
+            info.length = 1;
+            info.shape = start_tile.getDrawType();
+            info.side = DF_FRONT_SIDE;
+            info.tile_index = start_index;
+
+            merged_tiles.push_back(info);
+        }
     }
-
-
-    // Left
-
-    // Right
 }
 
 void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bool is_floor)

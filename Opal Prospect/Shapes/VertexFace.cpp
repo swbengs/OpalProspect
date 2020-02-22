@@ -35,6 +35,14 @@ VertexFace::VertexFace(Point3D bottom_left, Point3D bottom_right, Point3D top_le
     setVertex(bottom_left, bottom_right, top_left, top_right);
 }
 
+void VertexFace::scaleVertex(unsigned int x_scale, unsigned int y_scale, unsigned int z_scale)
+{
+    bottom_left_vertex.scale(x_scale, y_scale, z_scale);
+    bottom_right_vertex.scale(x_scale, y_scale, z_scale);
+    top_left_vertex.scale(x_scale, y_scale, z_scale);
+    top_right_vertex.scale(x_scale, y_scale, z_scale);
+}
+
 //gets
 Point3D VertexFace::getBottomLeftVertex() const
 {

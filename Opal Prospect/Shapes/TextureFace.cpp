@@ -29,6 +29,14 @@ TextureFace::TextureFace()
 
 }
 
+void TextureFace::scaleUV(unsigned int u_scale, unsigned int v_scale)
+{
+    bottom_left_uv.scale(u_scale, v_scale, 1);
+    bottom_right_uv.scale(u_scale, v_scale, 1);
+    top_left_uv.scale(u_scale, v_scale, 1);
+    top_right_uv.scale(u_scale, v_scale, 1);
+}
+
 //gets
 Point3D TextureFace::getBottomLeftUV() const
 {

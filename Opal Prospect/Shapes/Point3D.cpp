@@ -45,6 +45,11 @@ void Point3D::fillArray3D(size_t start, std::vector<float>& vector) const
     vector[start + 2] = z;
 }
 
+void Point3D::scale(unsigned int x_scale, unsigned int y_scale, unsigned int z_scale)
+{
+    setXYZ(x * x_scale, y * y_scale, z * z_scale);
+}
+
 //sets
 void Point3D::setXYZ(float X, float Y, float Z)
 {

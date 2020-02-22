@@ -40,6 +40,7 @@ public:
 
     void fillArray3D(std::vector<float>& vector) const;
     void fillArray3D(size_t start, std::vector<float>& vector) const;
+    void scale(unsigned int x_scale, unsigned int y_scale, unsigned int z_scale);
 
     //sets
     void setXYZ(float X, float Y, float Z);

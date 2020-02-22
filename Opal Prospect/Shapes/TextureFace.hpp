@@ -36,6 +36,7 @@ class TextureFace : public VertexFace
 {
 public:
     TextureFace();
+    void scaleUV(unsigned int u_scale, unsigned int v_scale);
 
     //gets
     Point3D getBottomLeftUV() const;

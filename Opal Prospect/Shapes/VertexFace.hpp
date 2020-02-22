@@ -38,6 +38,8 @@ public:
     VertexFace();
     VertexFace(Point3D bottom_left, Point3D bottom_right, Point3D top_left, Point3D top_right);
 
+    void scaleVertex(unsigned int x_scale, unsigned int y_scale, unsigned int z_scale);
+
     //gets
     Point3D getBottomLeftVertex() const;
     Point3D getBottomRightVertex() const;
