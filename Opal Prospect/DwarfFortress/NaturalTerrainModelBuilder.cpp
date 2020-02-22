@@ -427,7 +427,7 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
 
     // Left
     indexes.resize(dimensions.z * dimensions.y);
-    for (unsigned int z = 0; z < dimensions.z; z++)
+    for (unsigned int z = 0; z < dimensions.x; z++)
     {
         starting_index = (dimensions.z - 1) * dimensions.x + z; // Go right to push in
 
@@ -450,7 +450,7 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
     }
 
     // Right
-    for (unsigned int z = 0; z < dimensions.z; z++)
+    for (unsigned int z = 0; z < dimensions.x; z++)
     {
         starting_index = dimensions.x - 1 - z; // In by going left so minus z
 
@@ -475,7 +475,7 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
     // Top
     indexes.resize(dimensions.x * dimensions.z);
 
-    for (unsigned int z = 0; z < dimensions.z; z++)
+    for (unsigned int z = 0; z < dimensions.y; z++)
     {
         starting_index = dimensions.x * dimensions.z * (dimensions.y - 1) - (z * dimensions.z * dimensions.x);
 
@@ -498,9 +498,9 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
     }
 
     // Bottom
-    for (unsigned int z = 0; z < dimensions.z; z++)
+    for (unsigned int z = 0; z < dimensions.y; z++)
     {
-        starting_index =( dimensions.x - 1) + (z * dimensions.z * dimensions.x);
+        starting_index = (dimensions.x - 1) + (z * dimensions.z * dimensions.x);
 
         for (unsigned int y = 0; y < dimensions.z; y++)
         {
