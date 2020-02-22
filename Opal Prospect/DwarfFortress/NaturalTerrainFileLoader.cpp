@@ -36,6 +36,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+NaturalTerrainFileLoader::NaturalTerrainFileLoader()
+{
+    world_width = 0;
+    world_height = 0;
+    world_length = 0;
+}
+
 bool NaturalTerrainFileLoader::loadWorld(std::string filename, NaturalTerrain& terrain)
 {
     if (readFile(filename, terrain))

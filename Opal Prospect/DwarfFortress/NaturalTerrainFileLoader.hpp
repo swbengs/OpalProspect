@@ -38,6 +38,7 @@ Description: Class to load in a file that contains the world size, a table of na
 class NaturalTerrainFileLoader
 {
 public:
+    NaturalTerrainFileLoader();
     bool loadWorld(std::string filename, NaturalTerrain& terrain);
 
 private:

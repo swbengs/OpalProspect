@@ -66,9 +66,9 @@ private:
         DF_Draw_Tile_Type shape;
         DF_Sides side;
 
-        float width; // X total for merged faces(1 to N)
-        float height; // Y total for merged faces(1 to N)
-        float length; // Z total for merged faces(1 to N)
+        int width; // X total for merged faces(1 to N)
+        int height; // Y total for merged faces(1 to N)
+        int length; // Z total for merged faces(1 to N)
     };
 
     std::vector<natural_tile_draw_info> tiles; //only blocks that have at least one side to be drawn are added here
@@ -94,5 +94,8 @@ private:
     void checkNeighbors(natural_tile_draw_info& tile, bool is_floor); //takes index of current block and will handle cases for all neighbors. Modifies given tile info pod
     void checkHorizontalTile(bool& side, unsigned int start_index, unsigned int check_index, DF_Draw_Tile_Type current_shape); //check given tile side in vs the index passed in. Sets the boolean. Only checks x and z axis
     void checkVerticalTile(bool& side, unsigned int start_index, unsigned int check_index, bool is_floor, bool checking_up); //same as above but checks y axis
+
+    // Simple merge loop. Indexes is a vector of the literal index for that tile filled in ahead of time. Side is the side to check, x and y size are the proper sizes. Does not have to be literal x and y, depends on the side. bools control if the final width or length should be negative
+    void mergeLoopSimple(const std::vector<unsigned int>& indexes, DF_Sides side, unsigned int x_size, unsigned int y_size);
 };
 

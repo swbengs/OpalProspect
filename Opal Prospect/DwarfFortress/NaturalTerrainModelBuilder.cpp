@@ -3,6 +3,7 @@
 
 //std lib includes
 #include <iostream>
+#include <math.h>
 
 //other includes
 #include "NaturalTerrainFileLoader.hpp"
@@ -74,9 +75,9 @@ Point3DUInt NaturalTerrainModelBuilder::getWorldDimensions() const
 }
 
 //private
-void NaturalTerrainModelBuilder::addTile(natural_tile_draw_info block)
+void NaturalTerrainModelBuilder::addTile(natural_tile_draw_info tile)
 {
-    tiles.push_back(block);
+    tiles.push_back(tile);
 }
 
 void NaturalTerrainModelBuilder::create(Point3DUInt dimensions)
@@ -170,31 +171,31 @@ void NaturalTerrainModelBuilder::addBoxMergeFace(natural_merge_tile_draw_info in
     {
     case DF_FRONT_SIDE:
         face = box_model.getFace(0);
-        face.scaleUV(info.width, info.height);
+        face.scaleUV(abs(info.width), abs(info.height));
         break;
     case DF_BACK_SIDE:
         face = box_model.getFace(1);
-        face.scaleUV(info.width, info.height);
+        face.scaleUV(abs(info.width), abs(info.height));
         break;
     case DF_LEFT_SIDE:
         face = box_model.getFace(2);
-        face.scaleUV(info.length, info.height);
+        face.scaleUV(abs(info.length), abs(info.height));
         break;
     case DF_RIGHT_SIDE:
         face = box_model.getFace(3);
-        face.scaleUV(info.length, info.height);
+        face.scaleUV(abs(info.length), abs(info.height));
         break;
     case DF_TOP_SIDE:
         face = box_model.getFace(4);
-        face.scaleUV(info.width, info.length);
+        face.scaleUV(abs(info.width), abs(info.length));
         break;
     case DF_BOTTOM_SIDE:
         face = box_model.getFace(5);
-        face.scaleUV(info.width, info.length);
+        face.scaleUV(abs(info.width), abs(info.length));
         break;
     }
 
-    face.scaleVertex(info.width, info.height, info.length);
+    face.scaleVertex(abs(info.width), abs(info.height), abs(info.length));
     addBoxFace(face, position, terrain_model);
 }
 
@@ -334,6 +335,7 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
     unsigned int current_index;
     unsigned int start_index; // Last visible index to be merged with
     unsigned int merged_count; // Counter for number of tiles merged
+    std::vector<unsigned int> indexes;
 
     // Outer layer only for now
     // For each layer start at relative bottom left and move right until the end, then move up a row and repeat
@@ -423,6 +425,28 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
             merged_tiles.push_back(info);
         }
     }
+
+    // Loop to fill in all indexes to a vector
+    // Back
+    indexes.resize(dimensions.x * dimensions.y);
+    unsigned int starting_index = dimensions.x * dimensions.z - 1;
+
+    for (unsigned int y = 0; y < dimensions.y; y++)
+    {
+        current_index = starting_index;
+        for (unsigned int x = 0; x < dimensions.x; x++)
+        {
+            // Write current index to proper indexes spot
+            indexes[x + y * dimensions.x] = current_index;
+
+            // Get next index
+            current_index = terrain.getIndexLeft(current_index);
+        }
+
+        // Get next starting index vertically
+        starting_index = terrain.getIndexUp(starting_index);
+    }
+    mergeLoopSimple(indexes, DF_BACK_SIDE, dimensions.x, dimensions.y);
 }
 
 void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bool is_floor)
@@ -520,6 +544,140 @@ void NaturalTerrainModelBuilder::checkVerticalTile(bool& side, unsigned int star
         else
         {
             side = true;
+        }
+    }
+}
+
+void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>& indexes, DF_Sides side, unsigned int x_size, unsigned int y_size)
+{
+    assert(indexes.size() == x_size * y_size);
+
+    unsigned int saved_index; // Last visible index to be merged with. Index from the terrain index, not the passed in indexes
+    int merged_count; // Counter for number of tiles merged
+    bool start_next_sequence = false;
+
+    for (unsigned int y = 0; y < y_size; y++)
+    {
+        saved_index = 0;
+        merged_count = 0;
+        unsigned int index_offset = y * x_size;
+
+        for (unsigned int x = 0; x < x_size; x++)
+        {
+            bool visible;
+            if (x == x_size - 1) // Last loop so can't access x + 1 or it could go off the vector's valid index
+            {
+                if (merged_count > 0) // If previous sequence make sure it's saved before leaving this inner loop
+                {
+                    start_next_sequence = true;
+                }
+            }
+            switch (side)
+            {
+            case DF_LEFT_SIDE:
+                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexLeft(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                break;
+            case DF_RIGHT_SIDE:
+                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexRight(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                break;
+            case DF_TOP_SIDE:
+                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexUp(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                break;
+            case DF_BOTTOM_SIDE:
+                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexDown(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                break;
+            case DF_FRONT_SIDE:
+                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexBack(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                break;
+            case DF_BACK_SIDE:
+                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexFront(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                break;
+            }
+
+            if (visible) // Compare to previous visible
+            {
+                NaturalTile current_tile = terrain.getTile(indexes[x + index_offset]);
+
+                if (merged_count == 0) // First visible on this row
+                {
+                    saved_index = indexes[x + index_offset];
+                    merged_count = 1;
+                }
+                else // Compare to start index. If material or shape are different save the old one
+                {
+                    NaturalTile start_tile = terrain.getTile(saved_index);
+
+                    if (current_tile.getDrawType() == start_tile.getDrawType() && current_tile.getTileMaterial() == start_tile.getTileMaterial()) // Are equal
+                    {
+                        merged_count++; // Just increment merge count
+                    }
+                    else // Not so add old sequence and start new one
+                    {
+                        start_next_sequence = true;
+                    }
+                }
+            }
+            else // Not visible so if prior start index has a value end the sequence for it
+            {
+                if (merged_count > 0)
+                {
+                    start_next_sequence = true;
+                }
+            }
+
+            if (start_next_sequence)
+            {
+                NaturalTile start_tile = terrain.getTile(saved_index);
+                if (start_tile.getDrawType() != DF_DRAW_AIR) // Skip if it was air type
+                {
+                    natural_merge_tile_draw_info info;
+
+                    info.shape = start_tile.getDrawType();
+                    info.side = side;
+                    info.tile_index = saved_index;
+
+                    switch (side)
+                    {
+                    case DF_BOTTOM_SIDE:
+                        info.width = merged_count;
+                        info.height = 1;
+                        info.length = 1;
+                        break;
+                    case DF_TOP_SIDE:
+                        info.width = -merged_count;
+                        info.height = 1;
+                        info.length = 1;
+                        break;
+                    case DF_LEFT_SIDE:
+                        info.width = 1;
+                        info.height = 1;
+                        info.length = -merged_count;
+                        break;
+                    case DF_RIGHT_SIDE:
+                        info.width = 1;
+                        info.height = 1;
+                        info.length = merged_count;
+                        break;
+                    case DF_FRONT_SIDE:
+                        info.width = merged_count;
+                        info.height = 1;
+                        info.length = 1;
+                        break;
+                    case DF_BACK_SIDE:
+                        info.width = -merged_count;
+                        info.height = 1;
+                        info.length = 1;
+                        break;
+                    }
+
+                    merged_tiles.push_back(info);
+
+                    // New
+                    saved_index = indexes[x + index_offset];
+                    merged_count = 1;
+                    start_next_sequence = false;
+                }
+            }
         }
     }
 }
