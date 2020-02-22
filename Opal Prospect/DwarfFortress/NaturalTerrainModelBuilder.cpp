@@ -380,24 +380,26 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
     // Loop to fill in all indexes to a vector
     // Front
     indexes.resize(dimensions.x * dimensions.y); // Can reuse the vector for each pair of faces aka front and back, left and right, top and bottom, because they are the exact same size
-    starting_index = 0;
-
-    for (unsigned int y = 0; y < dimensions.y; y++)
+    for (unsigned int z = 0; z < dimensions.z; z++)
     {
-        current_index = starting_index;
-        for (unsigned int x = 0; x < dimensions.x; x++)
+        starting_index = z * dimensions.x;
+        for (unsigned int y = 0; y < dimensions.y; y++)
         {
-            // Write current index to proper indexes spot
-            indexes[x + y * dimensions.x] = current_index;
+            current_index = starting_index;
+            for (unsigned int x = 0; x < dimensions.x; x++)
+            {
+                // Write current index to proper indexes spot
+                indexes[x + y * dimensions.x] = current_index;
 
-            // Get next index
-            current_index = terrain.getIndexRight(current_index);
+                // Get next index
+                current_index = terrain.getIndexRight(current_index);
+            }
+
+            // Get next starting index vertically
+            starting_index = terrain.getIndexUp(starting_index);
         }
-
-        // Get next starting index vertically
-        starting_index = terrain.getIndexUp(starting_index);
+        mergeLoopSimple(indexes, DF_FRONT_SIDE, dimensions.x, dimensions.y);
     }
-    mergeLoopSimple(indexes, DF_FRONT_SIDE, dimensions.x, dimensions.y);
 
     // Back
     starting_index = dimensions.x * dimensions.z - 1;
@@ -617,7 +619,7 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
 
         for (unsigned int x = 0; x < x_size; x++)
         {
-            bool visible;
+            bool visible = false;
 
             switch (side)
             {
@@ -719,10 +721,13 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
 
                     merged_tiles.push_back(info);
 
-                    // New
-                    saved_index = indexes[x + index_offset];
-                    merged_count = 1;
-                    start_next_sequence = false;
+                    if (visible)
+                    {
+                        // New
+                        saved_index = indexes[x + index_offset];
+                        merged_count = 1;
+                        start_next_sequence = false;
+                    }
                 }
             }
         }
