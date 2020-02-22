@@ -379,6 +379,7 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
     unsigned int current_index;
     
     // Loop to fill in all indexes to a vector
+    ///*
     // Front
     indexes.resize(dimensions.x * dimensions.y); // Can reuse the vector for each pair of faces aka front and back, left and right, top and bottom, because they are the exact same size
     for (unsigned int z = 0; z < dimensions.z; z++)
@@ -404,7 +405,6 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
 
     BasicLog::getInstance().writeLog("front done\n");
 
-    ///*
     // Back
     for (unsigned int z = 0; z < dimensions.z; z++)
     {
@@ -429,6 +429,7 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
     }
 
     BasicLog::getInstance().writeLog("back done\n");
+    //*/
 
     // Left
     indexes.resize(dimensions.z * dimensions.y);
@@ -456,6 +457,7 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
 
     BasicLog::getInstance().writeLog("left done\n");
 
+    ///*
     // Right
     for (unsigned int z = 0; z < dimensions.x; z++)
     {
@@ -652,36 +654,37 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
         {
             bool visible = false;
             start_next_sequence = false;
+            unsigned int raw_index = indexes[x + index_offset];
 
             switch (side)
             {
             case DF_LEFT_SIDE:
-                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexLeft(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                checkHorizontalTile(visible, raw_index, terrain.getIndexLeft(raw_index), terrain.getTile(raw_index).getDrawType());
                 break;
             case DF_RIGHT_SIDE:
-                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexRight(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                checkHorizontalTile(visible, raw_index, terrain.getIndexRight(raw_index), terrain.getTile(raw_index).getDrawType());
                 break;
             case DF_TOP_SIDE:
-                checkVerticalTile(visible, indexes[x + index_offset], terrain.getIndexUp(indexes[x + index_offset]), (terrain.getTile(indexes[x + index_offset]).getDrawType() == DF_DRAW_FLOOR), true);
+                checkVerticalTile(visible, raw_index, terrain.getIndexUp(raw_index), (terrain.getTile(raw_index).getDrawType() == DF_DRAW_FLOOR), true);
                 break;
             case DF_BOTTOM_SIDE:
-                checkVerticalTile(visible, indexes[x + index_offset], terrain.getIndexDown(indexes[x + index_offset]), (terrain.getTile(indexes[x + index_offset]).getDrawType() == DF_DRAW_FLOOR), false);
+                checkVerticalTile(visible, raw_index, terrain.getIndexDown(raw_index), (terrain.getTile(raw_index).getDrawType() == DF_DRAW_FLOOR), false);
                 break;
             case DF_FRONT_SIDE:
-                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexBack(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                checkHorizontalTile(visible, raw_index, terrain.getIndexBack(raw_index), terrain.getTile(raw_index).getDrawType());
                 break;
             case DF_BACK_SIDE:
-                checkHorizontalTile(visible, indexes[x + index_offset], terrain.getIndexFront(indexes[x + index_offset]), terrain.getTile(indexes[x + index_offset]).getDrawType());
+                checkHorizontalTile(visible, raw_index, terrain.getIndexFront(raw_index), terrain.getTile(raw_index).getDrawType());
                 break;
             }
 
             if (visible) // Compare to previous visible
             {
-                NaturalTile current_tile = terrain.getTile(indexes[x + index_offset]);
+                NaturalTile current_tile = terrain.getTile(raw_index);
 
                 if (merged_count == 0 && current_tile.getDrawType() != DF_DRAW_AIR) // First visible on this row
                 {
-                    saved_index = indexes[x + index_offset];
+                    saved_index = raw_index;
                     merged_count = 1;
                 }
                 else // Compare to start index. If material or shape are different save the old one
@@ -756,10 +759,10 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
 
                     merged_tiles.push_back(info);
 
-                    if (visible)
+                    if (visible && terrain.getTile(raw_index).getDrawType() != DF_DRAW_AIR)
                     {
                         // New
-                        saved_index = indexes[x + index_offset];
+                        saved_index = raw_index;
                         merged_count = 1;
                     }
                     else
