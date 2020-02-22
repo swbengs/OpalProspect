@@ -8,6 +8,7 @@
 //other includes
 #include "NaturalTerrainFileLoader.hpp"
 #include "df_constants.hpp"
+#include "..\BasicLog.hpp"
 
 /*
 MIT License
@@ -401,6 +402,9 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
         mergeLoopSimple(indexes, DF_FRONT_SIDE, dimensions.x, dimensions.y);
     }
 
+    BasicLog::getInstance().writeLog("front done\n");
+
+    ///*
     // Back
     for (unsigned int z = 0; z < dimensions.z; z++)
     {
@@ -423,7 +427,8 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
         }
         mergeLoopSimple(indexes, DF_BACK_SIDE, dimensions.x, dimensions.y);
     }
-    
+
+    BasicLog::getInstance().writeLog("back done\n");
 
     // Left
     indexes.resize(dimensions.z * dimensions.y);
@@ -449,6 +454,8 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
         mergeLoopSimple(indexes, DF_LEFT_SIDE, dimensions.z, dimensions.y);
     }
 
+    BasicLog::getInstance().writeLog("left done\n");
+
     // Right
     for (unsigned int z = 0; z < dimensions.x; z++)
     {
@@ -471,6 +478,8 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
         }
         mergeLoopSimple(indexes, DF_RIGHT_SIDE, dimensions.z, dimensions.y);
     }
+
+    BasicLog::getInstance().writeLog("right done\n");
 
     // Top
     indexes.resize(dimensions.x * dimensions.z);
@@ -497,6 +506,8 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
         mergeLoopSimple(indexes, DF_TOP_SIDE, dimensions.x, dimensions.z);
     }
 
+    BasicLog::getInstance().writeLog("top done\n");
+
     // Bottom
     for (unsigned int z = 0; z < dimensions.y; z++)
     {
@@ -519,6 +530,9 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
         }
         mergeLoopSimple(indexes, DF_BOTTOM_SIDE, dimensions.x, dimensions.z);
     }
+
+    BasicLog::getInstance().writeLog("bottom done\n");
+    //*/
 }
 
 void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bool is_floor)
@@ -665,7 +679,7 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
             {
                 NaturalTile current_tile = terrain.getTile(indexes[x + index_offset]);
 
-                if (merged_count == 0) // First visible on this row
+                if (merged_count == 0 && current_tile.getDrawType() != DF_DRAW_AIR) // First visible on this row
                 {
                     saved_index = indexes[x + index_offset];
                     merged_count = 1;
@@ -680,7 +694,10 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
                     }
                     else // Not so add old sequence and start new one
                     {
-                        start_next_sequence = true;
+                        if (merged_count > 0)
+                        {
+                            start_next_sequence = true;
+                        }
                     }
                 }
             }
