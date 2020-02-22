@@ -62,16 +62,9 @@ private:
     // Struct to store needed info on what to draw for a merged face collection
     struct natural_merge_tile_draw_info
     {
-        // Sides that should be drawn
-        bool left;
-        bool right;
-        bool bottom;
-        bool top;
-        bool front;
-        bool back;
-
         unsigned int tile_index; // Natural tile to grab from for origin coordinates and material info
         DF_Draw_Tile_Type shape;
+        DF_Sides side;
 
         float width; // X total for merged faces(1 to N)
         float height; // Y total for merged faces(1 to N)
@@ -84,7 +77,7 @@ private:
 
     void addTile(natural_tile_draw_info tile);
     void create(Point3DUInt dimensions);
-    
+
     bool isSolid(DF_Draw_Tile_Type type) const; //check if the type is solid
     bool shouldDraw(const natural_tile_draw_info& info) const; //final check to see if we should add this tile to be drawn
 
@@ -92,8 +85,10 @@ private:
 
     //methods to build the model
     void addBoxFace(NormalFace face, const Point3D& offset, ModelIndex& terrain_model) const; //add offset to all vertex and then add the model
+    void addBoxMergeFace(natural_merge_tile_draw_info info, const ModelIndex& box_model, ModelIndex& terrain_model);
     void addBoxFaces(unsigned int current_index, unsigned int tile_position_index, const ModelIndex& box_model, ModelIndex& terrain_model, bool is_floor) const; //checks if proper bool is set and adds the face with the proper offset
     void buildModelNaive(const ModelController& model_controller, ModelIndex& terrain_model); //takes the natural tile draw info and uses that to access the models data directly along with the coordinates to place and rotate the face(s) correctly. And those faces are added to the model
+    void buildModelMergeSimple(const ModelController& model_controller, ModelIndex& terrain_model); // Build merged model the simple way
     void checkingLoopNaive(); //method that contains the main loop to check all terrain for what should be drawn
     void checkingLoopMergeSimple(); // Loop to check only X and Z axis for merging
     void checkNeighbors(natural_tile_draw_info& tile, bool is_floor); //takes index of current block and will handle cases for all neighbors. Modifies given tile info pod
