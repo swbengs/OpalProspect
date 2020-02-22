@@ -402,106 +402,123 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
     }
 
     // Back
-    starting_index = dimensions.x * dimensions.z - 1;
-
-    for (unsigned int y = 0; y < dimensions.y; y++)
+    for (unsigned int z = 0; z < dimensions.z; z++)
     {
-        current_index = starting_index;
-        for (unsigned int x = 0; x < dimensions.x; x++)
+        starting_index = (dimensions.x * dimensions.z - 1) - z * dimensions.x;
+
+        for (unsigned int y = 0; y < dimensions.y; y++)
         {
-            // Write current index to proper indexes spot
-            indexes[x + y * dimensions.x] = current_index;
+            current_index = starting_index;
+            for (unsigned int x = 0; x < dimensions.x; x++)
+            {
+                // Write current index to proper indexes spot
+                indexes[x + y * dimensions.x] = current_index;
 
-            // Get next index
-            current_index = terrain.getIndexLeft(current_index);
+                // Get next index
+                current_index = terrain.getIndexLeft(current_index);
+            }
+
+            // Get next starting index vertically
+            starting_index = terrain.getIndexUp(starting_index);
         }
-
-        // Get next starting index vertically
-        starting_index = terrain.getIndexUp(starting_index);
+        mergeLoopSimple(indexes, DF_BACK_SIDE, dimensions.x, dimensions.y);
     }
-    mergeLoopSimple(indexes, DF_BACK_SIDE, dimensions.x, dimensions.y);
+    
 
     // Left
     indexes.resize(dimensions.z * dimensions.y);
-    starting_index = (dimensions.z - 1) * dimensions.x;
-
-    for (unsigned int y = 0; y < dimensions.y; y++)
+    for (unsigned int z = 0; z < dimensions.z; z++)
     {
-        current_index = starting_index;
-        for (unsigned int x = 0; x < dimensions.z; x++)
+        starting_index = (dimensions.z - 1) * dimensions.x + z; // Go right to push in
+
+        for (unsigned int y = 0; y < dimensions.y; y++)
         {
-            // Write current index to proper indexes spot
-            indexes[x + y * dimensions.z] = current_index;
+            current_index = starting_index;
+            for (unsigned int x = 0; x < dimensions.z; x++)
+            {
+                // Write current index to proper indexes spot
+                indexes[x + y * dimensions.z] = current_index;
 
-            // Get next index
-            current_index = terrain.getIndexBack(current_index);
+                // Get next index
+                current_index = terrain.getIndexBack(current_index);
+            }
+
+            // Get next starting index vertically
+            starting_index = terrain.getIndexUp(starting_index);
         }
-
-        // Get next starting index vertically
-        starting_index = terrain.getIndexUp(starting_index);
+        mergeLoopSimple(indexes, DF_LEFT_SIDE, dimensions.z, dimensions.y);
     }
-    mergeLoopSimple(indexes, DF_LEFT_SIDE, dimensions.z, dimensions.y);
 
     // Right
-    starting_index = dimensions.x - 1;
-
-    for (unsigned int y = 0; y < dimensions.y; y++)
+    for (unsigned int z = 0; z < dimensions.z; z++)
     {
-        current_index = starting_index;
-        for (unsigned int x = 0; x < dimensions.z; x++)
+        starting_index = dimensions.x - 1 - z; // In by going left so minus z
+
+        for (unsigned int y = 0; y < dimensions.y; y++)
         {
-            // Write current index to proper indexes spot
-            indexes[x + y * dimensions.z] = current_index;
+            current_index = starting_index;
+            for (unsigned int x = 0; x < dimensions.z; x++)
+            {
+                // Write current index to proper indexes spot
+                indexes[x + y * dimensions.z] = current_index;
 
-            // Get next index
-            current_index = terrain.getIndexFront(current_index);
+                // Get next index
+                current_index = terrain.getIndexFront(current_index);
+            }
+
+            // Get next starting index vertically
+            starting_index = terrain.getIndexUp(starting_index);
         }
-
-        // Get next starting index vertically
-        starting_index = terrain.getIndexUp(starting_index);
+        mergeLoopSimple(indexes, DF_RIGHT_SIDE, dimensions.z, dimensions.y);
     }
-    mergeLoopSimple(indexes, DF_RIGHT_SIDE, dimensions.z, dimensions.y);
 
     // Top
     indexes.resize(dimensions.x * dimensions.z);
-    starting_index = dimensions.x * dimensions.z * (dimensions.y - 1);
 
-    for (unsigned int y = 0; y < dimensions.z; y++)
+    for (unsigned int z = 0; z < dimensions.z; z++)
     {
-        current_index = starting_index;
-        for (unsigned int x = 0; x < dimensions.x; x++)
+        starting_index = dimensions.x * dimensions.z * (dimensions.y - 1) - (z * dimensions.z * dimensions.x);
+
+        for (unsigned int y = 0; y < dimensions.z; y++)
         {
-            // Write current index to proper indexes spot
-            indexes[x + y * dimensions.z] = current_index;
+            current_index = starting_index;
+            for (unsigned int x = 0; x < dimensions.x; x++)
+            {
+                // Write current index to proper indexes spot
+                indexes[x + y * dimensions.z] = current_index;
 
-            // Get next index
-            current_index = terrain.getIndexRight(current_index);
+                // Get next index
+                current_index = terrain.getIndexRight(current_index);
+            }
+
+            // Get next starting index vertically
+            starting_index = terrain.getIndexFront(starting_index);
         }
-
-        // Get next starting index vertically
-        starting_index = terrain.getIndexFront(starting_index);
+        mergeLoopSimple(indexes, DF_TOP_SIDE, dimensions.x, dimensions.z);
     }
-    mergeLoopSimple(indexes, DF_TOP_SIDE, dimensions.x, dimensions.z);
 
     // Bottom
-    starting_index = dimensions.x - 1;
-
-    for (unsigned int y = 0; y < dimensions.z; y++)
+    for (unsigned int z = 0; z < dimensions.z; z++)
     {
-        current_index = starting_index;
-        for (unsigned int x = 0; x < dimensions.x; x++)
+        starting_index =( dimensions.x - 1) + (z * dimensions.z * dimensions.x);
+
+        for (unsigned int y = 0; y < dimensions.z; y++)
         {
-            // Write current index to proper indexes spot
-            indexes[x + y * dimensions.z] = current_index;
+            current_index = starting_index;
+            for (unsigned int x = 0; x < dimensions.x; x++)
+            {
+                // Write current index to proper indexes spot
+                indexes[x + y * dimensions.z] = current_index;
 
-            // Get next index
-            current_index = terrain.getIndexLeft(current_index);
+                // Get next index
+                current_index = terrain.getIndexLeft(current_index);
+            }
+
+            // Get next starting index vertically
+            starting_index = terrain.getIndexFront(starting_index);
         }
-
-        // Get next starting index vertically
-        starting_index = terrain.getIndexFront(starting_index);
+        mergeLoopSimple(indexes, DF_BOTTOM_SIDE, dimensions.x, dimensions.z);
     }
-    mergeLoopSimple(indexes, DF_BOTTOM_SIDE, dimensions.x, dimensions.z);
 }
 
 void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bool is_floor)
@@ -620,6 +637,7 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
         for (unsigned int x = 0; x < x_size; x++)
         {
             bool visible = false;
+            start_next_sequence = false;
 
             switch (side)
             {
@@ -726,7 +744,10 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
                         // New
                         saved_index = indexes[x + index_offset];
                         merged_count = 1;
-                        start_next_sequence = false;
+                    }
+                    else
+                    {
+                        merged_count = 0;
                     }
                 }
             }
