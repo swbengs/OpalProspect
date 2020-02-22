@@ -447,6 +447,47 @@ void NaturalTerrainModelBuilder::checkingLoopMergeSimple()
         starting_index = terrain.getIndexUp(starting_index);
     }
     mergeLoopSimple(indexes, DF_BACK_SIDE, dimensions.x, dimensions.y);
+
+    // Left
+    indexes.resize(dimensions.z * dimensions.y);
+    starting_index = (dimensions.z - 1) * dimensions.x;
+
+    for (unsigned int y = 0; y < dimensions.y; y++)
+    {
+        current_index = starting_index;
+        for (unsigned int x = 0; x < dimensions.z; x++)
+        {
+            // Write current index to proper indexes spot
+            indexes[x + y * dimensions.z] = current_index;
+
+            // Get next index
+            current_index = terrain.getIndexBack(current_index);
+        }
+
+        // Get next starting index vertically
+        starting_index = terrain.getIndexUp(starting_index);
+    }
+    mergeLoopSimple(indexes, DF_LEFT_SIDE, dimensions.z, dimensions.y);
+
+    // Right
+    starting_index = dimensions.x - 1;
+
+    for (unsigned int y = 0; y < dimensions.y; y++)
+    {
+        current_index = starting_index;
+        for (unsigned int x = 0; x < dimensions.z; x++)
+        {
+            // Write current index to proper indexes spot
+            indexes[x + y * dimensions.z] = current_index;
+
+            // Get next index
+            current_index = terrain.getIndexFront(current_index);
+        }
+
+        // Get next starting index vertically
+        starting_index = terrain.getIndexUp(starting_index);
+    }
+    mergeLoopSimple(indexes, DF_RIGHT_SIDE, dimensions.z, dimensions.y);
 }
 
 void NaturalTerrainModelBuilder::checkNeighbors(natural_tile_draw_info& info, bool is_floor)
@@ -565,13 +606,7 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
         for (unsigned int x = 0; x < x_size; x++)
         {
             bool visible;
-            if (x == x_size - 1) // Last loop so can't access x + 1 or it could go off the vector's valid index
-            {
-                if (merged_count > 0) // If previous sequence make sure it's saved before leaving this inner loop
-                {
-                    start_next_sequence = true;
-                }
-            }
+
             switch (side)
             {
             case DF_LEFT_SIDE:
@@ -677,6 +712,55 @@ void NaturalTerrainModelBuilder::mergeLoopSimple(const std::vector<unsigned int>
                     merged_count = 1;
                     start_next_sequence = false;
                 }
+            }
+        }
+
+        if (merged_count > 0)
+        {
+            NaturalTile start_tile = terrain.getTile(saved_index);
+            if (start_tile.getDrawType() != DF_DRAW_AIR) // Skip if it was air type
+            {
+                natural_merge_tile_draw_info info;
+
+                info.shape = start_tile.getDrawType();
+                info.side = side;
+                info.tile_index = saved_index;
+
+                switch (side)
+                {
+                case DF_BOTTOM_SIDE:
+                    info.width = merged_count;
+                    info.height = 1;
+                    info.length = 1;
+                    break;
+                case DF_TOP_SIDE:
+                    info.width = -merged_count;
+                    info.height = 1;
+                    info.length = 1;
+                    break;
+                case DF_LEFT_SIDE:
+                    info.width = 1;
+                    info.height = 1;
+                    info.length = -merged_count;
+                    break;
+                case DF_RIGHT_SIDE:
+                    info.width = 1;
+                    info.height = 1;
+                    info.length = merged_count;
+                    break;
+                case DF_FRONT_SIDE:
+                    info.width = merged_count;
+                    info.height = 1;
+                    info.length = 1;
+                    break;
+                case DF_BACK_SIDE:
+                    info.width = -merged_count;
+                    info.height = 1;
+                    info.length = 1;
+                    break;
+                }
+
+                merged_tiles.push_back(info);
             }
         }
     }
