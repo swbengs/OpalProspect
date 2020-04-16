@@ -639,6 +639,7 @@ void DrawEngine::cleanup()
 {
     texture_program.unUse();
     texture_program.destroy();
+    wireframe_program.destroy();
 
     test_texture.unbind();
     test_texture.destroy();
@@ -718,10 +719,21 @@ void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const g
 {
     OGLHelpers::getOpenGLError("pre draw", true);
 
-    if (texture_program.getID() != state.program_id)
+    if (wireframe_on)
     {
-        texture_program.use();
-        state.program_id = texture_program.getID();
+        if (wireframe_program.getID() != state.program_id)
+        {
+            wireframe_program.use();
+            state.program_id = wireframe_program.getID();
+        }
+    }
+    else
+    {
+        if (texture_program.getID() != state.program_id)
+        {
+            texture_program.use();
+            state.program_id = texture_program.getID();
+        }
     }
 
     if (main_textures.getTextureID(model_info.texture_reference) != state.texture_id)
@@ -762,8 +774,16 @@ void DrawEngine::draw(const model_pod &model_info, const Camera &camera, const g
     }
 
     glm::mat4 mvp = persp * view * model;
-    //glm::mat4 mvp = persp * view * model;
-    glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
+
+    if (wireframe_on)
+    {
+        glUniformMatrix4fv(uniform_wireframe_mvp_id, 1, false, glm::value_ptr(mvp));
+    }
+    else
+    {
+        glUniformMatrix4fv(uniform_mvp_id, 1, false, glm::value_ptr(mvp));
+    }
+
     glDrawElements(GL_TRIANGLES, model_info.index_count, GL_UNSIGNED_INT, (void*)(model_info.index_offset_bytes));
     //uvVAO3D.getObjectIndexSize() * sizeof(unsigned int) * wanted_drawable;
 
@@ -798,16 +818,19 @@ void DrawEngine::setupOpenGLObjects()
 {
     //setup programs individually
     texture_program.setName("texture");
+    wireframe_program.setName("wireframe");
     //texture_program.create("2dtexturebasic.vert", "2dtexturebasic.frag");
     //texture_program.create("Texture2D.vert", "Texture2D.frag");
     //texture_program.create("arrayTexture.vert", "arrayTexture.frag");
     texture_program.create("arrayTextureBasicLight.vert", "arrayTextureBasicLight.frag");
-    texture_program.use();
+    wireframe_program.create("wireframe.vert", "wireframe.frag");
 }
 
 void DrawEngine::setupOpenGLUniforms()
 {
     OGLHelpers::getOpenGLError("pre setup uniforms", true);
+    //Setup texture program first
+    texture_program.use();
     uniform_mvp_id = glGetUniformLocation(texture_program.getID(), "MVP");
     uniform_ambient_color_id = glGetUniformLocation(texture_program.getID(), "ambient_color");
     uniform_sun_light_color_id = glGetUniformLocation(texture_program.getID(), "sun_light_color");
@@ -839,6 +862,13 @@ void DrawEngine::setupOpenGLUniforms()
     const float ambient_b = 0.3f * light_b;
     glUniform3f(uniform_ambient_color_id, ambient_r, ambient_g, ambient_b);
     OGLHelpers::getOpenGLError("setup uniforms post ambient", true);
+
+    // Setup wireframe program
+    OGLHelpers::getOpenGLError("before wireframe setup", true);
+    wireframe_program.use();
+    uniform_wireframe_mvp_id = glGetUniformLocation(wireframe_program.getID(), "wireframeMVP");
+    std::cout << "uniform_wireframe_mvp_id: " << uniform_wireframe_mvp_id << "\n";
+    OGLHelpers::getOpenGLError("after wireframe setup", true);
 
     OGLHelpers::getOpenGLError("post setup uniforms", true);
 }

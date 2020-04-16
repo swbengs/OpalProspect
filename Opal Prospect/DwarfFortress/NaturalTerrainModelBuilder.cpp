@@ -45,6 +45,14 @@ void NaturalTerrainModelBuilder::loadFromFile(std::string filename, const ModelC
         //buildModelNaive(model_controller, terrain_model);
         checkingLoopMergeSimple();
         buildModelMergeSimple(model_controller, terrain_model);
+
+        /*
+        57, 583 faces simple
+        245, 006 faces naive
+
+        4.23
+        naive takes up this much more in a real map example
+        */
     }
     else
     {

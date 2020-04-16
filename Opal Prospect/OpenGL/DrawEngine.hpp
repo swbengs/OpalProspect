@@ -105,6 +105,7 @@ private:
     opengl_state state;
 
     VertexFragmentProgram texture_program;
+    VertexFragmentProgram wireframe_program;
     Grid3D grid;
     Grid3DYOffset grid_off, grid_off2;
     ModelIndex test_model;
@@ -124,6 +125,7 @@ private:
     int uniform_ambient_color_id;
     int uniform_sun_light_color_id;
     int uniform_sun_light_direction_id;
+    int uniform_wireframe_mvp_id;
 
     //glm types
     glm::mat4 ortho;

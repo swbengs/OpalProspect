@@ -327,6 +327,8 @@
     <None Include="lua\testcache.lua" />
     <None Include="Texture2D.frag" />
     <None Include="Texture2D.vert" />
+    <None Include="wireframe.vert" />
+    <None Include="wireframe.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\build.md" />
