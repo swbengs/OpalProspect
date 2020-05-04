@@ -140,6 +140,15 @@ void VoxelGrid::setYStride(float stride)
     y_stride = stride;
 }
 
+VoxelGrid::VoxelGrid()
+{
+    y_offset = 0;
+    y_stride = 0;
+    grid_height = 0;
+    grid_length = 0;
+    grid_width = 0;
+}
+
 bool VoxelGrid::isBottomSide(unsigned int index) const
 {
     if (grid_height == 1)

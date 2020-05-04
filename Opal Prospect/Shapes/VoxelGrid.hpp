@@ -39,6 +39,7 @@ Description: This structure is still not fully decided on. Give a basic descript
 class VoxelGrid
 {
 public:
+    VoxelGrid();
 
     bool isBottomSide(unsigned int index) const;
     bool isTopSide(unsigned int index) const;

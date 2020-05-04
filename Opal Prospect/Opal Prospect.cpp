@@ -5,6 +5,9 @@
 #include <array>
 #include <chrono>
 #include <fstream>
+#include <queue>
+#include <unordered_map>
+#include <sstream>
 #if defined(WIN32) || defined(_WIN32)
 #include <Windows.h>
 #include <WinBase.h>
@@ -12,6 +15,7 @@
 
 #include "MainLoop.hpp"
 #include "BasicLog.hpp"
+#include "zlib.h"
 
 //test includes
 #include "OpenGL\ArrayTextureAtlas.hpp"
@@ -30,6 +34,7 @@
 #include "DwarfFortress\natural_tiles.hpp"
 #include "DwarfFortress\NaturalTerrainModelBuilder.hpp"
 #include "Shapes\VoxelGrid.hpp"
+#include "Huffman.hpp"
 
 /*
 MIT License
@@ -772,6 +777,88 @@ void tests()
     voxel_grid_test(5,4,9, 1.0f, 0.2f);
 }
 
+void hoffman(std::string filename)
+{
+    //Create hash map that has the char and the frequency of it and fill them in from the file
+    Huffman huffman;
+    std::stringstream stream;
+    std::vector<char> characters;
+    std::vector<int> freqs;
+    std::unordered_map<char, int> frequencies;
+    std::ifstream file;
+    file.open(filename);
+
+    std::istream_iterator<char> end;
+    std::istream_iterator<char> iter = std::istream_iterator<char>(file);
+    for (; iter != end; iter++)
+    {
+        stream << *iter;
+        auto search = frequencies.find(*iter);
+        if (search != frequencies.end()) //found
+        {
+            search->second++;
+        }
+        else
+        {
+            frequencies[*iter] = 1;
+        }
+    }
+    file.close();
+
+    //print out the frequencies and fill in the two arrays
+    for (auto it = frequencies.begin(); it != frequencies.end(); it++)
+    {
+        std::cout << it->first << ": " << it->second << "\n";
+        characters.push_back(it->first);
+        freqs.push_back(it->second);
+    }
+    std::cout << "\n";
+
+    //make the codes
+    huffman.generateHuffmanCodes(characters.data(), freqs.data(), characters.size());
+    auto codes = huffman.getCodeMap(); // hashmap of all the huffman codes
+
+    //print them out
+    for (auto it = codes.begin(); it != codes.end(); it++)
+    {
+        std::cout << it->first << ": " << it->second << "\n";
+    }
+    std::cout << "\n";
+
+    //finally print out the entire RLE string as this bit code instead of ascii
+    std::stringstream output_stream;
+    std::string input = stream.str();
+    for (unsigned int i = 0; i < input.size(); i++)
+    {
+        output_stream << codes[input[i]];
+    }
+    std::string output = output_stream.str();
+    std::cout << "\n";
+    std::cout << output;
+
+    //divide the total size by 8 to find number of bytes it would take up
+    std::cout << "\n";
+    std::cout << "Size in bytes of RLE string: " << input.size() << "\n";
+    std::cout << "Size in bytes of hoffman codes: " << output.size() / 8 << "\n";
+}
+
+void zlib(std::string filename)
+{
+    FILE* infile = nullptr;
+    fopen_s(&infile, filename.c_str(), "rb");
+    gzFile outfile = gzopen("zlib_comp.txt", "wb");
+
+    char inbuffer[128];
+    unsigned int num_read = 0;
+    while ((num_read = fread(inbuffer, 1, sizeof(inbuffer), infile)) > 0)
+    {
+        gzwrite(outfile, inbuffer, num_read);
+    }
+
+    fclose(infile);
+    gzclose(outfile);
+}
+
 int main(int argc, char* argv[])
 {
     MainLoop loop;
@@ -829,9 +916,30 @@ int main(int argc, char* argv[])
     //std::cout << "test path: " << test.getPath() << "\n";
     //std::cout << "test filename: " << test.getFilename() << "\n";
 
-    if (argc > 1)
+    if (argc == 2)
     {
         terrain_filename = argv[1];
+    }
+    else if (argc == 3)
+    {
+        std::string arg1 = argv[1]; //command
+        std::string arg2 = argv[2]; //filename
+        if (arg1.compare("-hoffman") == 0)
+        {
+            //compress the file with hoffman encoding
+            hoffman(arg2);
+            exit(EXIT_SUCCESS);
+        }
+        else if (arg1.compare("-zlib") == 0)
+        {
+            //compress the file with zlib deflate
+            zlib(arg2);
+            exit(EXIT_SUCCESS);
+        }
+        else
+        {
+            exit(EXIT_FAILURE);
+        }
     }
     else
     {

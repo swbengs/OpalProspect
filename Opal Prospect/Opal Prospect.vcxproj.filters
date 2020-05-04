@@ -276,6 +276,9 @@
     <ClCompile Include="Shapes\DFVoxelGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Huffman.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpenGL\DrawEngine.hpp">
@@ -514,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="Shapes\DFVoxelGrid.hpp">
       <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Huffman.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

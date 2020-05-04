@@ -164,6 +164,7 @@
     <ClCompile Include="DwarfFortress\natural_tiles.cpp" />
     <ClCompile Include="DwarfFortress\tile_types.cpp" />
     <ClCompile Include="FilePath.cpp" />
+    <ClCompile Include="Huffman.cpp" />
     <ClCompile Include="MainLoop.cpp" />
     <ClCompile Include="Opal Prospect.cpp" />
     <ClCompile Include="OpenGL\ArrayTexture.cpp" />
@@ -245,6 +246,7 @@
     <ClInclude Include="DwarfFortress\natural_tiles.hpp" />
     <ClInclude Include="DwarfFortress\tile_types.hpp" />
     <ClInclude Include="FilePath.hpp" />
+    <ClInclude Include="Huffman.hpp" />
     <ClInclude Include="MainLoop.hpp" />
     <ClInclude Include="OpenGL\ArrayTexture.hpp" />
     <ClInclude Include="OpenGL\ArrayTextureAtlas.hpp" />
