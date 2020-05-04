@@ -31,8 +31,8 @@ SOFTWARE.
 */
 
 //class code
-struct HuffmanNode {
-
+struct HuffmanNode
+{
     char data;
     unsigned frequency;
     HuffmanNode* left, * right;
@@ -40,7 +40,6 @@ struct HuffmanNode {
     HuffmanNode(char data, unsigned freq)
 
     {
-
         left = nullptr;
         right = nullptr;
         this->data = data;
@@ -48,8 +47,8 @@ struct HuffmanNode {
     }
 };
 
-struct compare {
-
+struct compare
+{
     bool operator()(HuffmanNode* l, HuffmanNode* r)
 
     {
@@ -69,7 +68,6 @@ const std::unordered_map<char, std::string>& Huffman::getCodeMap() const
 
 void Huffman::makeHashMap(struct HuffmanNode* root, std::string str)
 {
-
     if (root == nullptr)
     {
         return;
@@ -87,30 +85,29 @@ void Huffman::makeHashMap(struct HuffmanNode* root, std::string str)
 
 void Huffman::generateHuffmanCodes(char data[], int freq[], int size)
 {
-    struct HuffmanNode* left, * right, * top;
-
-    std::priority_queue<HuffmanNode*, std::vector<HuffmanNode*>, compare> minHeap;
+    struct HuffmanNode* left, *right, *top;
+    std::priority_queue<HuffmanNode*, std::vector<HuffmanNode*>, compare> heap;
 
     for (int i = 0; i < size; ++i)
     {
-        minHeap.push(new HuffmanNode(data[i], freq[i]));
+        heap.push(new HuffmanNode(data[i], freq[i]));
     }
 
-    while (minHeap.size() != 1)
+    while (heap.size() != 1)
     {
-        left = minHeap.top();
-        minHeap.pop();
+        left = heap.top();
+        heap.pop();
 
-        right = minHeap.top();
-        minHeap.pop();
+        right = heap.top();
+        heap.pop();
 
         top = new HuffmanNode('#', left->frequency + right->frequency);
 
         top->left = left;
         top->right = right;
 
-        minHeap.push(top);
+        heap.push(top);
     }
 
-    makeHashMap(minHeap.top(), "");
+    makeHashMap(heap.top(), "");
 }
